@@ -18,8 +18,13 @@
 
   "customPageMapping": [
     {
-      "routes": [ "/Home/Category","/Home/Category/","/a" ],
+      "routes": [ "/Home/Category", "/Home/Category/", "/a" ],
       "file": "Category.cshtml"
+    },
+    {
+      "routes": [ "/Home/Tutorial","/Home/Tutorial/"],
+      "file": "Tutorial.cshtml"
     }
+
   ]
 }

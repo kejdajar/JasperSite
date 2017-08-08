@@ -72,9 +72,11 @@ namespace JasperSiteCore.Models
             Uri uriRefFullPath = new Uri(refFullPath, UriKind.Absolute);
             
             // creates root relative Uri 
-            Uri rootRelativeUrl = uriRefFullPath.MakeRelativeUri(urifullPath);            
-                        
-            return rootRelativeUrl.ToString();
+            Uri rootRelativeUrl = uriRefFullPath.MakeRelativeUri(urifullPath);
+
+            string result = rootRelativeUrl.ToString();
+
+            return result;
             
         }
 

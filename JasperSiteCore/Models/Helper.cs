@@ -9,40 +9,23 @@ namespace JasperSiteCore.Models
     public static class Helper
     {
         /// <summary>
-        /// Converts relative path to server mapped path.
+        /// Transforms Theme-relative Url to Root-relative Url
         /// </summary>
-        /// <param name="url">Relative path.</param>
+        /// <param name="url">Theme-relative Url</param>
         /// <returns></returns>
-        public static HtmlString JasperUrl(string url)
-        {
+        public static string JasperUrl(string url, bool addTilde = false)
+        {  
+            // without slash on the beginning it would work only on pages without route parameters
+            // urls has to look like: /Themes/Jasper/Styles/style.css
+            // without the slash it would create the following: localhost/Home/Category/Themes/Jasper/Styles/style.css = undesirable
+            string path = "/" + CustomRouting.RelativeThemePathToRootRelativePath(url);
 
-            //string root = WebsiteConfig.Hosting.ContentRootPath;
+            if(addTilde)
+            {
+                path = "~" + path;
+            }
 
-
-
-            string path = CustomRouting.RelativeThemePathToRootRelativePath(url);
-            string fullPath = System.IO.Path.GetFullPath(path);
-
-
-            return new HtmlString(path);
-        }
-
-
-        public static HtmlString JasperUrl2(string url)
-        {
-
-            //string root = WebsiteConfig.Hosting.ContentRootPath;
-
-
-
-            string path = CustomRouting.RelativeThemePathToRootRelativePath(url);
-            string fullPath = System.IO.Path.GetFullPath(path);
-
-            Uri fullPathUri = new Uri(fullPath, UriKind.Absolute);
-           // Uri relPathUri = new Uri(CustomRouting.);
-
-
-            return new HtmlString(path);
+            return path;
         }
     }
 }
