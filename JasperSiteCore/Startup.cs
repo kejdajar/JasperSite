@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using JasperSiteCore.Models;
 
 namespace JasperSiteCore
 {
@@ -20,6 +24,8 @@ namespace JasperSiteCore
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            WebsiteConfig.Hosting = env;
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -48,12 +54,27 @@ namespace JasperSiteCore
             }
 
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+Path.Combine(Directory.GetCurrentDirectory(), "Themes")),
+                  RequestPath = new PathString("/Themes")
+            });
+
+
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
 
             app.UseMvc(routes =>
-            {
+            { 
                 routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "dynamic",
+                    defaults: new { controller = "Home", action = "Index" },
+                    template: "{*.any}");
             });
         }
     }
