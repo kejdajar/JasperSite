@@ -39,5 +39,12 @@ namespace JasperSiteCore.Controllers
 
         }
 
+        [HttpGet("/Error/{statusCode}")]
+        public IActionResult Error(int statusCode)
+        {
+            // return Content("errr"+ statusCode);
+            return View(CustomRouting.GetErrorPageFile(),model:statusCode);
+        }
+
     }
 }

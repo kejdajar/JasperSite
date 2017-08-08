@@ -1,4 +1,5 @@
-﻿{
+﻿/* Global settings file for JasperSiteCore */
+{
   "themeName": "Jasper",
   "themeFolder": "Themes"
 }

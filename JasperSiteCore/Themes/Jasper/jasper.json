@@ -1,4 +1,5 @@
-﻿{
+﻿/* Json settings for theme */
+{
   "routing": {
     "homePage": [ "/Home/Index/", "/Home/Index", "/Home/", "/Home", "/", "" ],
     "homePageFile": "Index.cshtml",

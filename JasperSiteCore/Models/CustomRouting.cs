@@ -27,12 +27,12 @@ namespace JasperSiteCore.Models
         public static string GetHomePageFile()
         {
             string physicalFileUrl = WebsiteConfig.GetConfigData().routing.homePageFile;
-            return RelativeThemePathToAbsolute(physicalFileUrl);
+            return RelativeThemePathToRootRelativePath(physicalFileUrl);
         }
 
         public static string GetErrorPageFile()
         {string physicalFileUrl = WebsiteConfig.GetConfigData().routing.errorPageFile;
-            return RelativeThemePathToAbsolute(physicalFileUrl);
+            return RelativeThemePathToRootRelativePath(physicalFileUrl);
         }
 
         public static string MapUrlToFile(string rawUrl)
@@ -43,29 +43,39 @@ namespace JasperSiteCore.Models
                  if(routeObject.routes.Contains(rawUrl))
                 {
                     string physicalFileUrl = routeObject.file;
-                    return RelativeThemePathToAbsolute(physicalFileUrl);
+                    return RelativeThemePathToRootRelativePath(physicalFileUrl);
                 }
             }
             return null;
         }
 
-        /// <summary>
-        /// Cestu je potřeba předat
-        /// custom routing enginu v absolutní cestě s vlnovkou na začátku. 
-        /// </summary>
-        /// <param name="path">Absolutní/relativní cesta k souboru, který je součástí vzhledu.</param>
-        /// <returns></returns>
-        private static string RelativeThemePathToAbsolute(string path)
-        {
-            if (path.StartsWith("~")) // pokud v configu bude celá cesta (tzn. s vlnovkou), tak ponechat
-            {
-                return path;
-            }
-            else // Z relativní cesty udělat absolutní
-            {
-                return System.IO.Path.Combine(GlobalWebsiteConfig.ThemeFolder, GlobalWebsiteConfig.ThemeName, path);
 
-            }
+        /// <summary>
+        /// Takes url relative to Theme folder, for example ./Style/style.css or ../Style/style.css or Style/style.css
+        /// and transforms it to root url, which is ie. : Themes/Jasper/Styles/style.css
+        /// </summary>
+        /// <param name="path">Path relative to Theme folder</param>
+        /// <returns></returns>
+        public static string RelativeThemePathToRootRelativePath(string path)
+        {
+             // can contain relative parts ie. "Themes\\Jasper\\..//Styles/style.css"
+            string p = System.IO.Path.Combine(GlobalWebsiteConfig.ThemeFolder, GlobalWebsiteConfig.ThemeName, path);
+
+            // creates full path and resolves relative parts ==> "c:\\...\Themes\\Jasper\\Styles\\style.css" 
+            string fullPath = System.IO.Path.GetFullPath(p); 
+
+            // creates full path to the Themes folder ===> "c:\\..\\Themes"
+            string refFullPath = System.IO.Path.GetFullPath(GlobalWebsiteConfig.ThemeFolder);
+
+            // convert strings to absolute uris
+            Uri urifullPath = new Uri(fullPath, UriKind.Absolute);
+            Uri uriRefFullPath = new Uri(refFullPath, UriKind.Absolute);
+            
+            // creates root relative Uri 
+            Uri rootRelativeUrl = uriRefFullPath.MakeRelativeUri(urifullPath);            
+                        
+            return rootRelativeUrl.ToString();
+            
         }
 
     }

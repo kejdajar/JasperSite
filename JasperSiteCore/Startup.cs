@@ -18,6 +18,7 @@ namespace JasperSiteCore
     {
         public Startup(IHostingEnvironment env)
         {
+            // Configuration files for whole project
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -25,6 +26,7 @@ namespace JasperSiteCore
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
 
+            // Save IHostingEnvironment to static class (ie. to get Root path from controllers/other classes)
             WebsiteConfig.Hosting = env;
         }
 
@@ -49,18 +51,41 @@ namespace JasperSiteCore
                 app.UseBrowserLink();
             }
             else
-            {
-                app.UseExceptionHandler("/Home/Error");
+            {    //TODO: Exception Handling
+                //app.UseExceptionHandler("/Home/Error/");
             }
+          
+            // Redirects http status code errors to error controller
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
 
+            #region Ignore jasper.json files
+            app.Use((context, next) => {
+                // Ignore requests that don't point to static files.
+                string path = context.Request.Path;
+                if (!path.EndsWith("jasper.json"))
+                {
+                    return next();
+                }
+
+                // Stop processing the request and return a 401 response.                
+                context.Response.StatusCode = 401; //Unauthorized
+                return Task.FromResult(0);
+               
+            });
+            #endregion
+            
+            // wwwroot serves now static files
             app.UseStaticFiles();
+
+            // Themes folder serves now static files as well
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-Path.Combine(Directory.GetCurrentDirectory(), "Themes")),
-                  RequestPath = new PathString("/Themes")
+                Path.Combine(Directory.GetCurrentDirectory(), "Themes")), // Physical folder location
+                RequestPath = new PathString("/Themes") // Url
             });
 
+            #region DefaultRoutingDisabled
 
             //app.UseMvc(routes =>
             //{
@@ -68,7 +93,9 @@ Path.Combine(Directory.GetCurrentDirectory(), "Themes")),
             //        name: "default",
             //        template: "{controller=Home}/{action=Index}/{id?}");
             //});
-
+            #endregion
+            
+            //Custom routing: Home controller handles all incoming requests.
             app.UseMvc(routes =>
             { 
                 routes.MapRoute(
