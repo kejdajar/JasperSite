@@ -1,4 +1,5 @@
-﻿{
+﻿/* Json settings for theme */
+{
   "routing": {
     "homePage": [ "/Home/Index/", "/Home/Index", "/Home/", "/Home", "/", "" ],
     "homePageFile": "Index.cshtml",
@@ -17,8 +18,13 @@
 
   "customPageMapping": [
     {
-      "routes": [ "/Home/Category","/Home/Category/","/a" ],
+      "routes": [ "/Home/Category", "/Home/Category/", "/a" ],
       "file": "Category.cshtml"
+    },
+    {
+      "routes": [ "/Home/Tutorial","/Home/Tutorial/"],
+      "file": "Tutorial.cshtml"
     }
+
   ]
 }

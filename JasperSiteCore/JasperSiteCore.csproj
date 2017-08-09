@@ -9,6 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Themes\Onyx\Images\banner1.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Themes\Onyx\Images\banner2.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Themes\Onyx\Images\banner3.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Themes\Onyx\Images\banner4.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Themes\Onyx\Scripts\script.js" />
+    <Content Include="Themes\Onyx\Styles\style.css" />
     <Content Include="Themes\Jasper\Images\banner1.svg">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -23,8 +37,6 @@
     </Content>
     <Content Include="Themes\Jasper\Scripts\script.js" />
     <Content Include="Themes\Jasper\Styles\style.css" />
-    <Content Include="Themes\Onyx\Scripts\script.js" />
-    <Content Include="Themes\Onyx\Styles\style.css" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.4.337" />
