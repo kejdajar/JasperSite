@@ -1,50 +1,69 @@
 ﻿body {
-     font-family:'Lora';
-    font-size:1.5em ;
+    font-family: 'Lora';
+    font-size: 1em;
+    background-color:white;
 }
 
 
 /* Admin section */
 
-#headerPanel{
-    background-color: white;      
-    border-bottom:1px solid silver;
-    display:flex;
-     box-shadow: 0px 5px 20px silver;   
-    
+
+/* Header */
+#headerPanel {
+    background-image: url("../Images/noise_tomato.png");
+    border-bottom: 1px solid silver;
+    display: flex;
+    /*box-shadow: 0px 1px 10px tomato;*/
+    padding: 5px;
 }
 
-.font-jasper {
-        color: tomato;
+#headerPanel .mainToggleButton {
+    width:40px;
+    height:40px;
+    margin:5px;
+}
+
+    #headerPanel .mainToggleButton img{
+        width: 100%;
+        height: 100%;
     }
+
+    #headerPanel .headerLine {
+        flex: 1;
+        display: flex
+    }
+    #headerPanel .headerLine .mainTitle {
+   margin-left:20px;
+      padding:0px;
+    }
+
+
+/*End header */
+.font-jasper {
+    color: tomato;
+}
 
 
 
 /* Global styles */
-input[type=submit]:hover, .jasper-btn
+/*input[type=submit]:hover, .jasper-btn
 {
      background-color: lightgray;
-}
+}*/
 
- input[type=submit],.jasper-btn{  
+ /*input[type=submit],.jasper-btn{  
         background-color: tomato ;
         color:white;
         font-weight:bold;
         
-}
+}*/
 
-
-
-
-textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-    input:focus {
-    border-color: tomato;
-    
-   -webkit-box-shadow: 0px 0px 3px 1px rgba(255,128,82,1);
--moz-box-shadow: 0px 0px 3px 1px rgba(255,128,82,1);
-box-shadow: 0px 0px 3px 1px rgba(255,128,82,1);
-
-   
-}
+/*textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable- input:focus {
+    border-color: #a8efff;
+    -webkit-box-shadow: 0px 0px 3px 1px #a8efff;
+    -moz-box-shadow: 0px 0px 3px 1px #a8efff;
+    box-shadow: 0px 0px 3px 1px #a8efff;
+}*/
 
 /* Carousel */
 .carousel .item {

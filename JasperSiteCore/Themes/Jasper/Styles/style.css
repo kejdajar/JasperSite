@@ -1,39 +1,66 @@
-﻿
-body {
-    padding-top: 50px;
-    padding-bottom: 20px; 
-    background-color:white;
+﻿body{
+    background-image:url(../Images/noise2.png);
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.container {
+    
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
+.jasper-container-outer {
+   
+    padding: 0px;
+  
+   
+   background-color:white;
+   
+}
+.jasper-container-inner {
+    /*margin:0px;
+    padding: 10px;*/
+ 
+   
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
-}
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
-    width: 100%;
-}
+@media (max-width: 768px) {
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
+    .jasper-container-outer {
+        width:100%;
+        margin:0px;
+        padding:0px;
     }
+
+    .jasper-container-inner {
+        margin:0px;
+     width:100%;
+        background-color: white;
+    }
+
+    body {
+        margin:0px;
+        padding:0px;
+        background-image: none;
+    }
+
+ 
 }
+
+
+ /*@media (min-width: 576px) {
+    
+     .container {
+      
+     }
+
+}
+ @media (min-width: 768px) {
+    
+}
+
+@media (min-width: 992px) {
+
+}
+
+ @media (min-width: 1200px) {
+    
+}*/

@@ -10,7 +10,8 @@
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar2.css" />
+                
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -42,6 +43,9 @@
         </script>
         <!-- TODO: Nalinkovat minifikaci -->
         @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
+    
+    
+       
     </environment>
 
     @RenderSection("Scripts", required: false)
@@ -73,6 +77,7 @@
 </head>
 
 <body>
+    
     <div id="wrapper">
 
         <!-- Sidebar -->
@@ -111,25 +116,25 @@
         <!-- /#sidebar-wrapper -->
         <!--Header-->
         <header>
-            <div id="headerPanel">
-                <div>
-                    <a href="#menu-toggle" id="menu-toggle" style="display:inline-block;width:auto;margin:5px">
+            <div id="headerPanel" style="background-color:red; width:100%;position:fixed;top:0px;z-index:5000">
+                <div class="mainToggleButton">
+                    <a href="#menu-toggle" id="menu-toggle">
                         <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
                     </a>
                 </div>
-                <div style="flex:1;display:flex">
-                    <div style="margin:auto;flex-shrink: 0;">
-                        <h1 style="margin:0px;padding:0px;">J<span class="font-jasper">ASP</span>ER SITE</h1>
+                <div class="headerLine">
+                    <div class="mainTitle">
+                        <h1>J<span style="color:tomato">asp</span>er Site <span style="color:deepskyblue">Core</span></h1>
                     </div>
                 </div>
             </div>
         </header>
 
         <!-- Page Content -->
-        <main>
+        <main >
             <div id="page-content-wrapper">
 
-                <div class="container-fluid">
+                <div class="container-fluid" style="margin-top:60px">
                     <div class="row">
                         <div class="col-lg-12">
 
