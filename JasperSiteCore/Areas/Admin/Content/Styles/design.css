@@ -1,0 +1,75 @@
+﻿body {
+     font-family:'Lora';
+    font-size:1.5em ;
+}
+
+
+/* Admin section */
+
+#headerPanel{
+    background-color: white;      
+    border-bottom:1px solid silver;
+    display:flex;
+     box-shadow: 0px 5px 20px silver;   
+    
+}
+
+.font-jasper {
+        color: tomato;
+    }
+
+
+
+/* Global styles */
+input[type=submit]:hover, .jasper-btn
+{
+     background-color: lightgray;
+}
+
+ input[type=submit],.jasper-btn{  
+        background-color: tomato ;
+        color:white;
+        font-weight:bold;
+        
+}
+
+
+
+
+textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable-    input:focus {
+    border-color: tomato;
+    
+   -webkit-box-shadow: 0px 0px 3px 1px rgba(255,128,82,1);
+-moz-box-shadow: 0px 0px 3px 1px rgba(255,128,82,1);
+box-shadow: 0px 0px 3px 1px rgba(255,128,82,1);
+
+   
+}
+
+/* Carousel */
+.carousel .item {
+width: 100%;
+/*slider width*/
+max-height: 500px;
+/*slider height*/
+}
+.carousel .item img {
+width: 100%;
+/*image width*/
+}
+
+/* Footer */
+.footer-divider{
+     background-color: white;      
+    border-bottom:1px solid silver;
+    margin-top:10px;
+    
+}
+
+.footer-container{
+    margin-top:10px;
+}
+
+footer div img {
+    padding: 10px;
+}

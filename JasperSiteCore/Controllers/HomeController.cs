@@ -34,7 +34,9 @@ namespace JasperSiteCore.Controllers
             else
             {
                 //  return Content("špatný požadavek na server");
-                return View(CustomRouting.GetErrorPageFile());
+                if (!WebsiteConfig.Hosting.IsDevelopment())
+                    return View(CustomRouting.GetErrorPageFile());
+                else return View();
             }
 
         }

@@ -1,0 +1,207 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="@Helper.JasperUrl("./favicon.ico")" type="image/x-icon">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <!-- TODO: Nalinkovat minifikaci -->
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+    </environment>
+
+   @************************************************************** Scripts ****************************************************************************@
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <!-- TODO: Nalinkovat minifikaci -->
+        @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
+    </environment>
+
+    @RenderSection("Scripts", required: false)
+
+
+
+
+
+
+
+
+
+
+
+    @Html.Raw(JavaScriptSnippet.FullScript)
+
+    <!-- Font -->
+    <link href='http://fonts.googleapis.com/css?family=Lora&subset=latin,latin-ext' rel='stylesheet' type='text/css' />
+
+    <!-- Přepínání menu -->
+    <script>
+        $(document).ready(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <nav>
+            <div id="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a href="@Url.Action("Index","Home")">
+                            Přehled
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Categories","Home")">Rubriky</a>
+                    </li>
+                    <li>
+                        <a href="#">Články</a>
+                    </li>
+                    <li>
+                        <a href="#">Vzhled</a>
+                    </li>
+                    <li>
+                        <a href="#">Uživatel</a>
+                    </li>
+                    <li>
+                        <a href="#">Nastavení</a>
+                    </li>
+                    <li>
+                        <a href="#">Services</a>
+                    </li>
+                    <li>
+                        <a href="#">Nápověda</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- /#sidebar-wrapper -->
+        <!--Header-->
+        <header>
+            <div id="headerPanel">
+                <div>
+                    <a href="#menu-toggle" id="menu-toggle" style="display:inline-block;width:auto;margin:5px">
+                        <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
+                    </a>
+                </div>
+                <div style="flex:1;display:flex">
+                    <div style="margin:auto;flex-shrink: 0;">
+                        <h1 style="margin:0px;padding:0px;">J<span class="font-jasper">ASP</span>ER SITE</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main>
+            <div id="page-content-wrapper">
+
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            @RenderBody()
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- /#page-content-wrapper -->
+    </div>
+
+   
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+    <!--
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>
+        </div>
+
+
+    </body>
+    </html>-->*@

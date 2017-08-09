@@ -1,0 +1,83 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Přihlášení do administrace</title>
+    
+    <!-- Bundling -->
+    @System.Web.Optimization.Scripts.Render("~/jQuery")
+    @System.Web.Optimization.Styles.Render("~/jQueryUI_CSS")
+    @System.Web.Optimization.Scripts.Render("~/jQueryUI")
+    @System.Web.Optimization.Scripts.Render("~/modernizr")
+    @System.Web.Optimization.Styles.Render("~/tetherCSS")
+    @System.Web.Optimization.Scripts.Render("~/tetherJS")
+    @System.Web.Optimization.Styles.Render("~/bootstrapCSS")
+    @System.Web.Optimization.Scripts.Render("~/bootstrapJS")
+
+    <link href="~/Areas/Admin/Content/design.css" rel="stylesheet" />
+    <link href='http://fonts.googleapis.com/css?family=Lora&subset=latin,latin-ext' rel='stylesheet' type='text/css' />
+    <style>
+        /* Login section */
+        #loginBox {
+            max-width: 600px;
+            margin: 0px auto;
+            margin-bottom: 50px;
+            margin-top: 20px;
+            padding:5px;
+        }
+
+            #loginBox div.login-row {
+                display: flex;
+                padding: 5px;
+            }
+
+                #loginBox div.login-row input[type=password], input[type=text], input[type=submit] {
+                    flex: 1;
+                }
+
+
+
+                #loginBox div.login-row div:first-child {
+                    width: 100px;
+                }
+    </style>
+</head>
+<body>
+
+    <div id="headerPanel">        
+        <div style="flex:1;display:flex">
+            <div style="margin:auto;flex-shrink: 0;">
+
+                <h1 style="margin:0px;padding:0px;">J<span class="font-jasper">ASP</span>ER SITE</h1>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+            
+                <div id="loginBox">
+                    <h2>Přihlášení do administrace</h2>
+                    <div class="login-row">
+                        <div class="hidden-xs-down">Login</div>
+                        <input type="text" placeholder="Zadejte uživatelské jméno" class="form-control" />
+                    </div>
+                    <div class="login-row">
+                        <div class="hidden-xs-down">Heslo</div>
+                        <input type="password" placeholder="Zadejte heslo" class="form-control" />
+                    </div>
+                    <div class="login-row">
+                        <input type="submit" value="Přihlásit se" class="btn" />
+                    </div>
+                </div>
+
+
+            </div>
+     
+</body>
+</html>

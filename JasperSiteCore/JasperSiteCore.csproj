@@ -52,6 +52,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\Admin\Content\Scripts\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
 

@@ -53,10 +53,12 @@ namespace JasperSiteCore
             else
             {    //TODO: Exception Handling
                 //app.UseExceptionHandler("/Home/Error/");
-            }
-          
+
             // Redirects http status code errors to error controller
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            }
+          
+            
 
             #region Ignore jasper.json files
             app.Use((context, next) => {
@@ -85,6 +87,15 @@ namespace JasperSiteCore
                 RequestPath = new PathString("/Themes") // Url
             });
 
+            // Area/Admin/Content servers static files
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+               Path.Combine(Directory.GetCurrentDirectory(), "Areas/Admin/Content")), // Physical folder location
+                RequestPath = new PathString("/Areas/Admin/Content") // Url
+            });
+
+
             #region DefaultRoutingDisabled
 
             //app.UseMvc(routes =>
@@ -94,10 +105,15 @@ namespace JasperSiteCore
             //        template: "{controller=Home}/{action=Index}/{id?}");
             //});
             #endregion
-            
+
             //Custom routing: Home controller handles all incoming requests.
             app.UseMvc(routes =>
-            { 
+            {
+                //areas
+                routes.MapRoute(name: "areaRoute",
+                template: "{area:exists}/{controller=Home}/{action=Index}");
+
+                // custom routing
                 routes.MapRoute(
                     name: "dynamic",
                     defaults: new { controller = "Home", action = "Index" },
