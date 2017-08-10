@@ -11,6 +11,9 @@ using Microsoft.Extensions.FileProviders;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using JasperSiteCore.Models;
+using JasperSiteCore.Models.Database;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace JasperSiteCore
 {
@@ -28,6 +31,8 @@ namespace JasperSiteCore
 
             // Save IHostingEnvironment to static class (ie. to get Root path from controllers/other classes)
             WebsiteConfig.Hosting = env;
+
+            
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -35,12 +40,15 @@ namespace JasperSiteCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+         services.AddDbContext<DatabaseContext>(options =>
+        options.UseSqlServer(@"Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True"));
+
             // Add framework services.
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext dbContext)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -119,6 +127,8 @@ namespace JasperSiteCore
                     defaults: new { controller = "Home", action = "Index" },
                     template: "{*.any}");
             });
+
+            Models.Database.DbInitializer.Initialize(dbContext);
         }
     }
 }
