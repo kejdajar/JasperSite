@@ -1,12 +1,18 @@
-﻿
+﻿@using JasperSiteCore.Models.Database
 @{
     Layout = "~/Themes/Jasper/_Layout.cshtml";
 }
 <h1>Toto jsou kategorie</h1>
 <p>
-    #kategorie 1
-    <a href="~/Home/Index">Home</a>
-       
+ @foreach(Article a in Database.GetAllArticles())
+ {
+     <b>@a.Name</b> <br />
+      <blockquote>
+          @Html.Raw(a.HtmlContent)
+      </blockquote> <br />
+      <hr />
+ }
+
   </p>
 
 

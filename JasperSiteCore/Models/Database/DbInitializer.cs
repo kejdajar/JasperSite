@@ -9,8 +9,19 @@ namespace JasperSiteCore.Models.Database
    
         public static class DbInitializer
         {
-            public static void Initialize(DatabaseContext context)
+
+        private static DatabaseContext _database;  
+        public static DatabaseContext Database
+        {
+            get { return _database; }
+           
+        }
+
+
+        public static void Initialize(DatabaseContext context)
             {
+            _database = context;
+
                 context.Database.EnsureCreated();
 
                 // Look for any articles
