@@ -9,8 +9,10 @@
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="~/lib/tether/dist/css/tether.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar2.css" />
+        <link href="~/lib/chosen/chosen.css" rel="stylesheet" />
                 
     </environment>
     <environment names="Staging,Production">
@@ -19,14 +21,17 @@
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <!-- TODO: Nalinkovat minifikaci -->
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar2.css" />
+        <link href="~/lib/chosen/chosen.css" rel="stylesheet" />
     </environment>
 
    @************************************************************** Scripts ****************************************************************************@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/tether/dist/js/tether.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
+        <script src="~/lib/chosen/chosen.jquery.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -40,7 +45,9 @@
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+   
         </script>
+        <script src="~/lib/chosen/chosen.jquery.js"></script>
         <!-- TODO: Nalinkovat minifikaci -->
         @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
     
@@ -49,7 +56,7 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
-
+    @RenderSection("Styles", required: false)
 
 
 

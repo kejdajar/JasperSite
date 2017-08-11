@@ -33,13 +33,28 @@ namespace JasperSiteCore.Models.Database
 
             Article[] articles = new Article[]
             {
-                new Article {Name="První článek", HtmlContent="<b>tučný text</b>"},
-                 new Article {Name="Druhý článek", HtmlContent="<b>kurzíva</b>"},
+                new Article {Name="První článek", HtmlContent="<b>tučný text</b>", PublishDate = DateTime.Now},
+                 new Article {Name="Druhý článek", HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60)},
+                   new Article {Name="Třetí článek", HtmlContent="<h2>nadpis text</h2>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(120)},
+                    new Article {Name="Čtvrtý článek", HtmlContent="test", PublishDate = DateTime.Now + TimeSpan.FromMinutes(180)},
             };
 
             foreach(Article a in articles)
             {
                 context.Articles.Add(a);
+            }
+
+            Category[] categories = new Category[]
+            {
+                new Category { Name="Category1"},
+                 new Category { Name="Category2"},
+                  new Category { Name="Category3"},
+                   new Category { Name="Category4"}
+            };
+
+            foreach(Category c in categories)
+            {
+                context.Categories.Add(c);
             }
 
             //    var students = new Student[]

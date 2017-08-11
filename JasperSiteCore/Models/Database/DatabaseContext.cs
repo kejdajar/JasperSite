@@ -14,11 +14,12 @@ namespace JasperSiteCore.Models.Database
         }
 
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Category> Categories{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>().ToTable("Articles");
-           
+            modelBuilder.Entity<Category>().ToTable("Categories");
         }
     }
 }

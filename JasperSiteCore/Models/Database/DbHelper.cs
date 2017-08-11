@@ -35,5 +35,18 @@ namespace JasperSiteCore.Models.Database
                 return null;
             }
         }
+
+        public static List<Category> GetAllCategories()
+        {
+            DatabaseContext database = DbInitializer.Database;
+            if(database.Categories.Any())
+            {
+                return database.Categories.ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

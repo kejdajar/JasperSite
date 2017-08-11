@@ -103,6 +103,14 @@ namespace JasperSiteCore
                 RequestPath = new PathString("/Areas/Admin/Content") // Url
             });
 
+            //npm
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+               Path.Combine(Directory.GetCurrentDirectory(), "node_modules")), // Physical folder location
+                RequestPath = new PathString("/node_modules") // Url
+            });
+
 
             #region DefaultRoutingDisabled
 

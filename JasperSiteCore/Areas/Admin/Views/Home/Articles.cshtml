@@ -2,21 +2,62 @@
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
+@section Scripts {
+ 
+<script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+
+    <script>
+    
+
+       $(function () {
+           $("#selCategory").chosen({ width: "100%" });
+           $("#tb1").datepicker();
+           $("table tr").click(function () { 
+
+               var okno = $(`<div title="Window Title">
+                             @DateTime.Now
+                            </div>
+                           `);
+
+               $(okno).dialog();
+             });
+
+       });
+
+    </script>
+}
+
+@section Styles {
+
+<link href="~/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
 }
 
 <h1>Edit Articles</h1>
-...select category
+<select  id="selCategory" style="font-size:2em">
+    @foreach (Category c in DbHelper.GetAllCategories())
+    {
+
+        <option value="@c.Id">@c.Name</option>
+    }
+    
+</select>
 
 <h2>List of Articles</h2>
-<table class="table table-bordered table-striped table-hover">
-    <tr>  <th>Id</th><th>Jméno článku</th><th>Obsah</th></tr>
+<table class="table table-bordered table-striped table-hover jasper-table">
+    <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
     @foreach (Article a in DbHelper.GetAllArticles())
     {
         <tr>
             <td>@a.Id</td>
+            <td>@a.PublishDate</td>
             <td>@a.Name</td>
             <td>@Html.Raw(a.HtmlContent)</td>
+            
         </tr>
     }
 </table>
+<input type="text" id="tb1" />
+<div id="popup">
+
+</div>
+

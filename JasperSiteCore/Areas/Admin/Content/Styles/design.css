@@ -92,3 +92,12 @@ width: 100%;
 footer div img {
     padding: 10px;
 }
+
+.jasper-table tr:hover {
+   cursor: pointer;
+}
+
+#popup {
+   background-color:lightgoldenrodyellow;
+   
+}
