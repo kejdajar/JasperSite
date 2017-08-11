@@ -1,0 +1,22 @@
+﻿@using JasperSiteCore.Models.Database
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h1>Edit Articles</h1>
+...select category
+
+<h2>List of Articles</h2>
+<table class="table table-bordered table-striped table-hover">
+    <tr>  <th>Id</th><th>Jméno článku</th><th>Obsah</th></tr>
+    @foreach (Article a in DbHelper.GetAllArticles())
+    {
+        <tr>
+            <td>@a.Id</td>
+            <td>@a.Name</td>
+            <td>@Html.Raw(a.HtmlContent)</td>
+        </tr>
+    }
+</table>

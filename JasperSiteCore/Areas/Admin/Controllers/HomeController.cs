@@ -19,5 +19,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult Articles()
+        {
+            return View();
+        }
     }
 }
