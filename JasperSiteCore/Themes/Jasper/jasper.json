@@ -26,7 +26,7 @@
       "file": "Tutorial.cshtml"
     },
     {
-      "routes": [ "/Home/Article", "/Home/Articles/" ],
+      "routes": [ "/Home/Article", "/Home/Article/" ],
       "file": "Article.cshtml"
     }
 

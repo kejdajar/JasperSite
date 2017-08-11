@@ -4,7 +4,7 @@
 }
 <h1>Toto jsou kategorie</h1>
 <p>
- @foreach(Article a in Database.GetAllArticles())
+ @foreach(Article a in DbHelper.GetAllArticles())
  {
      <b>@a.Name</b> <br />
       <blockquote>

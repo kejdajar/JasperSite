@@ -13,4 +13,6 @@ namespace JasperSiteCore.Models.Database
         public string Name { get; set; }
         public string HtmlContent { get; set; }
     }
+
+   
 }
