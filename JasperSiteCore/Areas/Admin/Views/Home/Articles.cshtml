@@ -10,9 +10,10 @@
     <script>
     
 
-       $(function () {
+        $(function () {
+           
            $("#selCategory").chosen({ width: "100%" });
-           $("#tb1").datepicker();
+     
            $("table tr").click(function () { 
 
                
@@ -41,25 +42,71 @@
     
 </select>
 
-<h2>List of Articles</h2>
-<table class="table table-bordered table-striped table-hover jasper-table">
-    <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
-    @foreach (Article a in DbHelper.GetAllArticles())
-    {
-        <tr>
-            <td>@a.Id</td>
-            <td>@a.PublishDate</td>
-            <td>@a.Name</td>
-            <td>@Html.Raw(a.HtmlContent)</td>
-            
-        </tr>
-    }
-</table>
-<input type="text" id="tb1" />
-<div id="popup">
-    @*TODO: Předělat na view componentu *@
-    @Html.Partial("_EditArticlePartial")   
-    
-   
+
+
+<div id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="card">
+        <div class="card-header" role="tab" id="headingOne">
+            <h5 class="mb-0">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                 Přehled
+                </a>
+            </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+            <div class="card-block">
+             text ...
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" role="tab" id="headingTwo">
+            <h5 class="mb-0">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                 Nový článek
+                </a>
+            </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="card-block">
+                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header" role="tab" id="headingThree">
+            <h5 class="mb-0">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                 Seznam článků
+                </a>
+            </h5>
+        </div>
+        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div class="card-block">
+                <h2>List of Articles</h2>
+                <table class="table table-bordered table-striped table-hover jasper-table">
+                    <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
+                    @foreach (Article a in DbHelper.GetAllArticles())
+                    {
+                        <tr>
+                            <td>@a.Id</td>
+                            <td>@a.PublishDate</td>
+                            <td>@a.Name</td>
+                            <td>@Html.Raw(a.HtmlContent)</td>
+
+                        </tr>
+                    }
+                </table>
+
+                <div id="popup">
+                    @*TODO: Předělat na view componentu *@
+                    @Html.Partial("_EditArticlePartial")
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 

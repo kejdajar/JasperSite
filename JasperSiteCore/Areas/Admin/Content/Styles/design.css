@@ -96,8 +96,9 @@ footer div img {
 .jasper-table tr:hover {
    cursor: pointer;
 }
+.jasper-table {
 
+}
 #popup {
-   background-color:lightgoldenrodyellow;
-   
+    background-color: lightgoldenrodyellow;
 }
