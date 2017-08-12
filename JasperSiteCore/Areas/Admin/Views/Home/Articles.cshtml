@@ -4,9 +4,9 @@
 *@
 @section Scripts {
  
-<script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
 
-<script src="~/Areas/Admin/Content/Scripts/EditArticle.js"></script>
+
+
     <script>
     
 
@@ -15,10 +15,8 @@
            $("#selCategory").chosen({ width: "100%" });
      
            $("table tr").click(function () { 
-
-               
-
-               //$("#popup").dialog();
+               var id=  $(this).data("href")
+               window.location = "/Admin/Article/Index?id="+id ;
 
              });
 
@@ -27,20 +25,11 @@
     </script>
 }
 
-@section Styles {
 
-<link href="~/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
-}
-
-<h1>Edit Articles</h1>
-<select  id="selCategory" style="font-size:2em">
-    @foreach (Category c in DbHelper.GetAllCategories())
-    {
-
-        <option value="@c.Id">@c.Name</option>
-    }
-    
-</select>
+<div class="jumbotron">
+    <h1>Články</h1>
+</div>
+ 
 
 
 
@@ -84,28 +73,31 @@
         </div>
         <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
             <div class="card-block">
-                <h2>List of Articles</h2>
-                <table class="table table-bordered table-striped table-hover jasper-table">
-                    <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
-                    @foreach (Article a in DbHelper.GetAllArticles())
+                <h2>Seznam článků</h2>
+                <select id="selCategory">
+                    @foreach (Category c in DbHelper.GetAllCategories())
                     {
-                        <tr>
-                            <td>@a.Id</td>
-                            <td>@a.PublishDate</td>
-                            <td>@a.Name</td>
-                            <td>@Html.Raw(a.HtmlContent)</td>
 
-                        </tr>
+                        <option value="@c.Id">@c.Name</option>
                     }
-                </table>
 
-                <div id="popup">
-                    @*TODO: Předělat na view componentu *@
-                    @Html.Partial("_EditArticlePartial")
+                </select>
+                    <table class="table table-bordered table-striped table-hover jasper-table">
+                        <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
+                        @foreach (Article a in DbHelper.GetAllArticles())
+                        {
+                            <tr data-href="@a.Id">
+                                <td>@a.Id</td>
+                                <td>@a.PublishDate</td>
+                                <td>@a.Name</td>
+                                <td>@Html.Raw(a.HtmlContent)</td>
+
+                            </tr>
+                        }
+                    </table>
 
 
-                </div>
-            </div>
+</div>
         </div>
     </div>
 </div>

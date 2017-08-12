@@ -1,0 +1,17 @@
+@model int
+@{
+    ViewData["Title"] = "Article";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+    <script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+    <script src="~/Areas/Admin/Content/Scripts/EditArticle.js"></script>
+    }
+@section Styles {
+
+    <link href="~/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
+}
+
+<h2>Article</h2>
+
+@await  Component.InvokeAsync("EditArticle",new { articleId = Model})

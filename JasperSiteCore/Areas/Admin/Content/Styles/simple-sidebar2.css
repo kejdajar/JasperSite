@@ -71,17 +71,18 @@
 }
 
 .sidebar-nav li a {
+    font-size:1.2em;
     display: block;
     text-decoration: none;
     color: #999999;
 }
 
-.sidebar-nav li a:hover {
-    text-decoration: none;
-    /*color: #fff;*/
-    color:tomato;
-    background: rgba(255,255,255,0.2);
-}
+    .sidebar-nav li a:hover {
+        text-decoration: none;
+        /*color: #fff;*/
+        color: #E57373;        
+        background: rgba(255,255,255,0.2);
+    }
 
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
