@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\bootstrap-chosen\**" />
+    <Content Remove="wwwroot\lib\bootstrap-chosen\**" />
+    <EmbeddedResource Remove="wwwroot\lib\bootstrap-chosen\**" />
+    <None Remove="wwwroot\lib\bootstrap-chosen\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Themes\Onyx\Images\banner1.svg">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
@@ -37,6 +44,8 @@
     </Content>
     <Content Include="Themes\Jasper\Scripts\script.js" />
     <Content Include="Themes\Jasper\Styles\style.css" />
+    <Content Include="wwwroot\customThemes\bootstrap-chosen-master.zip" />
+    <Content Include="wwwroot\customThemes\chosen-custom.css" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.4.337" />
@@ -44,17 +53,19 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="1.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Admin\Content\Scripts\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
 

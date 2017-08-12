@@ -7,10 +7,11 @@
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",
     "framework7": "v1.6.4",
-    "chosen": "v1.7.0"
-   
+    "chosen": "v1.7.0",
+    "chosen-bootstrap": "1.1.0"
   },
   "resolutions": {
-    "bootstrap": "v4.0.0-alpha.6"
+    "bootstrap": "v4.0.0-alpha.6",
+    "chosen": "v1.7.0"
   }
 }

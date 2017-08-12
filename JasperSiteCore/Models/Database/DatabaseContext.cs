@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using JasperSiteCore.Areas.Admin.ViewModels;
 
 namespace JasperSiteCore.Models.Database
 {
@@ -21,5 +22,7 @@ namespace JasperSiteCore.Models.Database
             modelBuilder.Entity<Article>().ToTable("Articles");
             modelBuilder.Entity<Category>().ToTable("Categories");
         }
+
+        public DbSet<JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel> EditArticleViewModel { get; set; }
     }
 }

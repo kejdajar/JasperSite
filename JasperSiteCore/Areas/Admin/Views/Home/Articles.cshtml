@@ -6,6 +6,7 @@
  
 <script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
 
+<script src="~/Areas/Admin/Content/Scripts/EditArticle.js"></script>
     <script>
     
 
@@ -14,12 +15,10 @@
            $("#tb1").datepicker();
            $("table tr").click(function () { 
 
-               var okno = $(`<div title="Window Title">
-                             @DateTime.Now
-                            </div>
-                           `);
+               
 
-               $(okno).dialog();
+               //$("#popup").dialog();
+
              });
 
        });
@@ -58,6 +57,9 @@
 </table>
 <input type="text" id="tb1" />
 <div id="popup">
-
+    @*TODO: Předělat na view componentu *@
+    @Html.Partial("_EditArticlePartial")   
+    
+   
 </div>
 

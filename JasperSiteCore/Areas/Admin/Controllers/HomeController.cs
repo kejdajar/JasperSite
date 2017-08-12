@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JasperSiteCore.Models.Database;
+using JasperSiteCore.Areas.Admin.ViewModels;
 
 
 namespace JasperSiteCore.Areas.Admin.Controllers
@@ -23,6 +25,21 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public ActionResult Articles()
         {
             return View();
+        }
+
+        public IActionResult EditArticle(int id)
+        {
+            return Content("test");
+        //    Article articleToEdit = DbHelper.GetArticleById(id);
+        //    EditArticleViewModel model = new EditArticleViewModel()
+        //    {
+        //        Id = articleToEdit.Id,
+        //        Name = articleToEdit.Name,
+        //        PublishDate = articleToEdit.PublishDate,
+        //        HtmlContent = articleToEdit.HtmlContent
+
+        //    };
+        //    return PartialView("_EditArticlePartial",model);
         }
     }
 }
