@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar2.css" />
         @*<link href="~/lib/chosen/chosen.css" rel="stylesheet" />*@
         <link href="~/lib/chosen-bootstrap/chosen.bootstrap.css" rel="stylesheet" />
-            
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />    
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -71,7 +71,8 @@
     @Html.Raw(JavaScriptSnippet.FullScript)
 
     <!-- Font -->
-    <link href='http://fonts.googleapis.com/css?family=Lora&subset=latin,latin-ext' rel='stylesheet' type='text/css' />
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
 
     <!-- Přepínání menu -->
     <script>
@@ -124,7 +125,7 @@
         <!-- /#sidebar-wrapper -->
         <!--Header-->
         <header>
-            <div id="headerPanel" style="width:100%;position:fixed;top:0px;z-index:5000">
+            <div id="headerPanel">
                 <div class="mainToggleButton">
                     <a href="#menu-toggle" id="menu-toggle">
                         <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
@@ -132,7 +133,7 @@
                 </div>
                 <div class="headerLine">
                     <div class="mainTitle">
-                        <h1>J<span class="aspColor">asp</span>er Site <span class="coreColor">Core</span></h1>
+                        <span class="jasperHeading"> J<span class="aspColor">asp</span>er Site <span class="coreColor">Core</span></span>
                     </div>
                 </div>
             </div>

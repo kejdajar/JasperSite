@@ -12,7 +12,7 @@
 
         $(function () {
            
-           $("#selCategory").chosen({ width: "100%" });
+           $("#selCategory").chosen(/*{ width: "50%" }*/);
      
            $("table tr").click(function () { 
                var id=  $(this).data("href")
@@ -26,79 +26,67 @@
 }
 
 
-<div class="jumbotron">
-    <h1>Články</h1>
+<div class="banner1">
+    <div>  Články</div>
 </div>
  
 
+ <h2> <i class="fa fa-info-circle main-color-icon" aria-hidden="true"></i> Přehled</h2>  
+<hr />
+
+  <h2><i class="fa fa-pencil  main-color-icon" aria-hidden="true"></i>  Nový článek</h2>
+<hr />
 
 
-<div id="accordion" role="tablist" aria-multiselectable="true">
-    <div class="card">
-        <div class="card-header" role="tab" id="headingOne">
-            <h5 class="mb-0">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                 Přehled
-                </a>
-            </h5>
-        </div>
 
-        <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-            <div class="card-block">
-             text ...
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" role="tab" id="headingTwo">
-            <h5 class="mb-0">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                 Nový článek
-                </a>
-            </h5>
-        </div>
-        <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-            <div class="card-block">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-            </div>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header" role="tab" id="headingThree">
-            <h5 class="mb-0">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                 Seznam článků
-                </a>
-            </h5>
-        </div>
-        <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-            <div class="card-block">
-                <h2>Seznam článků</h2>
+<h2 id="articles"> <i class="fa fa-table main-color-icon" aria-hidden="true"></i>  Seznam článků</h2>
+
+<div class="jasper-filter-panel">
+    <div class="form-inline form-margins">
+
+        <div class="input-group">
+            <label class="label-margins jasper-label">Kategorie </label>
+            <div style="width:200px">
                 <select id="selCategory">
                     @foreach (Category c in DbHelper.GetAllCategories())
-                    {
+            {
 
                         <option value="@c.Id">@c.Name</option>
                     }
 
                 </select>
-                    <table class="table table-bordered table-striped table-hover jasper-table">
-                        <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
-                        @foreach (Article a in DbHelper.GetAllArticles())
-                        {
-                            <tr data-href="@a.Id">
-                                <td>@a.Id</td>
-                                <td>@a.PublishDate</td>
-                                <td>@a.Name</td>
-                                <td>@Html.Raw(a.HtmlContent)</td>
-
-                            </tr>
-                        }
-                    </table>
-
-
-</div>
+            </div>
         </div>
-    </div>
+
+        <div class="input-group">
+
+            <label class="label-margins jasper-label">Počet </label>
+
+            <select id="selCategory" class="custom-select">
+                @for (int i = 1; i <= 10; i++)
+                {
+
+                    <option value="@i">@i</option>
+                }
+
+            </select>
+        </div>
+
+ </div>
+
 </div>
 
+
+    <table class="table table-bordered jasper-table">
+        <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
+        @foreach (Article a in DbHelper.GetAllArticles())
+        {
+            <tr data-href="@a.Id">
+                <td>@a.Id</td>
+                <td>@a.PublishDate</td>
+                <td>@a.Name</td>
+                <td>@Html.Raw(a.HtmlContent)</td>
+
+            </tr>
+        }
+    </table>

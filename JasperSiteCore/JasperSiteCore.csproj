@@ -44,8 +44,6 @@
     </Content>
     <Content Include="Themes\Jasper\Scripts\script.js" />
     <Content Include="Themes\Jasper\Styles\style.css" />
-    <Content Include="wwwroot\customThemes\bootstrap-chosen-master.zip" />
-    <Content Include="wwwroot\customThemes\chosen-custom.css" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BuildBundlerMinifier" Version="2.4.337" />
