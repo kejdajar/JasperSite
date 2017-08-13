@@ -38,17 +38,52 @@
 .jasper-label {
     font-weight:bold;
 }
-.jasper-filter-panel 
+
+/* --------------------Filter panel-----------------*/
+.j-filter-panel 
 {
    border:1px solid rgb(236,238,239);
    margin-top:10px;
    margin-bottom:10px;
+   display:flex;
+   flex-wrap:wrap;
 }
 
-.label-margins {
-    margin-right: 10px;
-    margin-left:10px;
+/* direct divs are group containers 
+    for label + input */
+.j-filter-panel > div.j-filter-container 
+{
+    display:flex;   
+    margin-bottom:5px;
+    margin-top:5px;
 }
+   
+
+.j-filter-panel > div.j-filter-container div.j-label-container
+{
+    display: block;
+    display: flex;  
+}
+
+.j-filter-panel > div.j-filter-container > div.j-label-container > div.j-label-container-inner
+{
+    margin:auto;
+}
+
+ .j-filter-panel > div.j-filter-container > div.j-input-container 
+ {
+     margin: auto;       
+ }
+/* --------------------END Filter panel-----------------*/  
+
+
+
+
+    
+    .label-margins {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
 
 .form-margins {
     margin-top:10px;
@@ -132,11 +167,12 @@ footer div img {
     
     .jasper-table tr:not(:first-child):nth-child(even) td
     {
-        background-color:#fedddd;
+        background-color:#f8e9e9;
     }
-    .jasper-table tr:not(:first-child):hover td {
-        background-color: #eb9e9e;
-    }
+.jasper-table tr:not(:first-child):hover td {
+    transition: background-color 0.5s ease;
+    background-color: #eb9e9e;
+}
 
 .jasper-table {
     font-size:1.1em;
@@ -145,6 +181,9 @@ footer div img {
     background-color: lightgoldenrodyellow;
 }
 
+hr {
+    background-color: #ffe0e0;
+}
 
 /* Custom graphics */
 .banner1 {
@@ -164,4 +203,54 @@ footer div img {
 
     .banner1 div {
         font-family: 'Dancing Script', cursive;
+    }
+
+    /* Custom button */
+.btn-jasper {
+    color: #ffffff;
+    font-weight:bold;
+    background-color: #E57373;
+    border-color: #FFFFFF;
+}
+
+    .btn-jasper:hover,
+    .btn-jasper:focus,
+    .btn-jasper:active,
+    .btn-jasper.active,
+    .open .dropdown-toggle.btn-jasper {
+        color: #ffffff;
+        background-color: #EF9A9A;
+        border-color: #FFFFFF;       
+        -webkit-box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
+        box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
+    }
+
+    .btn-jasper:active,
+    .btn-jasper.active,
+    .open .dropdown-toggle.btn-jasper {
+        background-image: none;
+    }
+
+    .btn-jasper.disabled,
+    .btn-jasper[disabled],
+    fieldset[disabled] .btn-jasper,
+    .btn-jasper.disabled:hover,
+    .btn-jasper[disabled]:hover,
+    fieldset[disabled] .btn-jasper:hover,
+    .btn-jasper.disabled:focus,
+    .btn-jasper[disabled]:focus,
+    fieldset[disabled] .btn-jasper:focus,
+    .btn-jasper.disabled:active,
+    .btn-jasper[disabled]:active,
+    fieldset[disabled] .btn-jasper:active,
+    .btn-jasper.disabled.active,
+    .btn-jasper[disabled].active,
+    fieldset[disabled] .btn-jasper.active {
+        background-color: #E57373;
+        border-color: #FFFFFF;
+    }
+
+    .btn-jasper .badge {
+        color: #E57373;
+        background-color: #ffffff;
     }

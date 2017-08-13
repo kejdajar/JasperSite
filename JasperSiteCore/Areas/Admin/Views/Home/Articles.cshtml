@@ -31,7 +31,20 @@
 </div>
  
 
- <h2> <i class="fa fa-info-circle main-color-icon" aria-hidden="true"></i> Přehled</h2>  
+
+
+ <h2><i class="fa fa-pencil  main-color-icon" aria-hidden="true"></i>  Nový článek</h2>
+   <a href="/" class="btn btn-jasper" style="width:200px">Vyvořit</a> 
+
+
+
+
+ 
+  
+    <hr />
+
+
+<h2> <i class="fa fa-info-circle main-color-icon" aria-hidden="true"></i> Přehled</h2>
 
 <div class="table-responsive">
     <table class="table table-bordered">
@@ -40,102 +53,50 @@
             <td>@DbHelper.GetNumberOfEntities("Articles")</td>
         </tr>
         <tr>
-            <td>Celkový počet článků</td>
-            <td>@DbHelper.GetNumberOfEntities("Articles")</td>
+            <td>Celkový počet kategorií</td>
+            <td>?</td>
         </tr>
-        <tr>
-            <td>Celkový počet článků</td>
-            <td>@DbHelper.GetNumberOfEntities("Articles")</td>
-        </tr>
+
     </table>
-    </div>
-    <hr />
-
-    <h2><i class="fa fa-pencil  main-color-icon" aria-hidden="true"></i>  Nový článek</h2>
-    <hr />
-
-
-
-    @*<h2 id="articles"> <i class="fa fa-table main-color-icon" aria-hidden="true"></i>  Seznam článků</h2>
-
-    <div class="jasper-filter-panel">
-        <div class="form-inline form-margins">
-
-            <div class="input-group">
-                <label class="label-margins jasper-label">Kategorie </label>
-                <div style="width:200px">
-                    <select id="selCategory">
-                        @foreach (Category c in DbHelper.GetAllCategories())
-            {
-
-                            <option value="@c.Id">@c.Name</option>
-                        }
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="input-group">
-
-                <label class="label-margins jasper-label">Počet </label>
-
-                <select id="selCategory" class="custom-select">
-                    @for (int i = 1; i <= 10; i++)
-                    {
-
-                        <option value="@i">@i</option>
-                    }
-
-                </select>
-            </div>
-
-        </div>
-
-    </div>*@
-
-
-
+</div>
+<hr />
 
 <h2 id="articles"> <i class="fa fa-table main-color-icon" aria-hidden="true"></i>  Seznam článků</h2>
 
-<div class="jasper-filter-panel" style="display:flex;flex-wrap:wrap">
-    
+<div class="j-filter-panel">
 
-    <div  style="background-color:orangered;display:flex;">
-        
-        <div style="width:80px;display:block;display:flex;background-color:hotpink"><div style="margin:auto">Kategorie</div> </div>
-       
-        <div style="margin:auto;min-width:150px">
+    <div class="j-filter-container">
+
+        <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Kategorie</div></div>
+
+        <div class="j-input-container" style="width:140px">
             <select id="selCategory">
                 @foreach (Category c in DbHelper.GetAllCategories())
                 {
-
                     <option value="@c.Id">@c.Name</option>
                 }
-
             </select>
         </div>
+    </div>
+
+    <div class="j-filter-container">
+
+    <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Počet</div></div>
+
+    <div class="j-input-container" >
+
+        <select id="selCategory" class="custom-select" style="width:140px">
+            @for (int i = 1; i <= 10; i++)
+            {
+
+                <option value="@i">@i</option>
+            }
+
+        </select>
 
     </div>
 
-
-
-        <div  style="background-color:pink;display:flex">
-
-            <div style="width:80px;display:block;display:flex;background-color:hotpink"><div style="margin:auto">Počet</div> </div>
-
-          
-                <select id="selCategory" class="custom-select" style="min-width:150px">
-                    @for (int i = 1; i <= 10; i++)
-                    {
-
-                        <option value="@i">@i</option>
-                    }
-
-                </select>
-           
-
-   </div>
+</div>
 
 </div>
 
@@ -177,3 +138,5 @@
             }
         </table>
     </div>
+
+
