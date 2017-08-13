@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace JasperSiteCore.Models.Database
@@ -46,6 +47,21 @@ namespace JasperSiteCore.Models.Database
             else
             {
                 return null;
+            }
+        }
+
+        public static int GetNumberOfEntities(string nameOfContextProperty)
+        {
+            DatabaseContext database = DbInitializer.Database;
+            if (database.Categories.Any())
+            {
+                object i = database.GetType().GetProperty(nameOfContextProperty).GetValue(database);
+                IEnumerable<Article> a = i as IEnumerable<Article>;
+                return a.Count();
+            }
+            else
+            {
+                return 0;
             }
         }
     }

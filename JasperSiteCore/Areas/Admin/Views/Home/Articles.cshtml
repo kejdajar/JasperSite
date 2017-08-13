@@ -14,7 +14,7 @@
            
            $("#selCategory").chosen(/*{ width: "50%" }*/);
      
-           $("table tr").click(function () { 
+           $("#articleTable tr").click(function () { 
                var id=  $(this).data("href")
                window.location = "/Admin/Article/Index?id="+id ;
 
@@ -32,61 +32,148 @@
  
 
  <h2> <i class="fa fa-info-circle main-color-icon" aria-hidden="true"></i> Přehled</h2>  
-<hr />
 
-  <h2><i class="fa fa-pencil  main-color-icon" aria-hidden="true"></i>  Nový článek</h2>
-<hr />
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr>
+            <td>Celkový počet článků</td>
+            <td>@DbHelper.GetNumberOfEntities("Articles")</td>
+        </tr>
+        <tr>
+            <td>Celkový počet článků</td>
+            <td>@DbHelper.GetNumberOfEntities("Articles")</td>
+        </tr>
+        <tr>
+            <td>Celkový počet článků</td>
+            <td>@DbHelper.GetNumberOfEntities("Articles")</td>
+        </tr>
+    </table>
+    </div>
+    <hr />
+
+    <h2><i class="fa fa-pencil  main-color-icon" aria-hidden="true"></i>  Nový článek</h2>
+    <hr />
+
+
+
+    @*<h2 id="articles"> <i class="fa fa-table main-color-icon" aria-hidden="true"></i>  Seznam článků</h2>
+
+    <div class="jasper-filter-panel">
+        <div class="form-inline form-margins">
+
+            <div class="input-group">
+                <label class="label-margins jasper-label">Kategorie </label>
+                <div style="width:200px">
+                    <select id="selCategory">
+                        @foreach (Category c in DbHelper.GetAllCategories())
+            {
+
+                            <option value="@c.Id">@c.Name</option>
+                        }
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group">
+
+                <label class="label-margins jasper-label">Počet </label>
+
+                <select id="selCategory" class="custom-select">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+
+                        <option value="@i">@i</option>
+                    }
+
+                </select>
+            </div>
+
+        </div>
+
+    </div>*@
+
 
 
 
 <h2 id="articles"> <i class="fa fa-table main-color-icon" aria-hidden="true"></i>  Seznam článků</h2>
 
-<div class="jasper-filter-panel">
-    <div class="form-inline form-margins">
+<div class="jasper-filter-panel" style="display:flex;flex-wrap:wrap">
+    
 
-        <div class="input-group">
-            <label class="label-margins jasper-label">Kategorie </label>
-            <div style="width:200px">
-                <select id="selCategory">
-                    @foreach (Category c in DbHelper.GetAllCategories())
-            {
-
-                        <option value="@c.Id">@c.Name</option>
-                    }
-
-                </select>
-            </div>
-        </div>
-
-        <div class="input-group">
-
-            <label class="label-margins jasper-label">Počet </label>
-
-            <select id="selCategory" class="custom-select">
-                @for (int i = 1; i <= 10; i++)
+    <div  style="background-color:orangered;display:flex;">
+        
+        <div style="width:80px;display:block;display:flex;background-color:hotpink"><div style="margin:auto">Kategorie</div> </div>
+       
+        <div style="margin:auto;min-width:150px">
+            <select id="selCategory">
+                @foreach (Category c in DbHelper.GetAllCategories())
                 {
 
-                    <option value="@i">@i</option>
+                    <option value="@c.Id">@c.Name</option>
                 }
 
             </select>
         </div>
 
- </div>
+    </div>
+
+
+
+        <div  style="background-color:pink;display:flex">
+
+            <div style="width:80px;display:block;display:flex;background-color:hotpink"><div style="margin:auto">Počet</div> </div>
+
+          
+                <select id="selCategory" class="custom-select" style="min-width:150px">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+
+                        <option value="@i">@i</option>
+                    }
+
+                </select>
+           
+
+   </div>
 
 </div>
 
 
-    <table class="table table-bordered jasper-table">
-        <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
-        @foreach (Article a in DbHelper.GetAllArticles())
-        {
-            <tr data-href="@a.Id">
-                <td>@a.Id</td>
-                <td>@a.PublishDate</td>
-                <td>@a.Name</td>
-                <td>@Html.Raw(a.HtmlContent)</td>
 
-            </tr>
-        }
-    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="table-responsive">
+        <table class="table table-bordered jasper-table" id="articleTable">
+            <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
+            @foreach (Article a in DbHelper.GetAllArticles())
+            {
+                <tr data-href="@a.Id">
+                    <td>@a.Id</td>
+                    <td>@a.PublishDate</td>
+                    <td>@a.Name</td>
+                    <td>@Html.Raw(a.HtmlContent)</td>
+
+                </tr>
+            }
+        </table>
+    </div>
