@@ -51,23 +51,12 @@
         <script src="~/lib/chosen/chosen.jquery.js"></script>
         <!-- TODO: Nalinkovat minifikaci -->
         @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
-    
-    
+        
        
     </environment>
 
     @RenderSection("Scripts", required: false)
     @RenderSection("Styles", required: false)
-
-
-
-
-
-
-
-
-
-
     @Html.Raw(JavaScriptSnippet.FullScript)
 
     <!-- Font -->
@@ -79,7 +68,9 @@
         $(document).ready(function () {
             $("#menu-toggle").click(function (e) {
                 e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
+                $("#wrapper").toggleClass("toggled");               
+              
+
             });
         });
     </script>
@@ -87,47 +78,51 @@
 
 <body>
     
-    <div id="wrapper">
+<div id="wrapper">
 
-        <!-- Sidebar -->
-        <nav>
-            <div id="sidebar-wrapper">
-                <ul class="sidebar-nav">
-                    <li class="sidebar-brand">
-                        <a href="@Url.Action("Index","Home")">
-                            Přehled
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Categories","Home")">Rubriky</a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Articles","Home")">Články</a>
-                    </li>
-                    <li>
-                        <a href="#">Vzhled</a>
-                    </li>
-                    <li>
-                        <a href="#">Uživatel</a>
-                    </li>
-                    <li>
-                        <a href="#">Nastavení</a>
-                    </li>
-                    <li>
-                        <a href="#">Services</a>
-                    </li>
-                    <li>
-                        <a href="#">Nápověda</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-        <!-- /#sidebar-wrapper -->
-        <!--Header-->
-        <header>
-            <div id="headerPanel">
-               
-                <div class="j-flex-row"></div>
+    <!-- Sidebar -->
+    <nav>
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="@Url.Action("Index","Home")">
+                        Přehled
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Categories","Home")">Rubriky</a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Articles","Home")">Články</a>
+                </li>
+                <li>
+                    <a href="#">Vzhled</a>
+                </li>
+                <li>
+                    <a href="#">Uživatel</a>
+                </li>
+                <li>
+                    <a href="#">Nastavení</a>
+                </li>
+                <li>
+                    <a href="#">Services</a>
+                </li>
+                <li>
+                    <a href="#">Nápověda</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- /#sidebar-wrapper -->
+       
+        
+        
+        
+    <!-----------------------Header Panel---------------->
+    <header>
+        <div id="headerPanel">
+
+            <div class="j-flex-row">
                 <div class="mainToggleButton">
                     <a href="#menu-toggle" id="menu-toggle">
                         <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
@@ -135,42 +130,95 @@
                 </div>
                 <div class="headerLine">
                     <div class="mainTitle">
-                        <span class="jasperHeading"> J<span class="aspColor">asp</span>er Site <span class="coreColor">Core</span></span>
+                       <span class="jasperHeading"> J<span class="aspColor">asp</span>er Site <span class="coreColor">Core</span></span>
                     </div>
-                   
-                </div>
-
-
-                <div class="j-flex-row" style="background-color:red"> 
-                    <noscript><div style="color:white"><b>Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</b></div></noscript>
-                </div>
-
-                <div class="j-flex-row" style="background-color:#ffacac">
-                   <div style="color:white;display:flex"><div style="margin:auto"><b>Články / Článek </b></div></div>
-                    <a href="/" class="btn btn-jasper" style="margin-left:auto;padding:2px;margin-top:3px;margin-bottom:3px;margin-right:3px" >Zobrazit web</a>
                 </div>
             </div>
-        </header>
 
-        <!-- Page Content -->
-        <main >
-            <div id="page-content-wrapper">
+           
+                <div class="j-flex-row" style="background-color:red" >
+                    <noscript>  Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</noscript>
+                </div> 
 
-                <div class="container-fluid" style="margin-top:60px">
-                    <div class="row">
-                      
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 ">
-                          
-                            @RenderBody()
 
+                <div class="j-flex-row j-secondary-header desktop" >
+                  
+                    
+                  
+
+
+
+
+
+
+                    <div class="j-header-group">
+                        <div class="j-header-group-item">
+                            <button class="btn btn-jasper btn-jasper-icon">   <i class="fa fa-globe fa-2x" aria-hidden="true"></i> </button>
                         </div>
-                       
                     </div>
+                      
+
+                        <div class="j-header-group">
+                            <div class="j-header-group-item  ">
+                                
+                                <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-2x" aria-hidden="true"></i></button> 
+                                <input type="text" class="jasper-textbox" placeholder="Hledat" />
+                            </div>
+                        </div>
+
+                        
+
+
+                    <div class="j-header-group">
+
+                        <div class="j-header-group-item  "><b>Články / Článek </b></div>
+
+                    </div>
+
+
+
+                    </div>
+            <div class="j-flex-row j-secondary-header mobile">
+
+                <div class="j-header-group">
+                    
+                    <div class="j-header-group-item">
+                        <button class="btn btn-jasper btn-jasper-icon">   <i class="fa fa-home fa-2x" aria-hidden="true"></i> </button>
+                    </div>
+
+                    <div class="j-header-group-item">
+                        <button class="btn btn-jasper btn-jasper-icon" >   <i class="fa fa-globe fa-2x" aria-hidden="true"></i> </button>
+                    </div>
+
+                    <div class="j-header-group-item">
+                        <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-2x" aria-hidden="true"></i></button>   
+                    </div>
+                    
+                    
+
+                </div>
                 </div>
             </div>
-        </main>
-        <!-- /#page-content-wrapper -->
-    </div>
+    </header>
+    <!-----------------------END Header Panel---------------->
+
+
+    <!----------------Page Content--------------------------->
+    <main >
+        <div id="page-content-wrapper">
+            <div class="container-fluid j-margin-top">
+                <div class="row">  
+                        <!--Content will not take all space when LG-->
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 ">                          
+                        @RenderBody()
+                    </div>                       
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-------------------END Page Content----------------->
+   
+</div>
 
    
 </body>

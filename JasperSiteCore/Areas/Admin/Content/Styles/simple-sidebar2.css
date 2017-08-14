@@ -46,7 +46,7 @@
 #page-content-wrapper {
     width: 100%;
     position: absolute;
-    padding: 15px;
+    padding: 15px; 
 }
 
 #wrapper.toggled #page-content-wrapper {
