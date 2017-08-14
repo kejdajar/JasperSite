@@ -14,8 +14,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index(int id)
         {
-            return View(id);          
-
+            return View(id);   
         }
 
         [HttpPost]

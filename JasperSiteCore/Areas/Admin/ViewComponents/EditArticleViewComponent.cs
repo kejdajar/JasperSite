@@ -13,6 +13,7 @@ namespace JasperSiteCore.Areas.Admin.ViewComponents
     {
         private readonly DatabaseContext _db;
 
+        // Dependency injection
         public EditArticleViewComponent(DatabaseContext db)
         {
             _db = db;

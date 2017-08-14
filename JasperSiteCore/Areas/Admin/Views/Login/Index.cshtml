@@ -13,7 +13,7 @@ Layout = null;
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
-       
+
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -21,7 +21,7 @@ Layout = null;
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <!-- TODO: Nalinkovat minifikaci -->
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" asp-append-version="true" />
-     
+
     </environment>
 
     @************************************************************** Scripts ****************************************************************************@
@@ -51,10 +51,15 @@ Layout = null;
 
     @Html.Raw(JavaScriptSnippet.FullScript)
 
-    <link href="~/Areas/Admin/Content/design.css" rel="stylesheet" />
-    <link href='http://fonts.googleapis.com/css?family=Lora&subset=latin,latin-ext' rel='stylesheet' type='text/css' />
+
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+
     <style>
         /* Login section */
+        body {
+            margin-top: 80px;
+        }
+
         #loginBox {
             max-width: 600px;
             margin: 0px auto;
@@ -72,12 +77,11 @@ Layout = null;
                     flex: 1;
                 }
 
-
-
                 #loginBox div.login-row div:first-child {
                     width: 100px;
                 }
     </style>
+
 </head>
 <body>
 
@@ -85,11 +89,10 @@ Layout = null;
         <div style="flex:1;display:flex">
             <div style="margin:auto;flex-shrink: 0;">
 
-                <h1 style="margin:0px;padding:0px;">J<span class="aspColor">asp</span>er site <span class="coreColor">Core</span></h1>
+                <h1 style="margin:0px;padding:0px;">J<span class="j-gray-color">asp</span>er site <span class="j-gray-color">Core</span></h1>
             </div>
         </div>
     </div>
-
 
     <div>
 
@@ -104,7 +107,7 @@ Layout = null;
                 <input type="password" placeholder="Zadejte heslo" class="form-control" />
             </div>
             <div class="login-row">
-                <input type="submit" value="Přihlásit se" class="btn btn-primary" />
+                <input type="submit" value="Přihlásit se" class="btn btn-jasper" />
             </div>
         </div>
 

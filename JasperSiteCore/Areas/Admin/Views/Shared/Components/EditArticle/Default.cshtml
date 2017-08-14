@@ -16,7 +16,7 @@
         <div class="form-group">
             <label asp-for="HtmlContent" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <textarea asp-for="HtmlContent" class="form-control" > </textarea>
+                <textarea asp-for="HtmlContent" class="form-control" rows="10" > </textarea>
                 <span asp-validation-for="HtmlContent" class="text-danger"></span>
             </div>
         </div>
@@ -31,11 +31,7 @@
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Uložit" class="btn btn-jasper" />
                 <a href="/Admin/Home/Articles#articles" class=" btn btn-secondary">Zpět</a>
-
             </div>
-
-
-
         </div>
     </div>
 </form>
