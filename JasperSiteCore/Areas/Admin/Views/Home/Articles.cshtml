@@ -1,25 +1,19 @@
 ﻿@using JasperSiteCore.Models.Database
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+
+
 @section Scripts {
- 
-
-
-
-    <script>
-    
+    <script>   
 
         $(function () {
            
-           $("#selCategory").chosen(/*{ width: "50%" }*/);
-     
+           $("#selCategory").chosen(/*{ width: "100%" }*/);
+
+           $("#articleTable").addClass("j-table-clickable");
            $("#articleTable tr").click(function () { 
                var id=  $(this).data("href")
                window.location = "/Admin/Article/Index?id="+id ;
 
              });
-
        });
 
     </script>
@@ -27,24 +21,15 @@
 
 
 <div class="banner1">
-    <div>  Články</div>
+    <div>Články</div>
 </div>
- 
 
+ <h2><i class="fa fa-pencil  j-icon" aria-hidden="true"></i>  Nový článek</h2>
+ <a href="/" class="btn btn-jasper" style="width:200px">Vyvořit</a> 
 
+<hr />
 
- <h2><i class="fa fa-pencil  main-color-icon" aria-hidden="true"></i>  Nový článek</h2>
-   <a href="/" class="btn btn-jasper" style="width:200px">Vyvořit</a> 
-
-
-
-
- 
-  
-    <hr />
-
-
-<h2> <i class="fa fa-info-circle main-color-icon" aria-hidden="true"></i> Přehled</h2>
+<h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Přehled</h2>
 
 <div class="table-responsive">
     <table class="table table-bordered">
@@ -61,14 +46,12 @@
 </div>
 <hr />
 
-<h2 id="articles"> <i class="fa fa-table main-color-icon" aria-hidden="true"></i>  Seznam článků</h2>
+<h2 id="articles"> <i class="fa fa-table j-icon" aria-hidden="true"></i>  Seznam článků</h2>
 
 <div class="j-filter-panel">
-
+   
     <div class="j-filter-container">
-
         <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Kategorie</div></div>
-
         <div class="j-input-container" style="width:140px">
             <select id="selCategory">
                 @foreach (Category c in DbHelper.GetAllCategories())
@@ -80,63 +63,34 @@
     </div>
 
     <div class="j-filter-container">
-
-    <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Počet</div></div>
-
-    <div class="j-input-container" >
-
-        <select id="selCategory" class="custom-select" style="width:140px">
-            @for (int i = 1; i <= 10; i++)
-            {
-
-                <option value="@i">@i</option>
-            }
-
-        </select>
-
+        <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Počet</div></div>
+        <div class="j-input-container">
+            <select id="selCategory" class="custom-select" style="width:140px">
+                @for (int i = 1; i <= 10; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
     </div>
 
 </div>
 
+
+<div class="table-responsive">
+    <table class="table table-bordered j-table j-table-text-center" id="articleTable">
+        <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th><th>Akce</th></tr>
+        @foreach (Article a in DbHelper.GetAllArticles())
+        {
+            <tr data-href="@a.Id">
+                <td>@a.Id</td>
+                <td>@a.PublishDate</td>
+                <td>@a.Name</td>
+                <td>@Html.Raw(a.HtmlContent)</td>
+                <td><a href="/Admin/Article/Index?id=@a.Id" class="btn btn-jasper">Upravit</a></td>
+            </tr>
+        }
+    </table>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class="table-responsive">
-        <table class="table table-bordered jasper-table" id="articleTable">
-            <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th></tr>
-            @foreach (Article a in DbHelper.GetAllArticles())
-            {
-                <tr data-href="@a.Id">
-                    <td>@a.Id</td>
-                    <td>@a.PublishDate</td>
-                    <td>@a.Name</td>
-                    <td>@Html.Raw(a.HtmlContent)</td>
-
-                </tr>
-            }
-        </table>
-    </div>
 
 

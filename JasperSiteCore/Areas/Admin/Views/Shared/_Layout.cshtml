@@ -1,7 +1,7 @@
 ﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
 <!DOCTYPE html>
 <html>
-<head>
+<head>   
     <link rel="shortcut icon" href="~/Areas/Admin/Content/Images/favicon.ico" type="image/x-icon">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -126,6 +126,8 @@
         <!--Header-->
         <header>
             <div id="headerPanel">
+               
+                <div class="j-flex-row"></div>
                 <div class="mainToggleButton">
                     <a href="#menu-toggle" id="menu-toggle">
                         <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
@@ -135,6 +137,17 @@
                     <div class="mainTitle">
                         <span class="jasperHeading"> J<span class="aspColor">asp</span>er Site <span class="coreColor">Core</span></span>
                     </div>
+                   
+                </div>
+
+
+                <div class="j-flex-row" style="background-color:red"> 
+                    <noscript><div style="color:white"><b>Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</b></div></noscript>
+                </div>
+
+                <div class="j-flex-row" style="background-color:#ffacac">
+                   <div style="color:white;display:flex"><div style="margin:auto"><b>Články / Článek </b></div></div>
+                    <a href="/" class="btn btn-jasper" style="margin-left:auto;padding:2px;margin-top:3px;margin-bottom:3px;margin-right:3px" >Zobrazit web</a>
                 </div>
             </div>
         </header>
@@ -147,7 +160,7 @@
                     <div class="row">
                       
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 ">
-
+                          
                             @RenderBody()
 
                         </div>
