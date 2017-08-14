@@ -21,40 +21,36 @@ namespace JasperSiteCore.Helpers
         /// <param name="url">Theme-relative Url</param>
         /// <returns></returns>
         public static string JasperUrl(string url, bool addTilde = false)
-        {  
+        {
             // without slash on the beginning it would work only on pages without route parameters
             // urls has to look like: /Themes/Jasper/Styles/style.css
             // without the slash it would create the following: localhost/Home/Category/Themes/Jasper/Styles/style.css = undesirable
             string path = "/" + CustomRouting.RelativeThemePathToRootRelativePath(url);
 
-            if(addTilde)
+            if (addTilde)
             {
                 path = "~" + path;
             }
-
             return path;
         }
-        
-      
-       
     }
 
-    /* *************Tag helpers***************** */
+    /*--------------------Tag helpers---------------------------*/
 
-#region ArticleTagHelper
+    #region ArticleTagHelper
     [HtmlTargetElement("j-article")]
     //[RestrictChildren("j-name", "j-content")]
     public class JArticleTagHelper : TagHelper
     {
         public int Id { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
-        {   
-                     
+        {
+
             output.TagName = "div";
             Article a = DbHelper.GetArticleById(Id);
-            DataTransfer dataPackage = new DataTransfer() { ArticleId = Id, Article=a };
-           
-            context.Items.Add(typeof(JArticleTagHelper), dataPackage);            
+            DataTransfer dataPackage = new DataTransfer() { ArticleId = Id, Article = a };
+
+            context.Items.Add(typeof(JArticleTagHelper), dataPackage);
         }
     }
 
@@ -86,5 +82,5 @@ namespace JasperSiteCore.Helpers
         public int ArticleId { get; set; }
         public Article Article { get; set; }
     }
-#endregion
+    #endregion
 }

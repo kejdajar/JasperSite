@@ -6,27 +6,31 @@ body {
     font-family: 'Alegreya Sans', sans-serif;
 }
 
+/* margin-top -> content is not hidden under header panel */
+.j-margin-top {
+    margin-top: 105px;
+}
+
 /* Icon color */
 .j-icon {
     color: #E57373;
     padding-right:10px;
 }
 
+/* General styles */
+.j-base-color {
+    color: #E57373;
+}
 
-.coreColor {
+.j-gray-color {
     color: #524e4e;
 }
 
-.aspColor {
-    color: #524e4e;
+hr {
+    background-color: #ffe0e0;
 }
 
-
-.jasper-label {
-    font-weight:bold;
-}
-
-/* --------------------Filter panel-----------------*/
+/*---------------------Filter panel-----------------*/
 .j-filter-panel 
 {
    border:1px solid rgb(236,238,239);
@@ -43,8 +47,7 @@ body {
     display:flex;   
     margin-bottom:5px;
     margin-top:5px;
-}
-   
+}   
 
 .j-filter-panel > div.j-filter-container div.j-label-container
 {
@@ -61,29 +64,14 @@ body {
  {
      margin: auto;       
  }
-/* --------------------END Filter panel-----------------*/  
+/*---------------------END Filter panel-----------------*/  
 
 
 
-
-    
-    .label-margins {
-        margin-right: 10px;
-        margin-left: 10px;
-    }
-
-.form-margins {
-    margin-top:10px;
-    margin-bottom:10px;
-}
-
-/* Header */
+/*---------------Header------------------------------*/
 #headerPanel {
-    background-color: #E57373;
-    
-    
+    background-color: #E57373; 
     display: flex;
-   
     color: white;
     width: 100%;
     position: fixed;
@@ -92,150 +80,84 @@ body {
     flex-wrap:wrap;
 }
 
+/* One row of the header */
 .j-flex-row {
     display:flex;
-   flex-basis:100%;
-   padding-left:5px;
-   padding-right:5px;
+    flex-basis:100%;
+    padding-left:5px;
+    padding-right:5px;
 }
 
+/* Menu button style */
 #headerPanel .mainToggleButton {
-    width:32px;
-    height:32px;
-    margin:auto;
-    
+    width: 32px;
+    height: 32px;
+    margin: auto;
 }
 
-    #headerPanel .mainToggleButton img{
-        width: 100%;
-        height: 100%;
-    }
+#headerPanel .mainToggleButton img {
+    width: 100%;
+    height: 100%;
+}
 
-    #headerPanel .headerLine {        
-       flex:1;
-        
-      
-    }
-    #headerPanel .headerLine .mainTitle {
-      margin-left:20px;
-      padding:0px;
-    }
+/* "Jasper Site Core" header text container */
+#headerPanel .headerLine {
+    flex: 1;
+}
 
-    .jasperHeading {
-        font-size:2em;
-        margin:0px;
-        padding:0px;
-    }
+#headerPanel .headerLine .mainTitle {
+     margin-left: 20px;
+     padding: 0px;
+}
 
+.jasperHeading {
+    font-size: 2em;  
+}
 
-/*End header */
+/*------------------------END header---------------------*/
 
 /* Vertical secondary header */
 .j-secondary-header {
-background-color:#ffacac;
-flex-wrap:wrap;
+    background-color: #ffacac;
+    flex-wrap: wrap;
 }
 
 .j-secondary-header .j-header-group {
-     color:black;
-    
-     display:flex;    
-     flex-wrap:wrap;
+    color: black;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-    .j-secondary-header .j-header-group-item {
-        margin:auto;
-    }
-
-    /* Spaces between groups */
-    .j-secondary-header .j-header-group {
-   
-    }
-
-
-
-    
-
-
-
-
-
-.font-jasper {
-    color: tomato;
+.j-secondary-header .j-header-group-item {
+    margin: auto;
 }
 
-
-
-/* Global styles */
-/*input[type=submit]:hover, .jasper-btn
-{
-     background-color: lightgray;
-}*/
-
- /*input[type=submit],.jasper-btn{  
-        background-color: tomato ;
-        color:white;
-        font-weight:bold;
-        
-}*/
-
-/*textarea:focus, input[type="text"]:focus, input[type="password"]:focus, input[type="datetime"]:focus, input[type="datetime-local"]:focus, input[type="date"]:focus, input[type="month"]:focus, input[type="time"]:focus, input[type="week"]:focus, input[type="number"]:focus, input[type="email"]:focus, input[type="url"]:focus, input[type="search"]:focus, input[type="tel"]:focus, input[type="color"]:focus, .uneditable- input:focus {
-    border-color: #a8efff;
-    -webkit-box-shadow: 0px 0px 3px 1px #a8efff;
-    -moz-box-shadow: 0px 0px 3px 1px #a8efff;
-    box-shadow: 0px 0px 3px 1px #a8efff;
-}*/
-
-
-
-/* Footer */
-.footer-divider{
-     background-color: white;      
-    border-bottom:1px solid silver;
-    margin-top:10px;
-    
-}
-
-.footer-container{
-    margin-top:10px;
-}
-
-footer div img {
-    padding: 10px;
-}
-
-
+/*----------Custom table--------------*/
 .j-table {
-    font-size:1.1em;
+    font-size: 1.0em;
 }
 
-table.j-table-text-center tr td,th{
-    text-align:center;
+table.j-table-text-center tr td, th {
+    text-align: center;
 }
 
-table.j-table-clickable tr:hover
-{
- cursor: pointer;
+table.j-table-clickable tr:hover {
+    cursor: pointer;
 }
 
-    
-.j-table tr:not(:first-child):nth-child(even) td
-{
-  background-color:#f8e9e9;
+
+.j-table tr:not(:first-child):nth-child(even) td {
+    background-color: #f8e9e9;
 }
 
 .j-table tr:not(:first-child):hover td {
     transition: background-color 0.5s ease;
     background-color: #eb9e9e;
 }
+/*----------END Custom table--------------*/
 
-#popup {
-    background-color: lightgoldenrodyellow;
-}
 
-hr {
-    background-color: #ffe0e0;
-}
+
 
 /* Custom graphics */
 .banner1 {
@@ -250,100 +172,85 @@ hr {
     border-radius: 10px;
     margin-bottom: 20px;
     padding-left: 40px;
-    
 }
 
-    .banner1 div {
-        font-family: 'Dancing Script', cursive;
-    }
+.banner1 div {
+    font-family: 'Dancing Script', cursive;
+}
 
-    /* Custom button */
-
+/*-----------Custom button----------*/
 
 .btn-jasper {
     color: #ffffff;
-    font-weight:bold;
+    font-weight: bold;
     background-color: #E57373;
     border-color: #FFFFFF;
 }
 
-
 .btn-jasper-icon {
-    margin:5px;
-    
+    margin: 5px;
 }
 
-
-    .btn-jasper:hover,
-    .btn-jasper:focus,
-    .btn-jasper:active,
-    .btn-jasper.active,
-    .open .dropdown-toggle.btn-jasper {
-        color: #ffffff;
-        background-color: #EF9A9A;
-        border-color: #FFFFFF;       
-        -webkit-box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
-        box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
-    }
-
-    .btn-jasper:active,
-    .btn-jasper.active,
-    .open .dropdown-toggle.btn-jasper {
-        background-image: none;
-    }
-
-    .btn-jasper.disabled,
-    .btn-jasper[disabled],
-    fieldset[disabled] .btn-jasper,
-    .btn-jasper.disabled:hover,
-    .btn-jasper[disabled]:hover,
-    fieldset[disabled] .btn-jasper:hover,
-    .btn-jasper.disabled:focus,
-    .btn-jasper[disabled]:focus,
-    fieldset[disabled] .btn-jasper:focus,
-    .btn-jasper.disabled:active,
-    .btn-jasper[disabled]:active,
-    fieldset[disabled] .btn-jasper:active,
-    .btn-jasper.disabled.active,
-    .btn-jasper[disabled].active,
-    fieldset[disabled] .btn-jasper.active {
-        background-color: #E57373;
-        border-color: #FFFFFF;
-    }
-
-    .btn-jasper .badge {
-        color: #E57373;
-        background-color: #ffffff;
-    }
-
-
-/* margin-top -> content is not hidden under header panel */
-.j-margin-top {
-    margin-top: 105px;
+.btn-jasper:hover,
+.btn-jasper:focus,
+.btn-jasper:active,
+.btn-jasper.active,
+.open .dropdown-toggle.btn-jasper {
+    color: #ffffff;
+    background-color: #EF9A9A;
+    border-color: #FFFFFF;
+    -webkit-box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
+    box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
 }
 
-
-
-
-/* Menu switching */
-.mobile {
-    display:none;
+.btn-jasper:active,
+.btn-jasper.active,
+.open .dropdown-toggle.btn-jasper {
+    background-image: none;
 }
 
-@media (max-width: 550px)
-{
+.btn-jasper.disabled,
+.btn-jasper[disabled],
+fieldset[disabled] .btn-jasper,
+.btn-jasper.disabled:hover,
+.btn-jasper[disabled]:hover,
+fieldset[disabled] .btn-jasper:hover,
+.btn-jasper.disabled:focus,
+.btn-jasper[disabled]:focus,
+fieldset[disabled] .btn-jasper:focus,
+.btn-jasper.disabled:active,
+.btn-jasper[disabled]:active,
+fieldset[disabled] .btn-jasper:active,
+.btn-jasper.disabled.active,
+.btn-jasper[disabled].active,
+fieldset[disabled] .btn-jasper.active {
+    background-color: #E57373;
+    border-color: #FFFFFF;
+}
+
+/*-----------END Custom button----------------------*/
+
+
+
+/*-----------Menu switching-------------------------*/
+.j-flex-row.j-secondary-header.mobile {
+    display: none;
+}
+
+@media (max-width: 550px) {
     .desktop {
-        display:none;
+        display: none;
     }
 
-    .mobile {
-        display:flex;
+    .j-flex-row.j-secondary-header.mobile {
+        display: flex;
     }
 
     .j-margin-top {
-        margin-top:105px;
+        margin-top: 105px;
     }
 }
+/*--------------END Menu switching------------------*/
 
 /* --------------Custom search bar------------------*/
 .jasper-textbox {
@@ -351,8 +258,8 @@ hr {
     border: 1px solid #ffe0e0;
     outline: none;
     color: black;
-    padding:10.8px;
-    margin-right:10px;
+    padding: 10.8px;
+    margin-right: 10px;
 }
 
     .jasper-textbox::-webkit-input-placeholder { /* Chrome/Opera/Safari */

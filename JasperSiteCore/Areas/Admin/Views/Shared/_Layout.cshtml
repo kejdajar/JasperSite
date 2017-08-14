@@ -7,31 +7,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
 
+    @*********************************************************************** Styles ****************************************************************************@
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/lib/tether/dist/css/tether.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar2.css" />
-        @*<link href="~/lib/chosen/chosen.css" rel="stylesheet" />*@
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+        @*<link href="~/lib/chosen/chosen.css" rel="stylesheet" />*@  <!--Classic Chosen CSS -->
         <link href="~/lib/chosen-bootstrap/chosen.bootstrap.css" rel="stylesheet" />
         <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />    
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <!-- TODO: Nalinkovat minifikaci -->
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar2.css" />
-        <link href="~/lib/chosen/chosen.css" rel="stylesheet" />
+        
+       <!--TODO: CDNs-->
+
     </environment>
 
-   @************************************************************** Scripts ****************************************************************************@
+   @*********************************************************************** Scripts ****************************************************************************@
     <environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/tether/dist/js/tether.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>     
         <script src="~/lib/chosen/chosen.jquery.js"></script>
     </environment>
     <environment names="Staging,Production">
@@ -48,9 +44,8 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
    
         </script>
-        <script src="~/lib/chosen/chosen.jquery.js"></script>
-        <!-- TODO: Nalinkovat minifikaci -->
-        @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
+        
+        <!-- TODO: CDNs -->       
         
        
     </environment>
@@ -59,18 +54,16 @@
     @RenderSection("Styles", required: false)
     @Html.Raw(JavaScriptSnippet.FullScript)
 
-    <!-- Font -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
 
-    <!-- Přepínání menu -->
+    <!-- Menu switching -->
     <script>
         $(document).ready(function () {
             $("#menu-toggle").click(function (e) {
                 e.preventDefault();
-                $("#wrapper").toggleClass("toggled");               
-              
-
+                $("#wrapper").toggleClass("toggled"); 
             });
         });
     </script>
@@ -80,7 +73,7 @@
     
 <div id="wrapper">
 
-    <!-- Sidebar -->
+    <!----------------------------------Sidebar------------------------------------------>
     <nav>
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
@@ -113,72 +106,67 @@
             </ul>
         </div>
     </nav>
-    <!-- /#sidebar-wrapper -->
+    <!---------------------------------END Sidebar--------------------------------------->
+   
        
         
         
         
-    <!-----------------------Header Panel---------------->
+    <!---------------------------------Header Panel--------------------------------------->
     <header>
         <div id="headerPanel">
 
+            <!--Menu button-->
             <div class="j-flex-row">
                 <div class="mainToggleButton">
                     <a href="#menu-toggle" id="menu-toggle">
                         <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
                     </a>
                 </div>
+
                 <div class="headerLine">
                     <div class="mainTitle">
-                       <span class="jasperHeading"> J<span class="aspColor">asp</span>er Site <span class="coreColor">Core</span></span>
+                       <span class="jasperHeading"> J<span class="j-gray-color">asp</span>er Site <span class="j-gray-color">Core</span></span>
                     </div>
                 </div>
             </div>
 
-           
-                <div class="j-flex-row" style="background-color:red" >
-                    <noscript>  Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</noscript>
-                </div> 
+           <!--Noscript notification-->
+            <div class="j-flex-row" style="background-color:red" >
+                <noscript>  Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</noscript>
+            </div> 
 
 
-                <div class="j-flex-row j-secondary-header desktop" >
+             <!--Desktop version of horizontal header panel -->
+             <div class="j-flex-row j-secondary-header desktop" >
                   
-                    
-                  
-
-
-
-
-
-
+                    <!--View page button-->
                     <div class="j-header-group">
                         <div class="j-header-group-item">
                             <button class="btn btn-jasper btn-jasper-icon">   <i class="fa fa-globe fa-2x" aria-hidden="true"></i> </button>
                         </div>
                     </div>
                       
-
-                        <div class="j-header-group">
-                            <div class="j-header-group-item  ">
-                                
-                                <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-2x" aria-hidden="true"></i></button> 
-                                <input type="text" class="jasper-textbox" placeholder="Hledat" />
-                            </div>
-                        </div>
-
-                        
-
-
+                    <!--Search button-->
                     <div class="j-header-group">
-
+                        <div class="j-header-group-item  ">                                
+                            <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-2x" aria-hidden="true"></i></button> 
+                            <input type="text" class="jasper-textbox" placeholder="Hledat" />
+                        </div>
+                    </div>
+                                            
+                    <!--Navigation Button-->
+                    <div class="j-header-group">
                         <div class="j-header-group-item  "><b>Články / Článek </b></div>
-
                     </div>
 
+               </div>  <!--END Desktop version of horizontal header panel -->   
 
 
-                    </div>
-            <div class="j-flex-row j-secondary-header mobile">
+
+
+            <!--Mobile version of horizontal header panel -->
+           <div class="j-flex-row j-secondary-header mobile">
 
                 <div class="j-header-group">
                     
@@ -192,18 +180,17 @@
 
                     <div class="j-header-group-item">
                         <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-2x" aria-hidden="true"></i></button>   
-                    </div>
-                    
-                    
+                    </div>  
 
                 </div>
-                </div>
+          </div>
+
             </div>
     </header>
-    <!-----------------------END Header Panel---------------->
+    <!--------------------------------END Header Panel------------------------------->
 
 
-    <!----------------Page Content--------------------------->
+    <!-------------------Page Content--------------------------->
     <main >
         <div id="page-content-wrapper">
             <div class="container-fluid j-margin-top">
@@ -216,69 +203,10 @@
             </div>
         </div>
     </main>
-    <!-------------------END Page Content----------------->
+    <!-------------------END Page Content---------------------->
    
 </div>
 
    
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*
-    <!--
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>
-        </div>
-
-
-    </body>
-    </html>-->*@
