@@ -37,6 +37,44 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
+        public static void SaveArticle(JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel article)
+        {
+            DatabaseContext database = DbInitializer.Database;
+            JasperSiteCore.Models.Database.Article articleEntity = new Article()
+            {               
+                HtmlContent = article.HtmlContent,
+                Name = article.Name,
+                PublishDate = article.PublishDate
+            };
+            database.Articles.Add(articleEntity);
+            database.SaveChanges();
+        }
+
+        public static void EditArticle(JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel article)
+        {
+            DatabaseContext database = DbInitializer.Database;
+            Article oldArticleToChange = database.Articles.Where(a => a.Id == article.Id).Single();
+
+
+            oldArticleToChange.HtmlContent = article.HtmlContent;
+            oldArticleToChange.Name = article.Name;
+            oldArticleToChange.PublishDate = article.PublishDate;
+           
+           // database.Articles.Add(oldArticleToChange);
+            database.SaveChanges();
+        }
+
+
+        public static void DeleteArticle(int articleId)
+        {
+            DatabaseContext database = DbInitializer.Database;
+            Article articleToDelete = database.Articles.Where(a => a.Id == articleId).Single();
+            database.Articles.Remove(articleToDelete);
+            database.SaveChanges();
+        }
+
+
+
         public static List<Category> GetAllCategories()
         {
             DatabaseContext database = DbInitializer.Database;

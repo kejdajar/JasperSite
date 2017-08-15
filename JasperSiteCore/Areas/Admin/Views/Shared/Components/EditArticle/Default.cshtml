@@ -4,7 +4,7 @@
 <form asp-action="Index" asp-controller="Article" asp-area="Admin">
     <div class="form-horizontal">
 
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
         <div class="form-group">
             <label asp-for="Name" class="col-md-2 control-label"></label>
@@ -29,9 +29,14 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Uložit" class="btn btn-jasper" />
-                <a href="/Admin/Home/Articles#articles" class=" btn btn-secondary">Zpět</a>
-            </div>
+            
+                <button type="submit" asp-area="Admin" asp-controller="Article" asp-action="Index" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> Uložit</button>
+                <a href="/Admin/Home/Articles#articles" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět</a>
+                
+                    <a asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
+                
+
+</div>
         </div>
     </div>
 </form>

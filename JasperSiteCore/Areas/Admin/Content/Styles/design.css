@@ -181,11 +181,12 @@ table.j-table-clickable tr:hover {
 /*-----------Custom button----------*/
 
 .btn-jasper {
-    color: #ffffff;
-    font-weight: bold;
+    color: #ffffff !important; /*without !important it doesn't work with href */
     background-color: #E57373;
     border-color: #FFFFFF;
+    font-family: 'Alegreya Sans', sans-serif;
 }
+
 
 .btn-jasper-icon {
     margin: 5px;
@@ -228,6 +229,22 @@ fieldset[disabled] .btn-jasper.active {
     border-color: #FFFFFF;
 }
 
+/*Custom delete button*/
+.btn-jasper-delete {
+    background-color: #C51162;
+}
+
+    .btn-jasper-delete:hover,
+    .btn-jasper-delete:focus,
+    .btn-jasper-delete:active,
+    .btn-jasper-delete.active,
+    .open .dropdown-toggle.btn-jasper {
+        color: #ffffff;
+        background-color: #EC407A;
+        border-color: #c36d6d;
+        -webkit-box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
+        box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
+    }
 /*-----------END Custom button----------------------*/
 
 
