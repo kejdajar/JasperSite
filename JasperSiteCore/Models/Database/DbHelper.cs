@@ -37,17 +37,19 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
-        public static void SaveArticle(JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel article)
+        public static int AddArticle()
         {
             DatabaseContext database = DbInitializer.Database;
             JasperSiteCore.Models.Database.Article articleEntity = new Article()
             {               
-                HtmlContent = article.HtmlContent,
-                Name = article.Name,
-                PublishDate = article.PublishDate
+                HtmlContent = "Váš článek začíná zde...",
+                Name = "Nový článek",
+                PublishDate = DateTime.Now
             };
             database.Articles.Add(articleEntity);
             database.SaveChanges();
+            return articleEntity.Id;
+
         }
 
         public static void EditArticle(JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel article)

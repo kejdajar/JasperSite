@@ -21,9 +21,27 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Index(EditArticleViewModel model)
         {
+            bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
             DbHelper.EditArticle(model);
-            return Redirect("/Admin/Article/Index?id=" + model.Id);
 
+            if(isAjax)
+            {
+                return ViewComponent("EditArticle");
+            }
+            else
+            {
+                return Redirect("/Admin/Article/Index?id=" + model.Id);
+            }
+
+            
+
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+           int articleId =  DbHelper.AddArticle();
+            return Redirect("/Admin/Article/Index?id=" + articleId);
         }
 
         [HttpGet]

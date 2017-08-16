@@ -29,6 +29,7 @@
         <script src="~/lib/tether/dist/js/tether.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>     
         <script src="~/lib/chosen/chosen.jquery.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -49,6 +50,8 @@
         
        
     </environment>
+
+    @{Html.RenderPartial("_ValidationScriptsPartial");}
 
     @RenderSection("Scripts", required: false)
     @RenderSection("Styles", required: false)
@@ -115,7 +118,7 @@
     <!---------------------------------Header Panel--------------------------------------->
     <header>
         <div id="headerPanel">
-
+            
             <!--Menu button-->
             <div class="j-flex-row">
                 <div class="mainToggleButton">
@@ -184,6 +187,8 @@
 
                 </div>
           </div>
+
+
 
             </div>
     </header>

@@ -39,5 +39,59 @@ $.datepicker.regional['sk'] = {
 /* Enables datepicker on date field */
 $.datepicker.setDefaults($.datepicker.regional['cs']);
 $(document).ready(function () {
+
+
     $(".tbPublishDate").datepicker();
+
+
+
 });
+
+    function savedInfo()
+    {
+
+      
+
+        //var dialog = $("<div> uloženo </div>");
+        //dialog.css({
+        //    "position": "absolute",           
+        //    "background-color": "red",
+        //    "width": "100px",
+        //    "height": "100px",
+        //    "display":"none"
+        //});
+
+        //var x = $(window).width()/2   - (dialog.outerWidth() / 2);
+        //var y = $(window).height()/2 - (dialog.outerHeight() / 2);
+        // dialog.css({            
+        //    "left": x,
+        //    "top": y,            
+        //});
+
+        // dialog.appendTo('body');
+        // dialog.slideDown("slow");
+
+
+
+        var panel = $(`<div class="j-flex-row j-secondary-header">
+
+             <div class="j-header-group">
+
+                 <div class="j-header-group-item">
+                 <span style='color:white'>  <b>Uloženo</b> </span>
+                 </div>                 
+
+             </div>
+         </div>`);
+
+        panel.css({
+            "display": "none",
+            "background-color": "#8BC34A",     
+           
+            "font-size":"1.3em"
+        });
+
+        $("#headerPanel").append(panel);
+        panel.slideDown("slow").delay(2000).slideUp("slow");
+
+    }
