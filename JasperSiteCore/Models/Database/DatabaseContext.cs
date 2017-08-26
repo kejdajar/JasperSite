@@ -15,7 +15,7 @@ namespace JasperSiteCore.Models.Database
         }
 
         public DbSet<Article> Articles { get; set; }
-        public DbSet<Category> Categories{ get; set; }
+        public  DbSet<Category> Categories{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,6 +23,6 @@ namespace JasperSiteCore.Models.Database
             modelBuilder.Entity<Category>().ToTable("Categories");
         }
 
-        public DbSet<JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel> EditArticleViewModel { get; set; }
+       // public DbSet<JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel> EditArticleViewModel { get; set; }
     }
 }

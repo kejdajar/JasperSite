@@ -136,7 +136,8 @@ namespace JasperSiteCore
                     template: "{*.any}");
             });
 
-            Models.Database.DbInitializer.Initialize(dbContext);
+            // Asp.Net Core < 2.0.0
+           // Models.Database.DbInitializer.Initialize(dbContext);
         }
     }
 }
