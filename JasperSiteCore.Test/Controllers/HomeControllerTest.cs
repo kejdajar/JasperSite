@@ -11,7 +11,8 @@ namespace JasperSiteCore.Test.Controllers
         [Test]
         public void Index_MappingExists_ReturnsView()
         {
-            Assert.True(true);
+            Assert.IsTrue(false);
         }
+
     }
 }
