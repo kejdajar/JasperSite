@@ -88,12 +88,21 @@ namespace JasperSiteCore
             app.UseStaticFiles();
 
             // Themes folder serves now static files as well
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //    Path.Combine(Directory.GetCurrentDirectory(), "Themes")), // Physical folder location
+            //    RequestPath = new PathString("/Themes") // Url
+            //});
+
+            //"Theme" folder must serve static files
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-                Path.Combine(Directory.GetCurrentDirectory(), "Themes")), // Physical folder location
-                RequestPath = new PathString("/Themes") // Url
+               Path.Combine(Directory.GetCurrentDirectory(), GlobalWebsiteConfig.ThemeFolder)), // Physical folder location
+                RequestPath = new PathString("/" + GlobalWebsiteConfig.ThemeFolder) // Url
             });
+
 
             // Area/Admin/Content servers static files
             app.UseStaticFiles(new StaticFileOptions()

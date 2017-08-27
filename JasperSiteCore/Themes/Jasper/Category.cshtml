@@ -1,10 +1,10 @@
 ﻿@using JasperSiteCore.Models.Database
 @{
-    Layout = "~/Themes/Jasper/_Layout.cshtml";
+    Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
 }
 <h1>Toto jsou kategorie</h1>
 <p>
- @foreach(Article a in DbHelper.GetAllArticles())
+ @foreach (Article a in DbHelper.GetAllArticles())
  {
      <b>@a.Name</b> <br />
       <blockquote>

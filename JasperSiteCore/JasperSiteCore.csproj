@@ -19,9 +19,11 @@
 
   <ItemGroup>
     <!--<Content Include="Areas/Admin/Content/Images/*" CopyToPublishDirectory="PreserveNewest" />-->
-    <Content Include="Areas/**/**/**/**" CopyToPublishDirectory="PreserveNewest" />
-    <Content Include="Themes/**/**/**" CopyToPublishDirectory="PreserveNewest" />
-    <Content Include="node_modules/**/**/**/**" CopyToPublishDirectory="PreserveNewest" />
+    <!--<Content Include="Areas/**/**/**/**" CopyToPublishDirectory="Always" />-->
+   
+    <Content Include="Areas/**" CopyToPublishDirectory="Always" />
+    <Content Include="Themes/**" CopyToPublishDirectory="Always" />
+    <Content Include="node_modules/**" CopyToPublishDirectory="Always" />
   
    
     
