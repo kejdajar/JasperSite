@@ -9,10 +9,7 @@ using Microsoft.AspNetCore.Hosting;
 namespace JasperSiteCore.Controllers
 {
     public class HomeController : Controller
-    {
-             
-
-
+    {            
         // GET: Home
         /// <summary>
         /// Hlavní rozhodovací controller pro custom routing
