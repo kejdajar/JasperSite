@@ -12,14 +12,14 @@ using Microsoft.AspNetCore.Http;
 
 namespace JasperSiteCore.Test.Models
 {
-    [TestFixture]
-    class WebsiteConfigTest
-    {
+    //[TestFixture]
+    //class WebsiteConfigTest
+    //{
        
-        [Test]
-        public void GetConfigData()
-        {
+    //    [Test]
+    //    public void GetConfigData()
+    //    {
 
-        }
-    }
+    //    }
+    //}
 }

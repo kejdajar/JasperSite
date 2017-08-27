@@ -12,18 +12,18 @@ using Microsoft.AspNetCore.Http;
 
 namespace JasperSiteCore.Test.Controllers
 {
-    [TestFixture]
-    class HomeControllerTest
-    {
-        [Test]
-        public void Index_MappingExists_ReturnsView()
-        {
-            //TODO: Test controller
+    //[TestFixture]
+    //class HomeControllerTest
+    //{
+    //    [Test]
+    //    public void Index_MappingExists_ReturnsView()
+    //    {
+    //        //TODO: Test controller
 
-            // Assert
-            Assert.IsTrue(true);             
+    //        // Assert
+    //        Assert.IsTrue(true);             
 
-        }
+    //    }
 
-    }
+    //}
 }

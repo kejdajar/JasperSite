@@ -25,7 +25,7 @@ namespace JasperSiteCore.Helpers
             // without slash on the beginning it would work only on pages without route parameters
             // urls has to look like: /Themes/Jasper/Styles/style.css
             // without the slash it would create the following: localhost/Home/Category/Themes/Jasper/Styles/style.css = undesirable
-            string path = "/" + CustomRouting.RelativeThemePathToRootRelativePath(url);
+            string path = "/" + Configuration.CustomRouting.RelativeThemePathToRootRelativePath(url);
 
             if (addTilde)
             {

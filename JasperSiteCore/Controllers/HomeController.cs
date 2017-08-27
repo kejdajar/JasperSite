@@ -20,11 +20,11 @@ namespace JasperSiteCore.Controllers
         {                   // předtím Request.RawUrl
             string rawUrl = Request.Path; // Získá např: /MyController/MyActionName
             string file;
-            if (CustomRouting.IsHomePage(rawUrl)) // Pouze pro hlavní stránku
+            if (Configuration.CustomRouting.IsHomePage(rawUrl)) // Pouze pro hlavní stránku
             {
-                return View(CustomRouting.GetHomePageFile());
+                return View(Configuration.CustomRouting.GetHomePageFile());
             }
-            else if (!string.IsNullOrEmpty(file = CustomRouting.MapUrlToFile(rawUrl))) // Mapping pro ostatní stránky
+            else if (!string.IsNullOrEmpty(file = Configuration.CustomRouting.MapUrlToFile(rawUrl))) // Mapping pro ostatní stránky
             {
                 return View(file);
             }
@@ -32,7 +32,7 @@ namespace JasperSiteCore.Controllers
             {
                 //  return Content("špatný požadavek na server");
                 if (!Env.Hosting.IsDevelopment())
-                    return View(CustomRouting.GetErrorPageFile());
+                    return View(Configuration.CustomRouting.GetErrorPageFile());
                 else return View();
             }
 
@@ -44,7 +44,7 @@ namespace JasperSiteCore.Controllers
         public IActionResult Error(int statusCode)
         {
             // return Content("errr"+ statusCode);
-            return View(CustomRouting.GetErrorPageFile(),model:statusCode);
+            return View(Configuration.CustomRouting.GetErrorPageFile(),model:statusCode);
         }
 
     }
