@@ -23,7 +23,7 @@ namespace JasperSiteCore.Models
 
         public static string[] GetHomePageUrls()
         {
-            string[] homePageUrls = WebsiteConfig.GetConfigData().routing.homePage;
+            string[] homePageUrls = Configuration.WebsiteConfig.GetConfigData().routing.homePage;
             if(homePageUrls == null)
             {
                 return null;
@@ -36,18 +36,18 @@ namespace JasperSiteCore.Models
 
         public static string GetHomePageFile()
         {
-            string physicalFileUrl = WebsiteConfig.GetConfigData().routing.homePageFile;
+            string physicalFileUrl = Configuration.WebsiteConfig.GetConfigData().routing.homePageFile;
             return RelativeThemePathToRootRelativePath(physicalFileUrl);
         }
 
         public static string GetErrorPageFile()
-        {string physicalFileUrl = WebsiteConfig.GetConfigData().routing.errorPageFile;
+        {string physicalFileUrl = Configuration.WebsiteConfig.GetConfigData().routing.errorPageFile;
             return RelativeThemePathToRootRelativePath(physicalFileUrl);
         }
 
         public static string MapUrlToFile(string rawUrl)
         {
-            List<ConfigurationObject.RouteMapping> collection = WebsiteConfig.GetConfigData().customPageMapping;
+            List<ConfigurationObject.RouteMapping> collection = Configuration.WebsiteConfig.GetConfigData().customPageMapping;
             foreach(ConfigurationObject.RouteMapping routeObject in collection)
             {
                  if(routeObject.routes.Contains(rawUrl))
@@ -69,13 +69,13 @@ namespace JasperSiteCore.Models
         public static string RelativeThemePathToRootRelativePath(string path)
         {
              // can contain relative parts ie. "Themes\\Jasper\\..//Styles/style.css"
-            string p = System.IO.Path.Combine(GlobalWebsiteConfig.ThemeFolder, GlobalWebsiteConfig.ThemeName, path);
+            string p = System.IO.Path.Combine(Configuration.GlobalWebsiteConfig.ThemeFolder, Configuration.GlobalWebsiteConfig.ThemeName, path);
 
             // creates full path and resolves relative parts ==> "c:\\...\Themes\\Jasper\\Styles\\style.css" 
             string fullPath = System.IO.Path.GetFullPath(p); 
 
             // creates full path to the Themes folder ===> "c:\\..\\Themes"
-            string refFullPath = System.IO.Path.GetFullPath(GlobalWebsiteConfig.ThemeFolder);
+            string refFullPath = System.IO.Path.GetFullPath(Configuration.GlobalWebsiteConfig.ThemeFolder);
 
             // convert strings to absolute uris
             Uri urifullPath = new Uri(fullPath, UriKind.Absolute);

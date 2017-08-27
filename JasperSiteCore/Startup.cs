@@ -30,7 +30,7 @@ namespace JasperSiteCore
             Configuration = builder.Build();
 
             // Save IHostingEnvironment to static class (ie. to get Root path from controllers/other classes)
-            WebsiteConfig.Hosting = env;
+           JasperSiteCore.Models.Env.Hosting = env;
 
             
         }
@@ -99,8 +99,8 @@ namespace JasperSiteCore
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-               Path.Combine(Directory.GetCurrentDirectory(), GlobalWebsiteConfig.ThemeFolder)), // Physical folder location
-                RequestPath = new PathString("/" + GlobalWebsiteConfig.ThemeFolder) // Url
+               Path.Combine(Directory.GetCurrentDirectory(), JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeFolder)), // Physical folder location
+                RequestPath = new PathString("/" + JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeFolder) // Url
             });
 
 
