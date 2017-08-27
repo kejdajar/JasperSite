@@ -7,6 +7,8 @@ namespace JasperSiteCore.Models
 {
     public static class CustomRouting
     {
+       
+
         public static bool IsHomePage(string rawUrl)
         {
             foreach (string homeRouteUrl in GetHomePageUrls())
@@ -21,7 +23,15 @@ namespace JasperSiteCore.Models
 
         public static string[] GetHomePageUrls()
         {
-            return WebsiteConfig.GetConfigData().routing.homePage;
+            string[] homePageUrls = WebsiteConfig.GetConfigData().routing.homePage;
+            if(homePageUrls == null)
+            {
+                return null;
+            }
+            else
+            {
+                return homePageUrls;
+            }
         }
 
         public static string GetHomePageFile()

@@ -10,20 +10,16 @@ using Moq;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Http;
 
-namespace JasperSiteCore.Test.Controllers
+namespace JasperSiteCore.Test.Models
 {
     [TestFixture]
-    class HomeControllerTest
+    class WebsiteConfigTest
     {
+       
         [Test]
-        public void Index_MappingExists_ReturnsView()
+        public void GetConfigData()
         {
-            //TODO: Test controller
-
-            // Assert
-            Assert.IsTrue(true);             
 
         }
-
     }
 }

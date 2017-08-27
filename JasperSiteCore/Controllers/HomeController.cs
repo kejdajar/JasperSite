@@ -38,6 +38,8 @@ namespace JasperSiteCore.Controllers
 
         }
 
+      
+
         [HttpGet("/Error/{statusCode}")]
         public IActionResult Error(int statusCode)
         {
