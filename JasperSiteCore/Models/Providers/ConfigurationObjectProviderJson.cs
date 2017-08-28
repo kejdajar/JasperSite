@@ -1,46 +1,81 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace JasperSiteCore.Models
 {
     public class ConfigurationObjectProviderJson
     {
-      
-
-        public ConfigurationObjectProviderJson(GlobalWebsiteConfig globalWebsiteConfig)
+        /// <summary>
+        /// ConfigurationObjectProviderJson class
+        /// </summary>
+        /// <param name="globalWebsiteConfig"></param>
+        /// <exception cref="ConfigurationObjectProviderJsonException"></exception>
+        public ConfigurationObjectProviderJson(GlobalWebsiteConfig globalWebsiteConfig, string jsonPath = "jasper.json")
+        {
+            this.GlobalWebsiteConfig = globalWebsiteConfig ?? throw new ConfigurationObjectProviderJsonException();
+            if(!string.IsNullOrWhiteSpace(jsonPath))
             {
-                this.GlobalWebsiteConfig = globalWebsiteConfig;
+                _jsonPath = jsonPath;
             }
+            else
+            {
+                throw new ConfigurationObjectProviderJsonException();
+            }
+        }
 
-            public GlobalWebsiteConfig GlobalWebsiteConfig { get; set; }
+        private string _jsonPath;
 
+        public GlobalWebsiteConfig GlobalWebsiteConfig { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ConfigurationObjectProviderJsonException"></exception>
         public ConfigurationObject GetConfigData()
         {
-            string jasperJsonUrl = GetJasperJsonLocation(GlobalWebsiteConfig.ThemeName, GlobalWebsiteConfig.ThemeFolder);
-            string jsonSettings = System.IO.File.ReadAllText(jasperJsonUrl);
-            ConfigurationObject configData = JsonConvert.DeserializeObject<ConfigurationObject>(jsonSettings);
-            return configData;
+            try
+            {
+                string jasperJsonUrl = GetThemeJasperJsonLocation();
+                string jsonSettings = System.IO.File.ReadAllText(jasperJsonUrl);
+                ConfigurationObject configData = JsonConvert.DeserializeObject<ConfigurationObject>(jsonSettings);
+                return configData;
+            }
+            catch(Exception ex)
+            {
+                throw new ConfigurationObjectProviderJsonException(ex);
+            }
+           
 
             //string[] setting1 = configData.routing.homePage;
             //string key1 = configData.appSettings[0].key01;            
         }
 
-
-        private string GetJasperJsonLocation(string themeName, string themeFolderUrl)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ThemeConfigurationFileNotFoundException"></exception>
+        public string GetThemeJasperJsonLocation()
         {
-            string[] directories = Directory.GetDirectories(System.IO.Path.Combine(Env.Hosting.ContentRootPath, themeFolderUrl), themeName);
-            if (directories.Count() == 1)
+            try
             {
-                string themeDirectoryUrl = directories[0]; // např. ~/Themes/JasperTheme
-                return Path.Combine(themeDirectoryUrl, "jasper.json");
+                string path = System.IO.Path.Combine(Env.Hosting.ContentRootPath, GlobalWebsiteConfig.ThemeFolder);
+                string[] directories = Directory.GetDirectories(path, GlobalWebsiteConfig.ThemeName);
+                if (directories.Count() == 1)
+                {
+                    string themeDirectoryUrl = directories[0]; // např. ~/Themes/JasperTheme
+                    return Path.Combine(themeDirectoryUrl, _jsonPath);
+                }
+                else return null;
             }
-            else return null;
-
+            catch(Exception ex)
+            {
+                throw new ThemeConfigurationFileNotFoundException(ex);
+            }
         }
 
     }

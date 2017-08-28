@@ -16,7 +16,7 @@ namespace JasperSiteCore.Models
             GlobalConfigDataProviderJson globalProvider = new GlobalConfigDataProviderJson("jasper.json");
             GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalProvider.GetGlobalConfigData());
 
-            ConfigurationObjectProviderJson configurationObjectProvider = new ConfigurationObjectProviderJson(globalConfig);
+            ConfigurationObjectProviderJson configurationObjectProvider = new ConfigurationObjectProviderJson(globalConfig,"jasper.json");
             WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectProvider.GetConfigData());
 
             CustomRouting customRouting = new CustomRouting(websiteConfig, globalConfig);

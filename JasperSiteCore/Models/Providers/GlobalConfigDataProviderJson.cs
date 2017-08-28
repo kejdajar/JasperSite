@@ -11,20 +11,30 @@ namespace JasperSiteCore.Models.Providers
 
         public GlobalConfigDataProviderJson(string jsonPath = "jasper.json")
         {
-            JsonPath = jsonPath;
+            if(string.IsNullOrWhiteSpace(jsonPath)) throw new GlobalConfigDataProviderException();
+            _jsonPath = jsonPath;
         }
 
-        public string JsonPath { get; set; }
+        private string _jsonPath;
 
         /// <summary>
         /// Gets the lastest data from json configuration file
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="GlobalConfigDataProviderException"></exception>
         public GlobalConfigData GetGlobalConfigData()
         {
-            string jsonGlobalSettings = System.IO.File.ReadAllText(System.IO.Path.Combine(Env.Hosting.ContentRootPath, JsonPath));
-            GlobalConfigData configData = JsonConvert.DeserializeObject<GlobalConfigData>(jsonGlobalSettings);
-            return configData;
+            try
+            {
+                string jsonGlobalSettings = System.IO.File.ReadAllText(System.IO.Path.Combine(Env.Hosting.ContentRootPath, _jsonPath));
+                GlobalConfigData configData = JsonConvert.DeserializeObject<GlobalConfigData>(jsonGlobalSettings);
+                return configData;
+            }
+            catch(Exception ex)
+            {
+                throw new GlobalConfigDataProviderException(ex);
+            }
+           
         }
 
     }
