@@ -75,6 +75,8 @@ namespace JasperSiteCore.Models
         /// <returns></returns>
         public  string RelativeThemePathToRootRelativePath(string path)
         {
+            if (string.IsNullOrWhiteSpace(path)) return null;            
+
              // can contain relative parts ie. "Themes\\Jasper\\..//Styles/style.css"
             string p = System.IO.Path.Combine(GlobalWebsiteConfig.ThemeFolder, GlobalWebsiteConfig.ThemeName, path);
 

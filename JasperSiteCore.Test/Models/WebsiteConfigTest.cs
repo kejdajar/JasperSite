@@ -12,14 +12,31 @@ using Microsoft.AspNetCore.Http;
 
 namespace JasperSiteCore.Test.Models
 {
-    //[TestFixture]
-    //class WebsiteConfigTest
-    //{
-       
-    //    [Test]
-    //    public void GetConfigData()
-    //    {
+    [TestFixture]
+    class WebsiteConfigTest
+    {
+        [Test]      
+        public void WebsiteConfig_ParameterIsNull_ThrowsException()
+        {
+            // Arrange
+            ConfigurationObject configurationObject = null;                      
 
-    //    }
-    //}
+            // Assert
+            Assert.That(() =>new WebsiteConfig(configurationObject), Throws.TypeOf<ConfigurationObjectException>());
+        }
+
+        [Test]
+        public void GetConfigData_ParameterIsNull_ThrowsException()
+        {
+            // Arrange
+            ConfigurationObject configurationObject = new ConfigurationObject();
+            WebsiteConfig websiteConfig = new WebsiteConfig(configurationObject);
+
+            // Acti
+            ConfigurationObject testResult = websiteConfig.GetConfigData();
+
+            // Assert
+            Assert.That(testResult, Is.SameAs(configurationObject));
+        }
+    }
 }

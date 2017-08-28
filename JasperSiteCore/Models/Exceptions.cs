@@ -3,24 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace JasperSiteCore.Models.Exceptions
+namespace JasperSiteCore.Models
 {
-   
-        //public class EmployeeListNotFoundException : Exception
-        //{
-        //    public EmployeeListNotFoundException()
-        //    {
-        //    }
 
-        //    public EmployeeListNotFoundException(string message)
-        //        : base(message)
-        //    {
-        //    }
+    public class ConfigurationObjectException : Exception
+    {
+        public ConfigurationObjectException():base("Configuration object can't be NULL")
+        {
+           
+        }
 
-        //    public EmployeeListNotFoundException(string message, Exception inner)
-        //        : base(message, inner)
-        //    {
-        //    }
-        //}
-    
+        public ConfigurationObjectException(string message)
+            : base(message)
+        {
+        }
+
+        public ConfigurationObjectException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+    }
+
 }
