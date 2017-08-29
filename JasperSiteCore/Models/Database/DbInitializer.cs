@@ -7,25 +7,32 @@ using JasperSiteCore.Models;
 namespace JasperSiteCore.Models.Database
 {
    
-        public static class DbInitializer
+        public  class DbInitializer
         {
 
-        private static DatabaseContext _database;  
-        public static DatabaseContext Database
+        public DbInitializer(DatabaseContext context)
         {
-            get { return _database; }
+            _databaseContext = context;
+           
+        }
+
+        private DatabaseContext _databaseContext;  
+        public  DatabaseContext DatabaseContext
+        {
+            get { return _databaseContext; }
            
         }
 
 
-        public static void Initialize(DatabaseContext context)
+      public void Initialize()
             {
-            _database = context;
+           
+            Configuration.DbHelper = new DbHelper(DatabaseContext);
 
-                context.Database.EnsureCreated();
+            DatabaseContext.Database.EnsureCreated();
 
                 // Look for any articles
-                if (context.Articles.Any())
+                if (DatabaseContext.Articles.Any())
                 {
                     return;   // DB has been seeded
                 }
@@ -41,7 +48,7 @@ namespace JasperSiteCore.Models.Database
 
             foreach(Article a in articles)
             {
-                context.Articles.Add(a);
+                DatabaseContext.Articles.Add(a);
             }
 
             Category[] categories = new Category[]
@@ -54,7 +61,7 @@ namespace JasperSiteCore.Models.Database
 
             foreach(Category c in categories)
             {
-                context.Categories.Add(c);
+                DatabaseContext.Categories.Add(c);
             }
 
             //    var students = new Student[]
@@ -109,7 +116,7 @@ namespace JasperSiteCore.Models.Database
             //    {
             //        context.Enrollments.Add(e);
             //    }
-                context.SaveChanges();
+               DatabaseContext.SaveChanges();
             }
         }
     

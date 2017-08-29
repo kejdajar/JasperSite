@@ -1,5 +1,5 @@
 ﻿@using JasperSiteCore.Models.Database
-
+@using JasperSiteCore.Models
 
 @section Scripts {
     <script>
@@ -32,7 +32,7 @@
     <table class="table table-bordered">
         <tr>
             <td>Celkový počet článků</td>
-            <td>@DbHelper.GetNumberOfEntities("Articles")</td>
+            <td>@Configuration.DbHelper.GetNumberOfEntities("Articles")</td>
         </tr>
         <tr>
             <td>Celkový počet kategorií</td>
@@ -58,7 +58,7 @@
         <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Kategorie</div></div>
         <div class="j-input-container" style="width:140px">
             <select id="selCategory">
-                @foreach (Category c in DbHelper.GetAllCategories())
+                @foreach (Category c in Configuration.DbHelper.GetAllCategories())
                 {
                     <option value="@c.Id">@c.Name</option>
                 }
@@ -84,7 +84,7 @@
 <div class="table-responsive">
     <table class="table table-bordered j-table j-table-text-center" id="articleTable">
         <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th><th>Akce</th></tr>
-        @foreach (Article a in DbHelper.GetAllArticles())
+        @foreach (Article a in Configuration.DbHelper.GetAllArticles())
         {
             <tr data-href="@a.Id">
                 <td>@a.Id</td>

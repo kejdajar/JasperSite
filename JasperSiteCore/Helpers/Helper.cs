@@ -47,7 +47,7 @@ namespace JasperSiteCore.Helpers
         {
 
             output.TagName = "div";
-            Article a = DbHelper.GetArticleById(Id);
+            Article a = Configuration.DbHelper.GetArticleById(Id);
             DataTransfer dataPackage = new DataTransfer() { ArticleId = Id, Article = a };
 
             context.Items.Add(typeof(JArticleTagHelper), dataPackage);

@@ -7,15 +7,25 @@ using JasperSiteCore.Areas.Admin.ViewModels;
 
 namespace JasperSiteCore.Models.Database
 {
-    public class DatabaseContext: DbContext
+    public interface IDatabaseContext
     {
+        
+        DbSet<Article> Articles { get; set; }
+        DbSet<Category> Categories { get; set; }
+        int SaveChanges();
+    }
+
+    public class DatabaseContext: DbContext,IDatabaseContext
+    {
+      
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options):base(options)
         {
 
         }
 
-        public DbSet<Article> Articles { get; set; }
-        public  DbSet<Category> Categories{ get; set; }
+        public virtual DbSet<Article> Articles { get; set; }
+        public virtual DbSet<Category> Categories{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

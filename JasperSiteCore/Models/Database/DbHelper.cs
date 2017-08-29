@@ -6,16 +6,25 @@ using System.Threading.Tasks;
 
 namespace JasperSiteCore.Models.Database
 {
-    public static class DbHelper
+    public class DbHelper
     {
-
-        public static List<Article> GetAllArticles()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="database"></param>
+        /// <exception cref="DatabaseContextNullException"></exception>
+        public DbHelper(IDatabaseContext database)
         {
-            DatabaseContext database = DbInitializer.Database;
+            this._db = database ?? throw new DatabaseContextNullException();
+        }
 
-            if (database.Articles.Any())
+        private IDatabaseContext _db;
+
+        public  List<Article> GetAllArticles()
+        {           
+            if (_db.Articles.Any())
             {
-                return database.Articles.ToList();
+                return _db.Articles.ToList();
             }
            else
             {
@@ -23,9 +32,9 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
-        public static Article GetArticleById(int id)
+        public  Article GetArticleById(int id)
         {
-            DatabaseContext database = DbInitializer.Database;
+            IDatabaseContext database = _db;
 
             if (database.Articles.Any())
             {
@@ -37,9 +46,9 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
-        public static int AddArticle()
+        public  int AddArticle()
         {
-            DatabaseContext database = DbInitializer.Database;
+            IDatabaseContext database = _db;
             JasperSiteCore.Models.Database.Article articleEntity = new Article()
             {               
                 HtmlContent = "Váš článek začíná zde...",
@@ -52,9 +61,9 @@ namespace JasperSiteCore.Models.Database
 
         }
 
-        public static void EditArticle(JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel article)
+        public void EditArticle(JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel article)
         {
-            DatabaseContext database = DbInitializer.Database;
+            IDatabaseContext database = _db;
             Article oldArticleToChange = database.Articles.Where(a => a.Id == article.Id).Single();
 
 
@@ -67,9 +76,9 @@ namespace JasperSiteCore.Models.Database
         }
 
 
-        public static void DeleteArticle(int articleId)
+        public void DeleteArticle(int articleId)
         {
-            DatabaseContext database = DbInitializer.Database;
+            IDatabaseContext database = _db;
             Article articleToDelete = database.Articles.Where(a => a.Id == articleId).Single();
             database.Articles.Remove(articleToDelete);
             database.SaveChanges();
@@ -77,9 +86,9 @@ namespace JasperSiteCore.Models.Database
 
 
 
-        public static List<Category> GetAllCategories()
+        public  List<Category> GetAllCategories()
         {
-            DatabaseContext database = DbInitializer.Database;
+            IDatabaseContext database = _db;
             if(database.Categories.Any())
             {
                 return database.Categories.ToList();
@@ -90,9 +99,9 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
-        public static int GetNumberOfEntities(string nameOfContextProperty)
+        public int GetNumberOfEntities(string nameOfContextProperty)
         {
-            DatabaseContext database = DbInitializer.Database;
+            IDatabaseContext database = _db;
             if (database.Categories.Any())
             {
                 object i = database.GetType().GetProperty(nameOfContextProperty).GetValue(database);

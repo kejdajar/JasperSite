@@ -104,4 +104,28 @@ namespace JasperSiteCore.Models
         }
 
     }
+
+    public class DatabaseContextNullException : Exception
+    {
+        private static string _message = "Database context can't be null.";
+        public DatabaseContextNullException() : base(_message)
+        {
+
+        }
+        public DatabaseContextNullException(string message)
+            : base(message)
+        {
+        }
+
+        public DatabaseContextNullException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public DatabaseContextNullException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
 }

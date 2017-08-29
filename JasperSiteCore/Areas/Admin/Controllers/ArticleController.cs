@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using JasperSiteCore.Areas.Admin.ViewModels;
 using JasperSiteCore.Models.Database;
+using JasperSiteCore.Models;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {    
@@ -22,7 +23,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult Index(EditArticleViewModel model)
         {
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
-            DbHelper.EditArticle(model);
+            Configuration.DbHelper.EditArticle(model);
 
             if(isAjax)
             {
@@ -40,14 +41,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-           int articleId =  DbHelper.AddArticle();
+           int articleId =  Configuration.DbHelper.AddArticle();
             return Redirect("/Admin/Article/Index?id=" + articleId);
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            DbHelper.DeleteArticle(id);
+            Configuration.DbHelper.DeleteArticle(id);
             return RedirectToAction("Articles", "Home");
         }
 

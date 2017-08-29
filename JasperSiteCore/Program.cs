@@ -34,7 +34,8 @@ namespace JasperSiteCore
                 try
                 {
                     var context = services.GetRequiredService<DatabaseContext>();
-                    DbInitializer.Initialize(context);
+                    DbInitializer init = new DbInitializer(context);
+                    init.Initialize();
                 }
                 catch(Exception ex)
                 {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JasperSiteCore.Models;
 using JasperSiteCore.Models.Providers;
 using Microsoft.AspNetCore.Hosting;
+using JasperSiteCore.Models.Database;
 
 namespace JasperSiteCore.Models
 {
@@ -24,11 +25,16 @@ namespace JasperSiteCore.Models
             GlobalWebsiteConfig = globalConfig;
             WebsiteConfig = websiteConfig;
             CustomRouting = customRouting;
+
+           
+            
         }
 
         
         public static GlobalWebsiteConfig GlobalWebsiteConfig { get; set; }
         public static WebsiteConfig WebsiteConfig { get; set; }
         public static CustomRouting CustomRouting { get; set; }
+
+        public static DbHelper DbHelper { get; set; }
     }
 }
