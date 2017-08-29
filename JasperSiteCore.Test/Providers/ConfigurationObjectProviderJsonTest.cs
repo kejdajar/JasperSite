@@ -48,5 +48,7 @@ namespace JasperSiteCore.Test.Providers
             // Assert
             Assert.That(() => copj.GetThemeJasperJsonLocation(), Throws.Exception.TypeOf<ThemeConfigurationFileNotFoundException>());
         }
+
+        
     }
 }
