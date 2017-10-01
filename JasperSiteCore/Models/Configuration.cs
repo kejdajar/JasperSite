@@ -6,6 +6,7 @@ using JasperSiteCore.Models;
 using JasperSiteCore.Models.Providers;
 using Microsoft.AspNetCore.Hosting;
 using JasperSiteCore.Models.Database;
+using JasperSiteCore.Areas.Admin.Models;
 
 namespace JasperSiteCore.Models
 {
@@ -14,10 +15,15 @@ namespace JasperSiteCore.Models
 
         static Configuration()
         {
+            Initialize();
+        }
+
+        public static void Initialize()
+        {
             GlobalConfigDataProviderJson globalProvider = new GlobalConfigDataProviderJson("jasper.json");
             GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalProvider.GetGlobalConfigData());
 
-            ConfigurationObjectProviderJson configurationObjectProvider = new ConfigurationObjectProviderJson(globalConfig,"jasper.json");
+            ConfigurationObjectProviderJson configurationObjectProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
             WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectProvider.GetConfigData());
 
             CustomRouting customRouting = new CustomRouting(websiteConfig, globalConfig);
@@ -26,15 +32,14 @@ namespace JasperSiteCore.Models
             WebsiteConfig = websiteConfig;
             CustomRouting = customRouting;
 
-           
-            
+            ThemeHelper = new ThemeHelper();
         }
-
         
         public static GlobalWebsiteConfig GlobalWebsiteConfig { get; set; }
         public static WebsiteConfig WebsiteConfig { get; set; }
         public static CustomRouting CustomRouting { get; set; }
 
         public static DbHelper DbHelper { get; set; }
+        public static ThemeHelper ThemeHelper { get; set; }
     }
 }

@@ -1,1 +1,1 @@
-﻿document.write("testovací script");
+﻿//document.write("testovací script");

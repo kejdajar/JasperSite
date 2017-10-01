@@ -1,0 +1,1 @@
+﻿<b>Jasper</b> je výchozí vzhled aplikace JasperSiteCore.

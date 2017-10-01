@@ -27,6 +27,17 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             return View();
         }
 
+        public ActionResult Themes()
+        {
+            return View();
+        }
+
+        public ActionResult UpdateConfiguration()
+        {
+            JasperSiteCore.Models.Configuration.Initialize();
+            return View("Themes");
+        }
+
       
 
     }

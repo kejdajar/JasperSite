@@ -22,8 +22,12 @@
       "file": "Category.cshtml"
     },
     {
-      "routes": [ "/Home/Tutorial","/Home/Tutorial/"],
+      "routes": [ "/Home/Tutorial", "/Home/Tutorial/" ],
       "file": "Tutorial.cshtml"
+    },
+    {
+      "routes": [ "/Home/Article", "/Home/Article/" ],
+      "file": "Article.cshtml"
     }
 
   ]

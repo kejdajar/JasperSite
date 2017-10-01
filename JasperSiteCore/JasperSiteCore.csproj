@@ -29,4 +29,31 @@
     
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Themes\Jasper - Copy\Article.cshtml">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Themes\Jasper - Copy\Category.cshtml">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Themes\Jasper - Copy\Error.cshtml">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Themes\Jasper - Copy\Index.cshtml">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Themes\Jasper - Copy\jasper.json">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Themes\Jasper - Copy\Tutorial.cshtml">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Themes\Jasper - Copy\_Layout.cshtml">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Themes\Jasper - Copy\_ViewImports.cshtml">
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

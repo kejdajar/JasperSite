@@ -121,7 +121,7 @@ hr {
 /* Vertical secondary header */
 .j-secondary-header {
     background-color: #ffacac;
-    flex-wrap: wrap;
+    flex-wrap: wrap;  
 }
 
 .j-secondary-header .j-header-group {
@@ -191,7 +191,7 @@ table.j-table-clickable tr:hover {
 
 
 .btn-jasper-icon {
-    margin: 5px;
+    margin:5px;    
 }
 
 .btn-jasper:hover,

@@ -1,0 +1,51 @@
+﻿@using JasperSiteCore.Models
+@using JasperSiteCore.Areas.Admin.Models
+@{
+    ViewBag.Title = "Vzhledy";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+
+            $("tr[data-theme='@Configuration.GlobalWebsiteConfig.ThemeName'] td").css("background-color", "lightGreen");
+           
+        });
+    </script>
+
+}
+
+<div class="banner1">
+    <div>Vzhledy</div>
+</div>
+
+
+<h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Vlastní rozšíření </h2>
+<p>JasperSiteCore je možné rozšiřovat o vlastní vzhledy. Návod pro tvorbu vlastního vzhledu nalezente v dokumentaci.</p>
+<a href="#" class="btn btn-jasper">Nahrát vlastní vzhled</a>
+<a class="btn btn-jasper" asp-controller="Home" asp-action="UpdateConfiguration" asp-area="Admin">Aplikovat data z konfiguračních souborů</a>
+<hr />
+
+<h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Nainstalované vzhledy </h2>
+Složka se vzhledy: @Configuration.GlobalWebsiteConfig.ThemeFolder <br />
+Právě aktivní vzhled: @Configuration.GlobalWebsiteConfig.ThemeName
+<div class="table-responsive">
+    <table class="table table-bordered j-table j-table-text-center" id="articleTable">
+        <tr>  <th>Jméno vzhledu</th><th>Složka</th><th>Popis vzhledu</th></tr>
+        @foreach (ThemeInfo info in Configuration.ThemeHelper.GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder))
+        {
+            <tr data-theme="@info.ThemeName" id="test">
+                <td>@info.ThemeName <br />
+              
+                    @*<img src="@Url.Content(Configuration.ThemeHelper.GetThemeThumbnailUrl(Configuration.GlobalWebsiteConfig.ThemeFolder, info.ThemeName))" width="150" height="150" />*@
+                    <img src="@Url.Content(Configuration.ThemeHelper.GetThemeThumbnailUrl(info.ThemeName))" width="150" height="150" />
+                </td>
+                <td>@info.ThemeFolder</td>
+                <td>@Html.Raw(info.ThemeDescription)</td>
+                
+            </tr>
+        }
+    </table>
+</div>
