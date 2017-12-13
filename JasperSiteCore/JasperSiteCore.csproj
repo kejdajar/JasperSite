@@ -21,15 +21,15 @@
     <!--<Content Include="Areas/Admin/Content/Images/*" CopyToPublishDirectory="PreserveNewest" />-->
     <!--<Content Include="Areas/**/**/**/**" CopyToPublishDirectory="Always" />-->
    
-    <Content Include="Areas/**" CopyToPublishDirectory="Always" />
-    <Content Include="Themes/**" CopyToPublishDirectory="Always" />
-    <Content Include="node_modules/**" CopyToPublishDirectory="Always" />
+    <None Include="Areas/**" CopyToPublishDirectory="Always" />
+    <None Include="Themes/**" CopyToPublishDirectory="Always" />
+    <None Include="node_modules/**" CopyToPublishDirectory="Always" />
   
    
     
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Content Update="Themes\Jasper - Copy\Article.cshtml">
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Content>
@@ -54,6 +54,6 @@
     <Content Update="Themes\Jasper - Copy\_ViewImports.cshtml">
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Content>
-  </ItemGroup>
+  </ItemGroup>-->
 
 </Project>
