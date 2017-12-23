@@ -30,9 +30,7 @@ namespace JasperSiteCore
             Configuration = builder.Build();
 
             // Save IHostingEnvironment to static class (ie. to get Root path from controllers/other classes)
-           JasperSiteCore.Models.Env.Hosting = env;
-
-            
+           JasperSiteCore.Models.Env.Hosting = env;            
         }
 
         public IConfigurationRoot Configuration { get; }
