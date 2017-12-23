@@ -21,7 +21,7 @@ namespace JasperSiteCore.Models
         public static void Initialize()
         {
             GlobalConfigDataProviderJson globalProvider = new GlobalConfigDataProviderJson("jasper.json");
-            GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalProvider.GetGlobalConfigData());
+            GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalProvider);
 
             ConfigurationObjectProviderJson configurationObjectProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
             WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectProvider.GetConfigData());

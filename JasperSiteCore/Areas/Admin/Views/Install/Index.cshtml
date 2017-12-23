@@ -1,0 +1,134 @@
+﻿@model JasperSiteCore.Areas.Admin.ViewModels.InstallViewModel
+@{
+    Layout = null;
+}
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="~/Areas/Admin/Content/Images/favicon.ico" type="image/x-icon">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instalace</title>
+
+    @*********************************************************************** Styles ****************************************************************************@
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="~/lib/tether/dist/css/tether.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+        @*<link href="~/lib/chosen/chosen.css" rel="stylesheet" />*@  <!--Classic Chosen CSS -->
+        <link href="~/lib/chosen-bootstrap/chosen.bootstrap.css" rel="stylesheet" />  <!--Bootstrap style Chosen CSS -->
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    </environment>
+
+    <environment exclude="Development">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" rel="stylesheet"
+              asp-fallback-href="~/lib/tether/dist/css/tether.css" />
+
+        <!--Nalinkovat minifikaci-->
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+
+        <link href="~/lib/chosen-bootstrap/chosen.bootstrap.css" rel="stylesheet" />  <!--Without CDN-->
+
+        <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css"
+              integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous"
+              asp-fallback-href="~/lib/font-awesome/css/font-awesome.css">
+    </environment>
+
+    @*********************************************************************** Scripts ****************************************************************************@
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/tether/dist/js/tether.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/chosen/chosen.jquery.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" asp-fallback-href="~/lib/tether/dist/js/tether.min.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn">
+        </script>
+
+        <!-- Without CDN -->
+        <script src="~/lib/chosen/chosen.jquery.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    </environment>
+
+    @{Html.RenderPartial("_ValidationScriptsPartial");}
+
+   
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    </head>
+    
+<body>
+    
+    <div class="jumbotron">
+        <h1> Jasper Site Core </h1>
+        Instalace redakčního systému <br />        
+    </div>
+    <div id="page-content-wrapper">
+        
+        <div class="row col-lg-12">
+            <p>
+                Následující průvodce vás provede instalací redakčního systému <i>Jasper Site Core</i>.
+            </p>
+        </div>
+        <div style="background-color:lightgoldenrodyellow">
+            Installation completed:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ConfigurationDataObject.installationCompleted <br />
+            Connection string:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ConfigurationDataObject.connectionString <br />
+            Type of database:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ConfigurationDataObject.typeOfDatabase<br />
+        </div>
+
+        <form method="post" asp-area="Admin" asp-controller="Install" asp-action="Index">
+
+            <div class="form-group">
+                <label>Zvolte databázi</label>
+                <select class="form-control" asp-for="SelectedDatabase">
+                    <option value="mssql">MSSQL</option>
+                    <option value="mysql">MySQL</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Zadejte connection string</label>
+                @*Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True"*@
+                <input class="form-control" type="text" asp-for="ConnectionString"   />
+                <i>
+                    Ukázka: <br />
+                    <b>MSSQL:</b> Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True<br />
+                    <b>MySQL:</b> Server=localhost;Database=nightdb;Uid=root;Pwd=root; <br />
+                </i>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Odeslat" class="btn btn-primary" />
+                </div>
+</form>
+
+    </div>
+</body>
+</html>

@@ -37,6 +37,22 @@ namespace JasperSiteCore.Models.Providers
            
         }
 
+
+        public void SaveGlobalConfigData(GlobalConfigData dataToSave)
+        {
+            string jsonGlobalSettingsPath = System.IO.Path.Combine(Env.Hosting.ContentRootPath, _jsonPath);
+            string convertedDataToSave = JsonConvert.SerializeObject(dataToSave,Formatting.Indented);
+            try
+            {
+                System.IO.File.WriteAllText(jsonGlobalSettingsPath, convertedDataToSave);
+            }
+            catch (Exception ex)
+            {
+                throw new GlobalConfigDataProviderException(ex);
+            }
+
+        }
+
     }
 
     public class GlobalConfigData
@@ -46,5 +62,17 @@ namespace JasperSiteCore.Models.Providers
 
         [JsonProperty("themeFolder")]
         public string themeFolder { get; set; }
+
+        
+            [JsonProperty("connectionString")]
+            public string connectionString{ get; set; }
+                       
+        
+
+        [JsonProperty("typeOfDatabase")]
+        public string typeOfDatabase{ get; set; }
+
+        [JsonProperty("installationCompleted")]
+        public string installationCompleted { get; set; }
     }
 }

@@ -13,12 +13,19 @@ namespace JasperSiteCore.Models
     /// <exception cref="GlobalConfigDataException"></exception>
     public class GlobalWebsiteConfig
     {
-        public GlobalWebsiteConfig(GlobalConfigData configurationDataObject)
+        public GlobalWebsiteConfig(GlobalConfigDataProviderJson gcdpj)
         {
-            this.ConfigurationDataObject = configurationDataObject ?? throw new GlobalConfigDataException();
+            this.ConfigurationDataObject = gcdpj.GetGlobalConfigData() ?? throw new GlobalConfigDataException();
+            GlobalConfigDataProviderJson = gcdpj;
         }
 
+        public GlobalConfigDataProviderJson GlobalConfigDataProviderJson { get; set; }
         public GlobalConfigData ConfigurationDataObject { get; set; } 
+
+       public void SaveGlobalConfigData(GlobalConfigData dataToSave)
+        {
+            GlobalConfigDataProviderJson.SaveGlobalConfigData(dataToSave);
+        }
 
         public string ThemeName
         {
@@ -30,6 +37,10 @@ namespace JasperSiteCore.Models
             get { return GetThemeFolder(); }
         }
 
+
+
+
+
         private string GetThemeFolder()
         {
             return ConfigurationDataObject.themeFolder;
@@ -38,10 +49,9 @@ namespace JasperSiteCore.Models
         private  string GetThemeName()
         {
             return ConfigurationDataObject.themeName;
-        }
+        }        
 
-        
-
+       
       
     }
 
