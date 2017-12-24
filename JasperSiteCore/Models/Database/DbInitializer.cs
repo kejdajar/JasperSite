@@ -24,10 +24,13 @@ namespace JasperSiteCore.Models.Database
         }
 
 
-      public void Initialize()
+      public void Initialize(bool ensureDbIsDeleted = false)
             {
            
             Configuration.DbHelper = new DbHelper(DatabaseContext);
+
+            if(ensureDbIsDeleted) DatabaseContext.Database.EnsureDeleted();
+           
 
             DatabaseContext.Database.EnsureCreated();
 

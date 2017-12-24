@@ -39,7 +39,7 @@ namespace JasperSiteCore.Models
            
         }
 
-        public static void CreateAndSeedDb()
+        public static void CreateAndSeedDb(bool ensureDbIsDeleted = false)
         {
             if (GlobalWebsiteConfig.ConfigurationDataObject.installationCompleted == "true")
             {
@@ -47,7 +47,7 @@ namespace JasperSiteCore.Models
                 //{               
                 DatabaseContext dbContext = new DatabaseContext();
                 DbInitializer init = new DbInitializer(dbContext);
-                init.Initialize();
+                init.Initialize(ensureDbIsDeleted);
                 //}
                 //catch(NotSupportedDatabaseException ex)
                 //{

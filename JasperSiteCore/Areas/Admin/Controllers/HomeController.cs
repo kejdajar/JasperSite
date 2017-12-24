@@ -68,8 +68,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             #endregion
 
             JasperSiteCore.Models.Configuration.Initialize();
-            return View("Themes");
-        }
+            return RedirectToAction("Themes");
+         }
 
       
 

@@ -33,7 +33,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             if(ModelState.IsValid)
             {
-                Configuration.CreateAndSeedDb();
+                Configuration.CreateAndSeedDb(true); // Checks if Db contains another data, if it does, they are all deleted.
                 return RedirectToAction("Index", "Home", new { area = "admin" });
             }
             
