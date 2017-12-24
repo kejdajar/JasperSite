@@ -17,8 +17,15 @@ namespace JasperSiteCore.Controllers
         /// <returns>Vrací vyžádanou stránku dle nastavení v jasper.json</returns>
         [HttpGet]
         public IActionResult Index()
-        {                   // předtím Request.RawUrl
-            string rawUrl = Request.Path; // Získá např: /MyController/MyActionName
+        {
+            // Test, whether the installation was already completed and database was seeded
+            if (!Configuration.InstallationCompleted())
+            {
+                return RedirectToAction("Index", "Install", new { area = "admin" });
+            }
+
+                // předtím Request.RawUrl
+                string rawUrl = Request.Path; // Získá např: /MyController/MyActionName
             string file;
             if (Configuration.CustomRouting.IsHomePage(rawUrl)) // Pouze pro hlavní stránku
             {

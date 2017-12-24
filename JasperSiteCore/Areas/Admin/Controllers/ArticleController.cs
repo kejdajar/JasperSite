@@ -16,12 +16,25 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index(int id)
         {
+            #region InstallationCheck
+            if (!Configuration.InstallationCompleted())
+            {
+                return RedirectToAction("Index", "Install", new { area = "admin" });
+            }
+            #endregion
             return View(id);   
         }
 
         [HttpPost]
         public IActionResult Index(EditArticleViewModel model)
         {
+            #region InstallationCheck
+            if (!Configuration.InstallationCompleted())
+            {
+                return RedirectToAction("Index", "Install", new { area = "admin" });
+            }
+            #endregion
+
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
             Configuration.DbHelper.EditArticle(model);
 
@@ -41,13 +54,25 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-           int articleId =  Configuration.DbHelper.AddArticle();
+            #region InstallationCheck
+            if (!Configuration.InstallationCompleted())
+            {
+                return RedirectToAction("Index", "Install", new { area = "admin" });
+            }
+            #endregion
+            int articleId =  Configuration.DbHelper.AddArticle();
             return Redirect("/Admin/Article/Index?id=" + articleId);
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
+            #region InstallationCheck
+            if (!Configuration.InstallationCompleted())
+            {
+                return RedirectToAction("Index", "Install", new { area = "admin" });
+            }
+            #endregion
             Configuration.DbHelper.DeleteArticle(id);
             return RedirectToAction("Articles", "Home");
         }

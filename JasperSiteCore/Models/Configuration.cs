@@ -20,6 +20,7 @@ namespace JasperSiteCore.Models
 
         public static void Initialize()
         {
+              
             GlobalConfigDataProviderJson globalProvider = new GlobalConfigDataProviderJson("jasper.json");
             GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalProvider);
 
@@ -33,8 +34,41 @@ namespace JasperSiteCore.Models
             CustomRouting = customRouting;
 
             ThemeHelper = new ThemeHelper();
+
+            CreateAndSeedDb();
+           
+        }
+
+        public static void CreateAndSeedDb()
+        {
+            if (GlobalWebsiteConfig.ConfigurationDataObject.installationCompleted == "true")
+            {
+                //try
+                //{               
+                DatabaseContext dbContext = new DatabaseContext();
+                DbInitializer init = new DbInitializer(dbContext);
+                init.Initialize();
+                //}
+                //catch(NotSupportedDatabaseException ex)
+                //{
+
+                //}
+            }
+            else
+            {
+                //  throw new NotImplementedException();
+            }
         }
         
+        public static bool InstallationCompleted()
+        {
+            if (Configuration.GlobalWebsiteConfig.ConfigurationDataObject.installationCompleted != "true")
+            {
+                return false;
+            }
+            else return true;
+        }
+
         public static GlobalWebsiteConfig GlobalWebsiteConfig { get; set; }
         public static WebsiteConfig WebsiteConfig { get; set; }
         public static CustomRouting CustomRouting { get; set; }

@@ -8,7 +8,10 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 {
     public class InstallViewModel
     {
+        [Required(ErrorMessage ="Zvolte typ databáze")]
         public string SelectedDatabase { get; set; }
+
+        [Required(ErrorMessage = "Connection String je povinné pole.")]
         public string ConnectionString { get; set; }
     }
 }

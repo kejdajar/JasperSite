@@ -111,12 +111,15 @@
                     <option value="mssql">MSSQL</option>
                     <option value="mysql">MySQL</option>
                 </select>
+                <span asp-validation-for="SelectedDatabase" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label>Zadejte connection string</label>
                 @*Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True"*@
-                <input class="form-control" type="text" asp-for="ConnectionString"   />
+                <input class="form-control" type="text" asp-for="ConnectionString" />
+                <span asp-validation-for="ConnectionString" class="text-danger"></span><br />
+                
                 <i>
                     Ukázka: <br />
                     <b>MSSQL:</b> Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True<br />

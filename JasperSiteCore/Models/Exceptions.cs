@@ -128,4 +128,28 @@ namespace JasperSiteCore.Models
         }
 
     }
+
+    public class NotSupportedDatabaseException : Exception
+    {
+        private static string _message = "Selected database is not supported";
+        public NotSupportedDatabaseException() : base(_message)
+        {
+
+        }
+        public NotSupportedDatabaseException(string message)
+            : base(message)
+        {
+        }
+
+        public NotSupportedDatabaseException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public NotSupportedDatabaseException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
 }

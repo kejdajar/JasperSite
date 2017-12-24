@@ -31,13 +31,23 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             Configuration.GlobalWebsiteConfig.SaveGlobalConfigData(oldData);
 
-            // Načteme data znovu
-            GlobalConfigData updatedConfigData = Configuration.GlobalWebsiteConfig.ConfigurationDataObject;
-            InstallViewModel model2 = new InstallViewModel();
-            model2.ConnectionString = updatedConfigData.connectionString;
-            model2.SelectedDatabase = updatedConfigData.typeOfDatabase;          
-            ModelState.Clear();
-            return View(model2);
+            if(ModelState.IsValid)
+            {
+                Configuration.CreateAndSeedDb();
+                return RedirectToAction("Index", "Home", new { area = "admin" });
+            }
+            
+                // Reload configuration data
+                GlobalConfigData updatedConfigData = Configuration.GlobalWebsiteConfig.ConfigurationDataObject;
+                InstallViewModel model2 = new InstallViewModel();
+                model2.ConnectionString = updatedConfigData.connectionString;
+                model2.SelectedDatabase = updatedConfigData.typeOfDatabase;
+                ModelState.Clear();
+                return View(model2);
+            
+           
+
+
         }
     }
 }
