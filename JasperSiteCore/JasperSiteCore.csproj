@@ -5,63 +5,23 @@
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
   </PropertyGroup>
 
- 
-  
   <ItemGroup>
-    
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
-    
-    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="6.10.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
-    
-  </ItemGroup>
-
-  <ItemGroup>
-    <!--<Content Include="Areas/Admin/Content/Images/*" CopyToPublishDirectory="PreserveNewest" />-->
-    <!--<Content Include="Areas/**/**/**/**" CopyToPublishDirectory="Always" />-->
-   
     <None Include="Areas/**" CopyToPublishDirectory="Always" />
     <None Include="Themes/**" CopyToPublishDirectory="Always" />
     <None Include="node_modules/**" CopyToPublishDirectory="Always" />
-  
-   
-    
+
+
+
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Areas\Admin\ViewModels\InstallViewModel.cs" />
   </ItemGroup>
 
-  <!--<ItemGroup>
-    <Content Update="Themes\Jasper - Copy\Article.cshtml">
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Themes\Jasper - Copy\Category.cshtml">
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Themes\Jasper - Copy\Error.cshtml">
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Themes\Jasper - Copy\Index.cshtml">
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Themes\Jasper - Copy\jasper.json">
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Themes\Jasper - Copy\Tutorial.cshtml">
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Themes\Jasper - Copy\_Layout.cshtml">
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </Content>
-    <Content Update="Themes\Jasper - Copy\_ViewImports.cshtml">
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>-->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="6.10.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
 
 </Project>
