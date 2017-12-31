@@ -13,8 +13,8 @@ body {
 
 /* Icon color */
 .j-icon {
-    color: #E57373;
-    padding-right:10px;
+    color: #FF8A80;
+    padding-right: 10px;
 }
 
 /* General styles */
@@ -70,14 +70,14 @@ hr {
 
 /*---------------Header------------------------------*/
 #headerPanel {
-    background-color: #E57373; 
+    background-color: #FF8A80;
     display: flex;
     color: white;
     width: 100%;
     position: fixed;
     top: 0px;
     z-index: 5000;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 }
 
 /* One row of the header */
@@ -120,7 +120,7 @@ hr {
 
 /* Vertical secondary header */
 .j-secondary-header {
-    background-color: #ffacac;
+    background-color: #f8f8f8;
     flex-wrap: wrap;  
 }
 
@@ -149,12 +149,12 @@ table.j-table-clickable tr:hover {
 
 
 .j-table tr:not(:first-child):nth-child(even) td {
-    background-color: #f8e9e9;
+    background-color: #efefef;
 }
 
 .j-table tr:not(:first-child):hover td {
     transition: background-color 0.5s ease;
-    background-color: #eb9e9e;
+    background-color: #FF8A80;
 }
 /*----------END Custom table--------------*/
 
@@ -162,29 +162,13 @@ table.j-table-clickable tr:hover {
 
 
 /* Custom graphics */
-.banner1 {
-    background-image: url(../Images/banner2.svg);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    width: 100%;
-    padding: 0px;
-    color: white;
-    display: flex;
-    font-size: 4em;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    padding-left: 40px;
-}
 
-.banner1 div {
-    font-family: 'Dancing Script', cursive;
-}
 
 /*-----------Custom button----------*/
 
 .btn-jasper {
     color: #ffffff !important; /*without !important it doesn't work with href */
-    background-color: #E57373;
+    background-color: #FF8A80;
     border-color: #FFFFFF;
     font-family: 'Alegreya Sans', sans-serif;
 }

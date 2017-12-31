@@ -81,6 +81,7 @@ namespace JasperSiteCore.Models
         public static CustomRouting CustomRouting { get; set; }
         public static ThemeHelper ThemeHelper { get; set; }
 
+        // Filled by DbInitializer
         public static DbHelper DbHelper { get; set; }
         
     }

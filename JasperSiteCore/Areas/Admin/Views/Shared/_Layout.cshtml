@@ -76,7 +76,7 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    
 
     <!-- Menu switching -->
     <script>
@@ -98,9 +98,9 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <a href="@Url.Action("Index","Home")">
-                        Přehled
-                    </a>
+                    @*<a href="@Url.Action("Index","Home")"></a>*@
+                       Menu
+                    
                 </li>
                 <li>
                     <a href="@Url.Action("Categories","Home")">Rubriky</a>
@@ -124,6 +124,11 @@
                     <a href="#">Nápověda</a>
                 </li>
             </ul>
+
+
+            <!-- New design test -->
+            
+            <!-- New design test END-->
         </div>
     </nav>
     <!---------------------------------END Sidebar--------------------------------------->
@@ -158,29 +163,37 @@
 
 
              <!--Desktop version of horizontal header panel -->
-             <div class="j-flex-row j-secondary-header desktop" >
-                  
-                    <!--View page button-->
-                    <div class="j-header-group">
-                        <div class="j-header-group-item">
-                            <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-2x" aria-hidden="true"></i> </a>
-                        </div>
-                    </div>
-                      
-                    <!--Search button-->
-                    <div class="j-header-group">
-                        <div class="j-header-group-item  ">                                
-                            <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-2x" aria-hidden="true"></i></button> 
-                            <input type="text" class="jasper-textbox" placeholder="Hledat" />
-                        </div>
-                    </div>
-                                            
-                    <!--Navigation Button-->
-                    <div class="j-header-group">
-                        <div class="j-header-group-item  "><b>Články / Článek </b></div>
-                    </div>
+            <div class="j-flex-row j-secondary-header desktop">
 
-               </div>  <!--END Desktop version of horizontal header panel -->   
+
+                <!--View page button-->
+                <div class="j-header-group">
+                    <div class="j-header-group-item">
+                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-home fa-2x" aria-hidden="true"></i> </a>
+                    </div>
+                </div>
+
+                <!--View page button-->
+                <div class="j-header-group">
+                    <div class="j-header-group-item">
+                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-2x" aria-hidden="true"></i> </a>
+                    </div>
+                </div>
+
+                <!--Search button-->
+                <div class="j-header-group">
+                    <div class="j-header-group-item  ">
+                        <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-2x" aria-hidden="true"></i></button>
+
+                    </div>
+                </div>
+
+                <!--Navigation Button-->
+                <div class="j-header-group">
+                    <div class="j-header-group-item  "><b>Články / Článek </b></div>
+                </div>
+
+            </div>  <!--END Desktop version of horizontal header panel -->   
 
 
 
