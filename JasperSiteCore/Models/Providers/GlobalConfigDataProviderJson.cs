@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JasperSiteCore.Models.Providers
 {
-    public class GlobalConfigDataProviderJson
+    public class GlobalConfigDataProviderJson: IGlobalWebsiteConfigProvider
     {
 
         public GlobalConfigDataProviderJson(string jsonPath = "jasper.json")
@@ -22,7 +22,7 @@ namespace JasperSiteCore.Models.Providers
         /// </summary>
         /// <returns></returns>
         /// <exception cref="GlobalConfigDataProviderException"></exception>
-        public GlobalConfigData GetGlobalConfigData()
+        public GlobalConfigData GetFreshData()
         {
             try
             {
@@ -38,7 +38,7 @@ namespace JasperSiteCore.Models.Providers
         }
 
 
-        public void SaveGlobalConfigData(GlobalConfigData dataToSave)
+        public void SaveData(GlobalConfigData dataToSave)
         {
             string jsonGlobalSettingsPath = System.IO.Path.Combine(Env.Hosting.ContentRootPath, _jsonPath);
             string convertedDataToSave = JsonConvert.SerializeObject(dataToSave,Formatting.Indented);
@@ -55,24 +55,5 @@ namespace JasperSiteCore.Models.Providers
 
     }
 
-    public class GlobalConfigData
-    {
-        [JsonProperty("themeName")]
-        public string themeName { get; set; }
-
-        [JsonProperty("themeFolder")]
-        public string themeFolder { get; set; }
-
-        
-            [JsonProperty("connectionString")]
-            public string connectionString{ get; set; }
-                       
-        
-
-        [JsonProperty("typeOfDatabase")]
-        public string typeOfDatabase{ get; set; }
-
-        [JsonProperty("installationCompleted")]
-        public string installationCompleted { get; set; }
-    }
+   
 }

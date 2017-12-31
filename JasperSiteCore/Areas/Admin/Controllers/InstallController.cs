@@ -24,27 +24,38 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             string selectedDb = model.SelectedDatabase;
             string connectionString = model.ConnectionString;
 
-            GlobalConfigData oldData = Configuration.GlobalWebsiteConfig.ConfigurationDataObject;
-            oldData.typeOfDatabase = selectedDb;
-            oldData.connectionString = connectionString;
-            oldData.installationCompleted = "true";
+            //GlobalConfigData oldData = Configuration.GlobalWebsiteConfig.ConfigurationDataObject;
+            //oldData.TypeOfDatabase = selectedDb;
+            //oldData.ConnectionString = connectionString;
+            //oldData.InstallationCompleted = "true";
 
-            Configuration.GlobalWebsiteConfig.SaveGlobalConfigData(oldData);
+            //Configuration.GlobalWebsiteConfig.SaveData(oldData);
+
+            Configuration.GlobalWebsiteConfig.TypeOfDatabase = selectedDb;
+            Configuration.GlobalWebsiteConfig.ConnectionString = connectionString;
+            Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
+            Configuration.GlobalWebsiteConfig.CommitChanges();
 
             if(ModelState.IsValid)
             {
                 Configuration.CreateAndSeedDb(true); // Checks if Db contains another data, if it does, they are all deleted.
                 return RedirectToAction("Index", "Home", new { area = "admin" });
             }
-            
-                // Reload configuration data
-                GlobalConfigData updatedConfigData = Configuration.GlobalWebsiteConfig.ConfigurationDataObject;
-                InstallViewModel model2 = new InstallViewModel();
-                model2.ConnectionString = updatedConfigData.connectionString;
-                model2.SelectedDatabase = updatedConfigData.typeOfDatabase;
-                ModelState.Clear();
-                return View(model2);
-            
+
+            // Reload configuration data
+
+            //GlobalConfigData updatedConfigData = Configuration.GlobalWebsiteConfig.ConfigurationDataObject;
+            //    InstallViewModel model2 = new InstallViewModel();
+            //    model2.ConnectionString = updatedConfigData.ConnectionString;
+            //    model2.SelectedDatabase = updatedConfigData.TypeOfDatabase;
+
+            InstallViewModel model2 = new InstallViewModel();
+            Configuration.GlobalWebsiteConfig.RefreshData(); // Refreshes data from file
+            model2.ConnectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
+            model2.SelectedDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
+
+            ModelState.Clear();
+           return View(model2);          
            
 
 

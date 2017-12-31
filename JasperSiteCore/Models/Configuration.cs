@@ -21,8 +21,8 @@ namespace JasperSiteCore.Models
         public static void Initialize()
         {
               
-            GlobalConfigDataProviderJson globalProvider = new GlobalConfigDataProviderJson("jasper.json");
-            GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalProvider);
+            GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
+            GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalJsonProvider);
 
             ConfigurationObjectProviderJson configurationObjectProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
             WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectProvider.GetConfigData());
@@ -41,7 +41,7 @@ namespace JasperSiteCore.Models
 
         public static void CreateAndSeedDb(bool ensureDbIsDeleted = false)
         {
-            if (GlobalWebsiteConfig.ConfigurationDataObject.installationCompleted == "true")
+            if (GlobalWebsiteConfig.InstallationCompleted)
             {
                 //try
                 //{               
@@ -62,7 +62,7 @@ namespace JasperSiteCore.Models
         
         public static bool InstallationCompleted()
         {
-            if (Configuration.GlobalWebsiteConfig.ConfigurationDataObject.installationCompleted != "true")
+            if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
             {
                 return false;
             }

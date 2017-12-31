@@ -13,47 +13,105 @@ namespace JasperSiteCore.Models
     /// <exception cref="GlobalConfigDataException"></exception>
     public class GlobalWebsiteConfig
     {
-        public GlobalWebsiteConfig(GlobalConfigDataProviderJson gcdpj)
+        public GlobalWebsiteConfig(IGlobalWebsiteConfigProvider dataProvider)
         {
-            this.ConfigurationDataObject = gcdpj.GetGlobalConfigData() ?? throw new GlobalConfigDataException();
-            GlobalConfigDataProviderJson = gcdpj;
+            this.ConfigurationDataObject = dataProvider.GetFreshData() ?? throw new GlobalConfigDataException();
+            GlobalConfigDataProvider = dataProvider;
         }
 
-        public GlobalConfigDataProviderJson GlobalConfigDataProviderJson { get; set; }
-        public GlobalConfigData ConfigurationDataObject { get; set; } 
+        public IGlobalWebsiteConfigProvider GlobalConfigDataProvider { get; set; }
+        private GlobalConfigData ConfigurationDataObject { get; set; } 
 
-       public void SaveGlobalConfigData(GlobalConfigData dataToSave)
+        public void SaveData(GlobalConfigData dataToSave)
         {
-            GlobalConfigDataProviderJson.SaveGlobalConfigData(dataToSave);
+            GlobalConfigDataProvider.SaveData(dataToSave);
         }
 
         public string ThemeName
         {
-            get { return GetThemeName(); }
+            get { return ConfigurationDataObject.ThemeName; }
+            set
+            {
+                ConfigurationDataObject.ThemeName = value;
+            }
         }
 
         public  string ThemeFolder
         {
-            get { return GetThemeFolder(); }
+            get { return ConfigurationDataObject.ThemeFolder; }
+            set
+            {
+                ConfigurationDataObject.ThemeFolder = value;
+            }
         }
 
-
-
-
-
-        private string GetThemeFolder()
+        public string ConnectionString
         {
-            return ConfigurationDataObject.themeFolder;
+            get { return ConfigurationDataObject.ConnectionString; }
+            set
+            {
+                ConfigurationDataObject.ConnectionString = value;
+            }
         }
 
-        private  string GetThemeName()
+        public string TypeOfDatabase
         {
-            return ConfigurationDataObject.themeName;
-        }        
+            get { return ConfigurationDataObject.TypeOfDatabase; }
+            set
+            {
+                ConfigurationDataObject.TypeOfDatabase = value;
+            }
+        }
 
-       
-      
+        public bool InstallationCompleted
+        {
+            get {
+                bool flag;
+                bool parsed = Boolean.TryParse(ConfigurationDataObject.InstallationCompleted, out flag);
+                if (flag) return parsed; else return false;              
+            }
+            set
+            {
+                ConfigurationDataObject.InstallationCompleted = value.ToString();
+            }
+        }
+
+        public void CommitChanges()
+        {
+            SaveData(ConfigurationDataObject);
+        }
+
+        public void RefreshData()
+        {
+            this.ConfigurationDataObject = GlobalConfigDataProvider.GetFreshData();
+        }
+
     }
 
+    public interface IGlobalWebsiteConfigProvider
+    {
+       GlobalConfigData GetFreshData();
+       void SaveData(GlobalConfigData dataToSave);
+    }
+
+    public class GlobalConfigData
+    {
+        [JsonProperty("themeName")]
+        public string ThemeName { get; set; }
+
+        [JsonProperty("themeFolder")]
+        public string ThemeFolder { get; set; }
+
+
+        [JsonProperty("connectionString")]
+        public string ConnectionString { get; set; }
+
+
+        [JsonProperty("typeOfDatabase")]
+        public string TypeOfDatabase { get; set; }
+
+        [JsonProperty("installationCompleted")]
+        public string InstallationCompleted { get; set; }
+    }
 
 }
