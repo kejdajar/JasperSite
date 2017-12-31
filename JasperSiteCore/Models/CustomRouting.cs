@@ -30,7 +30,7 @@ namespace JasperSiteCore.Models
 
         public string[] GetHomePageUrls()
         {
-            string[] homePageUrls = WebsiteConfig.GetConfigData().routing.homePage;
+            string[] homePageUrls = WebsiteConfig.RoutingList.HomePage;
             if(homePageUrls == null || homePageUrls.Length <1)
             {
                 return null;
@@ -43,23 +43,23 @@ namespace JasperSiteCore.Models
 
         public string GetHomePageFile()
         {
-            string physicalFileUrl = WebsiteConfig.GetConfigData().routing.homePageFile;
+            string physicalFileUrl = WebsiteConfig.RoutingList.HomePageFile;
             return RelativeThemePathToRootRelativePath(physicalFileUrl);
         }
 
         public string GetErrorPageFile()
-        {string physicalFileUrl = WebsiteConfig.GetConfigData().routing.errorPageFile;
+        {string physicalFileUrl = WebsiteConfig.RoutingList.ErrorPageFile;
             return RelativeThemePathToRootRelativePath(physicalFileUrl);
         }
 
         public string MapUrlToFile(string rawUrl)
         {
-            List<ConfigurationObject.RouteMapping> collection = WebsiteConfig.GetConfigData().customPageMapping;
+            List<ConfigurationObject.RouteMapping> collection = WebsiteConfig.CustomPageMapping;
             foreach(ConfigurationObject.RouteMapping routeObject in collection)
             {
-                 if(routeObject.routes.Contains(rawUrl))
+                 if(routeObject.Routes.Contains(rawUrl))
                 {
-                    string physicalFileUrl = routeObject.file;
+                    string physicalFileUrl = routeObject.File;
                     return RelativeThemePathToRootRelativePath(physicalFileUrl);
                 }
             }

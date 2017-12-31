@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace JasperSiteCore.Models
 {
-    public class ConfigurationObjectProviderJson
+    public class ConfigurationObjectProviderJson:IWebsiteConfigProvider
     {
         /// <summary>
         /// ConfigurationObjectProviderJson class
@@ -35,7 +35,7 @@ namespace JasperSiteCore.Models
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ConfigurationObjectProviderJsonException"></exception>
-        public ConfigurationObject GetConfigData()
+        public ConfigurationObject GetFreshData()
         {
             try
             {
@@ -78,52 +78,22 @@ namespace JasperSiteCore.Models
             }
         }
 
-    }
-
-    /// <summary>        
-    /// Představuje kontejner pro konfigurační data z JSON souboru.
-    /// </summary>
-    public class ConfigurationObject
-    {
-        public class Routing
+        public void SaveData(ConfigurationObject dataToSave)
         {
-            [JsonProperty("homePage")]
-            public string[] homePage { get; set; }
+            string jsonThemeSettingsPath = GetThemeJasperJsonLocation();
+            string convertedDataToSave = JsonConvert.SerializeObject(dataToSave, Formatting.Indented);
+            try
+            {
+                System.IO.File.WriteAllText(jsonThemeSettingsPath, convertedDataToSave);
+            }
+            catch (Exception ex)
+            {
+                throw new ConfigurationObjectProviderJsonException(ex);
+            }
 
-            [JsonProperty("homePageFile")]
-            public string homePageFile { get; set; }
-
-            [JsonProperty("errorPageFile")]
-            public string errorPageFile { get; set; }
-        }
-
-        public class KeyValue
-        {
-            [JsonProperty("key")]
-            public string key { get; set; }
-
-            [JsonProperty("value")]
-            public string value { get; set; }
-        }
-
-        [JsonProperty("routing")]
-        public Routing routing { get; set; }
-
-        [JsonProperty("appSettings")]
-        public List<KeyValue> appSettings { get; set; }
-
-        // CustomPageMapping
-        [JsonProperty("customPageMapping")]
-        public List<RouteMapping> customPageMapping { get; set; }
-
-        public class RouteMapping
-        {
-            [JsonProperty("routes")]
-            public string[] routes { get; set; }
-
-            [JsonProperty("file")]
-            public string file { get; set; }
         }
 
     }
+
+    
 }

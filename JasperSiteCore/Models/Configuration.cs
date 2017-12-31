@@ -20,23 +20,30 @@ namespace JasperSiteCore.Models
 
         public static void Initialize()
         {
-              
+            // Global jasper.json file is mapped to config classes
             GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
             GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalJsonProvider);
 
-            ConfigurationObjectProviderJson configurationObjectProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
-            WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectProvider.GetConfigData());
+            // Theme jasper.json file is mapped to theme config classes
+            // Theme jasper.json file depends on global settings of theme folder location
+            ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
+            WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
 
+            // Custom routing manager
             CustomRouting customRouting = new CustomRouting(websiteConfig, globalConfig);
 
+            // Theme helper manager
+            ThemeHelper themeHelper = new ThemeHelper();
+
+            // Assigning variables of this static class - cross request persistent
             GlobalWebsiteConfig = globalConfig;
             WebsiteConfig = websiteConfig;
             CustomRouting = customRouting;
+            ThemeHelper = themeHelper;
 
-            ThemeHelper = new ThemeHelper();
-
+            // Database manager
             CreateAndSeedDb();
-           
+                        
         }
 
         public static void CreateAndSeedDb(bool ensureDbIsDeleted = false)
@@ -72,8 +79,9 @@ namespace JasperSiteCore.Models
         public static GlobalWebsiteConfig GlobalWebsiteConfig { get; set; }
         public static WebsiteConfig WebsiteConfig { get; set; }
         public static CustomRouting CustomRouting { get; set; }
+        public static ThemeHelper ThemeHelper { get; set; }
 
         public static DbHelper DbHelper { get; set; }
-        public static ThemeHelper ThemeHelper { get; set; }
+        
     }
 }
