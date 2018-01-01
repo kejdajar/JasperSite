@@ -37,6 +37,7 @@
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+   
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -82,7 +83,7 @@
         /*color: #fff;*/
         color: #FF8A80;
         font-weight: bold;
-        background: rgba(255,255,255,0.2);
+        background: rgba(254, 138, 138, 0.32);
     }
 
 .sidebar-nav li a:active,
@@ -101,7 +102,7 @@
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
+    color: #FF8A80;
     background: none;
 }
 

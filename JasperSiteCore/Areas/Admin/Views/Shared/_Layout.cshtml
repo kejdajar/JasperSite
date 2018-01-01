@@ -98,9 +98,9 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    @*<a href="@Url.Action("Index","Home")"></a>*@
-                       Menu
-                    
+                    <a href="@Url.Action("Index","Home")">Dashboard</a>
+        
+                   
                 </li>
                 <li>
                     <a href="@Url.Action("Categories","Home")">Rubriky</a>
@@ -144,8 +144,11 @@
             <!--Menu button-->
             <div class="j-flex-row">
                 <div class="mainToggleButton">
+                    @*<a href="#menu-toggle" id="menu-toggle">
+            <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
+        </a>*@
                     <a href="#menu-toggle" id="menu-toggle">
-                        <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
+                        <i class="fa fa-bars fa-2x j-hamburger-menu" aria-hidden="true" alt="menu"></i>
                     </a>
                 </div>
 
@@ -169,29 +172,29 @@
                 <!--View page button-->
                 <div class="j-header-group">
                     <div class="j-header-group-item">
-                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-home fa-2x" aria-hidden="true"></i> </a>
+                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
                     </div>
                 </div>
 
                 <!--View page button-->
                 <div class="j-header-group">
                     <div class="j-header-group-item">
-                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-2x" aria-hidden="true"></i> </a>
+                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
                     </div>
                 </div>
 
                 <!--Search button-->
                 <div class="j-header-group">
                     <div class="j-header-group-item  ">
-                        <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-2x" aria-hidden="true"></i></button>
+                        <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></button>
 
                     </div>
                 </div>
 
                 <!--Navigation Button-->
-                <div class="j-header-group">
+                @*<div class="j-header-group">
                     <div class="j-header-group-item  "><b>Články / Článek </b></div>
-                </div>
+                </div>*@
 
             </div>  <!--END Desktop version of horizontal header panel -->   
 
@@ -204,15 +207,15 @@
                 <div class="j-header-group">
                     
                     <div class="j-header-group-item">
-                        <button class="btn btn-jasper btn-jasper-icon">   <i class="fa fa-home fa-2x" aria-hidden="true"></i> </button>
+                        <a asp-controller="Home" asp-area="Admin" asp-action="Index" class="btn btn-jasper btn-jasper-icon">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
                     </div>
 
                     <div class="j-header-group-item">
-                        <a class="btn btn-jasper btn-jasper-icon"  asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-2x" aria-hidden="true"></i> </a>
+                        <a class="btn btn-jasper btn-jasper-icon"  asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
                     </div>
 
                     <div class="j-header-group-item">
-                        <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-2x" aria-hidden="true"></i></button>   
+                        <a href="#" class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></a>   
                     </div>  
 
                 </div>
