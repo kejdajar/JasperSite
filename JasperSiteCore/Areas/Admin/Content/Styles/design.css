@@ -11,20 +11,14 @@ body {
     margin-top: 95px;
 }
 
-/* Icon color */
-.j-icon {
-    color: #FF8A80;
-    padding-right: 10px;
-}
+
 
 /* General styles */
 .j-base-color {
     color: #E57373;
 }
 
-.j-gray-color {
-    color: #524e4e;
-}
+
 
 hr {
     background-color: #ffe0e0;
@@ -70,7 +64,7 @@ hr {
 
 /*---------------Header------------------------------*/
 #headerPanel {
-    background-color: #FF8A80;
+    background-color: #AB47BC;
     display: flex;
     color: white;
     width: 100%;
@@ -78,6 +72,21 @@ hr {
     top: 0px;
     z-index: 5000;
     flex-wrap: wrap;
+}
+
+.j-gray-color {
+    color:black;
+}
+
+.j-core-color {
+    color: black;
+}
+
+/* Icon color */
+.j-icon {
+    color: 
+    #CE93D8;
+    padding-right: 10px;
 }
 
 /* One row of the header */
@@ -121,9 +130,12 @@ hr {
 
 /*------------------------------------ Vertical secondary header --------------------------------*/
 .j-secondary-header {
-    background-color: #f9f9f9;
+    background-color:white;
     flex-wrap: wrap;
-    border-bottom: 2px solid #ffe0e0;
+   
+    -webkit-box-shadow: 0 4px 6px -3px #CE93D8;
+    -moz-box-shadow: 0 4px 6px -3px #CE93D8;
+         box-shadow: 0 4px 6px -3px #CE93D8;
     
 }
 
@@ -158,7 +170,9 @@ table.j-table-clickable tr:hover {
 
 .j-table tr:not(:first-child):hover td {
     transition: background-color 0.5s ease;
-    background-color: #FF8A80;
+    background-color: 
+    #CE93D8;
+    
 }
 /*----------END Custom table--------------*/
 
@@ -172,7 +186,7 @@ table.j-table-clickable tr:hover {
 
 .btn-jasper {
     color: #ffffff !important; /*without !important it doesn't work with href */
-    background-color: #FF8A80;
+    background-color:#AB47BC;
     border-color: #FFFFFF;
     font-family: 'Alegreya Sans', sans-serif;
 }
@@ -194,7 +208,7 @@ table.j-table-clickable tr:hover {
 .btn-jasper.active,
 .open .dropdown-toggle.btn-jasper {
     color: #ffffff;
-    background-color: #EF9A9A;
+    background-color:  #CE93D8;
     border-color: #FFFFFF;
     -webkit-box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
     box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
@@ -298,5 +312,5 @@ fieldset[disabled] .btn-jasper.active {
 
     .j-hamburger-menu:hover {
         
-        color: #524e4e;
+        color: #CE93D8;
     }

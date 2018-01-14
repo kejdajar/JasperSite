@@ -1,7 +1,7 @@
 {
   "themeName": "Jasper",
   "themeFolder": "Themes",
-  "connectionString": "Server=localhost;Database=nightdb;Uid=root;Pwd=root; ",
-  "typeOfDatabase": "mysql",
+  "connectionString": "Data Source=(localdb)\\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True",
+  "typeOfDatabase": "mssql",
   "installationCompleted": "True"
 }

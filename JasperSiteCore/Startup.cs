@@ -23,6 +23,7 @@ namespace JasperSiteCore
         {
             // Configuration files for whole project
             var builder = new ConfigurationBuilder()
+            
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)

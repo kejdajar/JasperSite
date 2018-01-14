@@ -96,7 +96,7 @@
     <!----------------------------------Sidebar------------------------------------------>
     <nav>
         <div id="sidebar-wrapper">
-            <ul class="sidebar-nav">
+          <!--   <ul class="fa-ul sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="@Url.Action("Index","Home")">Dashboard</a>
         
@@ -111,8 +111,9 @@
                 <li>
                     <a href="@Url.Action("Themes","Home")">Vzhled</a>
                 </li>
-                <li>
-                    <a href="#">Uživatel</a>
+                <li style="height:40px">
+                    <i class="fa fa-li fa-user-circle fa-lg"  aria-hidden="true"></i>
+                  <a href="#"> Uživatel</a>
                 </li>
                 <li>
                     <a href="#">Nastavení</a>
@@ -123,7 +124,47 @@
                 <li>
                     <a href="#">Nápověda</a>
                 </li>
-            </ul>
+            </ul> -->
+
+
+<div class="j-sidebar-brand">
+     <a href="@Url.Action("Index","Home")">Dashboard</a>
+</div>
+
+
+<div class="j-link-container">
+    <a asp-controller="Home" asp-action="Categories" class="j-link" >  <i class="fa fa-folder "  aria-hidden="true"></i>
+                  Rubriky</a></div>
+
+<div class="j-link-container">
+    <a class="j-link" asp-controller="Home" asp-action="Articles">  <i class="fa fa-edit "  aria-hidden="true"></i>
+                  Články</a></div>
+
+
+<div class="j-link-container">
+    <a class="j-link" asp-controller="Home" asp-action="Themes">  <i class="fa fa-user-circle "  aria-hidden="true"></i>
+                Vzhled</a></div>
+
+ <div class="j-link-container">
+    <a class="j-link" href="#">  <i class="fa fa-comment-o"  aria-hidden="true"></i>
+                  Komentáře</a></div>
+
+ <div class="j-link-container">
+    <a class="j-link" href="#">  <i class="fa fa-image"  aria-hidden="true"></i>
+                  Obrázky</a></div>
+
+                  <div class="j-link-container">
+    <a class="j-link" href="#">  <i class="fa fa-user-circle-o"  aria-hidden="true"></i>
+                  Uživatel</a></div>
+
+ <div class="j-link-container">
+    <a class="j-link" href="#">  <i class="fa fa-database"  aria-hidden="true"></i>
+                Databáze</a></div>
+
+<div class="j-link-container">
+    <a class="j-link" href="#">  <i class="fa fa-cogs"  aria-hidden="true"></i>
+                  Nastavení</a></div>
+
 
 
             <!-- New design test -->
@@ -154,7 +195,7 @@
 
                 <div class="headerLine">
                     <div class="mainTitle">
-                       <span class="jasperHeading"> J<span class="j-gray-color">asp</span>er Site <span class="j-gray-color">Core</span></span>
+                       <span class="jasperHeading"> J<span class="j-gray-color">asp</span>er Site <span class="j-core-color">Core</span></span>
                     </div>
                 </div>
             </div>
