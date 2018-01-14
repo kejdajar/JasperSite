@@ -1,1 +1,2 @@
-﻿<b>Onyx</b> je tmavý vzhled aplikace JasperSiteCore.
+﻿<b>Jasper</b> je základní výchozí vzhled vaší webové stránky. Poskytuje 
+přehlednou prezentaci informací jak na počítači, tak i na mobilních zařízeních. 

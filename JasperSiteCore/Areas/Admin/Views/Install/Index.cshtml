@@ -82,15 +82,41 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <style>
+        .j-jumbotron
+        {
+            background-color: #AB47BC;
+           
+        }
+
+        .j-jumbotron h1{
+            color:white;
+        }
+
+.j-jumbotron h2 {
+    color:#e7e7e7;
+    font-size:1.3em;
+}
+
+body {
+    margin-top:20px;
+}
+
+.j-jumbotron-span {
+    color:black;
+}
+        
+    </style>
     </head>
     
 <body>
-    
-    <div class="jumbotron">
-        <h1> Jasper Site Core </h1>
-        Instalace redakčního systému <br />        
+    <div class="container">
+    <div class="jumbotron j-jumbotron">
+        <h1> J<span class="j-jumbotron-span">asp</span>er Site <span class="j-jumbotron-span">Core</span>
+        </h1>        
+        <h2>Instalace redakčního systému </h2>
     </div>
-    <div id="page-content-wrapper">
+    <div >
         
         <div class="row col-lg-12">
             <p>
@@ -128,10 +154,11 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Odeslat" class="btn btn-primary" />
+                <input type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
                 </div>
 </form>
 
+    </div>
     </div>
 </body>
 </html>

@@ -1,1 +1,1 @@
-﻿<b>Jasper</b> je výchozí vzhled aplikace JasperSiteCore.
+﻿<b>Onyx</b> je <span style="color:gray">tmavý vzhled</span> vaší stránky.
