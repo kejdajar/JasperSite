@@ -32,16 +32,16 @@ Právě aktivní vzhled: @Configuration.GlobalWebsiteConfig.ThemeName
 <div class="table-responsive">
     <table class="table table-bordered j-table j-table-text-center" id="articleTable">
         <tr>  <th>Jméno vzhledu</th><th>Složka</th><th>Popis vzhledu</th></tr>
-        @foreach (ThemeInfo info in Configuration.ThemeHelper.GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder))
+        @foreach (ThemeInfo info in Configuration.ThemeHelper.GetInstalledThemesInfo())
         {
             <tr data-theme="@info.ThemeName" id="test">
                 <td>@info.ThemeName <br />
               
                     @*<img src="@Url.Content(Configuration.ThemeHelper.GetThemeThumbnailUrl(Configuration.GlobalWebsiteConfig.ThemeFolder, info.ThemeName))" width="150" height="150" />*@
-                    <img src="@Url.Content(Configuration.ThemeHelper.GetThemeThumbnailUrl(info.ThemeName))" width="150" height="150" />
+                    <img src="@Url.Content(info.ThemeThumbnailUrl)" width="150" height="150" />
                 </td>
                 <td>@info.ThemeFolder</td>
-                <td>@Html.Raw(info.ThemeDescription)</td>
+                <td style="text-align:left">@Html.Raw(info.ThemeDescription)</td>
                 
             </tr>
         }

@@ -13,24 +13,24 @@ namespace JasperSiteCore.Areas.Admin.Models
         {
 
         }
-
-
+                
         //public string GetAbsoluteThemeFolderPath()
         //{
         //    string themeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
         //    return Configuration.CustomRouting.RelativeThemePathToRootRelativePath(themeFolder);
         //}
 
-        public string GetThemeDescription(string pathToTheme)
+        private string GetThemeDescription(string pathToTheme)
         {            
             string desc = File.ReadAllText(Path.Combine(pathToTheme,"desc.txt"));
             return desc;
         }
 
-        public string GetThemeThumbnailUrl(string themeFolder, string themeName)
-        {   // vyřešit lépe
-            return "~/" + themeFolder + "/" + themeName + "/thumbnail.jpg"; 
-        }
+        // public string GetThemeThumbnailUrl(string themeFolder, string themeName)
+        // {   
+        //     return "~/" + themeFolder + "/" + themeName + "/thumbnail.jpg"; 
+        //    // return Configuration.CustomRouting.RelativeThemePathToRootRelativePath("thumbnail.jpg");
+        // }
 
         public string GetThemeThumbnailUrl(string themeName)
         {   // vyřešit lépe
@@ -38,20 +38,26 @@ namespace JasperSiteCore.Areas.Admin.Models
             return  Path.Combine("~/", themeFolder, themeName,"thumbnail.jpg").Replace('\\','/');
         }
 
+
+public List<ThemeInfo> GetInstalledThemesInfo()
+{
+return GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder);
+}
         public List<ThemeInfo> GetInstalledThemesInfo(string themeFolderPath)
         {
             //string themeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
             List<string> themeSubfolders = Directory.GetDirectories(themeFolderPath).ToList();
 
             List<ThemeInfo> themeInfos = new List<ThemeInfo>();
-            foreach (string themeName in themeSubfolders)
+            foreach (string themeSubdirPath in themeSubfolders)
             {
+                string _themeName = Path.GetFileName(themeSubdirPath);
                 ThemeInfo ti = new ThemeInfo()
                 {
-                    ThemeName = Path.GetFileName(themeName),
+                    ThemeName = _themeName,
                     ThemeFolder = themeFolderPath,
-                    ThemeDescription = GetThemeDescription(themeName)
-                    
+                    ThemeDescription = GetThemeDescription(themeSubdirPath),
+                    ThemeThumbnailUrl = GetThemeThumbnailUrl(_themeName)
                 };
                 themeInfos.Add(ti);
             }
@@ -65,7 +71,8 @@ namespace JasperSiteCore.Areas.Admin.Models
     {
         public string ThemeName { get; set; }
         public string ThemeFolder { get; set; }
-        public string ThemeDescription { get; set; } = "demo desc";
+        public string ThemeDescription { get; set; }
        // thumbnail img - TODO
+       public string ThemeThumbnailUrl {get;set;}
     }
 }
