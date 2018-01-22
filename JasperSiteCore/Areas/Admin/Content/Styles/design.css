@@ -64,7 +64,7 @@ hr {
 
 /*---------------Header------------------------------*/
 #headerPanel {
-    background-color: #AB47BC;
+    background-color: #BA68C8;
     display: flex;
     color: white;
     width: 100%;
@@ -186,7 +186,7 @@ table.j-table-clickable tr:hover {
 
 .btn-jasper {
     color: #ffffff !important; /*without !important it doesn't work with href */
-    background-color:#AB47BC;
+    background-color: #BA68C8; 
     border-color: #FFFFFF;
     font-family: 'Alegreya Sans', sans-serif;
 }
@@ -208,7 +208,7 @@ table.j-table-clickable tr:hover {
 .btn-jasper.active,
 .open .dropdown-toggle.btn-jasper {
     color: #ffffff;
-    background-color:  #CE93D8;
+    background-color: #CE93D8;
     border-color: #FFFFFF;
     -webkit-box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
     box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
