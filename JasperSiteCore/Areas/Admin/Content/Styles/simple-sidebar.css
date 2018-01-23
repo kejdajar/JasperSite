@@ -156,11 +156,15 @@
 .j-link 
 { margin:auto;
     text-decoration: none !important;
-    font-size:1.3em;
+    font-size:1.4em;
     white-space:nowrap;
     color:#AB47BC;
     width:100%;
     padding-left: 40px;
+}
+
+.j-fa-margin {
+    margin-right:10px;
 }
 
 .j-sidebar-brand {
