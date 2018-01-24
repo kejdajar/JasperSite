@@ -148,10 +148,11 @@
     
 }
 
-.j-link-container :hover {
-    color:white;
-    background-color:#AB47BC ;
-}
+    .j-link-container :hover {
+        color: white;
+        background-color: #AB47BC;
+       
+    }
 
 .j-link 
 { margin:auto;
@@ -165,6 +166,11 @@
 
 .j-fa-margin {
     margin-right:10px;
+}
+
+.j-menu-highlight {
+    background-color: #AB47BC;
+    color: white;
 }
 
 .j-sidebar-brand {

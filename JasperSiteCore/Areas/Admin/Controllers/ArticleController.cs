@@ -6,34 +6,41 @@ using Microsoft.AspNetCore.Mvc;
 using JasperSiteCore.Areas.Admin.ViewModels;
 using JasperSiteCore.Models.Database;
 using JasperSiteCore.Models;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {    
     [Area("Admin")]
     public class ArticleController : Controller
     {
+        // Firstly, the installation must have already been completed before accesing administration panel
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (!Configuration.InstallationCompleted())
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary {
+                { "Controller", "Install" },
+                { "Action", "Index" },
+                        {"Area","Admin" }
+                    });
+            }
+
+            base.OnActionExecuting(filterContext);
+        }
 
         [HttpGet]
         public IActionResult Index(int id)
         {
-            #region InstallationCheck
-            if (!Configuration.InstallationCompleted())
-            {
-                return RedirectToAction("Index", "Install", new { area = "admin" });
-            }
-            #endregion
+            
             return View(id);   
         }
 
         [HttpPost]
         public IActionResult Index(EditArticleViewModel model)
         {
-            #region InstallationCheck
-            if (!Configuration.InstallationCompleted())
-            {
-                return RedirectToAction("Index", "Install", new { area = "admin" });
-            }
-            #endregion
+            
 
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
             Configuration.DbHelper.EditArticle(model);
@@ -54,12 +61,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            #region InstallationCheck
-            if (!Configuration.InstallationCompleted())
-            {
-                return RedirectToAction("Index", "Install", new { area = "admin" });
-            }
-            #endregion
+          
             int articleId =  Configuration.DbHelper.AddArticle();
             return Redirect("/Admin/Article/Index?id=" + articleId);
         }
@@ -67,12 +69,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            #region InstallationCheck
-            if (!Configuration.InstallationCompleted())
-            {
-                return RedirectToAction("Index", "Install", new { area = "admin" });
-            }
-            #endregion
+            
             Configuration.DbHelper.DeleteArticle(id);
             return RedirectToAction("Articles", "Home");
         }

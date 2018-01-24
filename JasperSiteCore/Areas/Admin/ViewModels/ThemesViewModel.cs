@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JasperSiteCore.Areas.Admin.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,10 +9,13 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 {
     public class ThemesViewModel
     {
-        [Required(ErrorMessage ="Zvolte typ databáze")]
-        public string SelectedDatabase { get; set; }
+        
+        public string SelectedThemeName { get; set; }
+        public string ThemeFolder { get; set; }
+        public List<ThemeInfo> ThemeInfoList { get; set; }
 
-        [Required(ErrorMessage = "Connection String je povinné pole.")]
-        public string ConnectionString { get; set; }
+        public int PageNumber { get; set; }
+        public int ItemsPerPage { get; set; }
+       
     }
 }

@@ -152,7 +152,8 @@ hr {
 
 /*----------Custom table--------------*/
 .j-table {
-    font-size: 1.0em;
+    font-size: 1.0em;   
+    margin-top:5px;
 }
 
 table.j-table-text-center tr td, th {

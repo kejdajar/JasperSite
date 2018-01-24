@@ -133,16 +133,16 @@
 
 
 <div class="j-link-container">
-    <a asp-controller="Home" asp-action="Categories" class="j-link" >  <i class="fa fa-folder j-fa-margin"  aria-hidden="true"></i>
+    <a class="j-link  @(ViewContext.RouteData.Values["action"].ToString() == "Categories" ? "j-menu-highlight" : "" )" asp-controller="Home" asp-action="Categories" >  <i class="fa fa-folder j-fa-margin"  aria-hidden="true"></i>
                   Rubriky</a></div>
 
 <div class="j-link-container">
-    <a class="j-link" asp-controller="Home" asp-action="Articles">  <i class="fa fa-edit j-fa-margin"  aria-hidden="true"></i>
+    <a class="j-link @(ViewContext.RouteData.Values["action"].ToString() == "Articles" ? "j-menu-highlight" : "" )" asp-controller="Home" asp-action="Articles">  <i class="fa fa-edit j-fa-margin"  aria-hidden="true"></i>
                   Články</a></div>
 
 
 <div class="j-link-container">
-    <a class="j-link" asp-controller="Home" asp-action="Themes">  <i class="fa fa-user-circle j-fa-margin "  aria-hidden="true"></i>
+    <a class="j-link  @(ViewContext.RouteData.Values["action"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Home" asp-action="Themes">  <i class="fa fa-user-circle j-fa-margin "  aria-hidden="true"></i>
                 Vzhled</a></div>
 
  <div class="j-link-container">
