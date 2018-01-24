@@ -16,6 +16,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 
         public int PageNumber { get; set; }
         public int ItemsPerPage { get; set; }
+        public int TotalNumberOfPages { get; set; }
        
     }
 }

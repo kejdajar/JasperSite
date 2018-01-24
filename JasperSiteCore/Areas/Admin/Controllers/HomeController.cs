@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using JasperSiteCore.Areas.Admin.Models;
 using Microsoft.AspNetCore.Http;
+using JasperSiteCore.Helpers;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
@@ -50,80 +51,59 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Themes()
         {
-            int pageNumber = 1;
             int itemsPerPage = 3;
-
+            int currentPage = 1;
+            List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
+            JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList, currentPage, itemsPerPage);
+                       
             ThemesViewModel model = new ThemesViewModel();
             model.SelectedThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
-            model.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;  
-            model.PageNumber = pageNumber;
-            model.ItemsPerPage = itemsPerPage;
+            model.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
+            model.PageNumber = paging.CurrentPageNumber;
+            model.ItemsPerPage = paging.ItemsPerPage;
+            model.TotalNumberOfPages = paging.NumberOfPagesNeeded;
 
+            model.ThemeInfoList = paging.GetCurrentPageItems();
 
-            // Testing purposes
-            model.ThemeInfoList = new List<ThemeInfo>();
-            List<ThemeInfo> generic = new List<ThemeInfo>();
-            for(int i=1;i<=10;i++)
-            {
-                ThemeInfo info = new ThemeInfo() { ThemeFolder = "Folder:" + i.ToString(), ThemeName = "ThemeX" + i.ToString(), ThemeThumbnailUrl = "http://google.cz" };
-                generic.Add(info);
-            }
-            model.ThemeInfoList.AddRange(generic);
-            // End testing purposes
-
-            model.ThemeInfoList.AddRange(Configuration.ThemeHelper.GetInstalledThemesInfo());
-            model.ThemeInfoList = model.ThemeInfoList.Skip(itemsPerPage * (pageNumber - 1)).Take(itemsPerPage).ToList();
-
-
-
-          return View(model);
+            ModelState.Clear();
+            
+            return View(model);
         }
 
         [HttpPost]
         public ActionResult Themes(ThemesViewModel model,IFormCollection collection)
         {
-            string next_ = collection["next"];
-            string prev_ = collection["prev"];
-
             int itemsPerPage = 3;
             int currentPage = model.PageNumber;
-            ;
-           
-            if(next_ != null)
-            currentPage++;
-            if (prev_ != null)
+
+            string next = collection["next"];
+            string prev = collection["prev"];
+
+            if (next != null)
+                currentPage++;
+            if (prev != null)
                 currentPage--;
 
+            List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
+            JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList,currentPage,itemsPerPage);          
+                     
             ThemesViewModel model2 = new ThemesViewModel();
             model2.SelectedThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
             model2.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
-            model2.PageNumber = currentPage;
-            model2.ItemsPerPage = itemsPerPage;
+            model2.PageNumber = paging.CurrentPageNumber;
+            model2.ItemsPerPage = paging.ItemsPerPage;
+            model2.TotalNumberOfPages = paging.NumberOfPagesNeeded;
 
-
-            // Testing purposes
-            model2.ThemeInfoList = new List<ThemeInfo>();
-            List<ThemeInfo> generic = new List<ThemeInfo>();
-            for (int i = 1; i <= 10; i++)
-            {
-                ThemeInfo info = new ThemeInfo() { ThemeFolder = "Folder:" + i.ToString(), ThemeName = "ThemeX" + i.ToString(), ThemeThumbnailUrl = "http://google.cz" };
-                generic.Add(info);
-            }
-            model2.ThemeInfoList.AddRange(generic);
-            // End testing purposes
-
-            model2.ThemeInfoList.AddRange(Configuration.ThemeHelper.GetInstalledThemesInfo());
-            model2.ThemeInfoList = model2.ThemeInfoList.Skip(itemsPerPage * (currentPage - 1)).Take(itemsPerPage).ToList();
+            model2.ThemeInfoList = paging.GetCurrentPageItems();            
 
             ModelState.Clear();
             return PartialView("ThemesPartialView", model2);
-            //return PartialView("TestPartial", DateTime.Now);
+            
         }
 
 
         public ActionResult UpdateConfiguration()
-        {
-            
+        {            
             JasperSiteCore.Models.Configuration.Initialize();
             return RedirectToAction("Themes");
          }

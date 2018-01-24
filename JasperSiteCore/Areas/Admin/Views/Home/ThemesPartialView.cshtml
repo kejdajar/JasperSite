@@ -6,6 +6,13 @@
 @using JasperSiteCore.Areas.Admin.Models
 @model JasperSiteCore.Areas.Admin.ViewModels.ThemesViewModel
 
+<script>
+        $(document).ready(function () {
+
+            $("tr[data-theme='@Model.SelectedThemeName'] td").css("background-color", "lightGreen");
+
+        });
+</script>
 
 <form asp-action="Themes" asp-controller="Home" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm">
     <div class="table-responsive">
@@ -32,12 +39,15 @@
 
     <div style="background-color:transparent;display:flex;border:1px solid silver">
         <div style="background-color:transparent;margin:auto;">
-            <button type="submit" class="btn btn-jasper btn-jasper-icon" style="display:inline-block" title="předchozí" name="prev" id="prev"  >   <i class="fa fa-angle-left fa-1x" aria-hidden="true"></i> </button>
+            <button type="submit" class="btn btn-jasper btn-jasper-icon" style="display:inline-block" title="předchozí" name="prev" id="prev">   <i class="fa fa-angle-left fa-1x" aria-hidden="true"></i> </button>
             <div style="display:inline-block">
-                <input type="text" style="width:30px;text-align:center" asp-for="PageNumber" title="číslo stránky" />
+                <input type="hidden" asp-for="PageNumber" />
+                @*<input type="text" style="width:30px;text-align:center" asp-for="PageNumber" title="číslo stránky" />
+        <input type="text"  style="width:30px;text-align:center" asp-for="TotalNumberOfPages" title="celkem stránek" />*@
+                <span style="font-size:1.2em;font-weight:bold"> @Model.PageNumber / @Model.TotalNumberOfPages</span>
             </div>
-            <button type="submit" class="btn btn-jasper btn-jasper-icon" style="display:inline-block" title="další" name="next" id="next"  >   <i class="fa fa-angle-right fa-1x" aria-hidden="true"></i> </button>
+            <button type="submit" class="btn btn-jasper btn-jasper-icon" style="display:inline-block" title="další" name="next" id="next">   <i class="fa fa-angle-right fa-1x" aria-hidden="true"></i> </button>
         </div>
         <div />
     </div>
-    </form>
+</form>
