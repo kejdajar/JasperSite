@@ -236,7 +236,7 @@ fieldset[disabled] .btn-jasper:active,
 .btn-jasper.disabled.active,
 .btn-jasper[disabled].active,
 fieldset[disabled] .btn-jasper.active {
-    background-color: #E57373;
+    background-color: #CE93D8;
     border-color: #FFFFFF;
 }
 

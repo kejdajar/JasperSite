@@ -1,0 +1,15 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model JasperSiteCore.ViewModels.JasperPagingViewModel
+
+<div style="background-color:transparent;display:flex;border:1px solid silver">
+    <div style="background-color:transparent;margin:auto;">
+        <button type="submit" class="btn btn-jasper btn-jasper-icon" style="display:inline-block" title="předchozí" name="prev" id="prev" @(Model.DisplayPageNumber == 1 ? "disabled":"")>   <i class="fa fa-angle-left fa-1x" aria-hidden="true"></i> </button>
+        <div style="display:inline-block">            
+            <span style="font-size:1.2em;font-weight:bold"> @Model.DisplayPageNumber / @Model.TotalNumberOfPages</span>
+        </div>
+        <button type="submit" class="btn btn-jasper btn-jasper-icon" style="display:inline-block" title="další" name="next" id="next"  @(Model.DisplayPageNumber < Model.TotalNumberOfPages ? "":"disabled")>   <i class="fa fa-angle-right fa-1x" aria-hidden="true"></i> </button>
+    </div>
+    <div />
+</div>
