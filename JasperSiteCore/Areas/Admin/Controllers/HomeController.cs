@@ -53,7 +53,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             int itemsPerPage = 3;
             int currentPage = 1;
+            
             List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
+            themeInfoList.OrderBy(o=>o.ThemeName);
+            ThemeInfo currentTheme = themeInfoList.Where(i=>i.ThemeName==Configuration.GlobalWebsiteConfig.ThemeName).First();
+            themeInfoList.Remove(currentTheme);
+            themeInfoList.Insert(0,currentTheme);
+
             JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList, currentPage, itemsPerPage);
                        
             ThemesViewModel model = new ThemesViewModel();
@@ -85,6 +91,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 currentPage--;
 
             List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
+            themeInfoList.OrderBy(o=>o.ThemeName);
+            ThemeInfo currentTheme = themeInfoList.Where(i=>i.ThemeName==Configuration.GlobalWebsiteConfig.ThemeName).First();
+            themeInfoList.Remove(currentTheme);
+            themeInfoList.Insert(0,currentTheme);
+          
+          
             JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList,currentPage,itemsPerPage);          
                      
             ThemesViewModel model2 = new ThemesViewModel();
@@ -101,6 +113,18 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             
         }
 
+       [HttpGet]
+        public ActionResult DeleteTheme(string themeName)
+        {
+           bool success= Configuration.ThemeHelper.DeleteThemeByName(themeName);
+            if(success)
+            {
+              return RedirectToAction("Themes");
+            }
+            else return Content("Při mazání vzhledu nastala chyba");
+            
+             
+        }
 
         public ActionResult UpdateConfiguration()
         {            
