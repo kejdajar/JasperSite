@@ -211,8 +211,8 @@ table.j-table-clickable tr:hover {
     color: #ffffff;
     background-color: #CE93D8;
     border-color: #FFFFFF;
-    -webkit-box-shadow: 0 0 0 2px rgba(2, 117, 216, 0.25);
-    box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
+    -webkit-box-shadow: 0 0 0 2px rgba(191, 63, 167, 0.45);
+    box-shadow: 0 0 0 2px rgba(191, 63, 167, 0.1);
 }
 
 .btn-jasper:active,
@@ -243,6 +243,7 @@ fieldset[disabled] .btn-jasper.active {
 /*Custom delete button*/
 .btn-jasper-delete {
     background-color: #C51162;
+   
 }
 
     .btn-jasper-delete:hover,
@@ -252,9 +253,9 @@ fieldset[disabled] .btn-jasper.active {
     .open .dropdown-toggle.btn-jasper {
         color: #ffffff;
         background-color: #EC407A;
-        border-color: #c36d6d;
-        -webkit-box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
-        box-shadow: 0 0 0 2px rgba(239, 154, 154, 0.25);
+        border-color: #ffffff;
+        -webkit-box-shadow: 0 0 0 2px rgba(228, 47, 83, 0.15);
+        box-shadow: 0 0 0 2px rgba(228, 47, 83, 0.15);
     }
 /*-----------END Custom button----------------------*/
 
@@ -315,3 +316,15 @@ fieldset[disabled] .btn-jasper.active {
         
         color: #CE93D8;
     }
+
+
+.modal-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+}
+
+.j-theme-table tr:not(:first-of-type){
+    height:150px;
+}

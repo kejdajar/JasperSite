@@ -7,36 +7,93 @@
 @using JasperSiteCore.ViewModels
 @model JasperSiteCore.Areas.Admin.ViewModels.ThemesViewModel
 
+
+
+
 <script>
         $(document).ready(function () {
 
-            $("tr[data-theme='@Model.SelectedThemeName'] td").css("background-color", "lightGreen");
+            $("tr[data-theme='@Model.SelectedThemeName'] td").css("background-color", "#d5fca6");
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('[data-toggle="modal"] a').click(function (e) {
+                e.preventDefault();
+                
+                $("#themeNameModal").text($(this).data("name"));
+                $("#deleteModalButton").attr("href", "./DeleteTheme?ThemeName=" + $(this).data("name"));
+            });
+
 
         });
 </script>
 
+
+
+
 <form asp-action="Themes" asp-controller="Home" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm">
+
     <div class="table-responsive">
-        <table class="table table-bordered j-table j-table-text-center" id="articleTable">
-            <tr>  <th>Jméno vzhledu</th><th>Složka</th><th>Popis vzhledu</th><th>Akce</th></tr>
+        <table class="table table-bordered j-table j-table-text-center j-theme-table" id="articleTable">
+            <tr>  <th>Jméno vzhledu</th><th>Název</th><th>Popis vzhledu</th><th>Akce</th></tr>
 
             @foreach (ThemeInfo info in Model.ThemeInfoList)
             {
                 <tr data-theme="@info.ThemeName" id="test">
-                    <td>
-                        @info.ThemeName <br /> @(info.ThemeName==Model.SelectedThemeName ? "(Aktuální)":"") <br />
+                    <td style="text-align:center;vertical-align:middle">
+                      
 
-
-                        <img src="@Url.Content(info.ThemeThumbnailUrl)" class="img-fluid" style="max-width:100px;max-height:100px" />
+                        <img src="@Url.Content(info.ThemeThumbnailUrl)" class="img-fluid" style="max-width:130px;max-height:130px" />
                     </td>
-                    <td>@info.ThemeFolder</td>
+                    <td >@info.ThemeName </td> 
                     <td style="text-align:left">@Html.Raw(info.ThemeDescription)</td>
-                    <td> <a asp-area="Admin" asp-controller="Home" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
+                    <td style="text-align:center;vertical-align:middle">
+                        @{
+        if (info.ThemeName != Model.SelectedThemeName)
+        {
+                    <a data-toggle="tooltip" title="Aktivovat" asp-area="Admin" asp-controller="Home" asp-action="ActivateTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a>
+                    <span data-toggle="modal" data-target="#myModal">
+                        <a data-toggle="tooltip" title="Odstranit" asp-area="Admin" asp-controller="Home" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" data-name="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                    </span>
+}
+else
+{ <i class="fa fa-check fa-1x" aria-hidden="true"></i>
+                    <br /> @(info.ThemeName == Model.SelectedThemeName ? "Aktuální" : "")
+
+}
+                        }
+
+
+                    </td>
                 </tr>
             }
         </table>
     </div>
     <input type="hidden" asp-for="PageNumber" />
     @{Html.RenderPartial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.PageNumber, TotalNumberOfPages = Model.TotalNumberOfPages }); }
-   
+
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="margin-left:20px">Skutečně odstranit vzhled?</h4>
+                </div>
+                <div class="modal-body">
+                    Chystáte se odstranit vzhled <span id="themeNameModal"></span>
+
+                </div>
+                <div class="modal-footer">
+                    <a id="deleteModalButton"  title="Odstranit"class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i> Trvale odstranit  </a>
+                    <button type="button" class="btn btn-jasper" data-dismiss="modal" title="Zrušit">Zrušit</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </form>
+
+

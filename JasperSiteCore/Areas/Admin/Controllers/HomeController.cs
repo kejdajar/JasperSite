@@ -49,7 +49,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult Themes()
+        public ActionResult Themes(string errorFlag)
         {
             int itemsPerPage = 3;
             int currentPage = 1;
@@ -70,6 +70,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             model.TotalNumberOfPages = paging.NumberOfPagesNeeded;
 
             model.ThemeInfoList = paging.GetCurrentPageItems();
+
+            model.ErrorFlag = !string.IsNullOrEmpty(errorFlag) ? errorFlag : string.Empty;
 
             ModelState.Clear();
             
@@ -116,20 +118,44 @@ namespace JasperSiteCore.Areas.Admin.Controllers
        [HttpGet]
         public ActionResult DeleteTheme(string themeName)
         {
-           bool success= Configuration.ThemeHelper.DeleteThemeByName(themeName);
-            if(success)
+            bool success = Configuration.ThemeHelper.DeleteThemeByName(themeName);
+            if (success)
             {
-              return RedirectToAction("Themes");
+                return RedirectToAction("Themes", new { errorFlag="false"});
+            }  else
+                return RedirectToAction("Themes", new { errorFlag = "true" });
+        }
+
+        [HttpGet]
+        public ActionResult ActivateTheme(string themeName)
+        {
+            try
+            {
+                JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeName = themeName;
+                return RedirectToAction("Themes", new { errorFlag = "false" });
             }
-            else return Content("Při mazání vzhledu nastala chyba");
+            catch
+            {
+               return RedirectToAction("Themes",new { errorFlag="true"});
+            }
             
-             
+
         }
 
         public ActionResult UpdateConfiguration()
         {            
-            JasperSiteCore.Models.Configuration.Initialize();
-            return RedirectToAction("Themes");
+            try
+            {
+JasperSiteCore.Models.Configuration.Initialize();
+                return RedirectToAction("Themes", new { errorFlag = "false" });
+            }
+            catch
+            {
+return RedirectToAction("Themes", new { errorFlag="true"});
+            }
+            
+
+            
          }
 
       

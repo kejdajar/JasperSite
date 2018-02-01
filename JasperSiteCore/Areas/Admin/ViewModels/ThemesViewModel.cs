@@ -9,7 +9,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 {
     public class ThemesViewModel
     {
-        
+        public string ErrorFlag { get; set; }
         public string SelectedThemeName { get; set; }
         public string ThemeFolder { get; set; }
         public List<ThemeInfo> ThemeInfoList { get; set; }
