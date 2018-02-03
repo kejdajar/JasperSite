@@ -49,12 +49,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             if (ModelState.IsValid && model.Username == "admin" && model.Password == "admin")
             {
-                //var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                //identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.Username, null));
-                //identity.AddClaim(new Claim(ClaimTypes.Name, model.Username, null));
-                //var principal = new ClaimsPrincipal(identity);
-                //HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.Remember });
-                //return RedirectToAction("index", "home");
+                
 
                 List<Claim> claims = new List<Claim>
                     {
@@ -64,21 +59,34 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 HttpContext.SignInAsync(principal, new AuthenticationProperties { IsPersistent = model.Remember });
 
+               if(string.IsNullOrEmpty(returnUrl))
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+               else
+                {
+                    return Redirect(returnUrl);
+                }
                
-                return Redirect(returnUrl);
 
             }
             else
                 return Content("error");
            
-
+                  //var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                //identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.Username, null));
+                //identity.AddClaim(new Claim(ClaimTypes.Name, model.Username, null));
+                //var principal = new ClaimsPrincipal(identity);
+                //HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.Remember });
+                //return RedirectToAction("index", "home");
         }
 
         [HttpGet]
         public ActionResult SignOut()
         {
             HttpContext.SignOutAsync();
-            return View("Index");
+            return RedirectToAction("Index", "Home");
+            //return View("Index");
         }
     }
 }

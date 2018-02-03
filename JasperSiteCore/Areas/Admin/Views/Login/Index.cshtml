@@ -49,54 +49,48 @@ Layout = null;
 
 
 
-    
+
 
 
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+    <link href="~/css/LoginPageStyle.css" rel="stylesheet" />
+    @*<style>
+            /* Login section */
+            body {
+                margin-top: 80px;
+            }
 
-    <style>
-        /* Login section */
-        body {
-            margin-top: 80px;
-        }
-
-        #loginBox {
-            max-width: 600px;
-            margin: 0px auto;
-            margin-bottom: 50px;
-            margin-top: 20px;
-            padding: 5px;
-        }
-
-            #loginBox div.login-row {
-                display: flex;
+            #loginBox {
+                max-width: 600px;
+                margin: 0px auto;
+                margin-bottom: 50px;
+                margin-top: 20px;
                 padding: 5px;
             }
 
-                #loginBox div.login-row input[type=password], input[type=text], input[type=submit] {
-                    flex: 1;
+                #loginBox div.login-row {
+                    display: flex;
+                    padding: 5px;
                 }
 
-                #loginBox div.login-row div:first-child {
-                    width: 100px;
-                }
-    </style>
+                    #loginBox div.login-row input[type=password], input[type=text], input[type=submit] {
+                        flex: 1;
+                    }
+
+                    #loginBox div.login-row div:first-child {
+                        width: 100px;
+                    }
+        </style>*@
+   
 
 </head>
 <body>
 
-    <div id="headerPanel">
-        <div style="flex:1;display:flex">
-            <div style="margin:auto;flex-shrink: 0;">
+ 
 
-                <h1 style="margin:0px;padding:0px;">J<span class="j-gray-color">asp</span>er site <span class="j-gray-color">Core</span></h1>
-            </div>
-        </div>
-    </div>
+    
 
-    <div>
-
-        <div id="loginBox">
+        @*<div id="loginBox">
             <form asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
                 <h2>Přihlášení do administrace</h2>
                 <div class="login-row">
@@ -109,21 +103,79 @@ Layout = null;
                 </div>
                 <div class="login-row">
                     <div> Zapamatovat si přihlášení </div>
-                    <input asp-for="Remember" type="checkbox" class="form-control"/>
+                    <input asp-for="Remember" type="checkbox" class="form-control" />
                 </div>
                 <div class="login-row">
                     <input type="submit" value="Přihlásit se" class="btn btn-jasper" />
                 </div>
                 <input type="hidden" name="returnUrl" value="@Context.Request.Query["ReturnUrl"]" />
             </form>
+        </div>*@
+
+
+
+
+
+        @if (!User.Identity.IsAuthenticated)
+        {
+
+        <div class="login-form">
+            <form asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
+                <h2 class="text-center">J<span style="color:#BA68C8">asp</span>er Site <span style="color:#BA68C8">Core </span></h2>
+               
+                <div class="form-group">
+                    <input asp-for="Username" type="text" class="form-control" placeholder="Uživatelské jméno" required="required">
+                </div>
+                <div class="form-group">
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Heslo" required="required">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-jasper" style="width:100%">Přihlásit se</button>
+                </div>
+                <div class="clearfix">
+                    <label class="pull-left checkbox-inline"><input asp-for="Remember" type="checkbox"> Zapamatovat si</label>
+                    <a href="#" class="pull-right">Zapomenuté heslo?</a>
+                </div>
+
+                @if (!string.IsNullOrEmpty(Context.Request.Query["ReturnUrl"]))
+    {
+            <input type="hidden" name="returnUrl" value="@Context.Request.Query["ReturnUrl"]" />
+
+}
+
+
+            </form>
+
         </div>
+
+        }
+        else
+        {
+
+    <div class="login-form">
+        <form>
+            <h2 class="text-center">J<span style="color:#BA68C8">asp</span>er Site <span style="color:#BA68C8">Core </span></h2>
+            
+
+            <div class="form-group">
+                <a style="width:100%" asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-jasper">Administrace</a>
+                <a asp-area="Admin" asp-controller="Login" asp-action="SignOut" class="btn btn-jasper btn-leave">Odhlásit se</a>
+            </div>
+        </form>
+        </div>
+
+
+        
+
+
+
+
+
+
+        @*@:Odhlášení: <br />
+        <a asp-action="SignOut" asp-controller="Login" asp-area="admin">Odhlásit se</a>*@
+
     
-       
-
-        Odhlášení: <br />
-        <a asp-action="SignOut" asp-controller="Login" asp-area="admin">Odhlásit se</a>
-
-    </div>
-
+        }
 </body>
 </html>
