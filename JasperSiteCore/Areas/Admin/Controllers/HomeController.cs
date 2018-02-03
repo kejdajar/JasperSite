@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Routing;
 using JasperSiteCore.Areas.Admin.Models;
 using Microsoft.AspNetCore.Http;
 using JasperSiteCore.Helpers;
+using System.IO;
+using System.Net.Http.Headers;
+using System.IO.Compression;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
@@ -93,14 +96,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 currentPage--;
 
             List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
-            themeInfoList.OrderBy(o=>o.ThemeName);
-            ThemeInfo currentTheme = themeInfoList.Where(i=>i.ThemeName==Configuration.GlobalWebsiteConfig.ThemeName).First();
+            themeInfoList.OrderBy(o => o.ThemeName);
+            ThemeInfo currentTheme = themeInfoList.Where(i => i.ThemeName == Configuration.GlobalWebsiteConfig.ThemeName).First();
             themeInfoList.Remove(currentTheme);
-            themeInfoList.Insert(0,currentTheme);
-          
-          
-            JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList,currentPage,itemsPerPage);          
-                     
+            themeInfoList.Insert(0, currentTheme);
+
+
+            JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList, currentPage, itemsPerPage);
+
             ThemesViewModel model2 = new ThemesViewModel();
             model2.SelectedThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
             model2.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
@@ -108,11 +111,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             model2.ItemsPerPage = paging.ItemsPerPage;
             model2.TotalNumberOfPages = paging.NumberOfPagesNeeded;
 
-            model2.ThemeInfoList = paging.GetCurrentPageItems();            
+            model2.ThemeInfoList = paging.GetCurrentPageItems();
 
             ModelState.Clear();
             return PartialView("ThemesPartialView", model2);
-            
+
         }
 
        [HttpGet]
@@ -143,22 +146,72 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         public ActionResult UpdateConfiguration()
-        {            
+        {
             try
             {
-JasperSiteCore.Models.Configuration.Initialize();
+                JasperSiteCore.Models.Configuration.Initialize();
                 return RedirectToAction("Themes", new { errorFlag = "false" });
             }
             catch
             {
-return RedirectToAction("Themes", new { errorFlag="true"});
+                return RedirectToAction("Themes", new { errorFlag = "true" });
             }
-            
 
-            
-         }
+        }
 
-      
+        [HttpPost]
+        public IActionResult UploadTheme(ICollection<IFormFile> files)
+        {
+            string themeFolderPath = System.IO.Path.Combine("./",Configuration.GlobalWebsiteConfig.ThemeFolder).Replace('\\', '/');
+
+            foreach (IFormFile file in files)
+                {
+
+
+
+
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    file.OpenReadStream().CopyTo(memoryStream);
+
+                    using (ZipArchive archive = new ZipArchive(memoryStream))
+                    {
+
+                        foreach (ZipArchiveEntry entry in archive.Entries)
+                        {
+                            if (!string.IsNullOrEmpty(Path.GetExtension(entry.FullName))) //make sure it's not a folder
+                            {
+                                entry.ExtractToFile(Path.Combine(themeFolderPath, entry.FullName));
+                            }
+                            else
+                            {
+                                Directory.CreateDirectory(Path.Combine(themeFolderPath, entry.FullName));
+                            }
+                        }
+                    }
+                }
+
+
+
+
+
+
+
+                    //using (var reader = new StreamReader(file.OpenReadStream()))
+                    //    {
+                    //        var fileContent = reader.ReadToEnd();
+                    //        string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    //        System.IO.File.WriteAllText(System.IO.Path.Combine(Environment.CurrentDirectory, fileName), fileContent);
+                    //    }
+
+                    }
+                
+           
+            
+              return RedirectToAction("Themes", new { errorFlag = "true" });
+           
+        }
 
     }
 }

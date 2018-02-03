@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = Helper.JasperUrl("_Layout.cshtml",addTilde:true);
+    ViewData["Title"] = "Tutorial";
+ }
+
+<p>
+    <div class="jumbotron">
+        <h1>JasperSiteCore - návod pro pokročilé uživatele</h1>
+    </div>
+    <h3>Odkaz namapovaný</h3>
+    <a href="/Home/Category/">Kategorie</a> 
+    <hr />
+    <xmp>
+    <a href="@Helper.JasperUrl("../Styles/style.css")">style1</a>
+    <a href="@Helper.JasperUrl("./Styles/style.css")">style2</a>
+    <a href="@Helper.JasperUrl("Styles/style.css")">style3</a>
+    <a href="@Helper.JasperUrl("jasper.json")">json</a>
+</xmp>
+</p>
+
+

@@ -9,11 +9,11 @@
 <script>
 
     $(document).ready(function () {
-        @if(Model.ErrorFlag == "true")
+        @if (Model.ErrorFlag == "true")
         {
             @:$('#myErrorModal').modal('show');
         }
-        else if(Model.ErrorFlag == "false")
+        else if (Model.ErrorFlag == "false")
         {
               @:$('#mySuccessModal').modal('show');
         }
@@ -24,16 +24,9 @@
     });
 </script>
 
+<div id="vzhledy"></div>
 
 <div class="jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Vzhledy</h1></div>
-
-
-
-<h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Vlastní rozšíření </h2>
-<p>JasperSiteCore je možné rozšiřovat o vlastní vzhledy. Návod pro tvorbu vlastního vzhledu nalezente v dokumentaci.</p>
-
-<a class="btn btn-jasper" asp-controller="Home" asp-action="UpdateConfiguration" asp-area="Admin">Aplikovat data z konfiguračních souborů</a>
-<hr />
 
 
 
@@ -43,17 +36,42 @@
 
 
 
-        <div id="mainForm">
 
 
-            @{Html.RenderPartial("ThemesPartialView", Model); }
-                      
-
+        <div id="mainForm1">
+            @Html.Partial("ThemesPartialView", Model)
         </div>
 
-        <div id="mainForm2">
 
+
+
+
+
+
+        <br />
+        <h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Vlastní rozšíření </h2>
+        <p>JasperSiteCore je možné rozšiřovat o vlastní vzhledy. Návod pro tvorbu vlastního vzhledu nalezente v dokumentaci.</p>
+       
+         <form enctype = "multipart/form-data"  asp-controller="Home" asp-action="UploadTheme" asp-area="Admin">
+             <div class="form-group">
+                 <label for="files">Nahrání vzhledu</label>
+                 <input type="file" class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
+                 <small id="fileHelp" class="form-text text-muted"> Vzhled je potřeba nahrát v se formátu .zip</small>
+               
+                 @*<a class="btn btn-jasper" asp-controller="Home" asp-action="UploadTheme" asp-area="Admin">Nahrát nový vzhled</a>*@ 
+                 
+                 <input type="submit" value="Odeslat data" />
+             </div>   
+        </form>
+
+       
+        <hr />
+        <div>
+            <p>Pokud jste manuálně modifikovali vzhledy na serveru, je potřeba tyto změny potvrdit pomocí následující volby:</p>
+            <a class="btn btn-jasper" asp-controller="Home" asp-action="UpdateConfiguration" asp-area="Admin">Aplikovat data z konfiguračních souborů</a>
         </div>
+        <hr />
+
 
         <!-- Error Modal -->
         <div id="myErrorModal" class="modal fade" role="dialog">
@@ -88,7 +106,7 @@
                         <h4 class="modal-title" style="margin-left:20px">Úspěch</h4>
                     </div>
                     <div class="modal-body">
-                       Operace byla provedena úspěšně. <span id="themeNameModal"></span>
+                        Operace byla provedena úspěšně. <span id="themeNameModal"></span>
                     </div>
                     <div class="modal-footer">
 
