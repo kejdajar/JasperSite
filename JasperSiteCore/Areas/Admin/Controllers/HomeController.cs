@@ -13,9 +13,11 @@ using JasperSiteCore.Helpers;
 using System.IO;
 using System.Net.Http.Headers;
 using System.IO.Compression;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
+    [Authorize]
     [Area("Admin")]
     public class HomeController : Controller
     {  

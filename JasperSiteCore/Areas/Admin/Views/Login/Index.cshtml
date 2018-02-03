@@ -1,7 +1,7 @@
 ﻿@{
 Layout = null;
 }
-
+@model JasperSiteCore.Areas.Admin.ViewModels.LoginViewModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,20 +97,32 @@ Layout = null;
     <div>
 
         <div id="loginBox">
-            <h2>Přihlášení do administrace</h2>
-            <div class="login-row">
-                <div class="hidden-xs-down">Login</div>
-                <input type="text" placeholder="Zadejte uživatelské jméno" class="form-control" />
-            </div>
-            <div class="login-row">
-                <div class="hidden-xs-down">Heslo</div>
-                <input type="password" placeholder="Zadejte heslo" class="form-control" />
-            </div>
-            <div class="login-row">
-                <input type="submit" value="Přihlásit se" class="btn btn-jasper" />
-            </div>
+            <form asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
+                <h2>Přihlášení do administrace</h2>
+                <div class="login-row">
+                    <div class="hidden-xs-down">Login</div>
+                    <input asp-for="Username" type="text" placeholder="Zadejte uživatelské jméno" class="form-control" />
+                </div>
+                <div class="login-row">
+                    <div class="hidden-xs-down">Heslo</div>
+                    <input asp-for="Password" type="password" placeholder="Zadejte heslo" class="form-control" />
+                </div>
+                <div class="login-row">
+                    <div> Zapamatovat si přihlášení </div>
+                    <input asp-for="Remember" type="checkbox" class="form-control"/>
+                </div>
+                <div class="login-row">
+                    <input type="submit" value="Přihlásit se" class="btn btn-jasper" />
+                </div>
+            </form>
         </div>
+    
+        Infobox: <br />
+        @User.Identity.Name <br />
+        
 
+        Odhlášení: <br />
+        <a asp-action="SignOut" asp-controller="Login" asp-area="admin">Odhlásit se</a>
 
     </div>
 

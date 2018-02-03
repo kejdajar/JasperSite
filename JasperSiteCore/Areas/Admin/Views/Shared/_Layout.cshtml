@@ -186,8 +186,8 @@
             <div class="j-flex-row">
                 <div class="mainToggleButton">
                     @*<a href="#menu-toggle" id="menu-toggle">
-            <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
-        </a>*@
+                <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
+            </a>*@
                     <a href="#menu-toggle" id="menu-toggle">
                         <i class="fa fa-bars fa-2x j-hamburger-menu" aria-hidden="true" alt="menu"></i>
                     </a>
@@ -195,8 +195,23 @@
 
                 <div class="headerLine">
                     <div class="mainTitle">
-                       <span class="jasperHeading"> J<span class="j-gray-color">asp</span>er Site <span class="j-core-color">Core</span></span>
+                        <span class="jasperHeading"> J<span class="j-gray-color">asp</span>er Site <span class="j-core-color">Core</span></span>
                     </div>
+
+                </div>
+
+                <div>
+                    @if (User.Identity.IsAuthenticated)
+                      {
+                @:Přihlášen uživatel: <i>@User.Identity.Name</i> <br />
+                <a class="btn btn-jasper" asp-controller="Login" asp-area="admin" asp-action="SignOut">Odhlásit</a>
+                    }
+                    else
+                    {
+
+
+                    }
+
                 </div>
             </div>
 

@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http;
 using JasperSiteCore.Models;
 using JasperSiteCore.Models.Database;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace JasperSiteCore
 {
@@ -39,14 +39,26 @@ namespace JasperSiteCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Authentication
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie(options => { options.LoginPath = "/Admin/Login"; });
+
+            services.AddMvc();
+
             services.AddDbContext<DatabaseContext>();
             // Add framework services.
-            services.AddMvc();
+           // services.AddMvc();           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext dbContext)
         {
+            app.UseAuthentication(); // authentication
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

@@ -5,10 +5,15 @@ using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using JasperSiteCore.Areas.Admin.ViewModels;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
+    [AllowAnonymous]
     [Area("Admin")]
     public class LoginController : Controller
     {
@@ -29,11 +34,39 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         // GET: Admin/Login
+        [HttpGet]
         public ActionResult Index()
         {
-            
+            LoginViewModel model = new LoginViewModel();
+            model.Username = "admin";
+            model.Password = "admin";
+            return View(model);
+        }
 
-            return View();
+        [HttpPost]
+        public ActionResult Index(LoginViewModel model, string ReturnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                if (model.Username == "admin" && model.Password == "admin")
+                {
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.Username, null));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, model.Username, null));
+                    var principal = new ClaimsPrincipal(identity);
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.Remember });
+                    return RedirectToAction("index", "home");
+                }
+            }
+            return View(model);
+
+        }
+
+        [HttpGet]
+        public ActionResult SignOut()
+        {
+            HttpContext.SignOutAsync();
+            return View("Index");
         }
     }
 }
