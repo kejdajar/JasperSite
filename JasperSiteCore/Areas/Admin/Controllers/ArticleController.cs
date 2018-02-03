@@ -8,9 +8,11 @@ using JasperSiteCore.Models.Database;
 using JasperSiteCore.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {    
+    [Authorize]
     [Area("Admin")]
     public class ArticleController : Controller
     {

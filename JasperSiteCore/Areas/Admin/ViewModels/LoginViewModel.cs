@@ -15,5 +15,8 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         public string Password { get; set; }
 
         public bool Remember { get; set; }
+
+
+        
     }
 }

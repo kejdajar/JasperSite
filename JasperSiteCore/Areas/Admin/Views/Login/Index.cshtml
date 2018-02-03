@@ -114,12 +114,11 @@ Layout = null;
                 <div class="login-row">
                     <input type="submit" value="Přihlásit se" class="btn btn-jasper" />
                 </div>
+                <input type="hidden" name="returnUrl" value="@Context.Request.Query["ReturnUrl"]" />
             </form>
         </div>
     
-        Infobox: <br />
-        @User.Identity.Name <br />
-        
+       
 
         Odhlášení: <br />
         <a asp-action="SignOut" asp-controller="Login" asp-area="admin">Odhlásit se</a>

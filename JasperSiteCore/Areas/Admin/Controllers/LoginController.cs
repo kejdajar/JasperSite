@@ -39,26 +39,38 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             LoginViewModel model = new LoginViewModel();
             model.Username = "admin";
-            model.Password = "admin";
+            model.Password = "admin";           
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Index(LoginViewModel model, string ReturnUrl)
+        public ActionResult Index(LoginViewModel model, string returnUrl)
         {
-            if (ModelState.IsValid)
+
+            if (ModelState.IsValid && model.Username == "admin" && model.Password == "admin")
             {
-                if (model.Username == "admin" && model.Password == "admin")
-                {
-                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.Username, null));
-                    identity.AddClaim(new Claim(ClaimTypes.Name, model.Username, null));
-                    var principal = new ClaimsPrincipal(identity);
-                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.Remember });
-                    return RedirectToAction("index", "home");
-                }
+                //var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                //identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.Username, null));
+                //identity.AddClaim(new Claim(ClaimTypes.Name, model.Username, null));
+                //var principal = new ClaimsPrincipal(identity);
+                //HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.Remember });
+                //return RedirectToAction("index", "home");
+
+                List<Claim> claims = new List<Claim>
+                    {
+                       new Claim(ClaimTypes.Name,model.Username )
+                    };
+                ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
+                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                HttpContext.SignInAsync(principal, new AuthenticationProperties { IsPersistent = model.Remember });
+
+               
+                return Redirect(returnUrl);
+
             }
-            return View(model);
+            else
+                return Content("error");
+           
 
         }
 
