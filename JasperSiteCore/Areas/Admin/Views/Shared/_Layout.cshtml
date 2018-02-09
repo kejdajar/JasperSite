@@ -181,13 +181,13 @@
     <!---------------------------------Header Panel--------------------------------------->
     <header>
         <div id="headerPanel">
-            
+
             <!--Menu button-->
             <div class="j-flex-row">
                 <div class="mainToggleButton">
                     @*<a href="#menu-toggle" id="menu-toggle">
-                <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
-            </a>*@
+                    <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
+                </a>*@
                     <a href="#menu-toggle" id="menu-toggle">
                         <i class="fa fa-bars fa-2x j-hamburger-menu" aria-hidden="true" alt="menu"></i>
                     </a>
@@ -200,28 +200,18 @@
 
                 </div>
 
-                <div>
-                    @if (User.Identity.IsAuthenticated)
-                      {
-                @:Přihlášen uživatel: <i>@User.Identity.Name</i> <br />
-                <a class="btn btn-jasper" asp-controller="Login" asp-area="admin" asp-action="SignOut">Odhlásit</a>
-                    }
-                    else
-                    {
-
-
-                    }
-
-                </div>
+                
             </div>
 
-           <!--Noscript notification-->
-            <div class="j-flex-row" style="background-color:red" >
+           
+
+            <!--Noscript notification-->
+            <div class="j-flex-row" style="background-color:red">
                 <noscript>  Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</noscript>
-            </div> 
+            </div>
 
 
-             <!--Desktop version of horizontal header panel -->
+            <!--Desktop version of horizontal header panel -->
             <div class="j-flex-row j-secondary-header desktop">
 
 
@@ -247,39 +237,58 @@
                     </div>
                 </div>
 
+                <div class="j-header-group">
+                    @if (User.Identity.IsAuthenticated)
+    {
+               
+                                              <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name</a>
+}
+else
+{
+
+}
+                </div>
+
                 <!--Navigation Button-->
                 @*<div class="j-header-group">
-                    <div class="j-header-group-item  "><b>Články / Článek </b></div>
-                </div>*@
+                <div class="j-header-group-item  "><b>Články / Článek </b></div>
+            </div>*@
 
-            </div>  <!--END Desktop version of horizontal header panel -->   
-
-
-
-
+            </div>  <!--END Desktop version of horizontal header panel -->
             <!--Mobile version of horizontal header panel -->
-           <div class="j-flex-row j-secondary-header mobile">
+            <div class="j-flex-row j-secondary-header mobile">
 
                 <div class="j-header-group">
-                    
+
                     <div class="j-header-group-item">
                         <a asp-controller="Home" asp-area="Admin" asp-action="Index" class="btn btn-jasper btn-jasper-icon">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
                     </div>
 
                     <div class="j-header-group-item">
-                        <a class="btn btn-jasper btn-jasper-icon"  asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
                     </div>
 
                     <div class="j-header-group-item">
-                        <a href="#" class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></a>   
-                    </div>  
+                        <a href="#" class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="j-header-group">
+                        @if (User.Identity.IsAuthenticated)
+        {
+
+                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name</a>
+}
+else
+{
+
+}
+                    </div>
 
                 </div>
-          </div>
-
-
-
             </div>
+
+
+
+        </div>
     </header>
     <!--------------------------------END Header Panel------------------------------->
 

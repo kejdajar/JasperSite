@@ -203,6 +203,14 @@ table.j-table-clickable tr:hover {
     
 }
 
+.btn-user-icon {
+    padding: 6px;
+  
+    margin-top: 1px;
+    margin-left: 1px;
+    margin-bottom: 1px;
+}
+
 .btn-jasper:hover,
 .btn-jasper:focus,
 .btn-jasper:active,
