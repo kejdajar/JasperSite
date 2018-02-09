@@ -1,4 +1,5 @@
-﻿
+﻿@model JasperSiteCore.Areas.Admin.ViewModels.CategoriesViewModel
+@using JasperSiteCore.Models.Database;
 @{
     ViewBag.Title = "Categories";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -9,3 +10,12 @@
 <p>
    Zde si nastavte vaše rubriky
 </p>
+
+<h2>Kategorie</h2>
+<table class="j-table table-responsive">
+    <tr><td>Název</td></tr>
+    @foreach(Category c in Model.Categories)
+    {
+        <tr><td>@c.Name</td></tr>
+    }
+</table>

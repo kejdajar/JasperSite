@@ -40,34 +40,35 @@ namespace JasperSiteCore.Models.Database
                     return;   // DB has been seeded
                 }
 
+           
+            Category[] categories = new Category[]
+            {
+                new Category(){Name="Nezařazeno"},
+                new Category(){Name="Programování"},
+            };
+
+            foreach (Category c in categories)
+            {
+                DatabaseContext.Categories.Add(c);
+            }
+            DatabaseContext.SaveChanges();
 
             Article[] articles = new Article[]
             {
-                new Article {Name="První článek", HtmlContent="<b>tučný text</b>", PublishDate = DateTime.Now},
-                 new Article {Name="Druhý článek", HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60)},
-                   new Article {Name="Třetí článek", HtmlContent="<h2>nadpis text</h2>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(120)},
-                    new Article {Name="Čtvrtý článek", HtmlContent="test", PublishDate = DateTime.Now + TimeSpan.FromMinutes(180)},
+                new Article {Name="První článek", HtmlContent="<b>tučný text</b>",PublishDate = DateTime.Now,Category=categories[0]},
+                 new Article {Name="Druhý článek", HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[0]},
+                   new Article {Name="Třetí článek", HtmlContent="<h2>nadpis text</h2>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(120),Category=categories[1]},
+                    new Article {Name="Čtvrtý článek", HtmlContent="test", PublishDate = DateTime.Now + TimeSpan.FromMinutes(180),Category=categories[1]},
             };
 
             foreach(Article a in articles)
             {
                 DatabaseContext.Articles.Add(a);
             }
+            DatabaseContext.SaveChanges();
 
-            Category[] categories = new Category[]
-            {
-                new Category { Name="Category1"},
-                 new Category { Name="Category2"},
-                  new Category { Name="Category3"},
-                   new Category { Name="Category4"}
-            };
 
-            foreach(Category c in categories)
-            {
-                DatabaseContext.Categories.Add(c);
-            }            
-               DatabaseContext.SaveChanges();
-            }
+        }
         }
     
 }

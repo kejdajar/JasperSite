@@ -45,7 +45,9 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public ActionResult Categories()
         {
-           return View();
+            CategoriesViewModel model = new CategoriesViewModel();
+            model.Categories = Configuration.DbHelper.GetAllCategories();
+           return View(model);
         }
 
         public ActionResult Articles()

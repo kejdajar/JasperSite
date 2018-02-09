@@ -9,7 +9,7 @@ namespace JasperSiteCore.Models.Database
 {
     public class Article
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        
         public int Id { get; set; }
 
         [Required]
@@ -19,14 +19,45 @@ namespace JasperSiteCore.Models.Database
 
         [Required]
         public DateTime PublishDate { get; set; }
-      //  public List<Category> Categories { get; set; }
+      
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<User> Users { get; set; }
     }
 
     public class Category
-    {
-        
+    {        
         public int Id { get; set; }
         public string Name { get; set; }
+    }
+
+    public class User
+    {
+        public int Id { get; set; }
+        public string Nickname { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Salt { get; set; }
+
+        public int RoleId { get; set; }
+        public Role Role { get; set; }
+    }
+
+    public class Role
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Comment
+    {
+        public int Id { get; set; }
+        public string HtmlContent { get; set; }
+        public DateTime PublishDate { get; set; }        
+       
     }
    
 }
