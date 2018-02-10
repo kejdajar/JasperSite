@@ -32,6 +32,18 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
+        public List<Article> GetAllArticles(int categoryId)
+        {
+            if (_db.Articles.Any())
+            {
+                return _db.Articles.Where(a=>a.CategoryId==categoryId).ToList();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public  Article GetArticleById(int id)
         {
             IDatabaseContext database = _db;

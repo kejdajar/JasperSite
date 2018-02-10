@@ -11,14 +11,18 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/lib/tether/dist/css/tether.css" rel="stylesheet" />
         <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" />
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
     </environment>
 
     <environment exclude="Development">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />       
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" rel="stylesheet"
-              asp-fallback-href="~/lib/tether/dist/css/tether.css"/>        
+              asp-fallback-href="~/lib/tether/dist/css/tether.css" />
+        <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css"
+              integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous"
+              asp-fallback-href="~/lib/font-awesome/css/font-awesome.css">
         <!-- TODO: Nalinkovat minifikaci -->
         <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" asp-append-version="true" />
     </environment>
@@ -78,7 +82,7 @@
                         <a class="nav-link" href="/Admin/Install/Index">Instalace</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Home/Category/">Kategorie</a>
+                        <a class="nav-link" href="/Home/Category/">Rubriky</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Home/Tutorial/">Tutoriál</a>

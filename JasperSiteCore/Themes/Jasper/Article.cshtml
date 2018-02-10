@@ -2,17 +2,22 @@
 @{
     Layout = "~/Themes/Jasper/_Layout.cshtml";
 }
-<h1>---name-of-article</h1>
+
  
 @{ var query = Convert.ToInt32(Context.Request.Query["id"]) ;}
 
+<div class="container-fluid">
     <j-article id="@query">
-         <j-name /> <br />
-       <j-content />
+       
+        <div class="jumbotron">
+            <h1> <j-name /></h1>
+        </div>
+
+        <j-content />
     </j-article>
 
 
-    
+</div>
   
 
 
