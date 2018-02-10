@@ -9,7 +9,10 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 {
     public class CategoriesViewModel
     {
+       public List<Category> Categories { get; set; }
        
-        public List<Category> Categories { get; set; }
+        [Required( ErrorMessage ="Vyplňte jméno rubriky")]
+       public string NewCategoryName { get; set; }
+
     }
 }

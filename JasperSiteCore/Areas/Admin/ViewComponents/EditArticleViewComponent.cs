@@ -27,7 +27,9 @@ namespace JasperSiteCore.Areas.Admin.ViewComponents
                 Id = articleToEdit.Id,
                 HtmlContent = articleToEdit.HtmlContent,
                 Name = articleToEdit.Name,
-                PublishDate = articleToEdit.PublishDate
+                PublishDate = articleToEdit.PublishDate,
+                Categories= JasperSiteCore.Models.Configuration.DbHelper.GetAllCategories(),
+                SelectedCategoryId = articleToEdit.CategoryId
             };
             return View(model);
         }

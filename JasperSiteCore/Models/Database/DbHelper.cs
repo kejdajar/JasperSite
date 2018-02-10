@@ -61,16 +61,17 @@ namespace JasperSiteCore.Models.Database
 
         }
 
-        public void EditArticle(JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel article)
+        public void EditArticle(JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel articleViewModel)
         {
             IDatabaseContext database = _db;
-            Article oldArticleToChange = database.Articles.Where(a => a.Id == article.Id).Single();
+            Article oldArticleToChange = database.Articles.Where(a => a.Id == articleViewModel.Id).Single();
 
 
-            oldArticleToChange.HtmlContent = article.HtmlContent;
-            oldArticleToChange.Name = article.Name;
-            oldArticleToChange.PublishDate = article.PublishDate;
-           
+            oldArticleToChange.HtmlContent = articleViewModel.HtmlContent;
+            oldArticleToChange.Name = articleViewModel.Name;
+            oldArticleToChange.PublishDate = articleViewModel.PublishDate;
+            oldArticleToChange.CategoryId = articleViewModel.SelectedCategoryId;
+
            // database.Articles.Add(oldArticleToChange);
             database.SaveChanges();
         }
@@ -98,6 +99,22 @@ namespace JasperSiteCore.Models.Database
                 return null;
             }
         }
+
+        public void AddNewCategory(string categoryName)
+        {
+            IDatabaseContext database = _db;
+            database.Categories.Add(new Category() { Name = categoryName });
+            database.SaveChanges();
+        }
+
+        public void DeleteCategory(int categoryId)
+        {
+            IDatabaseContext database = _db;
+            Category goner = database.Categories.Where(c => c.Id == categoryId).Single();
+            database.Categories.Remove(goner);
+            database.SaveChanges();
+        }
+
 
         public int GetNumberOfEntities(string nameOfContextProperty)
         {

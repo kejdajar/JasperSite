@@ -43,12 +43,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult Categories()
-        {
-            CategoriesViewModel model = new CategoriesViewModel();
-            model.Categories = Configuration.DbHelper.GetAllCategories();
-           return View(model);
-        }
+       
 
         public ActionResult Articles()
         {
@@ -215,6 +210,39 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             
               return RedirectToAction("Themes", new { errorFlag = "true" });
            
+        }
+
+        public ActionResult Categories()
+        {
+            CategoriesViewModel model = new CategoriesViewModel();
+            model.Categories = Configuration.DbHelper.GetAllCategories();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult CreateNewCategory(CategoriesViewModel model)
+        {
+            Configuration.DbHelper.AddNewCategory(model.NewCategoryName);
+
+            CategoriesViewModel viewModel = new CategoriesViewModel();
+            viewModel.Categories = Configuration.DbHelper.GetAllCategories();
+            ModelState.Clear();
+
+
+            return View("Categories", viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteCategory(CategoriesViewModel model,int id)
+        {
+            Configuration.DbHelper.DeleteCategory(id);
+
+            CategoriesViewModel viewModel = new CategoriesViewModel();
+            viewModel.Categories = Configuration.DbHelper.GetAllCategories();
+            ModelState.Clear();
+
+
+            return View("Categories", viewModel);
         }
 
     }

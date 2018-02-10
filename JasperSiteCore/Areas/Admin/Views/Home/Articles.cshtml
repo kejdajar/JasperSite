@@ -80,10 +80,11 @@
 
 <div class="table-responsive">
     <table class="table table-bordered j-table j-table-text-center" id="articleTable">
-        <tr>  <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th><th>Akce</th></tr>
+        <tr> <th>Rubrika</th> <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th><th>Akce</th></tr>
         @foreach (Article a in Configuration.DbHelper.GetAllArticles())
         {
             <tr data-href="@a.Id">
+                 <td>@a.Category.Name</td>
                 <td>@a.Id</td>
                 <td>@a.PublishDate</td>
                 <td>@a.Name</td>
