@@ -68,8 +68,8 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#containerNavbar" aria-controls="containerNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="/">J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span></a>
-
+            @*<a class="navbar-brand" href="/">J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span></a>*@
+            <a class="navbar-brand" href="/"><span style="color:#edccff">@JasperSiteCore.Models.Configuration.DbHelper.GetWebsiteName()</span></a>
             <div class="collapse navbar-collapse" id="containerNavbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
@@ -96,10 +96,10 @@
                         </div>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-md-0">
+                @*<form class="form-inline my-2 my-md-0">
                     <input class="form-control mr-sm-2" type="text" placeholder="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
+                </form>*@
             </div>
         </nav>
 
@@ -128,7 +128,7 @@
             @RenderBody()
             <hr />
             <footer>
-                <p>&copy; 2017 - WebApplication1</p>
+                <p>&copy; 2017-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core</p>
             </footer>
             </div>
         

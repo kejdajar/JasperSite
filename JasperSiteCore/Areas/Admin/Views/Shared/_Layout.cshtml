@@ -162,8 +162,10 @@
                 Databáze</a></div>
 
 <div class="j-link-container">
-    <a class="j-link" href="#">  <i class="fa fa-cogs j-fa-margin"  aria-hidden="true"></i>
-                  Nastavení</a></div>
+    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Settings" ? "j-menu-highlight" : "" )" asp-controller="Settings" asp-action="Index">
+        <i class="fa fa-user-circle-o j-fa-margin" aria-hidden="true"></i>
+        Nastavení
+    </a></div>
 
 
 

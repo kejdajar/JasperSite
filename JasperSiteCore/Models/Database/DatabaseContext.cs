@@ -13,6 +13,7 @@ namespace JasperSiteCore.Models.Database
         DbSet<Category> Categories { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<Setting> Settings { get; set; }
         int SaveChanges();
     }
 
@@ -39,6 +40,7 @@ namespace JasperSiteCore.Models.Database
         public virtual DbSet<Category> Categories{ get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Setting> Settings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +48,7 @@ namespace JasperSiteCore.Models.Database
             modelBuilder.Entity<Category>().ToTable("Categories");
             modelBuilder.Entity<Role>().ToTable("Roles");
             modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Setting>().ToTable("Settings");
         }
 
        // public DbSet<JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel> EditArticleViewModel { get; set; }

@@ -178,5 +178,18 @@ namespace JasperSiteCore.Models.Database
         {
             _db.SaveChanges();
         }
+
+        // Settings
+        public string GetWebsiteName()
+        {
+            return _db.Settings.Where(s => s.Key == "WebsiteName").Select(s => s.Value).Single();
+        }
+        public void SetWebsiteName(string newWebsiteName)
+        {
+            // search for setting
+            Setting websiteNameSetting = _db.Settings.Where(s => s.Key.Trim() == "WebsiteName").Single();
+            websiteNameSetting.Value = newWebsiteName;
+            _db.SaveChanges();
+        }
     }
 }

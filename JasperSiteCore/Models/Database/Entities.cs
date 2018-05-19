@@ -52,6 +52,14 @@ namespace JasperSiteCore.Models.Database
         public string Name { get; set; }
     }
 
+    public class Setting
+    {
+        [Key]
+        public string Key { get; set; }
+
+        public string Value { get; set; }
+    }
+
     // Not yet implemented
     public class Comment
     {

@@ -79,7 +79,21 @@ namespace JasperSiteCore.Models.Database
             admin.Password = hashedPassword;
             admin.Salt = salt;
             DatabaseContext.Users.Add(admin);
+
+            User redactor = new User() { Nickname = "Redaktor", Username = "Red", Role = redactorRole };
+            string salt2, hashedPassword2;
+            JasperSiteCore.Models.Security.Authentication.HashPassword("red", out salt2, out hashedPassword2);
+            redactor.Password = hashedPassword2;
+            redactor.Salt = salt2;
+            DatabaseContext.Users.Add(redactor);
+
             DatabaseContext.SaveChanges();
+
+            // Settings
+            Setting websiteNameSetting = new Setting() { Key = "WebsiteName", Value = "My first JasperSite webpage" };
+            _databaseContext.Settings.Add(websiteNameSetting);
+            DatabaseContext.SaveChanges();
+
 
         }
         }
