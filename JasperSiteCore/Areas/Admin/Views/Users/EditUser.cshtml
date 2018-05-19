@@ -1,0 +1,97 @@
+﻿@using JasperSiteCore.Models.Database;
+@model JasperSiteCore.Areas.Admin.ViewModels.EditUserViewModel
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+    <script>
+        function savedInfo() {
+
+            var panel = $(`<div class="j-flex-row j-secondary-header">
+
+            <div class="j-header-group">
+
+                <div class="j-header-group-item">
+                    <span style='color:white'>  <b>Uloženo</b> </span>
+                </div>
+
+            </div>
+        </div>`);
+
+            panel.css({
+                "display": "none",
+                "background-color": "#8BC34A",
+
+                "font-size": "1.3em"
+            });
+
+            $("#headerPanel").append(panel);
+            panel.slideDown("slow").delay(2000).slideUp("slow");
+
+        }
+    </script>
+}
+
+<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Uživatel: @Model.Username</h1></div>
+
+<div id="mainForm">
+    <form asp-action="EditUser" asp-controller="Users" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete="savedInfo">
+        <div class="form-horizontal">
+
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Nickname"></label>
+
+                <input asp-for="Nickname" class="form-control" />
+                <span asp-validation-for="Nickname" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Username"></label>
+
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AllRoles"></label>
+
+                <select class="form-control" asp-for="RoleId" asp-items="@(new SelectList(Model.AllRoles,"Id","Name"))"></select>
+
+                <span asp-validation-for="RoleId" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="OldPasswordPlainText"></label>
+
+                <input asp-for="OldPasswordPlainText" class="form-control" />
+                <span asp-validation-for="OldPasswordPlainText" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NewPasswordPlainText"></label>
+
+                <input asp-for="NewPasswordPlainText" class="form-control" />
+                <span asp-validation-for="NewPasswordPlainText" class="text-danger"></span>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <a href="/Admin/Users/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam uživatelů</a>
+                <button type="submit" asp-area="Admin" asp-controller="Users" asp-action="EditUser" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+
+
+
+            </div>
+        </div>
+
+    </form>
+</div>

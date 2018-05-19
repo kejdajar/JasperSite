@@ -15,7 +15,7 @@ namespace JasperSiteCore.Models
 
         static Configuration()
         {
-            Initialize();
+            //Initialize();
         }
 
         public static void Initialize()
@@ -52,7 +52,9 @@ namespace JasperSiteCore.Models
             {
                 //try
                 //{               
-                DatabaseContext dbContext = new DatabaseContext();
+                DatabaseContext dbContext = new DatabaseContext();               
+              
+
                 DbInitializer init = new DbInitializer(dbContext);
                 init.Initialize(ensureDbIsDeleted);
                 //}

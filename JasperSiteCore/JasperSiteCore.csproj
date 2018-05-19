@@ -16,8 +16,10 @@
 
   <ItemGroup>
     <None Remove="Areas\Admin\ViewModels\CategoriesViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\EditUserViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\InstallViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\LoginViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\UsersViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>

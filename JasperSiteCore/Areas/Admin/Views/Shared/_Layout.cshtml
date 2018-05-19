@@ -154,8 +154,8 @@
                   Obrázky</a></div>
 
                   <div class="j-link-container">
-    <a class="j-link" href="#">  <i class="fa fa-user-circle-o j-fa-margin"  aria-hidden="true"></i>
-                  Uživatel</a></div>
+    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "j-menu-highlight" : "" )" asp-controller="Users" asp-action="Index">  <i class="fa fa-user-circle-o j-fa-margin"  aria-hidden="true"></i>
+                  Uživatelé</a></div>
 
  <div class="j-link-container">
     <a class="j-link" href="#">  <i class="fa fa-database j-fa-margin"  aria-hidden="true"></i>

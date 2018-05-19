@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using JasperSiteCore.Models.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace JasperSiteCore.Models.Database
 {
@@ -20,13 +22,13 @@ namespace JasperSiteCore.Models.Database
 
         private IDatabaseContext _db;
 
-        public  List<Article> GetAllArticles()
-        {           
+        public List<Article> GetAllArticles()
+        {
             if (_db.Articles.Any())
             {
                 return _db.Articles.ToList();
             }
-           else
+            else
             {
                 return null;
             }
@@ -36,7 +38,7 @@ namespace JasperSiteCore.Models.Database
         {
             if (_db.Articles.Any())
             {
-                return _db.Articles.Where(a=>a.CategoryId==categoryId).ToList();
+                return _db.Articles.Where(a => a.CategoryId == categoryId).ToList();
             }
             else
             {
@@ -44,13 +46,13 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
-        public  Article GetArticleById(int id)
+        public Article GetArticleById(int id)
         {
             IDatabaseContext database = _db;
 
             if (database.Articles.Any())
             {
-                return database.Articles.Where(a => a.Id==id).Single();
+                return database.Articles.Where(a => a.Id == id).Single();
             }
             else
             {
@@ -58,11 +60,11 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
-        public  int AddArticle()
+        public int AddArticle()
         {
             IDatabaseContext database = _db;
             JasperSiteCore.Models.Database.Article articleEntity = new Article()
-            {               
+            {
                 HtmlContent = "Váš článek začíná zde...",
                 Name = "Nový článek",
                 PublishDate = DateTime.Now
@@ -84,7 +86,7 @@ namespace JasperSiteCore.Models.Database
             oldArticleToChange.PublishDate = articleViewModel.PublishDate;
             oldArticleToChange.CategoryId = articleViewModel.SelectedCategoryId;
 
-           // database.Articles.Add(oldArticleToChange);
+            // database.Articles.Add(oldArticleToChange);
             database.SaveChanges();
         }
 
@@ -99,10 +101,10 @@ namespace JasperSiteCore.Models.Database
 
 
 
-        public  List<Category> GetAllCategories()
+        public List<Category> GetAllCategories()
         {
             IDatabaseContext database = _db;
-            if(database.Categories.Any())
+            if (database.Categories.Any())
             {
                 return database.Categories.ToList();
             }
@@ -141,6 +143,40 @@ namespace JasperSiteCore.Models.Database
             {
                 return 0;
             }
+        }
+
+        // **************** USERS **************** //
+        public User GetUserWithUsername(string username)
+        {
+            return _db.Users.Where(u => u.Username.Trim() == username.Trim()).Single();
+        }
+
+        public User GetUserById(int userId)
+        {
+            return _db.Users.Include(u => u.Role).Where(u => u.Id == userId).Single();
+        }
+
+        public List<User> GetAllUsers()
+        {
+            return _db.Users.Include(u => u.Role).ToList();
+        }
+
+        public List<Role> GetAllRoles()
+        {
+            return _db.Roles.ToList();
+        }
+
+        public void ChangePassword(int userId, string newHashedPassword, string newSalt)
+        {
+            User u = GetUserById(userId);
+            u.Password = newHashedPassword;
+            u.Salt = newSalt;
+            _db.SaveChanges();
+        }
+
+        public void SaveChanges()
+        {
+            _db.SaveChanges();
         }
     }
 }

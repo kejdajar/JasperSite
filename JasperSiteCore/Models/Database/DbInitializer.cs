@@ -67,6 +67,19 @@ namespace JasperSiteCore.Models.Database
             }
             DatabaseContext.SaveChanges();
 
+            Role adminRole = new Role() { Name = "Admin" };
+            Role redactorRole = new Role() { Name = "Redaktor" };
+            DatabaseContext.Roles.Add(adminRole);
+            DatabaseContext.Roles.Add(redactorRole);
+            DatabaseContext.SaveChanges();
+
+            User admin = new User() { Nickname = "Administrátor", Username = "Admin",Role=adminRole };
+            string salt, hashedPassword;
+            JasperSiteCore.Models.Security.Authentication.HashPassword("admin", out salt, out hashedPassword);
+            admin.Password = hashedPassword;
+            admin.Salt = salt;
+            DatabaseContext.Users.Add(admin);
+            DatabaseContext.SaveChanges();
 
         }
         }

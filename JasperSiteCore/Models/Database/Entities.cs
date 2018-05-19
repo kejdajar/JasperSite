@@ -34,7 +34,7 @@ namespace JasperSiteCore.Models.Database
         public string Name { get; set; }
     }
 
-    public class User
+    public partial class User
     {
         public int Id { get; set; }
         public string Nickname { get; set; }
@@ -52,11 +52,12 @@ namespace JasperSiteCore.Models.Database
         public string Name { get; set; }
     }
 
+    // Not yet implemented
     public class Comment
     {
         public int Id { get; set; }
         public string HtmlContent { get; set; }
-        public DateTime PublishDate { get; set; }        
+        public DateTime PublishDate { get; set; }      
        
     }
    

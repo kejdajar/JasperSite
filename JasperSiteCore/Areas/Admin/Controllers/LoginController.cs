@@ -10,6 +10,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using JasperSiteCore.Models.Database;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
@@ -39,15 +40,18 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             LoginViewModel model = new LoginViewModel();
             model.Username = "admin";
-            model.Password = "admin";           
+          // model.Password = "admin";           
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Index(LoginViewModel model, string returnUrl)
         {
+            User user = Configuration.DbHelper.GetUserWithUsername(model.Username);
+            string filledInPassword = model.Password;
+            bool isPswdCorrect = user.ComparePassword(filledInPassword);
 
-            if (ModelState.IsValid && model.Username == "admin" && model.Password == "admin")
+            if (ModelState.IsValid && isPswdCorrect)
             {
                 
 

@@ -1,0 +1,17 @@
+﻿@using JasperSiteCore.Models.Database;
+@model JasperSiteCore.Areas.Admin.ViewModels.UsersViewModel
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Uživatelé</h1></div>
+
+<div class="table-responsive">
+    <table class="table table-bordered j-table j-table-text-center">
+        <tr><th>Username</th><th>Nickname</th><th>Role</th><th>Akce</th></tr>
+        @foreach(User u in Model.Users)
+        {
+            <tr><td>@u.Username</td><td>@u.Nickname</td><td>@u.Role.Name</td><td><a href="/Admin/Users/EditUser?id=@u.Id" class="btn btn-jasper">Upravit</a></td></tr>
+        }
+    </table>
+</div>
