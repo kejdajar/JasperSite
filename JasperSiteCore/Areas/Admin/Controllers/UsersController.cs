@@ -38,12 +38,16 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpPost]
+       
         public IActionResult EditUser(EditUserViewModel model)
         {
-          
+           if (ModelState.IsValid)
+            {
                 // Get current user
                 User user = Configuration.DbHelper.GetUserById(model.Id);
+           
 
+           
                 // Check password
                 if(user.ComparePassword(model.OldPasswordPlainText))
                 {
@@ -59,7 +63,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     user.Salt = salt;
                     Configuration.DbHelper.SaveChanges();
                 }
-            
+            }
             return View(model);
         }
     }

@@ -32,9 +32,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 
         public int RoleId { get; set; }       
 
-        [Display(Name = "Zvolte roli")]
-        [Required(ErrorMessage = "Zvolte roli uživatele")]
-        
+        [Display(Name = "Zvolte roli")] 
         public List<Role> AllRoles { get; set; }
      
     }
