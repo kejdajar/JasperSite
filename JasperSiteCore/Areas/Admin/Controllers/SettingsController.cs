@@ -20,13 +20,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(SettingsViewModel model)
+        public IActionResult SaveSettings(SettingsViewModel model)
         {
             if(ModelState.IsValid)
             {
                 Configuration.DbHelper.SetWebsiteName(model.WebsiteName);
             }
-            return View();
+           
+            return View(model);
         }
     }
 }

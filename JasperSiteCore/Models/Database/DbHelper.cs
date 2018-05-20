@@ -114,6 +114,11 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
+        public string GetCategoryNameById(int id)
+        {
+            return _db.Categories.Where(c => c.Id == id).Single().Name;
+        }
+
         public void AddNewCategory(string categoryName)
         {
             IDatabaseContext database = _db;

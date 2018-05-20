@@ -33,6 +33,7 @@ namespace JasperSiteCore.Models
             set
             {
                 ConfigurationDataObject.ThemeName = value;
+                CommitChanges();
             }
         }
 
@@ -42,6 +43,7 @@ namespace JasperSiteCore.Models
             set
             {
                 ConfigurationDataObject.ThemeFolder = value;
+                CommitChanges();
             }
         }
 
@@ -51,6 +53,7 @@ namespace JasperSiteCore.Models
             set
             {
                 ConfigurationDataObject.ConnectionString = value;
+                CommitChanges();
             }
         }
 
@@ -60,6 +63,7 @@ namespace JasperSiteCore.Models
             set
             {
                 ConfigurationDataObject.TypeOfDatabase = value;
+                CommitChanges();
             }
         }
 
@@ -73,6 +77,7 @@ namespace JasperSiteCore.Models
             set
             {
                 ConfigurationDataObject.InstallationCompleted = value.ToString();
+                CommitChanges();
             }
         }
 

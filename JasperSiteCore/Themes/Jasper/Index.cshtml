@@ -1,102 +1,56 @@
-﻿
+﻿@using JasperSiteCore.Models.Database
+@using JasperSiteCore.Models
 @{
-    Layout = Helper.JasperUrl("_Layout.cshtml",addTilde:true);
+    Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
     ViewData["Title"] = "Název vaší stránky";
- }
-
- @section Scripts {
-    <script>
-        $(function () {
-
-            $('.carousel').carousel()
-        });
-     </script>
- }
-@section Styles {
-    <style>
-        .carousel-item {
-            height:300px;            
-        }
-    </style>
 }
 
 
 
 
 
+    
 
+    <div class="container-fluid">
+        <div class="jumbotron">
+            <h1>Hlavní stránka</h1>
+        </div>
 
+        @foreach (Category c in Configuration.DbHelper.GetAllCategories())
+    {
 
+        <h2 style="margin:10px"><i class="fa fa-star-o" aria-hidden="true"></i> @c.Name</h2>
+        @if (Configuration.DbHelper.GetAllArticles(c.Id).Count > 0)
+    {
+        @foreach (Article article in Configuration.DbHelper.GetAllArticles(c.Id))
+    {
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-bottom:5px">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active">
-                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/darker.jpg")" alt="First slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3>JasperSiteCore</h3>
-                    <p>Jednoduchý redakční systém</p>
+        <div class="list-group">
+            <a href="/Home/Article?id=@article.Id" class="list-group-item list-group-item-action flex-column align-items-start ">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">@article.Name</h5>
+                    <small>@article.PublishDate.ToLongDateString()</small>
                 </div>
+                <p class="mb-1"><i></i></p>
+                <small>@article.Category.Name</small>
+            </a>
+        </div>
+}
+}
+else
+{
+    <div class="list-group">
+        <div class="list-group-item list-group-item-action flex-column align-items-start ">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">Žádné články k dispozici</h5>
 
             </div>
-            <div class="carousel-item">
-                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/darker.jpg")" alt="Second slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3>Vytvářejte vlastní vzhledy</h3>
-                    <p>Pro pokročilejší uživatele</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/darker.jpg")" alt="Third slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3>Široká volba možností</h3>
-                    <p>Systém se vám přizpůsobí na míru</p>
-                </div>
-            </div>
-        </div>
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>
 
-
-    <div class="container jasper-container-inner">
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Vítejte</h2>
-            <ul>
-                <li>JasperSiteCore je redakční systém na platformě ASP.NET Core MVC</li>
-                <li>Umožňuje rychle vytvářet vlastní webové stránky</li>
-                <li>Momentálně se nacházíte na ukázkové stránkce, která byla pro vás vytvořena</li>
-            </ul>
-        </div>
-        
-        <div class="col-md-4">
-            <h2>Krok za krokem</h2>
-            <ul>
-                <li>Nejprve se přihlašte do administrace, použijte předpřipravený účet: uživatel:admin, heslo:admin</li>
-                <li>Lze se i přihlásit účtem redaktora: uživatel:red, heslo:red</li>
-                <li>Změňte v redakčním systému název vašeho webu</li>
-                <li>Vyberte si jeden z dostupných vzhledů, nebo si vytvořte vlastní</li>
-           </ul>
-        </div>
-        <div class="col-md-4">
-            <h2>Sdílejte obsah</h2>
-            <ul>
-                <li>Publikujte články</li>
-                <li>Vytvářejte další vzhledy</li>
-                <li>Upravujte si web dle svých potřeb</li>
-            </ul>
         </div>
     </div>
 
-</div>
+}
+
+}
+
+    </div>

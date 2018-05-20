@@ -43,13 +43,6 @@
         "/Home/Article/"
       ],
       "file": "Article.cshtml"
-    },
-    {
-      "routes": [
-        "/Home/SingleCategory",
-        "/Home/SingleCategory/"
-      ],
-      "file": "SingleCategory.cshtml"
     }
   ]
 }

@@ -1,14 +1,14 @@
 ﻿
 @{
-    Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
+    Layout = "~/Themes/Jasper/_Layout.cshtml";
 }
 
-
-@{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
+ 
+@{ var query = Convert.ToInt32(Context.Request.Query["id"]) ;}
 
 <div class="container-fluid">
     <j-article id="@query">
-
+       
         <div class="jumbotron">
             <h1> <j-name /></h1>
         </div>
@@ -18,6 +18,6 @@
 
 
 </div>
-
+  
 
 

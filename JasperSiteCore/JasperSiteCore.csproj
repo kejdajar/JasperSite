@@ -21,6 +21,14 @@
     <None Remove="Areas\Admin\ViewModels\LoginViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\SettingsViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\UsersViewModel.cs" />
+    <None Remove="Themes\Jasper\Article.cshtml" />
+    <None Remove="Themes\Jasper\Category.cshtml" />
+    <None Remove="Themes\Jasper\Error.cshtml" />
+    <None Remove="Themes\Jasper\Index.cshtml" />
+    <None Remove="Themes\Jasper\jasper.json" />
+    <None Remove="Themes\Jasper\SingleCategory.cshtml" />
+    <None Remove="Themes\Jasper\_Layout.cshtml" />
+    <None Remove="Themes\Jasper\_ViewImports.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
