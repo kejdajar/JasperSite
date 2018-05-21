@@ -134,6 +134,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeName = themeName;
+                UpdateConfiguration(); // All cached settings will be reset
                 return RedirectToAction("Themes", new { errorFlag = "false" });
             }
             catch

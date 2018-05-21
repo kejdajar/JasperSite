@@ -29,11 +29,11 @@
     <table class="table table-bordered">
         <tr>
             <td>Celkový počet článků</td>
-            <td>@Configuration.DbHelper.GetNumberOfEntities("Articles")</td>
+            <td>@Configuration.DbHelper.GetAllArticles().Count()</td>
         </tr>
         <tr>
-            <td>Celkový počet kategorií</td>
-            <td>?</td>
+            <td>Celkový počet rubrik</td>
+            <td>@Configuration.DbHelper.GetAllCategories().Count()</td>
         </tr>
 
     </table>

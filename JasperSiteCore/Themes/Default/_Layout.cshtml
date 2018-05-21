@@ -1,4 +1,4 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http.Extensions
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" asp-append-version="true" />
     </environment>
 
-  @**********************************************Scripts*******************************************@
+    @**********************************************Scripts*******************************************@
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
@@ -48,7 +48,7 @@
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
                 crossorigin="anonymous"
-               integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn">
+                integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn">
         </script>
         <!-- TODO: Nalinkovat minifikaci -->
         <script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>
@@ -57,7 +57,7 @@
     @RenderSection("Scripts", required: false)
     @RenderSection("Styles", required: false)
 
-  
+
 
 </head>
 <body>
@@ -72,34 +72,34 @@
             @*<a class="navbar-brand" href="/"><span style="color:#edccff">@JasperSiteCore.Models.Configuration.DbHelper.GetWebsiteName()</span></a>*@
             <div class="collapse navbar-collapse" id="containerNavbar">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/Admin/Login">Přihlášení<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item ">
                         <a class="nav-link" href="/Admin/">Administrace</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Admin/Install/Index">Instalace</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/Category") ? "active":"")">
                         <a class="nav-link" href="/Home/Category/">Rubriky</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/Tutorial") ? "active":"")">
                         <a class="nav-link" href="/Home/Tutorial/">Návody</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Další</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
-                            <a class="dropdown-item" href="#">O Projektu</a>
-                            <a class="dropdown-item" href="#">O Autorovi</a>
-                          
+                            <a class="dropdown-item" href="/Home/AboutProject/">O Projektu</a>
+                            <a class="dropdown-item" href="/Home/AboutAuthor/">O Autorovi</a>
+
                         </div>
                     </li>
                 </ul>
                 @*<form class="form-inline my-2 my-md-0">
-                    <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>*@
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>*@
             </div>
         </nav>
 
@@ -124,15 +124,15 @@
                     </div>
                 </div>
             </nav>*@
-        
-            @RenderBody()
-            <hr />
-            <div class="container-fluid" >
-                <footer >
-                    <p style="padding-bottom:10px">&copy; 2017-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core</p>
-                </footer>
-            </div>
-            </div>
-        
+
+        @RenderBody()
+        <hr />
+        <div class="container-fluid">
+            <footer>
+                <p style="padding-bottom:10px">&copy; 2017-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core</p>
+            </footer>
+        </div>
+    </div>
+
 </body>
 </html>

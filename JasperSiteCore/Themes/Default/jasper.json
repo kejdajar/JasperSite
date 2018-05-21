@@ -43,6 +43,20 @@
         "/Home/Article/"
       ],
       "file": "Article.cshtml"
+    },
+    {
+      "routes": [
+        "/Home/AboutProject",
+        "/Home/AboutProject/"
+      ],
+      "file": "AboutProject.cshtml"
+    },
+    {
+      "routes": [
+        "/Home/AboutAuthor",
+        "/Home/AboutAuthor/"
+      ],
+      "file": "AboutAuthor.cshtml"
     }
   ]
 }

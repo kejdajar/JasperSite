@@ -135,20 +135,7 @@ namespace JasperSiteCore.Models.Database
         }
 
 
-        public int GetNumberOfEntities(string nameOfContextProperty)
-        {
-            IDatabaseContext database = _db;
-            if (database.Categories.Any())
-            {
-                object i = database.GetType().GetProperty(nameOfContextProperty).GetValue(database);
-                IEnumerable<Article> a = i as IEnumerable<Article>;
-                return a.Count();
-            }
-            else
-            {
-                return 0;
-            }
-        }
+       
 
         // **************** USERS **************** //
         public User GetUserWithUsername(string username)

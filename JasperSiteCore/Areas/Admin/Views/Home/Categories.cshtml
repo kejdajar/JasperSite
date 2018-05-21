@@ -7,23 +7,27 @@
 
 <div class="jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Rubriky</h1></div>
 
+
+<h2><i class="fa fa-pencil  j-icon" aria-hidden="true"></i>  Nová rubrika</h2>
+
 <p>
-   Zde si nastavte vaše rubriky
-</p>
-
-<h2>Kategorie</h2>
-
 <form asp-action="CreateNewCategory" asp-controller="Home" method="post">
     <label>Jméno nové rubriky:</label>
     <input type="text" asp-for="NewCategoryName" />
     <span asp-validation-for="NewCategoryName" class="text-danger"></span>
-    <input type="submit" value="Vytvořit rubriku" />
+ 
+    <input type="submit" class="btn btn-jasper" style="width:200px" value="Vytvořit"/>
 </form>
+    </p>
+<h2><i class="fa fa-table  j-icon" aria-hidden="true"></i> Přehled rubrik</h2>
 
+<p>
 <table class="table table-bordered j-table j-table-text-center">
     <tr><td>Název</td> <td>Akce</td></tr>
-    @foreach(Category c in Model.Categories)
+    @foreach (Category c in Model.Categories)
     {
         <tr><td>@c.Name</td><td><a asp-controller="Home" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></td></tr>
     }
 </table>
+
+</p>
