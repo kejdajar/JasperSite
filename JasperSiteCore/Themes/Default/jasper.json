@@ -24,14 +24,6 @@
   "customPageMapping": [
     {
       "routes": [
-        "/Home/Category",
-        "/Home/Category/",
-        "/b"
-      ],
-      "file": "Category.cshtml"
-    },
-    {
-      "routes": [
         "/Home/Tutorial",
         "/Home/Tutorial/"
       ],

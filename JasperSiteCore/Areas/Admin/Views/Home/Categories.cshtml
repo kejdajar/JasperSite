@@ -12,8 +12,8 @@
 
 <p>
 <form asp-action="CreateNewCategory" asp-controller="Home" method="post">
-    <label>Jméno nové rubriky:</label>
-    <input type="text" asp-for="NewCategoryName" />
+
+    <input type="text" asp-for="NewCategoryName" placeholder="Název rubriky" />
     <span asp-validation-for="NewCategoryName" class="text-danger"></span>
  
     <input type="submit" class="btn btn-jasper" style="width:200px" value="Vytvořit"/>
