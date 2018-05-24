@@ -183,5 +183,26 @@ namespace JasperSiteCore.Models.Database
             websiteNameSetting.Value = newWebsiteName;
             _db.SaveChanges();
         }
+
+        // Holders
+        public List<BlockHolder> GetAllBlockHolders()
+        {
+            return _db.BlockHolders.ToList();
+        }
+
+        public List<Theme> GetAllThemes()
+        {
+            return _db.Themes.ToList();
+        }
+
+        public List<TextBlock> GetAllTextBlocks()
+        {
+            return _db.TextBlocks.ToList();
+        }
+
+        public List<Holder_Block> GetAllHolder_Blocks()
+        {
+            return _db.Holder_Block.ToList();
+        }
     }
 }

@@ -27,6 +27,11 @@ namespace JasperSiteCore.Models
             GlobalConfigDataProvider.SaveData(dataToSave);
         }
 
+        public void SetTemporaryThemeName(string themeName)
+        {
+            this.ConfigurationDataObject.ThemeName = themeName;
+        }
+
         public string ThemeName
         {
             get { return ConfigurationDataObject.ThemeName; }

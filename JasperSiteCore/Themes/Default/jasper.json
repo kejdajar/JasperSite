@@ -1,4 +1,5 @@
 {
+  "blockHolders": ["MainPageHolderDef","FooterHolderDef","AboutPageHolderDef"],
   "routingList": {
     "homePage": [
       "/Home/Index/",

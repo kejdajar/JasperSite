@@ -22,8 +22,7 @@ namespace JasperSiteCore.Models.Database
       
         public int CategoryId { get; set; }
         public Category Category { get; set; }
-
-        public ICollection<Comment> Comments { get; set; }
+     
 
         public ICollection<User> Users { get; set; }
     }
@@ -59,14 +58,47 @@ namespace JasperSiteCore.Models.Database
 
         public string Value { get; set; }
     }
+      
 
-    // Not yet implemented
-    public class Comment
+    // Placeholders and Blocks
+
+    public class Theme
     {
         public int Id { get; set; }
-        public string HtmlContent { get; set; }
-        public DateTime PublishDate { get; set; }      
-       
+        public string Name { get; set; }
+    }
+
+    public class BlockHolder
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+
+        [ForeignKey("Theme")]
+        public int ThemeId { get; set; }
+        public Theme Theme { get; set; }
+
+    }
+
+    public class TextBlock
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Content { get; set; }
+    }
+
+    public class Holder_Block
+    {
+        public int Id { get; set; }
+
+        [ForeignKey("BlockHolder")]
+        public int BlockHolderId { get; set; }
+        public BlockHolder BlockHolder { get; set; }
+
+        [ForeignKey("TextBlock")]
+        public int TextBlockId { get; set; }
+        public TextBlock TextBlock { get; set; }
+
+        public int Order { get; set; }
     }
    
 }

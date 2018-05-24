@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JasperSiteCore.Models;
+using JasperSiteCore.Areas.Admin.Models;
+using JasperSiteCore.Models.Providers;
 
 namespace JasperSiteCore.Models.Database
 {
@@ -90,9 +92,72 @@ namespace JasperSiteCore.Models.Database
             DatabaseContext.SaveChanges();
 
             // Settings
-            Setting websiteNameSetting = new Setting() { Key = "WebsiteName", Value = "My first JasperSite webpage" };
+            Setting websiteNameSetting = new Setting() { Key = "WebsiteName", Value = "Název vašeho webu" };
             _databaseContext.Settings.Add(websiteNameSetting);
             DatabaseContext.SaveChanges();
+
+            // Text blocks
+
+            List<ThemeInfo> themesInfo= Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+            foreach(ThemeInfo ti in themesInfo)
+            {
+                Theme theme = new Theme() { Name = ti.ThemeName };
+                _databaseContext.Themes.Add(theme);
+                _databaseContext.SaveChanges();
+
+                // Emulation of website configuration for every theme
+                GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
+                GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalJsonProvider);
+                globalConfig.SetTemporaryThemeName(ti.ThemeName); // This will not write enytihing to the underlying .json file 
+                ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
+                WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
+
+
+                TextBlock textBlock1 = new TextBlock() { Name = "WelcomePageTextBlock", Content = "Uvítací stránka - obsah tohoto bloku upravte pomocí redakčního systému." };
+                TextBlock textBlock2 = new TextBlock() { Name = "AboutPageTextBlock", Content = "Informace o autorovi - obsah tohoto bloku upravte pomocí redakčního systému." };
+                TextBlock textBlock3 = new TextBlock() { Name = "InfoPageTextBlock", Content = "Informační blok - obsah tohoto bloku upravte pomocí redakčního systému." };
+                _databaseContext.TextBlocks.Add(textBlock1);
+                _databaseContext.TextBlocks.Add(textBlock2);
+                _databaseContext.TextBlocks.Add(textBlock3);
+                _databaseContext.SaveChanges();
+
+
+                List<string> holders = websiteConfig.BlockHolders;
+                
+                foreach(string holderName in holders)
+                {
+                    BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
+                    _databaseContext.BlockHolders.Add(blockHolder);
+
+                    if(holderName.Contains("Main"))
+                    {
+Holder_Block hb1 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock1 };
+_databaseContext.Holder_Block.Add(hb1);
+                    }
+                    else if (holderName.Contains("About"))
+                    {
+Holder_Block hb2 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock2 };
+ _databaseContext.Holder_Block.Add(hb2);
+                    }
+                    else
+                    {
+                        Holder_Block hb3 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock3 };
+                        _databaseContext.Holder_Block.Add(hb3);
+                    }
+
+                }
+                _databaseContext.SaveChanges();
+
+            }            
+
+            
+            
+
+           
+           // _databaseContext.SaveChanges();
+
+            //  List<string> holders = JasperSiteCore.Models.Configuration.WebsiteConfig.BlockHolders;
+
 
 
         }

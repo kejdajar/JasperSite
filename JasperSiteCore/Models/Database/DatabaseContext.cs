@@ -14,6 +14,13 @@ namespace JasperSiteCore.Models.Database
         DbSet<Role> Roles { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<Setting> Settings { get; set; }
+
+        // Blocks
+        DbSet<Theme> Themes { get; set; }
+        DbSet<BlockHolder> BlockHolders { get; set; }
+        DbSet<TextBlock> TextBlocks { get; set; }
+        DbSet<Holder_Block> Holder_Block { get; set; }
+
         int SaveChanges();
     }
 
@@ -42,6 +49,12 @@ namespace JasperSiteCore.Models.Database
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
 
+        // Blocks
+        public virtual DbSet<Theme> Themes { get; set; }
+        public virtual DbSet<BlockHolder> BlockHolders { get; set; }
+        public virtual  DbSet<TextBlock> TextBlocks { get; set; }
+        public virtual DbSet<Holder_Block> Holder_Block { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>().ToTable("Articles");
@@ -49,6 +62,12 @@ namespace JasperSiteCore.Models.Database
             modelBuilder.Entity<Role>().ToTable("Roles");
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Setting>().ToTable("Settings");
+
+            // Blocks
+            modelBuilder.Entity<Theme>().ToTable("Themes");
+            modelBuilder.Entity<BlockHolder>().ToTable("BlockHolders");
+            modelBuilder.Entity<TextBlock>().ToTable("TextBlocks");
+            modelBuilder.Entity<Holder_Block>().ToTable("HolderBlocks");            
         }
 
        // public DbSet<JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel> EditArticleViewModel { get; set; }

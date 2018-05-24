@@ -146,8 +146,8 @@
                 Vzhled</a></div>
 
  <div class="j-link-container">
-    <a class="j-link" href="#">  <i class="fa fa-comment-o j-fa-margin"  aria-hidden="true"></i>
-                  Komentáře</a></div>
+    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Blocks" ? "j-menu-highlight" : "" )"  asp-controller="Blocks" asp-action="Index">  <i class="fa fa-comment-o j-fa-margin"  aria-hidden="true"></i>
+                 Bloky</a></div>
 
  <div class="j-link-container">
     <a class="j-link" href="#">  <i class="fa fa-image j-fa-margin"  aria-hidden="true"></i>

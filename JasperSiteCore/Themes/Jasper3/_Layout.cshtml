@@ -82,16 +82,12 @@
                         <a class="nav-link" href="/Home/Category/">Všechny rubriky</a>
                     </li>
 
-                    <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/About") ? "active":"")">
-                        <a class="nav-link" href="/Home/About/">O Autorovi</a>
-                    </li>
-
                     @foreach (Category c in Configuration.DbHelper.GetAllCategories())
-    {
-                <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
-                    <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
-                </li>
-}
+                    {
+                        <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
+                            <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
+                        </li>
+                    }
 
                 </ul>
             </div>

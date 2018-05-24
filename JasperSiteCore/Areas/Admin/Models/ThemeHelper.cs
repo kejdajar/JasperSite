@@ -66,6 +66,20 @@ return GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder);
             return themeInfos;
         }
 
+        /// <summary>
+        /// Searches through Theme folder, indexing themes and returns collection sorted by name, with current theme first.
+        /// </summary>
+        /// <returns></returns>
+        public List<ThemeInfo> GetInstalledThemesInfoByNameAndActive()
+        {
+            List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
+            themeInfoList.OrderBy(o => o.ThemeName);
+            ThemeInfo currentTheme = themeInfoList.Where(i => i.ThemeName == Configuration.GlobalWebsiteConfig.ThemeName).First();
+            themeInfoList.Remove(currentTheme);
+            themeInfoList.Insert(0, currentTheme);
+            return themeInfoList;
+        }
+
         public bool DeleteThemeByName(string themeName)
         {
             try

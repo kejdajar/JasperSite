@@ -1,5 +1,5 @@
 {
-  "blockHolders": ["MainPageHolder","FooterHolder","AboutPageHolder"],
+  "blockHolders": ["MainPageHolder4","FooterHolder4","AboutPageHolder4"],
   "routingList": {
     "homePage": [
       "/Home/Index/",
@@ -51,13 +51,6 @@
         "/Home/SingleCategory/"
       ],
       "file": "SingleCategory.cshtml"
-    },
-    {
-      "routes": [
-        "/Home/About",
-        "/Home/About/"
-      ],
-      "file": "About.cshtml"
     }
   ]
 }

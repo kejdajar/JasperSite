@@ -17,9 +17,11 @@
   <ItemGroup>
     <Content Remove="Themes\Default\AboutAuthor.cshtml" />
     <Content Remove="Themes\Default\AboutProject.cshtml" />
+    <Content Remove="Themes\Jasper\About.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Areas\Admin\ViewModels\BlockViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\CategoriesViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\EditUserViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\InstallViewModel.cs" />

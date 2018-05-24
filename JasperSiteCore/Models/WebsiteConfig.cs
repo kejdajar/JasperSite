@@ -76,6 +76,15 @@ namespace JasperSiteCore.Models
             }
         }
 
+        public List<string> BlockHolders
+        {
+            get { return _configurationObject.BlockHolders; }
+            set
+            {
+                _configurationObject.BlockHolders = value;
+            }
+        }
+
     }
 
     public interface IWebsiteConfigProvider
@@ -89,6 +98,9 @@ namespace JasperSiteCore.Models
     /// </summary>
     public class ConfigurationObject
     {
+        [JsonProperty("blockHolders")]
+        public List<string> BlockHolders { get; set; }
+
         public class Routing
         {
             [JsonProperty("homePage")]

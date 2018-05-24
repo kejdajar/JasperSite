@@ -1,6 +1,5 @@
 ﻿@using JasperSiteCore.Models.Database
 @using JasperSiteCore.Models
-@using JasperSiteCore.Helpers
 @{
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
     ViewData["Title"] = "Název vaší stránky";
@@ -16,11 +15,6 @@
         <div class="jumbotron">
             <h1>Hlavní stránka</h1>
         </div>
-
-        <div>
-            @J.Holder("MainPageHolder")
-        </div>
-
 
         @foreach (Category c in Configuration.DbHelper.GetAllCategories())
     {

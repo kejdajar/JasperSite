@@ -1,4 +1,6 @@
 ﻿@model JasperSiteCore.Areas.Admin.ViewModels.SettingsViewModel
+@using JasperSiteCore.Models.Database
+@using  JasperSiteCore.Models
 @{
     ViewData["Title"] = "Nastavení";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -39,19 +41,19 @@
         <div class="form-horizontal">
 
             @*<div asp-validation-summary="All" class="text-danger"></div>*@
-            
+
             <div class="form-group">
                 <label asp-for="WebsiteName"></label>
 
                 <input asp-for="WebsiteName" class="form-control" />
                 <span asp-validation-for="WebsiteName" class="text-danger"></span>
 
-            </div>           
+            </div>
 
 
             <div class="form-group">
 
-               
+
                 <button type="submit" asp-area="Admin" asp-controller="Settings" asp-action="SaveSettings" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
 
 
@@ -60,4 +62,5 @@
         </div>
 
     </form>
+
 </div>

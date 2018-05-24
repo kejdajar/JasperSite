@@ -1,0 +1,115 @@
+﻿@using JasperSiteCore.Models.Database
+@using  JasperSiteCore.Models
+@using JasperSiteCore.Areas.Admin.Controllers
+
+@model JasperSiteCore.Areas.Admin.ViewModels.BlockViewModel
+@{
+    ViewData["Title"] = "Bloky";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+    <script>
+        function savedInfo() {
+
+            var panel = $(`<div class="j-flex-row j-secondary-header">
+
+                <div class="j-header-group">
+
+                    <div class="j-header-group-item">
+                        <span style='color:white'>  <b>Uloženo</b> </span>
+                    </div>
+
+                </div>
+            </div>`);
+
+            panel.css({
+                "display": "none",
+                "background-color": "#8BC34A",
+
+                "font-size": "1.3em"
+            });
+
+            $("#headerPanel").append(panel);
+            panel.slideDown("slow").delay(2000).slideUp("slow");
+
+        }
+    </script>
+}
+<style>
+    .j-table-headers-left th {
+       text-align:left;
+    }
+</style>
+
+<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Správa bloků</h1></div>
+
+<div id="mainForm">
+   
+
+    <h2 style="background-color:palegreen">Bloky</h2>
+    <hr />
+    <div class="table-responsive" >
+
+
+        @foreach (BlocksViewModelData data in @Model.Blocks)
+    {
+            <h3>@data.TextBlock.Name</h3>
+            <div style="border-left:5px solid gold;padding-left:10px">
+               
+                <div class="input-group">
+                    <input type="text" class="form-control" value="@data.TextBlock.Content" disabled>
+                    <span class="input-group-btn">
+                        <a href="#" class="btn btn-jasper">Upravit</a>
+                    </span>
+                </div>
+                
+                
+                
+
+
+                <table class="table table-bordered j-table j-table-headers-left">
+                    <tr><th>Název kontejneru na stránce</th><th>Název odpovídajícího vzhledu</th><th>Pořadí bloku v kontejneru</th></tr>
+                    @foreach (var item in data.BlocHolderWithTheme)
+        {
+            <tr><td>@item.BlockHolderName</td><td>@item.ThemeName</td><td>@item.Order</td></tr>
+}
+                </table>
+            </div>
+        <hr/>
+        }
+       
+    </div>
+
+
+    <h2 style="background-color:lightgoldenrodyellow">Vzhledy</h2>
+    <hr />
+    <div class="table-responsive">
+
+
+        @foreach (Theme theme in Configuration.DbHelper.GetAllThemes())
+        {
+            <h2>@theme.Name</h2>
+            var blockHolders = Configuration.DbHelper.GetAllBlockHolders().Where(b => b.ThemeId == theme.Id);
+            <table class="table table-bordered j-table j-table-headers-left ">
+                <tr><th>Název holderu</th></tr>
+                @foreach (BlockHolder holder in blockHolders)
+                {
+
+                    <tr><td>@holder.Name</td></tr>
+
+                }
+            </table>
+        }
+
+    </div>
+
+    <h2>Holdery a bloky</h2>
+    <hr />
+
+
+
+    @*@foreach(string holder in  JasperSiteCore.Models.Configuration.WebsiteConfig.BlockHolders)
+        {
+            <p>@holder</p>
+        }*@
+</div>

@@ -34,7 +34,7 @@ namespace JasperSiteCore
            JasperSiteCore.Models.Env.Hosting = env;
            
            // APPLICATION ENTRY POINT
-           JasperSiteCore.Models.Configuration.Initialize();
+          JasperSiteCore.Models.Configuration.Initialize();
         }
 
         public IConfigurationRoot Configuration { get; }

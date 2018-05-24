@@ -55,12 +55,9 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             int itemsPerPage = 3;
             int currentPage = 1;
-            
-            List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
-            themeInfoList.OrderBy(o=>o.ThemeName);
-            ThemeInfo currentTheme = themeInfoList.Where(i=>i.ThemeName==Configuration.GlobalWebsiteConfig.ThemeName).First();
-            themeInfoList.Remove(currentTheme);
-            themeInfoList.Insert(0,currentTheme);
+
+            List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+          
 
             JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList, currentPage, itemsPerPage);
                        
