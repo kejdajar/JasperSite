@@ -9,14 +9,13 @@ using JasperSiteCore.Areas.Admin.Controllers;
 
 namespace JasperSiteCore.Areas.Admin.ViewModels
 {
-    public class BlockViewModel
+    public class EditBlockViewModel
     {
-        // Blocks section
-        public List<BlocksViewModelData> Blocks { get; set; } = new List<BlocksViewModelData>();
-
-        // Add new block section
-        public NewTextBlock NewTextBlock { get; set; } = new NewTextBlock();
+       
+       public EditTextBlock TextBlock { get; set; }
+    
         public List<BlockHolder> AllBlockHolders { get; set; }
+        public List<BlockHolder> CorrespondingBlockHolders { get; set; }
     }
 
    

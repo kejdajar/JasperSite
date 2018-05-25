@@ -204,5 +204,42 @@ namespace JasperSiteCore.Models.Database
         {
             return _db.Holder_Block.ToList();
         }
+
+
+        public TextBlock AddNewBlock(TextBlock block)
+        {
+            _db.TextBlocks.Add(block);
+            _db.SaveChanges();
+            return _db.TextBlocks.Where(b => b.Name == block.Name).Single();
+        }
+
+        public void AddNewHolder_Block(Holder_Block hb)
+        {
+            _db.Holder_Block.Add(hb);
+            _db.SaveChanges();
+        }
+
+        public void DeleteTextBlockById(int id)
+        {
+           TextBlock goner= _db.TextBlocks.Where(t => t.Id == id).Single();
+            _db.TextBlocks.Remove(goner);
+            _db.SaveChanges();
+        }
+
+        public void AddHolderToBlock(int holderId, int blockId)
+        {
+            Holder_Block h_b = new Holder_Block() { BlockHolderId = holderId, TextBlockId = blockId };
+            _db.Holder_Block.Add(h_b);
+            _db.SaveChanges();
+        }
+
+        public void RemoveHolderFromBlock(int holderId, int blockId)
+        {
+            Holder_Block goner_h_b = _db.Holder_Block.Where(h_b => h_b.BlockHolderId == holderId && h_b.TextBlockId == blockId).Single();
+            _db.Holder_Block.Remove(goner_h_b);
+            _db.SaveChanges();
+        }
+
+       
     }
 }

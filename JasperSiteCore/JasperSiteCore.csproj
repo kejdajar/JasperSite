@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Blocks\BlockFormPartialView.cshtml" />
     <Content Remove="Themes\Default\AboutAuthor.cshtml" />
     <Content Remove="Themes\Default\AboutProject.cshtml" />
     <Content Remove="Themes\Jasper\About.cshtml" />
@@ -23,6 +24,7 @@
   <ItemGroup>
     <None Remove="Areas\Admin\ViewModels\BlockViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\CategoriesViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\EditBlockViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\EditUserViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\InstallViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\LoginViewModel.cs" />

@@ -33,7 +33,7 @@ namespace JasperSiteCore.Helpers
             StringBuilder sb = new StringBuilder();
             foreach(TextBlock tb in blocksToDisplay)
             {
-                sb.Append(tb.Content);
+                sb.Append(tb.Content+"<hr/>");
             }
 
             return new HtmlString(sb.ToString());
