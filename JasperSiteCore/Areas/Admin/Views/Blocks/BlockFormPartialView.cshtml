@@ -102,7 +102,7 @@
                 @foreach (BlockHolder holder in blockHolders)
                 {
 
-                    <tr><td><a href="#" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px;margin-right:10px">x</a>@holder.Name</td></tr>
+                    <tr><td>@holder.Name</td></tr>
 
                 }
             </table>
@@ -110,14 +110,6 @@
 
     </div>
 
-    <h2>Holdery a bloky</h2>
-    <hr />
-
-
-
-    @*@foreach(string holder in  JasperSiteCore.Models.Configuration.WebsiteConfig.BlockHolders)
-        {
-            <p>@holder</p>
-        }*@
+    
 
 </form>

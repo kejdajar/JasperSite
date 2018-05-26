@@ -75,6 +75,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public IActionResult DeleteBlockHolder(int id)
+        {
+            Configuration.DbHelper.DeleteBlockHolderById(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
          public IActionResult EditBlock(int blockId)
         {
             TextBlock tbToEdit = Configuration.DbHelper.GetAllTextBlocks().Where(tb => tb.Id == blockId).Single();

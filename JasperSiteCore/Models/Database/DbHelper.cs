@@ -240,6 +240,13 @@ namespace JasperSiteCore.Models.Database
             _db.SaveChanges();
         }
 
+        public void DeleteBlockHolderById(int id)
+        {
+            BlockHolder goner = _db.BlockHolders.Where(bh => bh.Id == id).Single();
+            _db.BlockHolders.Remove(goner);
+            _db.SaveChanges();
+        }
+
        
     }
 }
