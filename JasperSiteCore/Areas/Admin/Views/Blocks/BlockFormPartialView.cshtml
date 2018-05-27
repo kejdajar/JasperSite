@@ -61,34 +61,30 @@
         @foreach (BlocksViewModelData data in @Model.Blocks)
         {
             <h3>  <a asp-area="Admin" asp-controller="Blocks" asp-action="DeleteBlock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px">x</a>  @data.TextBlock.Name   </h3>
-            <div style="border-left:3px solid #BA68C8;padding-left:8px">
+            <div style="border-left:3px solid #BA68C8;padding-left:4px">
 
-                <div class="input-group">
-                    <input type="text" class="form-control" value="@data.TextBlock.Content" disabled>
-                    <span class="input-group-btn">
-                        <a asp-area="Admin" asp-controller="Blocks" asp-action="EditBlock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper">Upravit</a>
-                    </span>
-                </div>
+
 
 
 
 
                 @if (data.BlocHolderWithTheme.Count() > 0)
-                {
-                <table class="table table-bordered j-table j-table-headers-left">
-                    <tr><th>Název kontejneru na stránce</th><th>Název odpovídajícího vzhledu</th><th>Pořadí bloku v kontejneru</th></tr>
-                    @foreach (var item in data.BlocHolderWithTheme)
-                    {
-                        <tr><td>@item.BlockHolderName</td><td>@item.ThemeName</td><td>@item.Order</td></tr>
-                    }
-                </table>
-                }
-                else
-                {
-                <div class="alert alert-warning" role="alert">
-                    <strong>Upozornění!</strong> Tento textový blok nemá přiřazen žádný kontejner a nebude proto zobrazen na stránce.
-                </div>
-                }
+    {
+            <table class="table table-bordered j-table j-table-headers-left">
+                <tr><th>Název kontejneru na stránce</th><th>Název odpovídajícího vzhledu</th><th>Pořadí bloku v kontejneru</th></tr>
+                @foreach (var item in data.BlocHolderWithTheme)
+    {
+            <tr><td>@item.BlockHolderName</td><td>@item.ThemeName</td><td>@item.Order</td></tr>
+}
+            </table>
+            <a asp-area="Admin" asp-controller="Blocks" asp-action="EditBlock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper" >Upravit</a>
+}
+else
+{
+            <div class="alert alert-warning" role="alert">
+                <strong>Upozornění!</strong> Tento textový blok nemá přiřazen žádný kontejner a nebude proto zobrazen na stránce.
+            </div>
+}
 
             </div>
             <hr />
@@ -97,28 +93,31 @@
     </div>
 
 
-    <h2><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Vzhledy</h2>
+    <h2><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Přehled vzhledů a jejich kontejnerů</h2>
     <hr />
     <div class="table-responsive">
 
 
         @foreach (Theme theme in Configuration.DbHelper.GetAllThemes())
+    {
+        <h2>@theme.Name</h2>
+    var blockHolders = Configuration.DbHelper.GetAllBlockHolders().Where(b => b.ThemeId == theme.Id);
+    <div style="border-left:3px solid #BA68C8;padding-left:4px">
+        <table class="table table-bordered j-table j-table-headers-left ">
+            <tr><th>Název kontejneru</th></tr>
+            @foreach (BlockHolder holder in blockHolders)
         {
-            <h2>@theme.Name</h2>
-            var blockHolders = Configuration.DbHelper.GetAllBlockHolders().Where(b => b.ThemeId == theme.Id);
-            <table class="table table-bordered j-table j-table-headers-left ">
-                <tr><th>Název holderu</th></tr>
-                @foreach (BlockHolder holder in blockHolders)
-                {
 
-                    <tr><td>@holder.Name</td></tr>
+            <tr><td>@holder.Name</td></tr>
 
-                }
-            </table>
+    }
+        </table>
+        </div>
+        <hr/>
         }
 
     </div>
 
-    
+
 
 </form>
