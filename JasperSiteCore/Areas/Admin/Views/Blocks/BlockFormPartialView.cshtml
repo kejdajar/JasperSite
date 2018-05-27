@@ -73,7 +73,8 @@
 
 
 
-
+                @if (data.BlocHolderWithTheme.Count() > 0)
+                {
                 <table class="table table-bordered j-table j-table-headers-left">
                     <tr><th>Název kontejneru na stránce</th><th>Název odpovídajícího vzhledu</th><th>Pořadí bloku v kontejneru</th></tr>
                     @foreach (var item in data.BlocHolderWithTheme)
@@ -81,6 +82,14 @@
                         <tr><td>@item.BlockHolderName</td><td>@item.ThemeName</td><td>@item.Order</td></tr>
                     }
                 </table>
+                }
+                else
+                {
+                <div class="alert alert-warning" role="alert">
+                    <strong>Upozornění!</strong> Tento textový blok nemá přiřazen žádný kontejner a nebude proto zobrazen na stránce.
+                </div>
+                }
+
             </div>
             <hr />
         }

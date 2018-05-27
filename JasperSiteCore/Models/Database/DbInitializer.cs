@@ -36,8 +36,8 @@ namespace JasperSiteCore.Models.Database
 
             DatabaseContext.Database.EnsureCreated();
 
-                // Look for any articles
-                if (DatabaseContext.Articles.Any())
+                // If there is at least one user, the DB was already seeded
+                if (DatabaseContext.Users.Any())
                 {
                     return;   // DB has been seeded
                 }

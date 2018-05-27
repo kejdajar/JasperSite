@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using JasperSiteCore.Models.Database;
 
 namespace JasperSiteCore.Areas.Admin.Models
 {
@@ -13,7 +14,7 @@ namespace JasperSiteCore.Areas.Admin.Models
         {
 
         }
-                
+
         //public string GetAbsoluteThemeFolderPath()
         //{
         //    string themeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
@@ -21,8 +22,8 @@ namespace JasperSiteCore.Areas.Admin.Models
         //}
 
         private string GetThemeDescription(string pathToTheme)
-        {            
-            string desc = File.ReadAllText(Path.Combine(pathToTheme,"desc.txt"));
+        {
+            string desc = File.ReadAllText(Path.Combine(pathToTheme, "desc.txt"));
             return desc;
         }
 
@@ -34,18 +35,18 @@ namespace JasperSiteCore.Areas.Admin.Models
 
         public string GetThemeThumbnailUrl(string themeName)
         {   // vyřešit lépe
-            string themeFolder = Configuration.CustomRouting.GlobalWebsiteConfig.ThemeFolder;          
-            return  Path.Combine("~/", themeFolder, themeName,"thumbnail.jpg").Replace('\\','/');
+            string themeFolder = Configuration.CustomRouting.GlobalWebsiteConfig.ThemeFolder;
+            return Path.Combine("~/", themeFolder, themeName, "thumbnail.jpg").Replace('\\', '/');
         }
 
 
-public List<ThemeInfo> GetInstalledThemesInfo()
-{
-return GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder);
-}
+        public List<ThemeInfo> GetInstalledThemesInfo()
+        {
+            return GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder);
+        }
         public List<ThemeInfo> GetInstalledThemesInfo(string themeFolderPath)
         {
-            
+
             List<string> themeSubfolders = Directory.GetDirectories(themeFolderPath).ToList();
 
             List<ThemeInfo> themeInfos = new List<ThemeInfo>();
@@ -54,14 +55,14 @@ return GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder);
                 string _themeName = Path.GetFileName(themeSubdirPath);
                 ThemeInfo ti = new ThemeInfo()
                 {
-                    
+
                     ThemeName = _themeName,
                     ThemeFolder = themeFolderPath,
                     ThemeDescription = GetThemeDescription(themeSubdirPath),
                     ThemeThumbnailUrl = GetThemeThumbnailUrl(_themeName)
                 };
                 themeInfos.Add(ti);
-               
+
             }
             return themeInfos;
         }
@@ -84,6 +85,8 @@ return GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder);
         {
             try
             {
+                Configuration.DbHelper.DeleteThemeByName(themeName);
+
                 string themeFolder = Configuration.CustomRouting.GlobalWebsiteConfig.ThemeFolder;
                 string themeFolderPath = Path.Combine("./", themeFolder, themeName).Replace('\\', '/');
                 System.IO.Directory.Delete(themeFolderPath, true);
@@ -95,12 +98,18 @@ return GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder);
             }
         }
 
-    }
+        public void Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase()
+        {
+            Configuration.DbHelper.Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
+        }
 
-     
-   
 
-    public class ThemeInfo
+}
+
+
+
+
+public class ThemeInfo
     {
         
         public string ThemeName { get; set; }

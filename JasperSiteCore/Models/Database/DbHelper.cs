@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using JasperSiteCore.Areas.Admin.Models;
 using JasperSiteCore.Models.Database;
+using JasperSiteCore.Models.Providers;
 using Microsoft.EntityFrameworkCore;
 
 namespace JasperSiteCore.Models.Database
@@ -20,7 +22,7 @@ namespace JasperSiteCore.Models.Database
             this._db = database ?? throw new DatabaseContextNullException();
         }
 
-        private IDatabaseContext _db;
+        public IDatabaseContext _db;
 
         public List<Article> GetAllArticles()
         {
@@ -247,6 +249,49 @@ namespace JasperSiteCore.Models.Database
             _db.SaveChanges();
         }
 
-       
+        public void DeleteThemeByName(string name)
+        {
+            Theme goner = _db.Themes.Where(t => t.Name == name).Single();
+            _db.Themes.Remove(goner);
+            _db.SaveChanges();
+        }
+
+        public void Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase()
+        {
+            // Delete all corrupted themes records
+            _db.Themes.RemoveRange(_db.Themes);
+            _db.SaveChanges();
+
+            // Old text blocks will not be deleted
+
+            List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+            foreach (ThemeInfo ti in themesInfo)
+            {
+                Theme theme = new Theme() { Name = ti.ThemeName };
+                _db.Themes.Add(theme);
+                _db.SaveChanges();
+
+                // Emulation of website configuration for every theme
+                GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
+                GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalJsonProvider);
+                globalConfig.SetTemporaryThemeName(ti.ThemeName); // This will not write enytihing to the underlying .json file 
+                ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
+                WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
+                              
+
+
+                List<string> holders = websiteConfig.BlockHolders;
+
+                foreach (string holderName in holders)
+                {
+                    BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
+                    _db.BlockHolders.Add(blockHolder);                    
+
+                }
+                _db.SaveChanges();
+
+            }
+        }
+
     }
 }

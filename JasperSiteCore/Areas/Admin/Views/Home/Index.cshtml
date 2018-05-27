@@ -10,30 +10,55 @@
 <ul>
     <li>
         Vítejte v administraci redakčního systému <b>J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span>. </b>
-    </li></ul>
+    </li>
+</ul>
 
- <h4>Hlavní ovládací panel systému</h4>
- <p>
+<h4>Hlavní ovládací panel systému</h4>
 
-     <ul>
-         <li>   Vaší stránku si můžete zobrazit pomocí následujícího tlačítka v horní liště nástrojů: <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a></li>
-     </ul>
-     <ul>
-         <li>   Na tuto stránku se vždy můžete vrátit tlačítkem domů:     <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a></li>
-     </ul>
-     <ul>
-         <li>Vyhledávat můžete pomocí následujícího tlačítka: <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></button></li>
-     </ul>
-     @if (User.Identity.IsAuthenticated)
-    {
-     <ul>
-         <li>
-             Odhlásit se můžete pomocí tlačítka s vaším uživatelským jménem:
 
-             <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name - odhlásit</a>
-             
-         </li>
-     </ul>
-     }
 
- </p>
+
+
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    Vaší stránku si můžete zobrazit pomocí následujícího tlačítka v horní liště nástrojů: <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+</div>
+
+
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    Na tuto stránku se vždy můžete vrátit tlačítkem domů:     <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+</div>
+
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    Vyhledávat můžete pomocí následujícího tlačítka: <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></button>
+</div>
+
+
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+
+<div class="alert alert-info alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    Odhlásit se můžete pomocí tlačítka s vaším uživatelským jménem:
+
+    <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name - odhlásit</a>
+</div>
+   
+
+
+}
+
+

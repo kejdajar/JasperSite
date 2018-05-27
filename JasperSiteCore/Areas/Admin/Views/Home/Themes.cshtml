@@ -34,7 +34,14 @@
         Složka se vzhledy: @Model.ThemeFolder <br />
         Právě aktivní vzhled: @Model.SelectedThemeName <br />
 
-
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Inteligetní změna vzhledu</strong> <br/>
+        Redakční systém obsahuje algoritmus pro inteligentní změnu vzhledu. Pokud nově aktivovaný
+        vzhled obsahuje stejně pojmenované kontejnery, tak se textové bloky automaticky nakonfigurují.
+    </div>
 
 
 
@@ -51,25 +58,31 @@
         <br />
         <h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Vlastní rozšíření </h2>
         <p>JasperSiteCore je možné rozšiřovat o vlastní vzhledy. Návod pro tvorbu vlastního vzhledu nalezente v dokumentaci.</p>
-       
-         <form enctype = "multipart/form-data"  asp-controller="Home" asp-action="UploadTheme" asp-area="Admin">
-             <div class="form-group">
-                 <label for="files">Nahrání vzhledu</label>
-                 <input type="file" class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
-                 <small id="fileHelp" class="form-text text-muted"> Vzhled je potřeba nahrát v se formátu .zip</small>
-               
-                 @*<a class="btn btn-jasper" asp-controller="Home" asp-action="UploadTheme" asp-area="Admin">Nahrát nový vzhled</a>*@ 
-                 
-                 <input type="submit" value="Odeslat data" />
-             </div>   
+
+        <form enctype="multipart/form-data" asp-controller="Home" asp-action="UploadTheme" asp-area="Admin">
+            <div class="form-group">
+                <label for="files">Nahrání vzhledu</label>
+                <input type="file" class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
+                <small id="fileHelp" class="form-text text-muted"> Vzhled je potřeba nahrát v se formátu .zip</small>
+
+                @*<a class="btn btn-jasper" asp-controller="Home" asp-action="UploadTheme" asp-area="Admin">Nahrát nový vzhled</a>*@
+
+                <input type="submit" value="Odeslat data" />
+            </div>
         </form>
 
-       
+
         <hr />
         <div>
             <p>Pokud jste manuálně modifikovali vzhledy na serveru, je potřeba tyto změny potvrdit pomocí následující volby:</p>
             <a class="btn btn-jasper" asp-controller="Home" asp-action="UpdateConfiguration" asp-area="Admin">Aplikovat data z konfiguračních souborů</a>
         </div>
+       
+        <div>            
+            <a class="btn btn-jasper" asp-controller="Home" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze</a>
+        </div>
+
+
         <hr />
 
 

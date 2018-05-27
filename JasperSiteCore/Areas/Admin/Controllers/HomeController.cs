@@ -128,16 +128,55 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult ActivateTheme(string themeName)
         {
-            try
-            {
-                JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeName = themeName;
+            string themeNameBeforeChanged = Configuration.GlobalWebsiteConfig.ThemeName;
+
+            //try
+            // {            
+
+            // Property ThemeName writes data automatically to the .json file
+            JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeName = themeName;
+
                 UpdateConfiguration(); // All cached settings will be reset
-                return RedirectToAction("Themes", new { errorFlag = "false" });
-            }
-            catch
+                                   
+
+            
+
+            // Find assigned blocks for the prior theme
+            Theme priorTheme = Configuration.DbHelper._db.Themes.Where(t => t.Name == themeNameBeforeChanged).Single();
+            Theme newTheme = Configuration.DbHelper._db.Themes.Where(t => t.Name == themeName).Single();
+
+            var oldRelationships = (from old_holder in Configuration.DbHelper.GetAllBlockHolders()
+                                                  from old_joinTable in Configuration.DbHelper.GetAllHolder_Blocks()
+                                                  where old_joinTable.BlockHolderId == old_holder.Id && old_holder.ThemeId==priorTheme.Id
+                                                  select new { JoinTableId=old_joinTable.Id, HolderName=old_holder.Name }).ToList();
+
+            List<string> newHolders = Configuration.WebsiteConfig.BlockHolders;
+            foreach(string holderNameNewTheme in newHolders)
             {
-               return RedirectToAction("Themes",new { errorFlag="true"});
+              var collectionOfCorrespondingObjects= oldRelationships.Where(r => r.HolderName == holderNameNewTheme).ToList();
+              foreach(var item in collectionOfCorrespondingObjects)
+                {
+                   var holdersToEdit= Configuration.DbHelper.GetAllHolder_Blocks().Where(h => h.Id == item.JoinTableId);
+                    foreach(var editedHolder in holdersToEdit)
+                    {
+                        var join = (from allThemes in Configuration.DbHelper.GetAllThemes()
+                                    from allBlockHolders in Configuration.DbHelper.GetAllBlockHolders()
+                                    where allThemes.Id == newTheme.Id && allBlockHolders.Name == holderNameNewTheme && allBlockHolders.ThemeId==newTheme.Id
+                                    select allBlockHolders).Single();
+                        
+                        editedHolder.BlockHolderId = join.Id;
+                        Configuration.DbHelper._db.SaveChanges();
+                    }
+                }
             }
+
+            return RedirectToAction("Themes");
+            //    return RedirectToAction("Themes", new { errorFlag = "false" });
+            //}
+            //catch
+            //{
+            //   return RedirectToAction("Themes",new { errorFlag="true"});
+            //}
             
 
         }
@@ -241,6 +280,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
 
             return View("Categories", viewModel);
+        }
+
+
+        [HttpGet]
+        public IActionResult ReconstructAllThemesCorrespondingDatabaseTables()
+        {
+            Configuration.ThemeHelper.Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
+            return RedirectToAction("Themes");
         }
 
     }
