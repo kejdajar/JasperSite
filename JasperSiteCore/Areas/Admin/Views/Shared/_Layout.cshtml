@@ -150,8 +150,11 @@
                  Bloky</a></div>
 
  <div class="j-link-container">
-    <a class="j-link" href="#">  <i class="fa fa-image j-fa-margin"  aria-hidden="true"></i>
-                  Obrázky</a></div>
+     <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Images" ? "j-menu-highlight" : "" )" asp-controller="Images" asp-action="Index">
+         <i class="fa fa-user-circle-o j-fa-margin" aria-hidden="true"></i>
+         Obrázky
+     </a>
+ </div>
 
                   <div class="j-link-container">
     <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "j-menu-highlight" : "" )" asp-controller="Users" asp-action="Index">  <i class="fa fa-user-circle-o j-fa-margin"  aria-hidden="true"></i>

@@ -42,7 +42,7 @@ namespace JasperSiteCore.Models
             ThemeHelper = themeHelper;
 
             // Database manager
-            CreateAndSeedDb();
+          CreateAndSeedDb();
                         
         }
 

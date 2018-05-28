@@ -62,6 +62,8 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
+       
+
         public int AddArticle()
         {
             IDatabaseContext database = _db;
@@ -291,6 +293,11 @@ namespace JasperSiteCore.Models.Database
                 _db.SaveChanges();
 
             }
+        }
+
+       public List<Image> GetAllImages()
+        {
+            return _db.Images.Include(i=>i.ImageData).ToList();
         }
 
     }

@@ -26,6 +26,7 @@
     <None Remove="Areas\Admin\ViewModels\CategoriesViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\EditBlockViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\EditUserViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\ImagesViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\InstallViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\LoginViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\SettingsViewModel.cs" />

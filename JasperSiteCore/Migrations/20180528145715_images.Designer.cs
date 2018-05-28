@@ -11,8 +11,8 @@ using System;
 namespace JasperSiteCore.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180524085226_initial")]
-    partial class initial
+    [Migration("20180528145715_images")]
+    partial class images
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -88,6 +88,32 @@ namespace JasperSiteCore.Migrations
                     b.HasIndex("TextBlockId");
 
                     b.ToTable("HolderBlocks");
+                });
+
+            modelBuilder.Entity("JasperSiteCore.Models.Database.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ImageDataId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageDataId");
+
+                    b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("JasperSiteCore.Models.Database.ImageData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<byte[]>("Data");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ImageData");
                 });
 
             modelBuilder.Entity("JasperSiteCore.Models.Database.Role", b =>
@@ -192,6 +218,14 @@ namespace JasperSiteCore.Migrations
                     b.HasOne("JasperSiteCore.Models.Database.TextBlock", "TextBlock")
                         .WithMany()
                         .HasForeignKey("TextBlockId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("JasperSiteCore.Models.Database.Image", b =>
+                {
+                    b.HasOne("JasperSiteCore.Models.Database.ImageData", "ImageData")
+                        .WithMany()
+                        .HasForeignKey("ImageDataId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

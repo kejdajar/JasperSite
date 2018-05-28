@@ -11,9 +11,10 @@ using System;
 namespace JasperSiteCore.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20180528145504_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,34 +88,6 @@ namespace JasperSiteCore.Migrations
                     b.HasIndex("TextBlockId");
 
                     b.ToTable("HolderBlocks");
-                });
-
-            modelBuilder.Entity("JasperSiteCore.Models.Database.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("ImageDataId");
-
-                    b.Property<string>("Name");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ImageDataId");
-
-                    b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("JasperSiteCore.Models.Database.ImageData", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<byte[]>("Data");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ImageData");
                 });
 
             modelBuilder.Entity("JasperSiteCore.Models.Database.Role", b =>
@@ -219,14 +192,6 @@ namespace JasperSiteCore.Migrations
                     b.HasOne("JasperSiteCore.Models.Database.TextBlock", "TextBlock")
                         .WithMany()
                         .HasForeignKey("TextBlockId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("JasperSiteCore.Models.Database.Image", b =>
-                {
-                    b.HasOne("JasperSiteCore.Models.Database.ImageData", "ImageData")
-                        .WithMany()
-                        .HasForeignKey("ImageDataId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

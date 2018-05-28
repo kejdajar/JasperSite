@@ -100,5 +100,21 @@ namespace JasperSiteCore.Models.Database
 
         public int Order { get; set; }
     }
-   
+
+    public class Image
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public ImageData ImageData { get; set; }
+
+        [ForeignKey("ImageData")]
+        public int ImageDataId { get; set; }
+    }
+
+    public class ImageData
+    {
+        public int Id { get; set; }
+        public byte[] Data { get; set; }
+    }
+
 }

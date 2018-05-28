@@ -1,7 +1,7 @@
 {
   "themeName": "Jasper",
   "themeFolder": "Themes",
-  "connectionString": " Data Source=(localdb)\\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True",
+  "connectionString": "Data Source=(localdb)\\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True",
   "typeOfDatabase": "mssql",
   "installationCompleted": "True"
 }
