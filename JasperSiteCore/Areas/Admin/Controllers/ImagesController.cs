@@ -48,15 +48,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         public FileResult GetImage(int id)
-        {
-            // Image image= Configuration.DbHelper.GetAllImages().Where(i => i.Id == id).Single();
-
-            var image = (from images in Configuration.DbHelper._db.Images
-                               from imagesData in Configuration.DbHelper._db.ImageData
-                               where images.ImageDataId == imagesData.Id && images.Id == id
-                               select imagesData).FirstOrDefaultAsync();
+        {                       
+           // Query using navigation property + include in DbHelper class
+           // Query must be Async in order to display all images one after another as they are being loaded
+           Task<Image> image = Configuration.DbHelper._db.Images.Where(i => i.Id == id).SingleAsync();
             
-            return  File(image.Result.Data, "image/jpg");
+            return  File(image.Result.ImageData.Data,"image/jpg");
         }
     }
 }

@@ -4,16 +4,43 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script src="~/lib/prism/prism.js"></script>
+    <link href="~/lib/prism/themes/prism.css" rel="stylesheet" />
+
+    <script src="~/lib/prism/components/prism-csharp.js"></script>
+
+    <script src="~/lib/prism/components/prism-markup-templating.js"></script> <!--Otherwise PHP markup will not work-->
+    <script src="~/lib/prism/components/prism-php.js"></script>
+
+    <script src="~/lib/prism/components/prism-java.js"></script>
+
+    <script src="~/lib/prism/components/prism-git.js"></script>
+
+    <script src="~/lib/prism/components/prism-markdown.js"></script>
+
+    @*<script src="~/lib/prism/components/prism-aspnet.js"></script>
+    <script src="~/lib/prism/components/prism-cpp.js"></script>
+    <script src="~/lib/prism/components/prism-fsharp.js"></script>
+    <script src="~/lib/prism/components/prism-json.js"></script>
+    <script src="~/lib/prism/components/prism-less.js"></script>
+    <script src="~/lib/prism/components/prism-sass.js"></script>
+    <script src="~/lib/prism/components/prism-smalltalk.js"></script>*@
+
     <link rel="shortcut icon" href="@Helper.JasperUrl("./favicon.ico")" type="image/x-icon">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
+
+
+
 
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/lib/tether/dist/css/tether.css" rel="stylesheet" />
         <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" />
         <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+
+
     </environment>
 
     <environment exclude="Development">
@@ -27,6 +54,9 @@
               asp-fallback-href="~/lib/font-awesome/css/font-awesome.css">
         <!-- TODO: Nalinkovat minifikaci -->
         <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" asp-append-version="true" />
+
+
+
     </environment>
 
     @**********************************************Scripts*******************************************@
@@ -36,6 +66,7 @@
         <script src="~/lib/tether/dist/js/tether.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>
+
     </environment>
 
     <environment exclude="Development">
@@ -54,6 +85,8 @@
         </script>
         <!-- TODO: Nalinkovat minifikaci -->
         <script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>
+
+
     </environment>
 
     @RenderSection("Scripts", required: false)
@@ -63,6 +96,8 @@
 
 </head>
 <body>
+
+
     <div class="container jasper-container-outer">
 
 
@@ -87,11 +122,11 @@
                     </li>
 
                     @foreach (Category c in Configuration.DbHelper.GetAllCategories())
-    {
-                <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
-                    <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
-                </li>
-}
+                    {
+                        <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
+                            <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
+                        </li>
+                    }
 
                 </ul>
             </div>
@@ -118,6 +153,6 @@
             </footer>
         </div>
     </div>
-
+   
 </body>
 </html>

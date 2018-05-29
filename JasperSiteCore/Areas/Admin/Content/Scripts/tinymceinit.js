@@ -1,4 +1,5 @@
 ﻿tinymce.init({
+    
     selector: '#myTextArea',
 
     //plugins: "image",   

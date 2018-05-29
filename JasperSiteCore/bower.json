@@ -10,7 +10,8 @@
     "chosen-bootstrap": "1.1.0",
     "font-awesome": "Font-Awesome#v4.7.0",
     "jquery-ajax-unobtrusive": "v3.2.4",
-    "tinymce": "4.7.13"
+    "tinymce": "4.7.13",
+    "prism": "Prism#v1.14.0"
   },
   "resolutions": {
     "bootstrap": "v4.0.0-alpha.6",
