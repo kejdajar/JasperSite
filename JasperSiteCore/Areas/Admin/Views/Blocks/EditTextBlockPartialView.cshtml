@@ -27,7 +27,10 @@
         <section class="j-admin-section">
 
             <div class="form-group">
+
                 <input type="hidden" asp-for="TextBlock.Id" />
+                
+
                 <label asp-for="TextBlock.Name"></label>
 
                 <input asp-for="TextBlock.Name" class="form-control" />
@@ -46,7 +49,7 @@
             <div class="form-group">
 
 
-                <button type="submit" asp-area="Admin" asp-controller="Blocks" asp-action="SaveBlock" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+                <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
                 <a href="/Admin/Blocks/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam bloků</a>
 
 

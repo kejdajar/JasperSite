@@ -85,25 +85,33 @@ namespace JasperSiteCore.Areas.Admin.Controllers
          public IActionResult EditBlock(int blockId)
         {
             TextBlock tbToEdit = Configuration.DbHelper.GetAllTextBlocks().Where(tb => tb.Id == blockId).Single();
-         
 
-            List<BlockHolder> all_blockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
-            List<Holder_Block> all_holder_block = Configuration.DbHelper.GetAllHolder_Blocks().ToList();
 
-            List<BlockHolder> correspondingBlockHolders = (from bh in all_blockHolders
-                                                          from h_b in all_holder_block
-                                                          where h_b.TextBlockId == blockId && h_b.BlockHolderId == bh.Id
-                                                          select bh).ToList();
+
+
+            List<BlockHolder> correspondingBlockHolders = GetCorrespondingBlockHolders(blockId);
 
             List<BlockHolder> allBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
 
             EditBlockViewModel model = new EditBlockViewModel();
             model.TextBlock = new EditTextBlock() { Name=tbToEdit.Name,Content=tbToEdit.Content,Id=tbToEdit.Id};
             model.CorrespondingBlockHolders = correspondingBlockHolders;
-            model.AllBlockHolders = all_blockHolders;
+            model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
             return View(model);
         }
 
+       
+
+        public List<BlockHolder> GetCorrespondingBlockHolders(int blockId)
+        {
+            List<BlockHolder> all_blockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+            List<Holder_Block> all_holder_block = Configuration.DbHelper.GetAllHolder_Blocks().ToList();
+
+            return                                        (from bh in all_blockHolders
+                                                           from h_b in all_holder_block
+                                                           where h_b.TextBlockId == blockId && h_b.BlockHolderId == bh.Id
+                                                           select bh).ToList();
+        }
     
         [HttpPost]
         public IActionResult SaveBlock(EditBlockViewModel model)
@@ -115,7 +123,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             tbFromDb.Content = changedData.Content;
             Configuration.DbHelper.SaveChanges();
 
-            ModelState.Clear();
+            // It is necessary to update other properties of the view or the partial view will not be served
+            // because hidden fields does not store complex types
+            model.CorrespondingBlockHolders = GetCorrespondingBlockHolders(model.TextBlock.Id);
+            model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+
             return PartialView("EditTextBlockPartialView",model);
         }
 
