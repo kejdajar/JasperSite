@@ -3,42 +3,25 @@
     ViewData["Title"] = "Úprava textového bloku";
 }
 @section Scripts {
-    <script>
-        function savedInfo() {
+    
+<script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+   
 
-            var panel = $(`<div class="j-flex-row j-secondary-header">
+    @{ Html.RenderPartial("TinyMceSettingsPartialView");}
+}
 
-                        <div class="j-header-group">
+@section Styles {
 
-                            <div class="j-header-group-item">
-                                <span style='color:white'>  <b>Uloženo</b> </span>
-                            </div>
+    <link href="~/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
 
-                        </div>
-                    </div>`);
-
-            panel.css({
-                "display": "none",
-                "background-color": "#8BC34A",
-
-                "font-size": "1.3em"
-            });
-
-            $("#headerPanel").append(panel);
-            panel.slideDown("slow").delay(2000).slideUp("slow");
-
-        }
-    </script>
-
-    <script src="~/lib/tinymce/tinymce.js"></script>
-    <script src="~/Areas/Admin/Content/Scripts/tinymceinit.js"></script>
 }
 
 
-<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Úprava textového bloku: @Model.TextBlock.Name</h1></div>
+
 <div class="container-fluid">
 
+   
     <div id="mainForm">
-        @{Html.RenderPartial("EditTextBlockPartialView");}
+      @Html.Partial("EditTextBlockPartialView", Model)
+        </div>
     </div>
-</div>

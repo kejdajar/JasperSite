@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Content Remove="Areas\Admin\Views\Blocks\BlockFormPartialView.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\TinyMceSettingsPartialView.cshtml" />
     <Content Remove="Themes\Default\AboutAuthor.cshtml" />
     <Content Remove="Themes\Default\AboutProject.cshtml" />
     <Content Remove="Themes\Jasper\About.cshtml" />

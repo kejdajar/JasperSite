@@ -104,18 +104,19 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             return View(model);
         }
 
+    
         [HttpPost]
-        public IActionResult SaveBlock(TextBlock textBlock)
+        public IActionResult SaveBlock(EditBlockViewModel model)
         {
-            TextBlock changedData = textBlock;
-            TextBlock tbFromDb= Configuration.DbHelper.GetAllTextBlocks().Where(tb => tb.Id == textBlock.Id).Single();
+            TextBlock changedData = new TextBlock() { Id = model.TextBlock.Id, Name = model.TextBlock.Name, Content = model.TextBlock.Content };
+            TextBlock tbFromDb= Configuration.DbHelper.GetAllTextBlocks().Where(tb => tb.Id == model.TextBlock.Id).Single();
 
             tbFromDb.Name = changedData.Name;
             tbFromDb.Content = changedData.Content;
             Configuration.DbHelper.SaveChanges();
 
             ModelState.Clear();
-            return PartialView("EditTextBlockPartialView", textBlock);
+            return PartialView("EditTextBlockPartialView",model);
         }
 
         [HttpGet]

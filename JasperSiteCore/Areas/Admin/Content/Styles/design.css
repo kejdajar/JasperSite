@@ -21,7 +21,10 @@ body {
 
 
 hr {
-    background-color: #ffe0e0;
+    border: 0;
+    height: 1px;
+    background: #333;
+    
 }
 
 /*---------------------Filter panel-----------------*/
@@ -335,4 +338,13 @@ fieldset[disabled] .btn-jasper.active {
 
 .j-theme-table tr:not(:first-of-type){
     height:150px;
+}
+
+.j-admin-section {
+margin-bottom:20px;
+}
+
+.j-left-border-block {
+    border-left: 3px solid #BA68C8;
+    padding-left: 4px;
 }

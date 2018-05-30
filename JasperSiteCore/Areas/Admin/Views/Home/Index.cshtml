@@ -13,7 +13,7 @@
     </li>
 </ul>
 
-<h4>Hlavní ovládací panel systému</h4>
+<h4><i class="fa fa-sticky-note j-icon" aria-hidden="true"></i>Tipy a triky</h4>
 
 
 
@@ -48,15 +48,15 @@
 @if (User.Identity.IsAuthenticated)
 {
 
-<div class="alert alert-info alert-dismissible fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    Odhlásit se můžete pomocí tlačítka s vaším uživatelským jménem:
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        Odhlásit se můžete pomocí tlačítka s vaším uživatelským jménem:
 
-    <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name - odhlásit</a>
-</div>
-   
+        <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name - odhlásit</a>
+    </div>
+
 
 
 }

@@ -290,11 +290,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             return RedirectToAction("Themes");
         }
 
-        [HttpGet]
-        public IActionResult Prism()
-        {
-            return View();
-        }
+       
 
     }
 }

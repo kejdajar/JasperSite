@@ -9,91 +9,18 @@
 @section Scripts {
     <script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
     <script src="~/Areas/Admin/Content/Scripts/EditArticle.js"></script>
-    <script src="~/lib/tinymce/tinymce.js"></script>
-
-  
-    <script>
-        tinymce.init({
-
-            selector: '#myTextArea',
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+    
+    @{ Html.RenderPartial("TinyMceSettingsPartialView");}
 
 
-
-            plugins: "image lists link table imagetools advlist autolink charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media contextmenu paste wordcount visualchars toc textpattern textcolor template hr help emoticons colorpicker codesample",
-            toolbar: ["undo redo | paste | fontselect | styleselect forecolor backcolor | bold italic hr | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | template insertdatetime anchor link media image emoticons toc table | visualblocks visualchars |searchreplace code codesample charmap print | help  fullscreen"],
-
-            contextmenu: "link image inserttable | cell row column deletetable",
-            templates: [
-                { title: 'JasperSiteCore logo', description: 'Adds JSC logo', content: '<b>J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span>' },
-            ],
-
-            codesample_languages: [
-                { text: 'HTML/XML', value: 'markup' },
-                { text: 'JavaScript', value: 'javascript' },
-                { text: 'CSS', value: 'css' },
-                { text: 'C-like', value: 'clike' },
-                { text: 'C#', value: 'csharp' },
-                { text: 'PHP', value: 'php' },
-                { text: 'Java', value: 'java' },
-                { text: 'GIT', value: 'git' },
-                { text: 'MARKDOWN', value: 'markdown' },
-                { text: 'ASP NET', value: 'aspnet' },
-               
-                { text: 'F#', value: 'fsharp' },
-                { text: 'JSON', value: 'json' },
-                { text: 'LESS', value: 'less' },
-                { text: 'SASS', value: 'sass' },
-                { text: 'SMALLTALK', value: 'smalltalk' },
-            ],           
-
-            convert_urls: false, // url will remain unchanged, default conversion is ../Images/GetImage?id=1
-            image_list: [
-
-                @foreach(Image img in Configuration.DbHelper.GetAllImages())
-                {
-                    @: { title: '@img.Name', value: '@Url.Action("GetImage","Images",new { id=img.Id})' },
-                }
-            ]
-        })
-        /*
-        image ... allows to add image
-        lists ... bulleted list
-        link ... allows to add hyperlink manually from menu
-        imagetools ... tools appears when img is selected in the gui
-        table ... allows to add tables from menu
-        advlist ... advanced bulleted lists
-        autolink ... automatically creates hyperlinks from entered text, like www.mypage.com
-        charmap ... inserts special character
-        print ... shows browsers print dialog
-        preview ... shows how the page will be eventually rendered
-        anchor ... links can be pointed to anchors
-        searchreplace ... adds search & replace feature
-        visualblocks ... allows user to display dashed area around paragraphs etc.
-        code ... user can view and edit HTML code of the textarea
-        fullscreen ... allows to toggle full-screen edit mode
-        insertdatetime ... allows to choose from various date-time formats and insert current time/date
-        media ... allows to add for instance youtube video
-        contextmenu ... enables right-click menu
-        paste ... allows to paste text from word - does not work in chrome :/
-        wordcount ... adds number of words in the bottom right hand corner
-        visualchars ... shows invisible characters
-        toc ... adds table of contents
-        textpattern ... something like markdown syntax, ie. "##header" creates bigger text
-        textcolor ...FORECOLOR + BACKCOLOR in toolbar
-        template ... allows to define custom template
-        hr .... adds horizontal rule
-        help ... shows keyboard shortcuts and lists of installed plugins
-        emoticons ... allows user to add emoticons
-        colorpicker ... adds custom color dialog to forecolor and backcolor buttons
-        */
-    </script>
 
 
 }
 @section Styles {
 
     <link href="~/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
-   
+
 }
 <style>
     div.mce-fullscreen {

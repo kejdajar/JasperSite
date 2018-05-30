@@ -61,7 +61,7 @@
         @foreach (BlocksViewModelData data in @Model.Blocks)
         {
             <h3>  <a asp-area="Admin" asp-controller="Blocks" asp-action="DeleteBlock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px">x</a>  @data.TextBlock.Name   </h3>
-            <div style="border-left:3px solid #BA68C8;padding-left:4px">
+            <div class="j-left-border-block">
 
 
 
