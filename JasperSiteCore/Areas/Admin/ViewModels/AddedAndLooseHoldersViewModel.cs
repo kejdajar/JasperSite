@@ -9,12 +9,11 @@ using JasperSiteCore.Areas.Admin.Controllers;
 
 namespace JasperSiteCore.Areas.Admin.ViewModels
 {
-    public class EditBlockViewModel
+    public class AddedAndLooseHoldersViewModel
     {
-       
-       public TextBlock TextBlock { get; set; }
-       public AddedAndLooseHoldersViewModel HolderManagement { get; set; }
-      
+        public int CurrentTextBoxId { get; set; }
+        public List<BlockHolder> AllBlockHolders { get; set; } = new List<BlockHolder>();
+        public List<BlockHolder> CorrespondingBlockHolders { get; set; } = new List<BlockHolder>();
     }
 
    

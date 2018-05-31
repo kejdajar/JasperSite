@@ -1,0 +1,57 @@
+﻿@using JasperSiteCore.Models.Database
+@using  JasperSiteCore.Models
+@using JasperSiteCore.Areas.Admin.Controllers
+
+@model JasperSiteCore.Areas.Admin.ViewModels.AddedAndLooseHoldersViewModel
+
+<section class="j-admin-section">
+
+    <h2> <i class="fa fa-thumb-tack j-icon" aria-hidden="true"></i>Přiřazené kontejnery:</h2>
+
+    @if (Model.CorrespondingBlockHolders.Count() > 0)
+    {<table class="table table-bordered j-table j-left-border-block">
+            <tr><th>Akce</th><th class="col-sm-1">Název kontejneru</th></tr>
+            @foreach (BlockHolder holder in Model.CorrespondingBlockHolders)
+            {
+                <tr>
+                    <td>   <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Blocks" asp-action="RemoveHolderFromBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
+                    <td>@holder.Name</td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            <strong>Upozornění:</strong> Tento textový blok nemá přiřazen zatím žádný kontejner a proto nebude zobrazen na stránce.
+        </div>
+
+    }
+
+</section>
+
+
+<section class="j-admin-section">
+
+    <h2> <i class="fa fa-plus-circle j-icon" aria-hidden="true"></i>Přiřadit kontejnery:</h2>
+    <table class="table table-bordered j-table j-table-left j-left-border-block">
+        <tr><th>Akce</th><th class="col-sm-1">Název kontejneru</th></tr>
+        @foreach (BlockHolder holder in Model.AllBlockHolders.Except(Model.CorrespondingBlockHolders))
+        {
+            <tr>
+                <td><a data-toggle="tooltip" title="Přiřadit" asp-area="Admin" asp-controller="Blocks" asp-action="AddHolderToBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a></td>
+                <td>@holder.Name</td>
+            </tr>
+        }
+    </table>
+
+    <div class="form-group">
+
+        <a href="/Admin/Blocks/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam bloků</a>
+
+
+
+
+    </div>
+
+</section>

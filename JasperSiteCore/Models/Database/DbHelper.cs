@@ -300,5 +300,10 @@ namespace JasperSiteCore.Models.Database
             return _db.Images.Include(i=>i.ImageData).ToList();
         }
 
+        public TextBlock GetTextBlockById(int id)
+        {
+            return _db.TextBlocks.Where(tb => tb.Id == id).Single();
+        }
+
     }
 }

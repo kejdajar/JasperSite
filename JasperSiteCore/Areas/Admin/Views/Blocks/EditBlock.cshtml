@@ -6,6 +6,7 @@
 
     <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
 
+    @{ Html.RenderPartial("TinyMceSettingsPartialView");}
 
     @*@{ Html.RenderPartial("TinyMceSettingsPartialView");}*@
 
@@ -29,10 +30,15 @@
 
 
 
-<div class="container-fluid">
+    <div class="container-fluid">
 
 
-    <div id="mainForm">
-        @Html.Partial("EditTextBlockPartialView", Model)
+        <div id="mainForm">
+            @Html.Partial("EditTextBlockPartialView",Model.TextBlock)
+        </div>
+
+        <div id="mainForm2">
+            @Html.Partial("AddedAndLooseHoldersPartialView",Model.HolderManagement);
+        </div>
+
     </div>
-</div>

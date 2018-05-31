@@ -94,9 +94,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             List<BlockHolder> allBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
 
             EditBlockViewModel model = new EditBlockViewModel();
-            model.TextBlock = new EditTextBlock() { Name=tbToEdit.Name,Content=tbToEdit.Content,Id=tbToEdit.Id};
-            model.CorrespondingBlockHolders = correspondingBlockHolders;
-            model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+          
+            model.HolderManagement = new AddedAndLooseHoldersViewModel();
+            model.HolderManagement.CurrentTextBoxId = blockId;
+            model.TextBlock = tbToEdit;
+            model.HolderManagement.CorrespondingBlockHolders = correspondingBlockHolders;
+            model.HolderManagement.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
             return View(model);
         }
 
@@ -114,11 +117,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
     
         [HttpPost]
-        public IActionResult SaveBlock(EditBlockViewModel model)
-        {    ModelState.Clear();
-
-            TextBlock changedData = new TextBlock() { Id = model.TextBlock.Id, Name = model.TextBlock.Name, Content = model.TextBlock.Content };
-            TextBlock tbFromDb= Configuration.DbHelper.GetAllTextBlocks().Where(tb => tb.Id == model.TextBlock.Id).Single();
+        public IActionResult SaveBlock(TextBlock model)
+        {
+            
+            TextBlock changedData = new TextBlock() { Id = model.Id, Name = model.Name, Content = model.Content };
+            TextBlock tbFromDb= Configuration.DbHelper.GetAllTextBlocks().Where(tb => tb.Id == model.Id).Single();
 
             tbFromDb.Name = changedData.Name;
             tbFromDb.Content = changedData.Content;
@@ -126,10 +129,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             // It is necessary to update other properties of the view or the partial view will not be served
             // because hidden fields does not store complex types
-            model.CorrespondingBlockHolders = GetCorrespondingBlockHolders(model.TextBlock.Id);
-            model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();           
-            
-            return PartialView("EditTextBlockPartialView",model);
+
+            // model.HolderManagement.CorrespondingBlockHolders = GetCorrespondingBlockHolders(model.TextBlock.Id);
+            // model.HolderManagement.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+
+
+            // return PartialView("EditTextBlockPartialView",model);
+            return RedirectToAction("EditBlock", new { blockId = model.Id });
         }
 
         [HttpGet]

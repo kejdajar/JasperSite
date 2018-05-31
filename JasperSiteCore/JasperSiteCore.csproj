@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Blocks\AddedAndLooseHoldersPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Blocks\BlockFormPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\TinyMceSettingsPartialView.cshtml" />
     <Content Remove="Themes\Default\AboutAuthor.cshtml" />
@@ -23,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Areas\Admin\ViewModels\AddedAndLooseHoldersViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\BlockViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\CategoriesViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\EditBlockViewModel.cs" />
