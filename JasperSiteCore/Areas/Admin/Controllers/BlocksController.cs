@@ -115,7 +115,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     
         [HttpPost]
         public IActionResult SaveBlock(EditBlockViewModel model)
-        {
+        {    ModelState.Clear();
+
             TextBlock changedData = new TextBlock() { Id = model.TextBlock.Id, Name = model.TextBlock.Name, Content = model.TextBlock.Content };
             TextBlock tbFromDb= Configuration.DbHelper.GetAllTextBlocks().Where(tb => tb.Id == model.TextBlock.Id).Single();
 
@@ -126,8 +127,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             // It is necessary to update other properties of the view or the partial view will not be served
             // because hidden fields does not store complex types
             model.CorrespondingBlockHolders = GetCorrespondingBlockHolders(model.TextBlock.Id);
-            model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
-
+            model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();           
+            
             return PartialView("EditTextBlockPartialView",model);
         }
 

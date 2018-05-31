@@ -3,11 +3,22 @@
     ViewData["Title"] = "Úprava textového bloku";
 }
 @section Scripts {
-    
-<script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
-   
 
-    @{ Html.RenderPartial("TinyMceSettingsPartialView");}
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+
+
+    @*@{ Html.RenderPartial("TinyMceSettingsPartialView");}*@
+
+    <script>
+        $(document).ready(function () {
+
+
+            $('[data-toggle="tooltip"]').tooltip();
+
+
+        });
+    </script>
+
 }
 
 @section Styles {
@@ -20,8 +31,8 @@
 
 <div class="container-fluid">
 
-   
+
     <div id="mainForm">
-      @Html.Partial("EditTextBlockPartialView", Model)
-        </div>
+        @Html.Partial("EditTextBlockPartialView", Model)
     </div>
+</div>
