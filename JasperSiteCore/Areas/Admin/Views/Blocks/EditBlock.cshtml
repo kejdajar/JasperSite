@@ -21,11 +21,12 @@
     </script>
 
     <script>
+        /* AJAX TINYMCE SUBMIT WITH NO JS FALLBACK */
         $(document).ready(function () {
 
             var allDeleteLinks = $('#btnSaveTinymce').click(function (e) {
 
-                e.preventDefault();               
+                e.preventDefault();
 
                // var formData = $("#tinymceForm").serialize();
                 var textarea = tinyMCE.activeEditor.getContent();
@@ -33,7 +34,7 @@
                     Id: $("#hiddenId").val(),
                     Name: $("#tbName").val(),
                     Content: textarea
-                
+
                 };
 
                 $.ajax({
@@ -42,7 +43,7 @@
                     data: model,
                     dataType: 'HTML',
                     success: function (data) {
-                    
+
                         $("#modelNameHeader").text(data);
                         savedInfo();
                     }
@@ -52,6 +53,32 @@
         });
     </script>
 
+    <script>
+        /* AJAX REMOVE HOLDER */
+        $(document).ready(function () {
+
+
+            var allDeleteLinks = $('a[data-remove-holder-id]').click(function (e) {
+
+                e.preventDefault();
+                var singleLink = $(this);
+
+                var holderToBeRemovedId = singleLink.data('removeHolderId');
+                var tbToBeRemovedId = @Model.HolderManagement.CurrentTextBoxId;
+
+                $.ajax({
+                    type: 'get',
+                    url: '@Url.Action("RemoveHolderFromBlock","Blocks")',
+                    data: { holderId: holderToBeRemovedId, blockId:tbToBeRemovedId },
+                    dataType: 'HTML',
+                    success: function (data) {
+                        alert('odebrano');
+                        $("#mainForm2").html(data);
+                    }
+                });
+            });
+        });
+    </script>
 }
 
 @section Styles {

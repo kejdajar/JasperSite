@@ -153,7 +153,20 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult RemoveHolderFromBlock(int holderId,int blockId)
         {
             Configuration.DbHelper.RemoveHolderFromBlock(holderId, blockId);
-            return RedirectToAction("EditBlock", new { blockId = blockId });
+
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+            {
+                AddedAndLooseHoldersViewModel model = new AddedAndLooseHoldersViewModel();
+                 model.CorrespondingBlockHolders = GetCorrespondingBlockHolders(blockId);
+                 model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+                return PartialView("AddedAndLooseHoldersPartialView",model);
+            }
+
+            else {
+return RedirectToAction("EditBlock", new { blockId = blockId });
+            }
+            
         }
 
 
