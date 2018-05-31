@@ -20,6 +20,38 @@
         });
     </script>
 
+    <script>
+        $(document).ready(function () {
+
+            var allDeleteLinks = $('#btnSaveTinymce').click(function (e) {
+
+                e.preventDefault();               
+
+               // var formData = $("#tinymceForm").serialize();
+                var textarea = tinyMCE.activeEditor.getContent();
+                var model = {
+                    Id: $("#hiddenId").val(),
+                    Name: $("#tbName").val(),
+                    Content: textarea
+                
+                };
+
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("SaveBlock","Blocks")',
+                    data: model,
+                    dataType: 'HTML',
+                    success: function (data) {
+                    
+                        $("#modelNameHeader").text(data);
+                        savedInfo();
+                    }
+                });
+            });
+
+        });
+    </script>
+
 }
 
 @section Styles {
@@ -38,7 +70,7 @@
         </div>
 
         <div id="mainForm2">
-            @Html.Partial("AddedAndLooseHoldersPartialView",Model.HolderManagement);
+            @Html.Partial("AddedAndLooseHoldersPartialView",Model.HolderManagement)
         </div>
 
     </div>

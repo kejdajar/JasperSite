@@ -5,20 +5,20 @@
 
 
 @*<form asp-action="SaveBlock" asp-controller="Blocks" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete="savedInfo">*@
-<form asp-action="SaveBlock" asp-controller="Blocks" asp-area="Admin">
+<form asp-action="SaveBlock" asp-controller="Blocks" asp-area="Admin" id="tinymceForm">
 
-    <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Úprava textového bloku: @JasperSiteCore.Models.Configuration.DbHelper.GetTextBlockById(Model.Id).Name</h1></div>
+    <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Úprava textového bloku: <span id="modelNameHeader"> @JasperSiteCore.Models.Configuration.DbHelper.GetTextBlockById(Model.Id).Name</span></h1></div>
 
     <section class="j-admin-section">
 
         <div class="form-group">
 
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Id" id="hiddenId" />
 
 
             <label asp-for="Name"></label>
 
-            <input asp-for="Name" class="form-control" />
+            <input asp-for="Name" class="form-control" id="tbName" />
             <span asp-validation-for="Name" class="text-danger"></span>
 
         </div>
@@ -34,7 +34,7 @@
         <div class="form-group">
 
 
-            <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+            <button id="btnSaveTinymce" type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
             <a href="/Admin/Blocks/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam bloků</a>
 
 

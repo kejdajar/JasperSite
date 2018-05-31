@@ -135,7 +135,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
 
             // return PartialView("EditTextBlockPartialView",model);
-            return RedirectToAction("EditBlock", new { blockId = model.Id });
+
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+                return Content(model.Name);
+            else return RedirectToAction("EditBlock", new { blockId = model.Id });
         }
 
         [HttpGet]
