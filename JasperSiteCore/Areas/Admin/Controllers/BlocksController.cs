@@ -157,10 +157,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
             {
-                AddedAndLooseHoldersViewModel model = new AddedAndLooseHoldersViewModel();
+                 AddedAndLooseHoldersViewModel model = new AddedAndLooseHoldersViewModel();
                  model.CorrespondingBlockHolders = GetCorrespondingBlockHolders(blockId);
                  model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
-                return PartialView("AddedAndLooseHoldersPartialView",model);
+                 model.CurrentTextBoxId = blockId;
+                 return PartialView("AddedAndLooseHoldersPartialView",model);
             }
 
             else {

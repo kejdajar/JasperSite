@@ -10,15 +10,7 @@
 
     @*@{ Html.RenderPartial("TinyMceSettingsPartialView");}*@
 
-    <script>
-        $(document).ready(function () {
-
-
-            $('[data-toggle="tooltip"]').tooltip();
-
-
-        });
-    </script>
+   
 
     <script>
         /* AJAX TINYMCE SUBMIT WITH NO JS FALLBACK */
@@ -53,32 +45,7 @@
         });
     </script>
 
-    <script>
-        /* AJAX REMOVE HOLDER */
-        $(document).ready(function () {
-
-
-            var allDeleteLinks = $('a[data-remove-holder-id]').click(function (e) {
-
-                e.preventDefault();
-                var singleLink = $(this);
-
-                var holderToBeRemovedId = singleLink.data('removeHolderId');
-                var tbToBeRemovedId = @Model.HolderManagement.CurrentTextBoxId;
-
-                $.ajax({
-                    type: 'get',
-                    url: '@Url.Action("RemoveHolderFromBlock","Blocks")',
-                    data: { holderId: holderToBeRemovedId, blockId:tbToBeRemovedId },
-                    dataType: 'HTML',
-                    success: function (data) {
-                        alert('odebrano');
-                        $("#mainForm2").html(data);
-                    }
-                });
-            });
-        });
-    </script>
+    
 }
 
 @section Styles {

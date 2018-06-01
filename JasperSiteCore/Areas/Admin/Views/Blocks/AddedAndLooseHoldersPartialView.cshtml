@@ -4,6 +4,44 @@
 
 @model JasperSiteCore.Areas.Admin.ViewModels.AddedAndLooseHoldersViewModel
 
+<script>
+        /* AJAX REMOVE HOLDER */
+        $(document).ready(function () {
+
+
+            var allDeleteLinks = $('a[data-remove-holder-id]').click(function (e) {
+
+                e.preventDefault();
+                var singleLink = $(this);
+
+                var holderToBeRemovedId = singleLink.data('removeHolderId');
+                var tbToBeRemovedId = singleLink.data('tbHolderId');
+
+                $.ajax({
+                    type: 'get',
+                    url: '@Url.Action("RemoveHolderFromBlock","Blocks")',
+                    data: { holderId: holderToBeRemovedId, blockId:tbToBeRemovedId },
+                    dataType: 'HTML',
+                    success: function (data) {
+                      
+                        $("#mainForm2").html(data);
+                        savedInfo();
+                    }
+                });
+            });
+        });
+</script>
+
+<script>
+    $(document).ready(function () {
+
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+
+    });
+</script>
+
 <section class="j-admin-section">
 
     <h2> <i class="fa fa-thumb-tack j-icon" aria-hidden="true"></i>Přiřazené kontejnery:</h2>
@@ -14,7 +52,7 @@
             @foreach (BlockHolder holder in Model.CorrespondingBlockHolders)
             {
                 <tr>
-                    <td>   <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Blocks" asp-action="RemoveHolderFromBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper btn-jasper-delete" data-remove-holder-id="@holder.Id" > <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
+                    <td>   <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Blocks" asp-action="RemoveHolderFromBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper btn-jasper-delete" data-remove-holder-id="@holder.Id" data-tb-holder-id="@Model.CurrentTextBoxId"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
                     <td>@holder.Name</td>
                 </tr>
             }
