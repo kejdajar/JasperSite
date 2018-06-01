@@ -15,7 +15,7 @@
                 var singleLink = $(this);
 
                 var holderToBeRemovedId = singleLink.data('removeHolderId');
-                var tbToBeRemovedId = singleLink.data('tbHolderId');
+                var tbToBeRemovedId = @Model.CurrentTextBoxId;
 
                 $.ajax({
                     type: 'get',
@@ -23,20 +23,50 @@
                     data: { holderId: holderToBeRemovedId, blockId:tbToBeRemovedId },
                     dataType: 'HTML',
                     success: function (data) {
-                      
+
                         $("#mainForm2").html(data);
+
+                        savedInfo();
+                    }
+                });
+            });
+    });
+
+
+    /* AJAX ADD HOLDER TO BLOCK*/
+    $(document).ready(function () {
+
+
+            var allAddLinks = $('a[data-add-holder-id]').click(function (e) {
+
+                e.preventDefault();
+                var singleLink = $(this);
+
+                var holderToBeAddedId = singleLink.data('addHolderId');
+                var tbId = @Model.CurrentTextBoxId;
+
+                $.ajax({
+                    type: 'get',
+                    url: '@Url.Action("AddHolderToBlock","Blocks")',
+                    data: { holderId: holderToBeAddedId, blockId:tbId },
+                    dataType: 'HTML',
+                    success: function (data) {
+
+                        $("#mainForm2").html(data);
+
                         savedInfo();
                     }
                 });
             });
         });
+
 </script>
 
 <script>
     $(document).ready(function () {
 
 
-        $('[data-toggle="tooltip"]').tooltip();
+        //$('[data-toggle="tooltip"]').tooltip();
 
 
     });
@@ -52,7 +82,7 @@
             @foreach (BlockHolder holder in Model.CorrespondingBlockHolders)
             {
                 <tr>
-                    <td>   <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Blocks" asp-action="RemoveHolderFromBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper btn-jasper-delete" data-remove-holder-id="@holder.Id" data-tb-holder-id="@Model.CurrentTextBoxId"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
+                    <td>   <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Blocks" asp-action="RemoveHolderFromBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper btn-jasper-delete" data-remove-holder-id="@holder.Id" > <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
                     <td>@holder.Name</td>
                 </tr>
             }
@@ -77,7 +107,7 @@
         @foreach (BlockHolder holder in Model.AllBlockHolders.Except(Model.CorrespondingBlockHolders))
         {
             <tr>
-                <td><a data-toggle="tooltip" title="Přiřadit" asp-area="Admin" asp-controller="Blocks" asp-action="AddHolderToBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a></td>
+                <td><a data-toggle="tooltip" title="Přiřadit" asp-area="Admin" asp-controller="Blocks" asp-action="AddHolderToBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper"  data-add-holder-id="@holder.Id" > <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a></td>
                 <td>@holder.Name</td>
             </tr>
         }

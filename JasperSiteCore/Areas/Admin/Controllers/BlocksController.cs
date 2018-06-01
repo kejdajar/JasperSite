@@ -146,7 +146,25 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult AddHolderToBlock(int holderId, int blockId)
         {
             Configuration.DbHelper.AddHolderToBlock(holderId, blockId);
-            return RedirectToAction("EditBlock",new { blockId=blockId});
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+            {                
+                return PartialView("AddedAndLooseHoldersPartialView", GetBlockManagementModel(blockId));
+            }
+            else
+            {
+                return RedirectToAction("EditBlock", new { blockId = blockId });
+            }
+                
+        }
+
+        public AddedAndLooseHoldersViewModel GetBlockManagementModel(int blockId)
+        {
+            AddedAndLooseHoldersViewModel model = new AddedAndLooseHoldersViewModel();
+            model.CorrespondingBlockHolders = GetCorrespondingBlockHolders(blockId);
+            model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+            model.CurrentTextBoxId = blockId;
+            return model;
         }
 
         [HttpGet]
