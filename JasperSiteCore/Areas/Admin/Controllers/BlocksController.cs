@@ -71,7 +71,19 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult DeleteBlock(int id)
         {
             Configuration.DbHelper.DeleteTextBlockById(id);
-            return RedirectToAction("Index");
+
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+            {
+
+                return PartialView("BlockFormPartialView",UpdatePage());
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+                
         }
 
         [HttpGet]
