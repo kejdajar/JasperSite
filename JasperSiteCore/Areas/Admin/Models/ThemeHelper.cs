@@ -130,6 +130,27 @@ namespace JasperSiteCore.Areas.Admin.Models
             return allNamesInFolder;
         }
 
+        public List<string> FindManuallyDeletedThemes()
+        {
+            List<ThemeInfo> themeInfosFromFolder = GetInstalledThemesInfo();
+            List<Theme> themesStoredInDb = Configuration.DbHelper.GetAllThemes();
+
+
+            List<string> themeNamesOnlyInDatabaseAndNotInFolder = themesStoredInDb.Select(n => n.Name).ToList();
+
+           foreach(Theme dbName in themesStoredInDb)
+            {
+                foreach(ThemeInfo folderName in themeInfosFromFolder)
+                {
+                    if(dbName.Name==folderName.ThemeName)
+                    {
+                        themeNamesOnlyInDatabaseAndNotInFolder.Remove(dbName.Name);
+                    }
+                }
+            }
+            return themeNamesOnlyInDatabaseAndNotInFolder;
+        }
+
 
 }
 

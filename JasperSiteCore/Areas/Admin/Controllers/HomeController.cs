@@ -103,8 +103,20 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult AddNewAddedThemesToDb()
         {
             Configuration.DbHelper.AddThemesFromFolderToDatabase(Configuration.ThemeHelper.CheckThemeFolderAndDatabaseIntegrity());
-            return View("Themes",UpdatePage());
+            return RedirectToAction("Themes");
         }
+
+        [HttpGet]
+        public IActionResult RemoveManuallyDeletedThemesFromDb()
+        {
+           List<string> themesToDelete= Configuration.ThemeHelper.FindManuallyDeletedThemes();
+            foreach(string name in themesToDelete)
+            {
+                Configuration.DbHelper.DeleteThemeByName(name);
+            }
+            return View("Themes", UpdatePage());
+        }
+
 
         public ThemesViewModel UpdatePage()
         {
@@ -127,6 +139,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             // Not registered themes check
             model.NotRegisteredThemeNames = Configuration.ThemeHelper.CheckThemeFolderAndDatabaseIntegrity();
+            model.ManuallyDeletedThemeNames = Configuration.ThemeHelper.FindManuallyDeletedThemes();
             return model;
         }
 

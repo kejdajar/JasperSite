@@ -10,6 +10,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
     public class ThemesViewModel
     {
         public List<string> NotRegisteredThemeNames { get; set; }
+        public List<string> ManuallyDeletedThemeNames { get; set; }
 
         public string ErrorFlag { get; set; }
         public string SelectedThemeName { get; set; }
