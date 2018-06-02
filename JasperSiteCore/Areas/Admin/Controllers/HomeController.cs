@@ -125,6 +125,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             model.ThemeInfoList = paging.GetCurrentPageItems();
 
+            // Not registered themes check
             model.NotRegisteredThemeNames = Configuration.ThemeHelper.CheckThemeFolderAndDatabaseIntegrity();
             return model;
         }
