@@ -13,17 +13,67 @@
 <script>
         $(document).ready(function () {
 
-            $("tr[data-theme='@Model.SelectedThemeName'] td").css("background-color", "#d5fca6");
-            $('[data-toggle="tooltip"]').tooltip();
+            /* TOOLTIP & HIGHLIGHT */
+            $("tr[data-theme='@Model.SelectedThemeName']").css("border-left", "10px solid #BA68C8");
+             $('[data-toggle="tooltip"]').tooltip();
+
+            /* DELETE THEME AJAX*/
 
             $('[data-toggle="modal"] a').click(function (e) {
                 e.preventDefault();
+                var themeName = $(this).data("deleteName");
 
-                $("#themeNameModal").text($(this).data("name"));
-                $("#deleteModalButton").attr("href", "./DeleteTheme?ThemeName=" + $(this).data("name"));
+                $("#themeNameModal").text(themeName);
+                $("#deleteModalButton").attr("href", "./DeleteTheme?ThemeName=" + themeName);
+
+                /* use AJAX in modal pop-up*/
+                $("#deleteModalButton").click(function (e) {
+                    e.preventDefault();
+
+                    $.ajax({
+                        type: 'get',
+                        url: '@Url.Action("DeleteTheme","Home")',
+                        data: { themeName: themeName },
+                        dataType: 'HTML',
+                        success: function (data) {
+
+                            $("#mainForm1").html(data);
+                            $("#myModal").modal('toggle');
+                            savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        },
+                        error: function () {
+                            savedInfo("<strong>Chyba.</strong> Akce nemohla být dokončena.", "alert-danger");
+                        }
+
+                    });
+                });
+
             });
 
 
+
+            /* ACTIVATE THEME AJAX*/
+                var activateLinks = $("a[data-activate-name]");
+
+                activateLinks.click(function (e) {
+                    e.preventDefault();
+                    var currentLink = $(this);
+                    var themeName = currentLink.data("activateName");
+                    $.ajax({
+                        type: 'get',
+                        url: '@Url.Action("ActivateTheme","Home")',
+                        data: { themeName: themeName },
+                        dataType: 'HTML',
+                        success: function (data) {
+
+                            $("#mainForm1").html(data);
+                            savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        },
+                        error: function () {
+                            savedInfo("<strong>Chyba.</strong> Akce nemohla být dokončena.", "alert-danger");
+                        }
+                    });
+                });
         });
 </script>
 
@@ -50,15 +100,16 @@
                         @{
                             if (info.ThemeName != Model.SelectedThemeName)
                             {
-                                <a data-toggle="tooltip" title="Aktivovat" asp-area="Admin" asp-controller="Home" asp-action="ActivateTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a>
+                                
+                                <a data-toggle="tooltip" title="Aktivovat" asp-area="Admin" asp-controller="Home" asp-action="ActivateTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper" data-activate-name="@info.ThemeName"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a>
                                 <span data-toggle="modal" data-target="#myModal">
-                                    <a data-toggle="tooltip" title="Odstranit" asp-area="Admin" asp-controller="Home" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" data-name="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                                    <a data-toggle="tooltip" title="Odstranit" asp-area="Admin" asp-controller="Home" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" data-delete-name="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
                                 </span>
                             }
                             else
                             { <i class="fa fa-check fa-1x" aria-hidden="true"></i>
                                 <br /> @(info.ThemeName == Model.SelectedThemeName ? "Aktuální" : "")
-
+                                
                             }
                         }
 
@@ -72,28 +123,8 @@
     @Html.Partial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.PageNumber, TotalNumberOfPages = Model.TotalNumberOfPages })
   
 
-    <!-- Modal -->
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" style="margin-left:20px">Skutečně odstranit vzhled?</h4>
-                </div>
-                <div class="modal-body">
-                    Chystáte se odstranit vzhled <span id="themeNameModal"></span>
-
-                </div>
-                <div class="modal-footer">
-                    <a id="deleteModalButton" title="Odstranit" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i> Trvale odstranit  </a>
-                    <button type="button" class="btn btn-jasper" data-dismiss="modal" title="Zrušit">Zrušit</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
+   
 
 </form>
     

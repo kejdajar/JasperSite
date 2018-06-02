@@ -103,6 +103,33 @@ namespace JasperSiteCore.Areas.Admin.Models
             Configuration.DbHelper.Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
         }
 
+        /// <summary>
+        /// Sometimes user can manually add a theme, without registering that change in the database.
+        /// Therefore it is necessary to check whether folder strucure is in accord with database.
+        /// </summary>
+        public List<string> CheckThemeFolderAndDatabaseIntegrity()
+        {
+            List<ThemeInfo> themeInfosFromFolder = GetInstalledThemesInfo();
+            List<Theme> themesStoredInDb = Configuration.DbHelper.GetAllThemes();
+
+            // All names that are to be found in DB will be removed from this list
+            // Eventually this list will contain all names that has not yet been stored in DB
+            List<string> allNamesInFolder = themeInfosFromFolder.Select(t => t.ThemeName.Trim()).ToList();
+
+            foreach(ThemeInfo folder in themeInfosFromFolder)
+            {
+                foreach(Theme db in themesStoredInDb)
+                {
+                    if(folder.ThemeName.Trim()==db.Name.Trim())
+                    {
+                        allNamesInFolder.Remove(folder.ThemeName.Trim());
+                    }
+                }
+            }
+
+            return allNamesInFolder;
+        }
+
 
 }
 

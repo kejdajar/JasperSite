@@ -1,15 +1,15 @@
 ﻿
-        function savedInfo() {
+        function savedInfo(text,style) {
 
-          
+         
 
             var panel = $(`
 
 
             <div class="j-flex-row j-secondary-header" >
 
-                        <div class="alert alert-success" role="alert" style="margin:0px;width:100%">
-                            <strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.
+                        <div class="alert `+ style +`" role="alert" style="margin:0px;width:100%">
+                       `+ text +`
                         </div>
                 
             </div>

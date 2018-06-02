@@ -258,6 +258,59 @@ namespace JasperSiteCore.Models.Database
             _db.SaveChanges();
         }
 
+        /// <summary>
+        /// Creates database theme objects with corresponding relationships.
+        /// </summary>
+        /// <param name="themeNamesToBeAdded"></param>        
+        public void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded)
+        {
+            // All themes info, even those that were already registered
+            List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+
+            // Subset of new themes that will be stored in DB
+            List<ThemeInfo> subset = new List<ThemeInfo>();
+
+            foreach(ThemeInfo themeInfoObject in themesInfo)
+            {
+                foreach(string nameToBeAdded in themeNamesToBeAdded)
+                {
+                    if(themeInfoObject.ThemeName.Trim()==nameToBeAdded.Trim())
+                    {
+                        subset.Add(themeInfoObject);
+                    }
+                }
+            }
+
+
+
+            foreach (ThemeInfo ti in subset)
+            {
+                Theme theme = new Theme() { Name = ti.ThemeName };
+                _db.Themes.Add(theme);
+                _db.SaveChanges();
+
+                // Emulation of website configuration for every theme
+                GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
+                GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalJsonProvider);
+                globalConfig.SetTemporaryThemeName(ti.ThemeName); // This will not write enytihing to the underlying .json file 
+                ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
+                WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
+
+
+
+                List<string> holders = websiteConfig.BlockHolders;
+
+                foreach (string holderName in holders)
+                {
+                    BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
+                    _db.BlockHolders.Add(blockHolder);
+
+                }
+                _db.SaveChanges();
+
+            }
+        }
+
         public void Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase()
         {
             // Delete all corrupted themes records

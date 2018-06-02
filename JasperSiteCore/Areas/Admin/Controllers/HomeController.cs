@@ -51,30 +51,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult Themes(string errorFlag)
+        public ActionResult Themes()
         {
-            int itemsPerPage = 3;
-            int currentPage = 1;
-
-            List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
-          
-
-            JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList, currentPage, itemsPerPage);
-                       
-            ThemesViewModel model = new ThemesViewModel();
-            model.SelectedThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
-            model.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
-            model.PageNumber = paging.CurrentPageNumber;
-            model.ItemsPerPage = paging.ItemsPerPage;
-            model.TotalNumberOfPages = paging.NumberOfPagesNeeded;
-
-            model.ThemeInfoList = paging.GetCurrentPageItems();
-
-            model.ErrorFlag = !string.IsNullOrEmpty(errorFlag) ? errorFlag : string.Empty;
-
-            ModelState.Clear();
+            //ModelState.Clear();
             
-            return View(model);
+            return View(UpdatePage());
         }
 
         [HttpPost]
@@ -114,24 +95,63 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         }
 
-       [HttpGet]
+        /// <summary>
+        /// If the user has modified Theme folder directly on the server, new themes will be added to the database.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]        
+        public IActionResult AddNewAddedThemesToDb()
+        {
+            Configuration.DbHelper.AddThemesFromFolderToDatabase(Configuration.ThemeHelper.CheckThemeFolderAndDatabaseIntegrity());
+            return View("Themes",UpdatePage());
+        }
+
+        public ThemesViewModel UpdatePage()
+        {
+            int itemsPerPage = 3;
+            int currentPage = 1;
+
+            List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+
+
+            JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList, currentPage, itemsPerPage);
+
+            ThemesViewModel model = new ThemesViewModel();
+            model.SelectedThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
+            model.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
+            model.PageNumber = paging.CurrentPageNumber;
+            model.ItemsPerPage = paging.ItemsPerPage;
+            model.TotalNumberOfPages = paging.NumberOfPagesNeeded;
+
+            model.ThemeInfoList = paging.GetCurrentPageItems();
+
+            model.NotRegisteredThemeNames = Configuration.ThemeHelper.CheckThemeFolderAndDatabaseIntegrity();
+            return model;
+        }
+
+        [HttpGet]
         public ActionResult DeleteTheme(string themeName)
         {
             bool success = Configuration.ThemeHelper.DeleteThemeByName(themeName);
-            if (success)
+
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
             {
-                return RedirectToAction("Themes", new { errorFlag="false"});
-            }  else
-                return RedirectToAction("Themes", new { errorFlag = "true" });
+                return PartialView("ThemesPartialView", UpdatePage());
+            }
+            else
+            {
+                return RedirectToAction("Themes");
+            }
+
+            
         }
 
         [HttpGet]
         public ActionResult ActivateTheme(string themeName)
         {
             string themeNameBeforeChanged = Configuration.GlobalWebsiteConfig.ThemeName;
-
-            //try
-            // {            
+       
 
             // Property ThemeName writes data automatically to the .json file
             JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeName = themeName;
@@ -170,28 +190,28 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 }
             }
 
-            return RedirectToAction("Themes");
-            //    return RedirectToAction("Themes", new { errorFlag = "false" });
-            //}
-            //catch
-            //{
-            //   return RedirectToAction("Themes",new { errorFlag="true"});
-            //}
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+            {
+                return PartialView("ThemesPartialView", UpdatePage());
+            }
+            else
+            {
+                return RedirectToAction("Themes");
+            }
+
+                
+            
             
 
         }
 
+        [HttpGet]
         public ActionResult UpdateConfiguration()
         {
-            try
-            {
+            
                 JasperSiteCore.Models.Configuration.Initialize();
-                return RedirectToAction("Themes", new { errorFlag = "false" });
-            }
-            catch
-            {
-                return RedirectToAction("Themes", new { errorFlag = "true" });
-            }
+                return RedirectToAction("Themes");  
 
         }
 
