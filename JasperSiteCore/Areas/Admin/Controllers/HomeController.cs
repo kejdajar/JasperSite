@@ -239,30 +239,30 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
 
 
-
-
-                using (var memoryStream = new MemoryStream())
+                // ZipArchive sometimes throws errors even if the process was successfull ...
+                try
                 {
-                    file.OpenReadStream().CopyTo(memoryStream);
-
-                    using (ZipArchive archive = new ZipArchive(memoryStream))
+                    using (var memoryStream = new MemoryStream())
                     {
+                        file.OpenReadStream().CopyTo(memoryStream);
 
-                        foreach (ZipArchiveEntry entry in archive.Entries)
+                        using (ZipArchive archive = new ZipArchive(memoryStream))
                         {
-                            if (!string.IsNullOrEmpty(Path.GetExtension(entry.FullName))) //make sure it's not a folder
+
+                            foreach (ZipArchiveEntry entry in archive.Entries)
                             {
-                                entry.ExtractToFile(Path.Combine(themeFolderPath, entry.FullName));
-                            }
-                            else
-                            {
-                                Directory.CreateDirectory(Path.Combine(themeFolderPath, entry.FullName));
+                                if (!string.IsNullOrEmpty(Path.GetExtension(entry.FullName))) //make sure it's not a folder
+                                {
+                                    entry.ExtractToFile(Path.Combine(themeFolderPath, entry.FullName));
+                                }
+                                else
+                                {
+                                    Directory.CreateDirectory(Path.Combine(themeFolderPath, entry.FullName));
+                                }
                             }
                         }
                     }
-                }
-
-
+                } catch { }
 
 
 
@@ -279,7 +279,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 
            
             
-              return RedirectToAction("Themes", new { errorFlag = "true" });
+              return RedirectToAction("Themes");
            
         }
 

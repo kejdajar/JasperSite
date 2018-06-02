@@ -7,7 +7,24 @@
 }
 @section Scripts {
     <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+    <script>
+        $(document).ready(
+            function () {
+                $('#files').change(
+                    function () {
+                        if ($(this).val()) {
+                            $('#submitThemeFile').attr('disabled', false);
+                            // or, as has been pointed out elsewhere:
+                            // $('input:submit').removeAttr('disabled');
+                        }
+                        else {
 
+                            $('#submitThemeFile').attr('disabled', true);
+                        }
+                    }
+                );
+            });
+    </script>
 }
 <div id="vzhledy"></div>
 
@@ -15,24 +32,25 @@
 
 
 
-<h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Nainstalované vzhledy </h2>
+<h2> <i class="fa fa-paint-brush j-icon" aria-hidden="true"></i> Nainstalované vzhledy </h2>
 
 <!--NOT REGISTERED THEMES IN FOLDER-->
 @if (Model.NotRegisteredThemeNames.Count > 0)
 {
     <section class="j-admin-section">
         <div class="alert alert-warning fade show" role="alert">
-           
+
             <strong>Složka se vzhledy byla upravena - neregistrované vzhledy</strong> <br />
             Ve složce: <i> @Configuration.GlobalWebsiteConfig.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, které je nutné
             uložit. Neregistrované vzhledy:
-            @foreach (string name in Model.NotRegisteredThemeNames)
-            {
-                @name @:,
-            }
-
+            <ul style="list-style-type:disc">
+                @foreach (string name in Model.NotRegisteredThemeNames)
+                  {
+                       <li>@name</li>
+                   }
+            </ul>
             <a class="btn btn-jasper" asp-controller="Home" asp-action="AddNewAddedThemesToDb" asp-area="Admin">Registrovat nové vzhledy do databáze.</a>
-           
+
         </div>
     </section>
 }
@@ -42,15 +60,16 @@
 {
     <section class="j-admin-section">
         <div class="alert alert-warning fade show" role="alert">
-           
+
             <strong>Složka se vzhledy byla upravena - manuálně smazány vzhledy</strong> <br />
             Ve složce: <i> @Configuration.GlobalWebsiteConfig.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, které je nutné
             uložit. Manuálně odstraněné vzhledy:
-            @foreach (string name in Model.ManuallyDeletedThemeNames)
-            {
-                @name @:,
-            }
-
+            <ul style="list-style-type:disc">
+                     @foreach (string name in Model.ManuallyDeletedThemeNames)
+                   {
+                <li>@name</li>  
+                   }
+            </ul>
             <a class="btn btn-jasper" asp-controller="Home" asp-action="RemoveManuallyDeletedThemesFromDb" asp-area="Admin">Odstranit nedostupné vzhledy z datbáze.</a>
         </div>
     </section>
@@ -101,29 +120,40 @@ else
 </section>
 
 <section class="j-admin-section">
-    <h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Vlastní rozšíření </h2>
+    <h2> <i class="fa fa-upload j-icon" aria-hidden="true"></i> Vlastní rozšíření </h2>
     <p>JasperSiteCore je možné rozšiřovat o vlastní vzhledy. Návod pro tvorbu vlastního vzhledu nalezente v dokumentaci.</p>
 
     <form enctype="multipart/form-data" asp-controller="Home" asp-action="UploadTheme" asp-area="Admin">
         <div class="form-group">
-            <label for="files">Nahrání vzhledu</label>
             <input type="file" class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
-            <small id="fileHelp" class="form-text text-muted"> Vzhled je potřeba nahrát v se formátu .zip</small>
-            <input type="submit" value="Odeslat data" />
+            <small id="fileHelp" class="form-text text-muted"> Vzhled je potřeba nahrát ve formátu .zip</small>
         </div>
+        <div class="form-group">
+            <input type="submit" value="Nahrát zvolený vzhled" class="btn btn-jasper" id="submitThemeFile" disabled />
+        </div>
+
     </form>
     <hr />
 </section>
 
+<h2> <i class="fa fa-cog j-icon" aria-hidden="true"></i> Pokročilé možnosti </h2>
 <section class="j-admin-section">
-    <div>
-        <p>Pokud jste manuálně modifikovali vzhledy na serveru, je potřeba tyto změny potvrdit pomocí následující volby:</p>
-        <a class="btn btn-jasper" asp-controller="Home" asp-action="UpdateConfiguration" asp-area="Admin">Aplikovat data z konfiguračních souborů</a>
-    </div>
+    
+        <p>Pokud jste manuálně modifikovali vzhledy na serveru, nebo upravovali konfigurační nastavení aplikace, můžou se hodit následující možnosti:</p>
+        
+   
 
-    <div>
-        <a class="btn btn-jasper" asp-controller="Home" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze</a>
-    </div>
+    
+        
+    
+
+        <table class="table-bordered j-table">
+            <tr><th>Akce</th><th>Popis</th></tr>
+            <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Home" asp-action="UpdateConfiguration" asp-area="Admin">Aplikovat data z konfiguračních souborů</a></td><td>Všechna konfigurační data, která byla dočasně uložena do paměti budou znovu načtena z konfiguračníchj souborů.</td></tr>
+            <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Home" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze vzhledů</a></td><td>V případě poškození databáze vzhledů tato možnost zresetuje databázi vzhledů a odstraní přiřazené textové bloky k jednotlivým kontejnerům příslušných vzhledů. </td></tr>
+        </table>
+
+
 </section>
 
 
