@@ -24,16 +24,17 @@ namespace JasperSiteCore.Helpers
                                      where t.Name == currentThemeName
                                      select t.Id).Single();
 
-            IEnumerable < TextBlock > blocksToDisplay = (from h in holders
+            var blocksToDisplay = (from h in holders
                                                          from b in blocks
                                                          from hb in holder_block                                                        
                                                          where h.Name == holderName && hb.BlockHolderId == h.Id && b.Id == hb.TextBlockId && currentThemeId == h.ThemeId
-                                                         select b);
+                                                         select new { BlockToDisplay=b,Order=hb.Order});
 
             StringBuilder sb = new StringBuilder();
-            foreach(TextBlock tb in blocksToDisplay)
+            blocksToDisplay = blocksToDisplay.OrderBy(o => o.Order);
+            foreach(var tb in blocksToDisplay)
             {
-                sb.Append(tb.Content+"<hr/>");
+                sb.Append(tb.BlockToDisplay.Content+"<hr/>");
             }
 
             return new HtmlString(sb.ToString());
