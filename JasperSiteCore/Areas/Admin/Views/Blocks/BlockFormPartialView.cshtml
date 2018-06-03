@@ -26,7 +26,7 @@
 
                         $("#mainForm1").html(data);
 
-                        savedInfo();
+                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                     }
                 });
             });
@@ -106,7 +106,7 @@
             <tr><td>@item.BlockHolderName</td><td>@item.ThemeName</td><td>@item.Order</td></tr>
 }
             </table>
-            <a asp-area="Admin" asp-controller="Blocks" asp-action="EditBlock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper" >Upravit</a>
+
 }
 else
 {
@@ -114,7 +114,7 @@ else
                 <strong>Upozornění!</strong> Tento textový blok nemá přiřazen žádný kontejner a nebude proto zobrazen na stránce.
             </div>
 }
-
+                <a asp-area="Admin" asp-controller="Blocks" asp-action="EditBlock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper">Upravit</a>
             </div>
             <hr />
         }
