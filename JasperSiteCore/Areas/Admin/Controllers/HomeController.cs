@@ -283,24 +283,35 @@ namespace JasperSiteCore.Areas.Admin.Controllers
            
         }
 
+        [HttpGet]
         public ActionResult Categories()
+        {            
+            return View(UpdateCategoryPage());
+        }
+
+        public CategoriesViewModel UpdateCategoryPage()
         {
             CategoriesViewModel model = new CategoriesViewModel();
             model.Categories = Configuration.DbHelper.GetAllCategories();
-            return View(model);
+            return model;
         }
 
         [HttpPost]
-        public IActionResult CreateNewCategory(CategoriesViewModel model)
+        public IActionResult CreateNewCategory(string btnCategoryName)
         {
-            Configuration.DbHelper.AddNewCategory(model.NewCategoryName);
+            Configuration.DbHelper.AddNewCategory(btnCategoryName);
 
-            CategoriesViewModel viewModel = new CategoriesViewModel();
-            viewModel.Categories = Configuration.DbHelper.GetAllCategories();
-            ModelState.Clear();
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest"; 
+            if(isAjaxCall)
+            {
 
-
-            return View("Categories", viewModel);
+                return PartialView("AddNewCategoryPartialView", UpdateCategoryPage());
+            }
+            else
+            {
+                return RedirectToAction("Categories");
+            }
+            
         }
 
         [HttpGet]

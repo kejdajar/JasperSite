@@ -1,0 +1,30 @@
+﻿@model JasperSiteCore.Areas.Admin.ViewModels.CategoriesViewModel
+@using JasperSiteCore.Models.Database;
+
+<section class="j-admin-section">
+    <form asp-action="CreateNewCategory" asp-controller="Home" method="post">
+        <div class="input-group">
+            <input id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="Název rubriky" class="form-control" name="btnCategoryName" />
+            <span asp-validation-for="NewCategory.NewCategoryName" class="text-danger"></span>
+
+            <div class="input-group-btn">
+                <input type="submit" class="btn btn-jasper" style="width:200px" value="Vytvořit" id="btnSubmit" />
+            </div>
+        </div>
+    </form>
+    </section>
+
+<section class="j-admin-section">
+    <h2><i class="fa fa-table  j-icon" aria-hidden="true"></i> Přehled rubrik</h2>
+
+    <p>
+        <table class="table table-bordered j-table">
+            <tr><th>Akce</th><th class="col-sm" style="text-align:left">Název</th> </tr>
+            @foreach (Category c in Model.Categories)
+            {
+                <tr><td><a asp-controller="Home" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></td><td>@c.Name</td></tr>
+            }
+        </table>
+
+    </p>
+    </section>
