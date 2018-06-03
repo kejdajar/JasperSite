@@ -14,6 +14,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         public int CurrentTextBoxId { get; set; }
         public List<BlockHolder> AllBlockHolders { get; set; } = new List<BlockHolder>();
         public List<BlockHolder> CorrespondingBlockHolders { get; set; } = new List<BlockHolder>();
+        public List<Holder_Block> CorrespondingHolder_Blocks { get; set; } = new List<Holder_Block>();
     }
 
    

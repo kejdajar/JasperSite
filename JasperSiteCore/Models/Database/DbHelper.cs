@@ -361,5 +361,19 @@ namespace JasperSiteCore.Models.Database
             return _db.TextBlocks.Where(tb => tb.Id == id).Single();
         }
 
+        public Holder_Block GetTextBlockOrderNumberInHolder(int textBlockId,int holderId)
+        {
+            Holder_Block holder = _db.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
+            return holder;
+        }
+
+        public void SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order)
+        {
+            Holder_Block holder = _db.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
+            holder.Order = order;
+            _db.SaveChanges();
+           
+        }
+
     }
 }

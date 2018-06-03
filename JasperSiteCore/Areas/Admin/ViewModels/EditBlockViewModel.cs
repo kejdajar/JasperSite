@@ -12,7 +12,8 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
     public class EditBlockViewModel
     {
        
-       public TextBlock TextBlock { get; set; }
+       public EditTextBlock TextBlock { get; set; }
+        
        public AddedAndLooseHoldersViewModel HolderManagement { get; set; }
       
     }

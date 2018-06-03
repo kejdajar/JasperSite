@@ -109,12 +109,29 @@ namespace JasperSiteCore.Areas.Admin.Controllers
           
             model.HolderManagement = new AddedAndLooseHoldersViewModel();
             model.HolderManagement.CurrentTextBoxId = blockId;
-            model.TextBlock = tbToEdit;
+            model.TextBlock = new EditTextBlock() { Name=tbToEdit.Name,Content=tbToEdit.Content,Id=tbToEdit.Id};
             model.HolderManagement.CorrespondingBlockHolders = correspondingBlockHolders;
             model.HolderManagement.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+            model.HolderManagement.CorrespondingHolder_Blocks = GetCorrespondingHolder_Blocks(blockId);
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult SaveTextBlockOrder(int textBlockId, int holderId, int order)
+        {
+            Configuration.DbHelper.SaveTextBlockOrderNumberInHolder(textBlockId, holderId, order);
+
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+            {
+                return PartialView("AddedAndLooseHoldersPartialView", GetBlockManagementModel(textBlockId));
+            }
+            else
+            {
+                return RedirectToAction("EditBlock", new { blockId = textBlockId });
+            }
+               
+        }
        
 
         public List<BlockHolder> GetCorrespondingBlockHolders(int blockId)
@@ -127,7 +144,18 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                                                            where h_b.TextBlockId == blockId && h_b.BlockHolderId == bh.Id
                                                            select bh).ToList();
         }
-    
+
+        public List<Holder_Block> GetCorrespondingHolder_Blocks(int blockId)
+        {
+            List<BlockHolder> all_blockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+            List<Holder_Block> all_holder_block = Configuration.DbHelper.GetAllHolder_Blocks().ToList();
+
+            return (from bh in all_blockHolders
+                    from h_b in all_holder_block
+                    where h_b.TextBlockId == blockId && h_b.BlockHolderId == bh.Id
+                    select h_b).ToList();
+        }
+
         [HttpPost]
         public IActionResult SaveBlock(TextBlock model)
         {
@@ -241,6 +269,8 @@ return RedirectToAction("EditBlock", new { blockId = blockId });
 
         [Display(Name = "Obsah bloku")]
         public string Content { get; set; }
+
+      
     }
 
 }
