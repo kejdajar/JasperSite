@@ -25,8 +25,8 @@
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Články</h1></div>
 <h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Přehled</h2>
 
-<div class="table-responsive">
-    <table class="table table-bordered">
+<div class="table-responsive ">
+    <table class="table table-bordered j-left-border-block">
         <tr>
             <td>Celkový počet článků</td>
             <td>@Configuration.DbHelper.GetAllArticles().Count()</td>
@@ -49,7 +49,8 @@
 
 <h2 id="articles"> <i class="fa fa-table j-icon" aria-hidden="true"></i>  Seznam článků</h2>
 
-<div class="j-filter-panel">
+@*TODO:FILTER PANEL NOT YET IMPLEMENTED*@
+@*<div class="j-filter-panel">
 
     <div class="j-filter-container">
         <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Kategorie</div></div>
@@ -75,22 +76,21 @@
         </div>
     </div>
 
-</div>
+</div>*@
 
 
 <div class="table-responsive">
     <table class="table table-bordered j-table j-table-text-center" id="articleTable">
-        <tr> <th>Rubrika</th> <th>Id</th><th>Publikováno</th><th>Jméno článku</th><th>Obsah</th><th>Akce</th></tr>
+        <tr><th>Jméno článku</th><th>Rubrika</th><th>Publikováno</th><th>Akce</th></tr>
         @foreach (Article a in Configuration.DbHelper.GetAllArticles())
         {
-            <tr data-href="@a.Id">
-                 <td>@a.Category.Name</td>
-                <td>@a.Id</td>
-                <td>@a.PublishDate</td>
-                <td>@a.Name</td>
-                <td>@Html.Raw(a.HtmlContent)</td>
-                <td><a href="/Admin/Article/Index?id=@a.Id" class="btn btn-jasper">Upravit</a></td>
-            </tr>
+        <tr data-href="@a.Id">
+            <td>@a.Name</td>
+            <td>@a.Category.Name</td>
+            <td>@a.PublishDate</td>
+
+            <td><a href="/Admin/Article/Index?id=@a.Id" class="btn btn-jasper">Upravit</a></td>
+        </tr>
         }
     </table>
 </div>
