@@ -18,9 +18,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+
+            return View(UpdatePage());
+        }
+
+        public ImagesViewModel UpdatePage()
+        {
             ImagesViewModel model = new ImagesViewModel();
             model.ImagesFromDatabase = Configuration.DbHelper.GetAllImages();
-            return View(model);
+            return model;
         }
 
         [HttpPost]
@@ -60,7 +66,18 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult DeleteImage(int imgId)
         {
             Configuration.DbHelper.DeleteImageById(imgId);
-            return RedirectToAction("Index");
+
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+            {
+                return PartialView("UploadedImagesPartialView",UpdatePage());
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+              
+         
         }
     }
 }

@@ -5,7 +5,9 @@
 }
 @section Scripts
     {
-    <script>
+
+<script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+<script>
         /* IMAGE UPLOAD DISABLE SUBMIT WHEN EMPTY */
         $(document).ready(
             function () {
@@ -21,7 +23,11 @@
                     }
                 );
             });
-    </script>
+
+
+        
+
+</script>
 }
 
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Obrázky</h1></div>
@@ -47,5 +53,7 @@
 </section>
 <hr />
 <section class="j-admin-section">
-    @Html.PartialAsync("UploadedImagesPartialView").Result
+    <div id="mainForm">
+        @Html.PartialAsync("UploadedImagesPartialView").Result
+    </div>
 </section>

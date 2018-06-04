@@ -2,6 +2,35 @@
 @using JasperSiteCore.Models.Database
 
 <h1><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Nahrané obrázky</h1>
+
+<script>
+     $(document).ready(function () {
+
+            var allAddLinks = $('a[data-remove-id]').click(function (e) {
+
+                e.preventDefault();
+                var singleLink = $(this);
+
+            
+                var id= singleLink.data('removeId');
+               
+
+                $.ajax({
+                    type: 'get',
+                    url: '@Url.Action("DeleteImage", "Images")',
+                    data: { imgId: id },
+                    dataType: 'HTML',
+                    success: function (data) {
+
+                        $("#mainForm").html(data);
+
+                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                    }
+                });
+            });
+        });
+</script>
+
 @if (Model.ImagesFromDatabase.Count > 0)
 {
     <table class="table table-bordered j-table">
@@ -11,7 +40,7 @@
         {
             <tr>
 
-                <td>  <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Images" asp-action="DeleteImage" asp-route-imgId="@img.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
+                <td>  <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Images" asp-action="DeleteImage" asp-route-imgId="@img.Id" data-remove-id="@img.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
                 <td>@img.Name</td>
                 <td><img alt="@img.Name" src="@Url.Action("GetImage","Images",new { id=img.Id})" style="max-width:100px" class="img-fluid" /></td>
             </tr>
