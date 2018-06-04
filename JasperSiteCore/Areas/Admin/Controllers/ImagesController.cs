@@ -44,7 +44,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             ImagesViewModel model = new ImagesViewModel();
             model.ImagesFromDatabase = Configuration.DbHelper.GetAllImages();
-            return View("Index",model);
+            return RedirectToAction("Index");
         }
 
         public FileResult GetImage(int id)
@@ -54,6 +54,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
            Task<Image> image = Configuration.DbHelper._db.Images.Where(i => i.Id == id).SingleAsync();
             
             return  File(image.Result.ImageData.Data,"image/jpg");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteImage(int imgId)
+        {
+            Configuration.DbHelper.DeleteImageById(imgId);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -3,40 +3,73 @@
 @{
     ViewData["Title"] = "Obrázky";
 }
+@section Scripts
+    {
+    <script>
+        /* IMAGE UPLOAD DISABLE SUBMIT WHEN EMPTY */
+        $(document).ready(
+            function () {
+                $('#files').change(
+                    function () {
+                        if ($(this).val()) {
+                            $('#submitThemeFile').attr('disabled', false);
+                        }
+                        else {
+
+                            $('#submitThemeFile').attr('disabled', true);
+                        }
+                    }
+                );
+            });
+    </script>
+}
 
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Obrázky</h1></div>
 
-<h1> Nahrání obrázku</h1>
+<h1> <i class="fa fa-upload j-icon" aria-hidden="true"></i> Nahrání obrázku</h1>
 
-<form method="post" asp-controller="Images" asp-action="PostImage" asp-area="admin" enctype="multipart/form-data">
-    <div class="form-group">
-        <div class="col-md-10">
-            <p>Nahrajte obrázky:</p>
-            <input type="file" name="files" accept="image/*" multiple />
+
+<section class="j-admin-section j-left-border-block">
+
+    <p>Pokud chcete ve Vašich příspěvcích používat vlastní obrázky, je nutné jejich nahrání:</p>
+
+    <form method="post" asp-controller="Images" asp-action="PostImage" asp-area="admin" enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="file" accept="image/*" class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
+            <small id="fileHelp" class="form-text text-muted"> Je možné nahrávat pouze obrázkové formáty (.JPG,.PNG apod.)</small>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-10">
-            <input type="submit" value="Nahrát" />
+        <div class="form-group">
+            <input type="submit" value="Nahrát" class="btn btn-jasper" id="submitThemeFile" disabled />
         </div>
-    </div>
-</form>
-@if (Model.ImagesFromDatabase.Count > 0)
-{
-    <table class="table table-bordered j-table">
-        <tr><th>Id</th><th></th><th>Náhled</th></tr>
 
-        @foreach (Image img in Model.ImagesFromDatabase)
-        {
-            <tr><td>@img.Id</td><td>@img.Name</td><td><img alt="@img.Name" src="@Url.Action("GetImage","Images",new { id=img.Id})" style="max-width:100px" class="img-fluid" /></td></tr>
-        }
+    </form>
 
-    </table>
-}
-else
-{
-    <div class="alert alert-warning" role="alert">
-        <strong>Upozornění:</strong> Žádné obrázky nebyly ještě nahrány.
-    </div>
+</section>
+<hr />
+<section class="j-admin-section">
+    <h1><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Nahrané obrázky</h1>
+    @if (Model.ImagesFromDatabase.Count > 0)
+    {
+        <table class="table table-bordered j-table">
+            <tr><th>Odstranit</th><th class="col-sm-1" style="text-align:left">Název</th><th>Náhled</th></tr>
 
-}
+            @foreach (Image img in Model.ImagesFromDatabase)
+            {
+            <tr>
+               
+                <td>  <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Images" asp-action="DeleteImage" asp-route-imgId="@img.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
+                <td>@img.Name</td>
+                <td><img alt="@img.Name" src="@Url.Action("GetImage","Images",new { id=img.Id})" style="max-width:100px" class="img-fluid" /></td>
+            </tr>
+            }
+
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            <strong>Upozornění:</strong> Žádné obrázky nebyly ještě nahrány.
+        </div>
+
+    }
+</section>

@@ -375,5 +375,12 @@ namespace JasperSiteCore.Models.Database
            
         }
 
+        public void DeleteImageById(int imgId)
+        {
+            Image imgToBeRemoved = _db.Images.Where(i => i.Id == imgId).Single();
+            _db.Images.Remove(imgToBeRemoved);
+            _db.SaveChanges();
+        }
+
     }
 }
