@@ -382,5 +382,18 @@ namespace JasperSiteCore.Models.Database
             _db.SaveChanges();
         }
 
+        public void AddNewUser(User u)
+        {
+            _db.Users.Add(u);
+            _db.SaveChanges();
+        }
+
+        public void DeleteUserById(int id)
+        {
+            User goner = _db.Users.Where(u => u.Id == id).Single();
+            _db.Users.Remove(goner);
+            _db.SaveChanges();
+        }
+
     }
 }

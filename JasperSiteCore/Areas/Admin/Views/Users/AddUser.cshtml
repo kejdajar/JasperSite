@@ -1,0 +1,76 @@
+﻿@using JasperSiteCore.Models.Database;
+@model JasperSiteCore.Areas.Admin.ViewModels.AddUserViewModel
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@*@section Scripts {
+
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+}*@
+
+
+
+    <div id="mainForm">
+        <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Vytvoření nového uživatele</h1></div>
+
+        <form asp-action="SaveNewUser" asp-controller="Users" asp-area="Admin" method="post">
+
+            <div class="form-horizontal">
+
+                @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Nickname"></label>
+
+                    <input asp-for="Nickname" class="form-control" />
+                    <span asp-validation-for="Nickname" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AllRoles"></label>
+
+                    <select class="form-control" asp-for="RoleId" asp-items="@(new SelectList(Model.AllRoles,"Id","Name"))"></select>
+
+                    <span asp-validation-for="RoleId" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NewPasswordPlainText"></label>
+
+                    <input asp-for="NewPasswordPlainText" class="form-control" />
+                    <span asp-validation-for="NewPasswordPlainText" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NewPasswordPlainTextAgain"></label>
+
+                    <input asp-for="NewPasswordPlainTextAgain" class="form-control" />
+                    <span asp-validation-for="NewPasswordPlainTextAgain" class="text-danger"></span>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <a href="/Admin/Users/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam uživatelů</a>
+                    <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+
+
+
+                </div>
+            </div>
+
+        </form>
+    </div>

@@ -74,5 +74,40 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             return PartialView("EditUserPartialView",UpdateEditUserPage(model.Id));
         }
+
+        [HttpGet]
+        public IActionResult AddUser()
+        {
+            AddUserViewModel model = new AddUserViewModel();
+            model.AllRoles = Configuration.DbHelper.GetAllRoles();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult SaveNewUser(AddUserViewModel model)
+        {
+            User u = new User();
+            u.Nickname = model.Nickname;            
+            u.RoleId = model.RoleId;
+            u.Username = model.Username;
+
+            string salt;
+            string hashedNewPaswd;
+            Authentication.HashPassword(model.NewPasswordPlainTextAgain, out salt, out hashedNewPaswd);
+            u.Password = hashedNewPaswd;
+            u.Salt = salt;
+
+            Configuration.DbHelper.AddNewUser(u);
+
+            return RedirectToAction("Index");
+
+        }
+
+        [HttpGet]
+        public IActionResult DeleteUser(int id)
+        {
+            Configuration.DbHelper.DeleteUserById(id);
+            return RedirectToAction("Index");
+        }
     }
 }
