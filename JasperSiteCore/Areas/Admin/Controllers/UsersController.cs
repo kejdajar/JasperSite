@@ -50,10 +50,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             model.Id = userToEdit.Id;
             model.Username = userToEdit.Username;
             model.RoleId = userToEdit.RoleId;
+            model.NewPasswordPlainText = string.Empty;
+            model.NewPasswordPlainTextAgain = string.Empty;
             return model;
         }
 
-        [HttpPost]       
+        [HttpPost]        
         public IActionResult EditUser(EditUserViewModel model)
         {
            
@@ -66,9 +68,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                  // Password will be changed only if both fields are filled in
                 if (!string.IsNullOrWhiteSpace(model.NewPasswordPlainText) && !string.IsNullOrWhiteSpace(model.NewPasswordPlainTextAgain))
-                {
-                    if (model.NewPasswordPlainText.Trim()==model.NewPasswordPlainTextAgain.Trim())  // Check password
-                    {
+                {                   
                         string salt;
                         string hashedNewPaswd;
                         Authentication.HashPassword(model.NewPasswordPlainTextAgain, out salt, out hashedNewPaswd);
@@ -76,12 +76,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                         user.Password = hashedNewPaswd;
                         user.Salt = salt;
-
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("NewPasswordPlainTextAgain", "Zadaná hesla se neshodují.");
-                    }
+                    
                 }
 
               if (ModelState.IsValid)
@@ -89,8 +84,19 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 Configuration.DbHelper.SaveChanges();
             }
 
-            model.AllRoles = Configuration.DbHelper.GetAllRoles();
-            return View(model);
+            
+
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+            {
+                EditUserViewModel cleanModel = UpdateEditUserPage(model.Id);   
+                return PartialView("EditUserPartialView",cleanModel);
+            }
+            else
+            {
+                return RedirectToAction("EditUser",new { id=model.Id});
+            }
+            
         }
 
         [HttpGet]

@@ -4,7 +4,7 @@
 
 
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Uživatel: @Model.Username</h1></div>
-<form id="formId" asp-action="EditUser" asp-controller="Users" asp-area="Admin">
+<form id="formId" asp-action="EditUser" asp-controller="Users" asp-area="Admin" data-ajax="true" data-ajax-update="#mainForm" method="post" data-ajax-complete="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success');">
 
     <div class="form-horizontal">
 
@@ -62,5 +62,5 @@
         </div>
 
     </div>
-    @Html.ValidationSummary()
+  
 </form>

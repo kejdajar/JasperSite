@@ -6,7 +6,8 @@
 }
 
 @section Scripts {
-<script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+    
 }
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Uživatelé</h1></div>
 
@@ -14,7 +15,7 @@
     <h2><i class="fa fa-user j-icon" aria-hidden="true"></i>  Nový uživatel</h2>
     <div class="input-group">
         <div class="input-group-btn">
-            <a class="btn btn-jasper" asp-area="admin" asp-controller="Users" asp-action="AddUser" > Přidat nového uživatele </a>
+            <a class="btn btn-jasper" asp-area="admin" asp-controller="Users" asp-action="AddUser"> Přidat nového uživatele </a>
         </div>
     </div>
     <hr />
@@ -22,6 +23,6 @@
 
 <section class="j-admin-section">
     <div id="mainFormPartial">
-       @Html.Partial("UserListPartialView",Model)
+        @Html.Partial("UserListPartialView")
     </div>
 </section>

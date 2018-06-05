@@ -25,7 +25,8 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         [Display(Name = "Zadejte vaše nové heslo")]        
         public string NewPasswordPlainText { get; set; }
 
-        [Display(Name="Zadejte vaše nové heslo znovu")]       
+        [Display(Name="Zadejte vaše nové heslo znovu")] 
+        [Compare("NewPasswordPlainText",ErrorMessage ="Zadaná hesla se musí shodovat.")]
         public string NewPasswordPlainTextAgain { get; set; }
 
         public int RoleId { get; set; }       
