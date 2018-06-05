@@ -15,15 +15,25 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     {
         [HttpGet]
         public IActionResult Index()
+        {          
+            return View(UpdatePage());
+        }
+
+        public UsersViewModel UpdatePage()
         {
-            List<User> users = Configuration.DbHelper.GetAllUsers();  
+            List<User> users = Configuration.DbHelper.GetAllUsers();
             UsersViewModel model = new UsersViewModel();
             model.Users = users;
-            return View(model);
+            return model;
         }
 
         [HttpGet]
         public IActionResult EditUser(int id)
+        {           
+            return View(UpdateEditUserPage(id));
+        }
+
+        public EditUserViewModel UpdateEditUserPage(int id)
         {
             User userToEdit = Configuration.DbHelper.GetUserById(id);
             EditUserViewModel model = new EditUserViewModel();
@@ -31,14 +41,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             model.AllRoles = Configuration.DbHelper.GetAllRoles();
             model.Nickname = userToEdit.Nickname;
             model.Id = userToEdit.Id;
-            model.Username = userToEdit.Username;          
+            model.Username = userToEdit.Username;
             model.RoleId = userToEdit.RoleId;
-           
-            return View(model);
+            return model;
         }
 
-        [HttpPost]
-       
+        [HttpPost]       
         public IActionResult EditUser(EditUserViewModel model)
         {
            if (ModelState.IsValid)
@@ -64,7 +72,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     Configuration.DbHelper.SaveChanges();
                 }
             }
-            return View(model);
+            return PartialView("EditUserPartialView",UpdateEditUserPage(model.Id));
         }
     }
 }

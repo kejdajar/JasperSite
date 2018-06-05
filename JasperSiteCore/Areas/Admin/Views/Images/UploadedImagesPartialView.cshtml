@@ -4,17 +4,16 @@
 <h1><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Nahrané obrázky</h1>
 
 <script>
-     $(document).ready(function () {
 
+    /* AJAX DELETE IMAGE */
+     $(document).ready(function () {
             var allAddLinks = $('a[data-remove-id]').click(function (e) {
 
                 e.preventDefault();
                 var singleLink = $(this);
-
             
-                var id= singleLink.data('removeId');
-               
-
+                var id= singleLink.data('removeId');              
+                
                 $.ajax({
                     type: 'get',
                     url: '@Url.Action("DeleteImage", "Images")',
