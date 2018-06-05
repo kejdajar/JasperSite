@@ -4,6 +4,10 @@
     ViewData["Title"] = "Users";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
+@section Scripts {
+<script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+}
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Uživatelé</h1></div>
 
 <section class="j-admin-section">
@@ -17,22 +21,7 @@
 </section>
 
 <section class="j-admin-section">
-    <h2><i class="fa fa-table j-icon" aria-hidden="true"></i>  Seznam uživatelů</h2>
-
-
-    <div class="table-responsive">
-        <table class="table table-bordered j-table j-table-text-center">
-            <tr><th>Odstranit</th><th>Uživatelské jméno</th><th>Přezdívka</th><th>Role</th><th>Upravit</th></tr>
-            @foreach (User u in Model.Users)
-        {
-            <tr>
-                <td> <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-id="@u.Id" data-remove-id="@u.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
-                <td>@u.Username</td>
-                <td>@u.Nickname</td>
-                <td>@u.Role.Name</td>
-                <td><a href="/Admin/Users/EditUser?id=@u.Id" class="btn btn-jasper">Upravit</a></td>
-            </tr>
-    }
-        </table>
+    <div id="mainFormPartial">
+       @Html.Partial("UserListPartialView",Model)
     </div>
 </section>

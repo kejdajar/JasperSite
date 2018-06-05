@@ -22,13 +22,11 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         [Required(ErrorMessage = "Vyplňte uživatelské jméno")]
         public string Username { get; set; }
 
-        [Display(Name = "Zadejte vaše nové heslo")]
-        [Required(ErrorMessage = "Vyplňte vaše nové heslo")]
+        [Display(Name = "Zadejte vaše nové heslo")]        
         public string NewPasswordPlainText { get; set; }
 
-        [Display(Name="Zadejte vaše staré heslo")]
-        [Required(ErrorMessage = "Vyplňte vaše staré heslo")]
-        public string OldPasswordPlainText { get; set; }
+        [Display(Name="Zadejte vaše nové heslo znovu")]       
+        public string NewPasswordPlainTextAgain { get; set; }
 
         public int RoleId { get; set; }       
 

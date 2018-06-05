@@ -48,7 +48,7 @@
                 <div class="form-group">
                     <label asp-for="NewPasswordPlainText"></label>
 
-                    <input asp-for="NewPasswordPlainText" class="form-control" />
+                    <input type="text" asp-for="NewPasswordPlainText" class="form-control j-input-password" autocomplete="off"/>
                     <span asp-validation-for="NewPasswordPlainText" class="text-danger"></span>
 
                 </div>
@@ -56,7 +56,7 @@
                 <div class="form-group">
                     <label asp-for="NewPasswordPlainTextAgain"></label>
 
-                    <input asp-for="NewPasswordPlainTextAgain" class="form-control" />
+                    <input type="text" asp-for="NewPasswordPlainTextAgain" class="form-control j-input-password" autocomplete="off" />
                     <span asp-validation-for="NewPasswordPlainTextAgain" class="text-danger"></span>
 
                 </div>

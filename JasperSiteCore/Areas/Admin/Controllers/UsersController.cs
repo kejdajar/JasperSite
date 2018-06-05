@@ -24,6 +24,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             List<User> users = Configuration.DbHelper.GetAllUsers();
             UsersViewModel model = new UsersViewModel();
             model.Users = users;
+
+            // Active user will be in the first row
+            string activeUserName = User.Identity.Name;
+            JasperSiteCore.Models.Database.User currentUser = users.Where(u => u.Username.Trim().ToLower() == activeUserName.Trim().ToLower()).Single();
+            users.Remove(currentUser);
+            users.Insert(0, currentUser);
+
             return model;
         }
 
@@ -49,30 +56,41 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]       
         public IActionResult EditUser(EditUserViewModel model)
         {
-           if (ModelState.IsValid)
-            {
+           
                 // Get current user
                 User user = Configuration.DbHelper.GetUserById(model.Id);
-           
+                user.Nickname = model.Nickname;
+                user.Username = model.Username;
+                user.RoleId = model.RoleId;
 
-           
-                // Check password
-                if(user.ComparePassword(model.OldPasswordPlainText))
+
+                 // Password will be changed only if both fields are filled in
+                if (!string.IsNullOrWhiteSpace(model.NewPasswordPlainText) && !string.IsNullOrWhiteSpace(model.NewPasswordPlainTextAgain))
                 {
-                    string salt;
-                    string hashedNewPaswd;
-                    Authentication.HashPassword(model.NewPasswordPlainText, out salt, out hashedNewPaswd);
-                    //Configuration.DbHelper.ChangePassword(user.Id, hashedNewPaswd, salt);
+                    if (model.NewPasswordPlainText.Trim()==model.NewPasswordPlainTextAgain.Trim())  // Check password
+                    {
+                        string salt;
+                        string hashedNewPaswd;
+                        Authentication.HashPassword(model.NewPasswordPlainTextAgain, out salt, out hashedNewPaswd);
+                        //Configuration.DbHelper.ChangePassword(user.Id, hashedNewPaswd, salt);
 
-                    user.Nickname = model.Nickname;
-                    user.Username = model.Username;
-                    user.RoleId = model.RoleId;
-                    user.Password = hashedNewPaswd;
-                    user.Salt = salt;
-                    Configuration.DbHelper.SaveChanges();
+                        user.Password = hashedNewPaswd;
+                        user.Salt = salt;
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("NewPasswordPlainTextAgain", "Zadaná hesla se neshodují.");
+                    }
                 }
+
+              if (ModelState.IsValid)
+            {
+                Configuration.DbHelper.SaveChanges();
             }
-            return PartialView("EditUserPartialView",UpdateEditUserPage(model.Id));
+
+            model.AllRoles = Configuration.DbHelper.GetAllRoles();
+            return View(model);
         }
 
         [HttpGet]
@@ -107,7 +125,18 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult DeleteUser(int id)
         {
             Configuration.DbHelper.DeleteUserById(id);
-            return RedirectToAction("Index");
+
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+            {
+                return PartialView("UserListPartialView",UpdatePage());
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+                
         }
     }
 }

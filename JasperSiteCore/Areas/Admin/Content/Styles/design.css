@@ -344,3 +344,10 @@ margin-bottom:20px;
     border-left: 3px solid #BA68C8;
     padding-left: 4px;
 }
+
+/* User will not be prompted to save password */
+.j-input-password {
+    text-security: disc;
+    -webkit-text-security: disc;
+    -mox-text-security: disc;
+}
