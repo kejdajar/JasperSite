@@ -107,53 +107,53 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <a class="navbar-brand" href="/"><span style="color:#edccff">@JasperSiteCore.Models.Configuration.DbHelper.GetWebsiteName()</span></a>
-            <div class="collapse navbar-collapse" id="containerNavbar">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Admin/Login">Přihlášení</a>
+            @*<a class="navbar-brand" href="/"><span style="color:#edccff">@JasperSiteCore.Models.Configuration.DbHelper.GetWebsiteName()</span></a>
+        <div class="collapse navbar-collapse" id="containerNavbar">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Admin/Login">Přihlášení</a>
+                </li>
+
+                <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/Category") ? "active":"")">
+                    <a class="nav-link" href="/Home/Category/">Všechny rubriky</a>
+                </li>
+
+                <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/About") ? "active":"")">
+                    <a class="nav-link" href="/Home/About/">O Autorovi</a>
+                </li>
+
+                @foreach (Category c in Configuration.DbHelper.GetAllCategories())
+                {
+                    <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
+                        <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
                     </li>
+                }
 
-                    <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/Category") ? "active":"")">
-                        <a class="nav-link" href="/Home/Category/">Všechny rubriky</a>
-                    </li>
-
-                    <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/About") ? "active":"")">
-                        <a class="nav-link" href="/Home/About/">O Autorovi</a>
-                    </li>
-
-                    @foreach (Category c in Configuration.DbHelper.GetAllCategories())
-                    {
-                        <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
-                            <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
-                        </li>
-                    }
-
-                </ul>
-            </div>
+            </ul>
+        </div>*@
         </nav>
 
 
 
 
 
-        <div class="container-fluid" style="margin-top:20px">
+            <div class="container-fluid" style="margin-top:20px">
 
-            @RenderBody()
-        </div>
-
-
+                @RenderBody()
+            </div>
 
 
 
 
-        <hr />
-        <div class="container-fluid">
-            <footer>
-                <p style="padding-bottom:10px">&copy; 2017-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core,  <a class="nav-link" href="/Admin/">Vstup do administrace</a></p>
-            </footer>
-        </div>
-    </div>
+
+
+            <hr />
+            <div class="container-fluid">
+                <footer>
+                    <p style="padding-bottom:10px">&copy; 2017-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core,  <a class="nav-link" href="/Admin/">Vstup do administrace</a></p>
+                </footer>
+            </div>
+</div>
    
 </body>
 </html>

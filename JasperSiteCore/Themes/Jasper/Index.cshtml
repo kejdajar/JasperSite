@@ -6,8 +6,8 @@
     ViewData["Title"] = "Název vaší stránky";
 }
 
-
-
+@inject DatabaseContext DatabaseContext
+@{J jHolder = new J(DatabaseContext);}
 
 
     
@@ -18,11 +18,12 @@
         </div>
 
         <div>
-            @J.Holder("MainPageHolder")
+            @jHolder.Holder("MainPageHolder")
         </div>
 
 
-        @foreach (Category c in Configuration.DbHelper.GetAllCategories())
+
+        @*@foreach (Category c in Configuration.DbHelper.GetAllCategories())
     {
 
         <h2 style="margin:10px"><i class="fa fa-star-o" aria-hidden="true"></i> @c.Name</h2>
@@ -57,6 +58,6 @@ else
 
 }
 
-}
+}*@
 
     </div>

@@ -34,7 +34,7 @@ namespace JasperSiteCore
            JasperSiteCore.Models.Env.Hosting = env;
            
            // APPLICATION ENTRY POINT
-          JasperSiteCore.Models.Configuration.Initialize();
+      
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -53,8 +53,18 @@ namespace JasperSiteCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DatabaseContext dbContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
+            // APPLICATON DATABASE SEEDING
+            DatabaseContext dbContext = ((ServiceProvider)serviceProvider).GetRequiredService<DatabaseContext>();
+
+            // Initializes GlobalWebsiteConfig, WebsiteCongig, ThemeHelper, CustomRouting
+            // Does not require DB Context, only reads data from text files on disc
+            JasperSiteCore.Models.Configuration.Initialize();
+            
+            // Initializes and runs DbInitializer class (formerly called automatically inside Configuration.Initialize())
+            JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext);
+
             app.UseAuthentication(); // authentication
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
@@ -150,10 +160,7 @@ namespace JasperSiteCore
                     name: "dynamic",
                     defaults: new { controller = "Home", action = "Index" },
                     template: "{*.any}");
-            });
-
-            // Asp.Net Core < 2.0.0
-           // Models.Database.DbInitializer.Initialize(dbContext);
+            });           
         }
     }
 }

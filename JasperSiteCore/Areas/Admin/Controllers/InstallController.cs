@@ -6,12 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 using JasperSiteCore.Areas.Admin.ViewModels;
 using JasperSiteCore.Models;
 using JasperSiteCore.Models.Providers;
+using JasperSiteCore.Models.Database;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class InstallController : Controller
-    {   [HttpGet]
+    {
+        private readonly DatabaseContext dbContext;
+
+        public InstallController(DatabaseContext context)
+        {
+            this.dbContext = context;
+        }
+
+        [HttpGet]
         public IActionResult Index()
         {
             InstallViewModel model = new InstallViewModel();
@@ -38,7 +47,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             if(ModelState.IsValid)
             {
-                Configuration.CreateAndSeedDb(true); // Checks if Db contains another data, if it does, they are all deleted.
+                Configuration.CreateAndSeedDb(dbContext,true); // Checks if Db contains another data, if it does, they are all deleted.
                 return RedirectToAction("Index", "Home", new { area = "admin" });
             }
 

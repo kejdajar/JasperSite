@@ -10,14 +10,23 @@ using Microsoft.AspNetCore.Html;
 
 namespace JasperSiteCore.Helpers
 {
-    public static class J
-    {
-        public static HtmlString Holder(string holderName)
+    public class J
+    {      
+        private readonly DatabaseContext _dbContext;
+        private readonly DbHelper _dbHelper;
+
+        public J(DatabaseContext dbContext)
         {
-            var holders = Configuration.DbHelper.GetAllBlockHolders();
-            var holder_block = Configuration.DbHelper.GetAllHolder_Blocks();
-            var blocks = Configuration.DbHelper.GetAllTextBlocks();
-            var themes = Configuration.DbHelper.GetAllThemes(); 
+            this._dbContext = dbContext;
+            this._dbHelper = new DbHelper(_dbContext);
+        }
+
+        public  HtmlString Holder(string holderName)
+        {
+            var holders = _dbHelper.GetAllBlockHolders();
+            var holder_block = _dbHelper.GetAllHolder_Blocks();
+            var blocks = _dbHelper.GetAllTextBlocks();
+            var themes = _dbHelper.GetAllThemes(); 
 
             string currentThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
             int currentThemeId = (from t in themes
@@ -44,4 +53,7 @@ namespace JasperSiteCore.Helpers
 
         }
     }
+
+   
+
 }

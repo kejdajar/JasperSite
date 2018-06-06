@@ -42,17 +42,17 @@ namespace JasperSiteCore.Models
             ThemeHelper = themeHelper;
 
             // Database manager
-          CreateAndSeedDb();
+         // CreateAndSeedDb();
                         
         }
 
-        public static void CreateAndSeedDb(bool ensureDbIsDeleted = false)
+        public static void CreateAndSeedDb(DatabaseContext dbContext,bool ensureDbIsDeleted = false)
         {
             if (GlobalWebsiteConfig.InstallationCompleted)
             {
                 //try
                 //{               
-                DatabaseContext dbContext = new DatabaseContext();               
+                             
               
 
                 DbInitializer init = new DbInitializer(dbContext);
