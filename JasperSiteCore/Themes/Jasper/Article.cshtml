@@ -1,15 +1,10 @@
-﻿
+﻿@using JasperSiteCore.Models.Database
+@inject DatabaseContext databaseContext
+@{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
 @{
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
+    ViewData["Title"] = J.Db(databaseContext).GetAllArticles().Where(a => a.Id==query).Single().Name;
 }
-
-
-@{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
-
-
-
-
-
 
 <div class="container-fluid">
     <j-article id="@query">
