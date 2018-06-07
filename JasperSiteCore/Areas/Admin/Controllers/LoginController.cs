@@ -34,20 +34,28 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             base.OnActionExecuting(filterContext);
         }
 
+        private readonly DatabaseContext _databaseContext;
+        private readonly DbHelper _dbHelper;
+
+        public LoginController(DatabaseContext dbContext)
+        {
+            this._databaseContext = dbContext;
+            this._dbHelper = new DbHelper(dbContext);
+        }
+
         // GET: Admin/Login
         [HttpGet]
         public ActionResult Index()
         {
             LoginViewModel model = new LoginViewModel();
             model.Username = "admin";
-          // model.Password = "admin";           
             return View(model);
         }
 
         [HttpPost]
         public ActionResult Index(LoginViewModel model, string returnUrl)
         {
-            User user = Configuration.DbHelper.GetUserWithUsername(model.Username);
+            User user =_dbHelper.GetUserWithUsername(model.Username);
             string filledInPassword = model.Password;
             bool isPswdCorrect = user.ComparePassword(filledInPassword);
 
@@ -77,12 +85,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             else
                 return Content("error");
            
-                  //var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                //identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, model.Username, null));
-                //identity.AddClaim(new Claim(ClaimTypes.Name, model.Username, null));
-                //var principal = new ClaimsPrincipal(identity);
-                //HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.Remember });
-                //return RedirectToAction("index", "home");
+                 
         }
 
         [HttpGet]
@@ -90,7 +93,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
-            //return View("Index");
+            
         }
     }
 }
