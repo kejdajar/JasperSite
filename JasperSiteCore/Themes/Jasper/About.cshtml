@@ -1,4 +1,7 @@
 ﻿@using JasperSiteCore.Helpers;
+@using JasperSiteCore.Models.Database
+@inject DatabaseContext databaseContext
+
 @{
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
     ViewData["Title"] = "O Projektu";
@@ -11,6 +14,6 @@
     </div>
 
     <p>
-        @J.Holder("AboutPageHolder")
+        @J.Holder("AboutPageHolder",databaseContext)
     </p>
 </div>

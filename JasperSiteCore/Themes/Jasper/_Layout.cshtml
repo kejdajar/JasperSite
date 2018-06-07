@@ -1,6 +1,7 @@
 ﻿@using JasperSiteCore.Models.Database
 @using JasperSiteCore.Models
 @using Microsoft.AspNetCore.Http.Extensions
+@inject DatabaseContext databaseContext
 <!DOCTYPE html>
 <html>
 <head>
@@ -107,7 +108,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            @*<a class="navbar-brand" href="/"><span style="color:#edccff">@JasperSiteCore.Models.Configuration.DbHelper.GetWebsiteName()</span></a>
+            <a class="navbar-brand" href="/"><span style="color:#edccff">@J.Db(databaseContext).GetWebsiteName()</span></a>
         <div class="collapse navbar-collapse" id="containerNavbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -122,7 +123,7 @@
                     <a class="nav-link" href="/Home/About/">O Autorovi</a>
                 </li>
 
-                @foreach (Category c in Configuration.DbHelper.GetAllCategories())
+                @foreach (Category c in J.Db(databaseContext).GetAllCategories())
                 {
                     <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
                         <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
@@ -130,7 +131,7 @@
                 }
 
             </ul>
-        </div>*@
+        </div>
         </nav>
 
 

@@ -1,5 +1,6 @@
 ﻿@using JasperSiteCore.Models.Database
 @using JasperSiteCore.Models
+@inject DatabaseContext databaseContext
 
 @{
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
@@ -9,15 +10,15 @@
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <h1> @Configuration.DbHelper.GetCategoryNameById(query)</h1>
+        <h1> @J.Db(databaseContext).GetCategoryNameById(query)</h1>
 </div>
 
     
 
     
-    @if (Configuration.DbHelper.GetAllArticles(query).Count() > 0)
+    @if (J.Db(databaseContext).GetAllArticles(query).Count() > 0)
         {
-    @foreach (Article article in Configuration.DbHelper.GetAllArticles(query))
+    @foreach (Article article in J.Db(databaseContext).GetAllArticles(query))
             {
 
     <div class="list-group">

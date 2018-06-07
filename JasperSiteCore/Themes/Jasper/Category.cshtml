@@ -1,5 +1,6 @@
 ﻿@using JasperSiteCore.Models.Database
 @using JasperSiteCore.Models
+@inject DatabaseContext databaseContext
 
 @{
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
@@ -9,13 +10,13 @@
         <h1>Rubriky</h1>
     </div>
 
-    @foreach (Category c in Configuration.DbHelper.GetAllCategories())
+    @foreach (Category c in J.Db(databaseContext).GetAllCategories())
     {
 
          <h2 style="margin:10px"><i class="fa fa-star-o" aria-hidden="true"></i> @c.Name</h2>
-        @if (Configuration.DbHelper.GetAllArticles(c.Id).Count > 0)
+        @if (J.Db(databaseContext).GetAllArticles(c.Id).Count > 0)
         {
-            @foreach (Article article in Configuration.DbHelper.GetAllArticles(c.Id))
+            @foreach (Article article in J.Db(databaseContext).GetAllArticles(c.Id))
             {
 
                 <div class="list-group">

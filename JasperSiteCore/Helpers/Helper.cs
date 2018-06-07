@@ -42,12 +42,22 @@ namespace JasperSiteCore.Helpers
     //[RestrictChildren("j-name", "j-content")]
     public class JArticleTagHelper : TagHelper
     {
+        // Dependency injection
+        public JArticleTagHelper(DatabaseContext dbContext)
+        {
+            this.databaseContext = dbContext;
+            this.databaseHelper = new DbHelper(dbContext);
+        }
+
+        private readonly DatabaseContext databaseContext;
+        private readonly DbHelper databaseHelper;
+
         public int Id { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
 
             output.TagName = "div";
-            Article a = Configuration.DbHelper.GetArticleById(Id);
+            Article a = databaseHelper.GetArticleById(Id);
             DataTransfer dataPackage = new DataTransfer() { ArticleId = Id, Article = a };
 
             context.Items.Add(typeof(JArticleTagHelper), dataPackage);

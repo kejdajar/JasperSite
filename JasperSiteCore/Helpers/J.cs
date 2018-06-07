@@ -10,50 +10,49 @@ using Microsoft.AspNetCore.Html;
 
 namespace JasperSiteCore.Helpers
 {
-    public class J
-    {      
-        private readonly DatabaseContext _dbContext;
-        private readonly DbHelper _dbHelper;
-
-        public J(DatabaseContext dbContext)
+    public static class J
+    {
+        /// <summary>
+        /// Holder is container for any number of assigned bloks. Holder name is assigned to the active theme through CMS.
+        /// Single page can contain more holders of the same name. Holder name must be beforehand registered in jasper.json theme file.
+        /// </summary>
+        /// <param name="holderName">Non-uniqe name of the registered holder.</param>
+        /// <param name="dbContext">Database context from the dependecy injeciton.</param>
+        /// <returns></returns>
+        public static HtmlString Holder(string holderName, DatabaseContext dbContext)
         {
-            this._dbContext = dbContext;
-            this._dbHelper = new DbHelper(_dbContext);
-        }
+            DbHelper dbHelper = new DbHelper(dbContext);
 
-        public  HtmlString Holder(string holderName)
-        {
-            var holders = _dbHelper.GetAllBlockHolders();
-            var holder_block = _dbHelper.GetAllHolder_Blocks();
-            var blocks = _dbHelper.GetAllTextBlocks();
-            var themes = _dbHelper.GetAllThemes(); 
+            var holders = dbHelper.GetAllBlockHolders();
+            var holder_block = dbHelper.GetAllHolder_Blocks();
+            var blocks = dbHelper.GetAllTextBlocks();
+            var themes = dbHelper.GetAllThemes();
 
             string currentThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
             int currentThemeId = (from t in themes
-                                     where t.Name == currentThemeName
-                                     select t.Id).Single();
+                                  where t.Name == currentThemeName
+                                  select t.Id).Single();
 
             var blocksToDisplay = (from h in holders
-                                                         from b in blocks
-                                                         from hb in holder_block                                                        
-                                                         where h.Name == holderName && hb.BlockHolderId == h.Id && b.Id == hb.TextBlockId && currentThemeId == h.ThemeId
-                                                         select new { BlockToDisplay=b,Order=hb.Order});
+                                   from b in blocks
+                                   from hb in holder_block
+                                   where h.Name == holderName && hb.BlockHolderId == h.Id && b.Id == hb.TextBlockId && currentThemeId == h.ThemeId
+                                   select new { BlockToDisplay = b, Order = hb.Order });
 
             StringBuilder sb = new StringBuilder();
             blocksToDisplay = blocksToDisplay.OrderBy(o => o.Order);
-            foreach(var tb in blocksToDisplay)
+            foreach (var tb in blocksToDisplay)
             {
-                sb.Append(tb.BlockToDisplay.Content+"<hr/>");
+                sb.Append(tb.BlockToDisplay.Content + "<hr/>");
             }
-
             return new HtmlString(sb.ToString());
-
-         //   BlockHolder holder = Configuration.DbHelper.GetAllBlockHolders().Where(b => b.Name == holderName).Single();
-         // StringBuilder sb = new StringBuilder();
-
         }
-    }
 
-   
+        public static DbHelper Db (DatabaseContext dbContext)
+        {
+            DbHelper dbHelper = new DbHelper(dbContext);
+            return dbHelper;
+        }
+    }   
 
 }
