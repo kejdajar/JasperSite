@@ -20,12 +20,20 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             return View(UpdatePage());
         }
 
+        private readonly DatabaseContext _databaseContext;
+        private readonly DbHelper _dbHelper;
+        public BlocksController(DatabaseContext dbContext)
+        {
+            this._databaseContext = dbContext;
+            this._dbHelper = new DbHelper(dbContext);
+        }
+
         public BlockViewModel UpdatePage()
         {
-            var all_Themes = Configuration.DbHelper.GetAllThemes();
-            var all_Holder_Block = Configuration.DbHelper.GetAllHolder_Blocks();
-            var all_BlockHolder = Configuration.DbHelper.GetAllBlockHolders();
-            var all_TextBlocks = Configuration.DbHelper.GetAllTextBlocks();
+            var all_Themes = _dbHelper.GetAllThemes();
+            var all_Holder_Block = _dbHelper.GetAllHolder_Blocks();
+            var all_BlockHolder = _dbHelper.GetAllBlockHolders();
+            var all_TextBlocks = _dbHelper.GetAllTextBlocks();
 
             BlockViewModel model = new BlockViewModel();
 
@@ -43,7 +51,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 model.Blocks.Add(bvmd);
             }
 
-            model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders();
+            model.AllBlockHolders = _dbHelper.GetAllBlockHolders();
             return model;
         }
 
@@ -55,12 +63,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             string newBlockContent = model.NewTextBlock.Content;
 
             TextBlock tb = new TextBlock() { Content = newBlockContent, Name = newBlockName };
-            TextBlock addedBlock= Configuration.DbHelper.AddNewBlock(tb);
+            TextBlock addedBlock= _dbHelper.AddNewBlock(tb);
 
             Holder_Block hb = new Holder_Block();
             hb.BlockHolderId = newBlock_BlockHolderId;
             hb.TextBlockId = addedBlock.Id;
-            Configuration.DbHelper.AddNewHolder_Block(hb);
+            _dbHelper.AddNewHolder_Block(hb);
 
             ModelState.Clear();
 
@@ -70,7 +78,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DeleteBlock(int id)
         {
-            Configuration.DbHelper.DeleteTextBlockById(id);
+            _dbHelper.DeleteTextBlockById(id);
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
@@ -89,21 +97,21 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DeleteBlockHolder(int id)
         {
-            Configuration.DbHelper.DeleteBlockHolderById(id);
+            _dbHelper.DeleteBlockHolderById(id);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
          public IActionResult EditBlock(int blockId)
         {
-            TextBlock tbToEdit = Configuration.DbHelper.GetAllTextBlocks().Where(tb => tb.Id == blockId).Single();
+            TextBlock tbToEdit = _dbHelper.GetAllTextBlocks().Where(tb => tb.Id == blockId).Single();
 
 
 
 
             List<BlockHolder> correspondingBlockHolders = GetCorrespondingBlockHolders(blockId);
 
-            List<BlockHolder> allBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+            List<BlockHolder> allBlockHolders = _dbHelper.GetAllBlockHolders().ToList();
 
             EditBlockViewModel model = new EditBlockViewModel();
           
@@ -111,7 +119,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             model.HolderManagement.CurrentTextBoxId = blockId;
             model.TextBlock = new EditTextBlock() { Name=tbToEdit.Name,Content=tbToEdit.Content,Id=tbToEdit.Id};
             model.HolderManagement.CorrespondingBlockHolders = correspondingBlockHolders;
-            model.HolderManagement.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+            model.HolderManagement.AllBlockHolders = _dbHelper.GetAllBlockHolders().ToList();
             model.HolderManagement.CorrespondingHolder_Blocks = GetCorrespondingHolder_Blocks(blockId);
             return View(model);
         }
@@ -119,7 +127,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult SaveTextBlockOrder(int textBlockId, int holderId, int order)
         {
-            Configuration.DbHelper.SaveTextBlockOrderNumberInHolder(textBlockId, holderId, order);
+            _dbHelper.SaveTextBlockOrderNumberInHolder(textBlockId, holderId, order);
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
@@ -136,8 +144,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public List<BlockHolder> GetCorrespondingBlockHolders(int blockId)
         {
-            List<BlockHolder> all_blockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
-            List<Holder_Block> all_holder_block = Configuration.DbHelper.GetAllHolder_Blocks().ToList();
+            List<BlockHolder> all_blockHolders = _dbHelper.GetAllBlockHolders().ToList();
+            List<Holder_Block> all_holder_block = _dbHelper.GetAllHolder_Blocks().ToList();
 
             return                                        (from bh in all_blockHolders
                                                            from h_b in all_holder_block
@@ -147,8 +155,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public List<Holder_Block> GetCorrespondingHolder_Blocks(int blockId)
         {
-            List<BlockHolder> all_blockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
-            List<Holder_Block> all_holder_block = Configuration.DbHelper.GetAllHolder_Blocks().ToList();
+            List<BlockHolder> all_blockHolders = _dbHelper.GetAllBlockHolders().ToList();
+            List<Holder_Block> all_holder_block = _dbHelper.GetAllHolder_Blocks().ToList();
 
             return (from bh in all_blockHolders
                     from h_b in all_holder_block
@@ -161,11 +169,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             
             TextBlock changedData = new TextBlock() { Id = model.Id, Name = model.Name, Content = model.Content };
-            TextBlock tbFromDb= Configuration.DbHelper.GetAllTextBlocks().Where(tb => tb.Id == model.Id).Single();
+            TextBlock tbFromDb= _dbHelper.GetAllTextBlocks().Where(tb => tb.Id == model.Id).Single();
 
             tbFromDb.Name = changedData.Name;
             tbFromDb.Content = changedData.Content;
-            Configuration.DbHelper.SaveChanges();
+            _dbHelper.SaveChanges();
 
             // It is necessary to update other properties of the view or the partial view will not be served
             // because hidden fields does not store complex types
@@ -185,7 +193,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult AddHolderToBlock(int holderId, int blockId)
         {
-            Configuration.DbHelper.AddHolderToBlock(holderId, blockId);
+            _dbHelper.AddHolderToBlock(holderId, blockId);
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
             {                
@@ -202,7 +210,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             AddedAndLooseHoldersViewModel model = new AddedAndLooseHoldersViewModel();
             model.CorrespondingBlockHolders = GetCorrespondingBlockHolders(blockId);
-            model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+            model.AllBlockHolders = _dbHelper.GetAllBlockHolders().ToList();
             model.CurrentTextBoxId = blockId;
             return model;
         }
@@ -210,14 +218,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult RemoveHolderFromBlock(int holderId,int blockId)
         {
-            Configuration.DbHelper.RemoveHolderFromBlock(holderId, blockId);
+            _dbHelper.RemoveHolderFromBlock(holderId, blockId);
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
             {
                  AddedAndLooseHoldersViewModel model = new AddedAndLooseHoldersViewModel();
                  model.CorrespondingBlockHolders = GetCorrespondingBlockHolders(blockId);
-                 model.AllBlockHolders = Configuration.DbHelper.GetAllBlockHolders().ToList();
+                 model.AllBlockHolders = _dbHelper.GetAllBlockHolders().ToList();
                  model.CurrentTextBoxId = blockId;
                  return PartialView("AddedAndLooseHoldersPartialView",model);
             }

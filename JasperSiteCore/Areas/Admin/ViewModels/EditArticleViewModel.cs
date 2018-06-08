@@ -24,7 +24,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime PublishDate { get; set; }
 
-        [Required(ErrorMessage ="Zvolte kategorii")]
+       
         [Display(Name ="Kategorie")]
         public List<Category> Categories{ get; set; }
 

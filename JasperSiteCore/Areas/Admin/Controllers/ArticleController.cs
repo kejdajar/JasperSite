@@ -32,6 +32,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             base.OnActionExecuting(filterContext);
         }
 
+        private readonly DatabaseContext databaseContext;
+        private readonly DbHelper dbHelper;
+        public ArticleController(DatabaseContext dbContext)
+        {
+            this.databaseContext = dbContext;
+            this.dbHelper = new DbHelper(dbContext);
+        }
+
         [HttpGet]
         public IActionResult Index(int id)
         {
@@ -45,11 +53,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             
 
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
-            Configuration.DbHelper.EditArticle(model);
+            dbHelper.EditArticle(model);
 
             if(isAjax)
             {
-                return ViewComponent("EditArticle");
+                return ViewComponent("EditArticle",new { articleId=model.Id});
             }
             else
             {
@@ -64,7 +72,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult Add()
         {
           
-            int articleId =  Configuration.DbHelper.AddArticle();
+            int articleId =  dbHelper.AddArticle();
             return Redirect("/Admin/Article/Index?id=" + articleId);
         }
 
@@ -72,7 +80,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             
-            Configuration.DbHelper.DeleteArticle(id);
+            dbHelper.DeleteArticle(id);
             return RedirectToAction("Articles", "Home");
         }
 

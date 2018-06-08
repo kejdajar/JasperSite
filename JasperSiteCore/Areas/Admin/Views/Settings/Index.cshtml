@@ -6,38 +6,15 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section Scripts {
-    <script>
-        function savedInfo() {
 
-            var panel = $(`<div class="j-flex-row j-secondary-header">
 
-                <div class="j-header-group">
-
-                    <div class="j-header-group-item">
-                        <span style='color:white'>  <b>Uloženo</b> </span>
-                    </div>
-
-                </div>
-            </div>`);
-
-            panel.css({
-                "display": "none",
-                "background-color": "#8BC34A",
-
-                "font-size": "1.3em"
-            });
-
-            $("#headerPanel").append(panel);
-            panel.slideDown("slow").delay(2000).slideUp("slow");
-
-        }
-    </script>
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
 }
 
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Nastavení</h1></div>
 
 <div id="mainForm">
-    <form asp-action="SaveSettings" asp-controller="Settings" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete="savedInfo">
+    <form asp-action="SaveSettings" asp-controller="Settings" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')">
         <div class="form-horizontal">
 
             @*<div asp-validation-summary="All" class="text-danger"></div>*@

@@ -1,7 +1,7 @@
 ﻿@using JasperSiteCore.Models.Database
 @using  JasperSiteCore.Models
 @using JasperSiteCore.Areas.Admin.Controllers
-
+@inject DatabaseContext databaseContext
 @model JasperSiteCore.Areas.Admin.ViewModels.BlockViewModel
 
 <script>
@@ -33,7 +33,7 @@
         });
 </script>
 
-<form asp-action="AddNewBlock" asp-controller="Blocks" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1" data-ajax-complete="savedInfo">
+<form asp-action="AddNewBlock" asp-controller="Blocks" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1" data-ajax-complete='savedInfo("<strong>Uloženo.</strong> Veškeré změny byly uloženy.", "alert-success")'>
     <div class="form-horizontal">
 
         @*<div asp-validation-summary="All" class="text-danger"></div>*@
@@ -127,10 +127,10 @@ else
     <div class="table-responsive">
 
 
-        @foreach (Theme theme in Configuration.DbHelper.GetAllThemes())
+        @foreach (Theme theme in J.Db(databaseContext).GetAllThemes())
     {
         <h2>@theme.Name</h2>
-    var blockHolders = Configuration.DbHelper.GetAllBlockHolders().Where(b => b.ThemeId == theme.Id);
+    var blockHolders = J.Db(databaseContext).GetAllBlockHolders().Where(b => b.ThemeId == theme.Id);
     <div style="border-left:3px solid #BA68C8;padding-left:4px">
         <table class="table table-bordered j-table j-table-headers-left ">
             <tr><th>Název kontejneru</th></tr>

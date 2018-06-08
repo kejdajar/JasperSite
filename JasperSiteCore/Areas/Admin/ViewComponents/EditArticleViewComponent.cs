@@ -12,11 +12,13 @@ namespace JasperSiteCore.Areas.Admin.ViewComponents
     public class EditArticleViewComponent:ViewComponent
     {
         private readonly DatabaseContext _db;
+        private readonly DbHelper _dbHelper;
 
         // Dependency injection
         public EditArticleViewComponent(DatabaseContext db)
         {
             _db = db;
+            _dbHelper = new DbHelper(db);
         }
 
         public async Task<IViewComponentResult> InvokeAsync(int articleId)
@@ -28,7 +30,7 @@ namespace JasperSiteCore.Areas.Admin.ViewComponents
                 HtmlContent = articleToEdit.HtmlContent,
                 Name = articleToEdit.Name,
                 PublishDate = articleToEdit.PublishDate,
-                Categories= JasperSiteCore.Models.Configuration.DbHelper.GetAllCategories(),
+                Categories= _dbHelper.GetAllCategories(),
                 SelectedCategoryId = articleToEdit.CategoryId
             };
             return View(model);

@@ -9,9 +9,9 @@
 @section Scripts {
     <script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
     <script src="~/Areas/Admin/Content/Scripts/EditArticle.js"></script>
-    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
-    
-    @{ Html.RenderPartial("TinyMceSettingsPartialView");}
+
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>    
+
 
 
 
@@ -30,4 +30,7 @@
 <h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Úprava článku</h2>
 
 @* Invokes View Component that renders edit fields *@
-@await Component.InvokeAsync("EditArticle", new { articleId = Model })
+
+<div id="mainForm">
+    @await Component.InvokeAsync("EditArticle", new { articleId = Model })
+</div>

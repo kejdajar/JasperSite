@@ -29,7 +29,7 @@ namespace JasperSiteCore.Models.Database
       public void Initialize(bool ensureDbIsDeleted = false)
             {
            
-            Configuration.DbHelper = new DbHelper(DatabaseContext);
+           //Configuration.DbHelper = new DbHelper(DatabaseContext); // Old implementation without dependency injection
 
             if(ensureDbIsDeleted) DatabaseContext.Database.EnsureDeleted();
            

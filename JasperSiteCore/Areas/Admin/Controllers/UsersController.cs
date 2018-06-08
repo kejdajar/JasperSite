@@ -13,6 +13,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Area("Admin")]
     public class UsersController : Controller
     {
+        private readonly DatabaseContext _databaseContext;
+        private readonly DbHelper _dbHelper;
+        public UsersController(DatabaseContext dbContext)
+        {
+            _databaseContext = dbContext;
+            _dbHelper = new DbHelper(dbContext);
+        }
+
         [HttpGet]
         public IActionResult Index()
         {          
@@ -21,7 +29,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public UsersViewModel UpdatePage()
         {
-            List<User> users = Configuration.DbHelper.GetAllUsers();
+            List<User> users = _dbHelper.GetAllUsers();
             UsersViewModel model = new UsersViewModel();
             model.Users = users;
 
@@ -42,10 +50,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public EditUserViewModel UpdateEditUserPage(int id)
         {
-            User userToEdit = Configuration.DbHelper.GetUserById(id);
+            User userToEdit =_dbHelper.GetUserById(id);
             EditUserViewModel model = new EditUserViewModel();
 
-            model.AllRoles = Configuration.DbHelper.GetAllRoles();
+            model.AllRoles = _dbHelper.GetAllRoles();
             model.Nickname = userToEdit.Nickname;
             model.Id = userToEdit.Id;
             model.Username = userToEdit.Username;
@@ -60,7 +68,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
            
                 // Get current user
-                User user = Configuration.DbHelper.GetUserById(model.Id);
+                User user = _dbHelper.GetUserById(model.Id);
                 user.Nickname = model.Nickname;
                 user.Username = model.Username;
                 user.RoleId = model.RoleId;
@@ -81,7 +89,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
               if (ModelState.IsValid)
             {
-                Configuration.DbHelper.SaveChanges();
+                _dbHelper.SaveChanges();
             }
 
             
@@ -103,7 +111,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult AddUser()
         {
             AddUserViewModel model = new AddUserViewModel();
-            model.AllRoles = Configuration.DbHelper.GetAllRoles();
+            model.AllRoles = _dbHelper.GetAllRoles();
             return View(model);
         }
 
@@ -121,7 +129,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             u.Password = hashedNewPaswd;
             u.Salt = salt;
 
-            Configuration.DbHelper.AddNewUser(u);
+           _dbHelper.AddNewUser(u);
 
             return RedirectToAction("Index");
 
@@ -130,7 +138,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DeleteUser(int id)
         {
-            Configuration.DbHelper.DeleteUserById(id);
+           _dbHelper.DeleteUserById(id);
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)

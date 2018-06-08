@@ -1,5 +1,6 @@
 ﻿@using JasperSiteCore.Models.Database
 @using JasperSiteCore.Models
+@inject DatabaseContext databaseContext
 
 <script src="~/lib/tinymce/tinymce.js"></script>
 <script>
@@ -39,7 +40,7 @@
             convert_urls: false, // url will remain unchanged, default conversion is ../Images/GetImage?id=1
             image_list: [
 
-                @foreach(Image img in Configuration.DbHelper.GetAllImages())
+                @foreach(Image img in J.Db(databaseContext).GetAllImages())
                 {
                     @: { title: '@img.Name', value: '@Url.Action("GetImage","Images",new { id=img.Id})' },
                 }

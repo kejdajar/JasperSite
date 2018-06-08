@@ -15,6 +15,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Area("admin")]
     public class ImagesController : Controller
     {
+        private readonly DatabaseContext _databaseContext;
+        private readonly DbHelper _dbHelper;
+        public ImagesController(DatabaseContext dbContext)
+        {
+            this._databaseContext = dbContext;
+            this._dbHelper = new DbHelper(dbContext);
+        }
+
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -25,7 +34,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public ImagesViewModel UpdatePage()
         {
             ImagesViewModel model = new ImagesViewModel();
-            model.ImagesFromDatabase = Configuration.DbHelper.GetAllImages();
+            model.ImagesFromDatabase = _dbHelper.GetAllImages();
             return model;
         }
 
@@ -43,13 +52,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     Image dbImageEntity = new Image();
                     dbImageEntity.Name = file.FileName;
                     dbImageEntity.ImageData = new ImageData() { Data = imageInBytes };
-                    Configuration.DbHelper._db.Images.Add(dbImageEntity);
-                    Configuration.DbHelper._db.SaveChanges();
+                    _databaseContext.Images.Add(dbImageEntity);
+                    _databaseContext.SaveChanges();
                 }
             }
 
             ImagesViewModel model = new ImagesViewModel();
-            model.ImagesFromDatabase = Configuration.DbHelper.GetAllImages();
+            model.ImagesFromDatabase = _dbHelper.GetAllImages();
             return RedirectToAction("Index");
         }
 
@@ -57,7 +66,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {                       
            // Query using navigation property + include in DbHelper class
            // Query must be Async in order to display all images one after another as they are being loaded
-           Task<Image> image = Configuration.DbHelper._db.Images.Where(i => i.Id == id).SingleAsync();
+           Task<Image> image = _databaseContext.Images.Include(i=>i.ImageData).Where(i => i.Id == id).SingleAsync();
             
             return  File(image.Result.ImageData.Data,"image/jpg");
         }
@@ -65,7 +74,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DeleteImage(int imgId)
         {
-            Configuration.DbHelper.DeleteImageById(imgId);
+            _dbHelper.DeleteImageById(imgId);
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)

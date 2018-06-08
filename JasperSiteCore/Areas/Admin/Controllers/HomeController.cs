@@ -37,6 +37,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             base.OnActionExecuting(filterContext);
         }
 
+        private readonly DatabaseContext databaseContext;
+        private readonly DbHelper dbHelper;
+
+        public HomeController(DatabaseContext dbContext)
+        {
+            this.databaseContext = dbContext;
+            this.dbHelper = new DbHelper(dbContext);
+        }
+
         // GET: Admin/Home
         public ActionResult Index()
         {          
@@ -102,17 +111,17 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]        
         public IActionResult AddNewAddedThemesToDb()
         {
-            Configuration.DbHelper.AddThemesFromFolderToDatabase(Configuration.ThemeHelper.CheckThemeFolderAndDatabaseIntegrity());
+            dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity());
             return RedirectToAction("Themes");
         }
 
         [HttpGet]
         public IActionResult RemoveManuallyDeletedThemesFromDb()
         {
-           List<string> themesToDelete= Configuration.ThemeHelper.FindManuallyDeletedThemes();
+           List<string> themesToDelete= dbHelper.FindManuallyDeletedThemes();
             foreach(string name in themesToDelete)
             {
-                Configuration.DbHelper.DeleteThemeByName(name);
+                dbHelper.DeleteThemeByName(name);
             }
             return View("Themes", UpdatePage());
         }
@@ -138,15 +147,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             model.ThemeInfoList = paging.GetCurrentPageItems();
 
             // Not registered themes check
-            model.NotRegisteredThemeNames = Configuration.ThemeHelper.CheckThemeFolderAndDatabaseIntegrity();
-            model.ManuallyDeletedThemeNames = Configuration.ThemeHelper.FindManuallyDeletedThemes();
+            model.NotRegisteredThemeNames = dbHelper.CheckThemeFolderAndDatabaseIntegrity();
+            model.ManuallyDeletedThemeNames = dbHelper.FindManuallyDeletedThemes();
             return model;
         }
 
         [HttpGet]
         public ActionResult DeleteTheme(string themeName)
         {
-            bool success = Configuration.ThemeHelper.DeleteThemeByName(themeName);
+            bool success = Configuration.ThemeHelper.DeleteThemeByNameFromDbAndFolder(themeName,databaseContext);
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
@@ -176,11 +185,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             
 
             // Find assigned blocks for the prior theme
-            Theme priorTheme = Configuration.DbHelper._db.Themes.Where(t => t.Name == themeNameBeforeChanged).Single();
-            Theme newTheme = Configuration.DbHelper._db.Themes.Where(t => t.Name == themeName).Single();
+            Theme priorTheme = dbHelper._db.Themes.Where(t => t.Name == themeNameBeforeChanged).Single();
+            Theme newTheme = dbHelper._db.Themes.Where(t => t.Name == themeName).Single();
 
-            var oldRelationships = (from old_holder in Configuration.DbHelper.GetAllBlockHolders()
-                                                  from old_joinTable in Configuration.DbHelper.GetAllHolder_Blocks()
+            var oldRelationships = (from old_holder in dbHelper.GetAllBlockHolders()
+                                                  from old_joinTable in dbHelper.GetAllHolder_Blocks()
                                                   where old_joinTable.BlockHolderId == old_holder.Id && old_holder.ThemeId==priorTheme.Id
                                                   select new { JoinTableId=old_joinTable.Id, HolderName=old_holder.Name }).ToList();
 
@@ -190,16 +199,16 @@ namespace JasperSiteCore.Areas.Admin.Controllers
               var collectionOfCorrespondingObjects= oldRelationships.Where(r => r.HolderName == holderNameNewTheme).ToList();
               foreach(var item in collectionOfCorrespondingObjects)
                 {
-                   var holdersToEdit= Configuration.DbHelper.GetAllHolder_Blocks().Where(h => h.Id == item.JoinTableId);
+                   var holdersToEdit= dbHelper.GetAllHolder_Blocks().Where(h => h.Id == item.JoinTableId);
                     foreach(var editedHolder in holdersToEdit)
                     {
-                        var join = (from allThemes in Configuration.DbHelper.GetAllThemes()
-                                    from allBlockHolders in Configuration.DbHelper.GetAllBlockHolders()
+                        var join = (from allThemes in dbHelper.GetAllThemes()
+                                    from allBlockHolders in dbHelper.GetAllBlockHolders()
                                     where allThemes.Id == newTheme.Id && allBlockHolders.Name == holderNameNewTheme && allBlockHolders.ThemeId==newTheme.Id
                                     select allBlockHolders).Single();
                         
                         editedHolder.BlockHolderId = join.Id;
-                        Configuration.DbHelper._db.SaveChanges();
+                        dbHelper._db.SaveChanges();
                     }
                 }
             }
@@ -292,14 +301,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public CategoriesViewModel UpdateCategoryPage()
         {
             CategoriesViewModel model = new CategoriesViewModel();
-            model.Categories = Configuration.DbHelper.GetAllCategories();
+            model.Categories =dbHelper.GetAllCategories();
             return model;
         }
 
         [HttpPost]
         public IActionResult CreateNewCategory(string btnCategoryName)
         {
-            Configuration.DbHelper.AddNewCategory(btnCategoryName);
+            dbHelper.AddNewCategory(btnCategoryName);
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest"; 
             if(isAjaxCall)
@@ -317,10 +326,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DeleteCategory(CategoriesViewModel model,int id)
         {
-            Configuration.DbHelper.DeleteCategory(id);
+            dbHelper.DeleteCategory(id);
 
             CategoriesViewModel viewModel = new CategoriesViewModel();
-            viewModel.Categories = Configuration.DbHelper.GetAllCategories();
+            viewModel.Categories = dbHelper.GetAllCategories();
             ModelState.Clear();
 
 
@@ -331,7 +340,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ReconstructAllThemesCorrespondingDatabaseTables()
         {
-            Configuration.ThemeHelper.Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
+            dbHelper.Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
             return RedirectToAction("Themes");
         }
 

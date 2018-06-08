@@ -1,60 +1,57 @@
 ﻿@model JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel
 
+@{ Html.RenderPartial("TinyMceSettingsPartialView");}
 
 
-<div id="mainForm">
-    <form asp-action="Index" asp-controller="Article" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete="savedInfo">
-        <div class="form-horizontal">
-          
-            @*<div asp-validation-summary="All" class="text-danger"></div>*@
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name"></label>
+<form asp-action="Index" asp-controller="Article" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete='savedInfo("<strong>Uloženo.</strong> Veškeré změny byly uloženy.", "alert-success")'>
+    <div class="form-horizontal">
 
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+        <input type="hidden" asp-for="Id" />
+        <div class="form-group">
+            <label asp-for="Name"></label>
 
-            </div>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
 
-            <div class="form-group">
-                <label asp-for="HtmlContent"></label>
-
-                <textarea asp-for="HtmlContent" class="form-control" rows="18" id="myTextArea"> </textarea>
-                <span asp-validation-for="HtmlContent" class="text-danger"></span>
-
-            </div>
-
-            <div class="form-group">
-                <label asp-for="Categories"></label>
-
-                <select class="form-control" asp-for="SelectedCategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))">
-                    
-                </select>
-
-                <span asp-validation-for="Categories" class="text-danger"></span>
-
-            </div>
-
-            <div class="form-group">
-                <label asp-for="PublishDate"></label>
-
-                <input type="text" asp-for="PublishDate" class="form-control tbPublishDate" />
-                <span asp-validation-for="PublishDate" class="text-danger"></span>
-
-            </div>
-
-            <div class="form-group">
-
-
-                <button type="submit" asp-area="Admin" asp-controller="Article" asp-action="Index" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> Uložit</button>
-                <a href="/Admin/Home/Articles#articles" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na přehled</a>
-
-                <a asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
-
-
-            </div>
         </div>
 
-    </form>
-</div>
+        <div class="form-group">
+            <label asp-for="HtmlContent"></label>
+
+            <textarea asp-for="HtmlContent" class="form-control" rows="18" id="myTextArea"> </textarea>
+            <span asp-validation-for="HtmlContent" class="text-danger"></span>
+
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Categories"></label>
+
+            <select class="form-control" asp-for="SelectedCategoryId" asp-items="@(new SelectList(Model.Categories,"Id","Name"))"></select>
+
+            <span asp-validation-for="Categories" class="text-danger"></span>
+
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PublishDate"></label>
+
+            <input type="text" asp-for="PublishDate" class="form-control tbPublishDate" />
+            <span asp-validation-for="PublishDate" class="text-danger"></span>
+
+        </div>
+
+        <div class="form-group">
+
+
+            <button type="submit" asp-area="Admin" asp-controller="Article" asp-action="Index" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> Uložit</button>
+            <a href="/Admin/Home/Articles#articles" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na přehled</a>
+
+            <a asp-area="Admin" asp-controller="Article" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
+
+
+        </div>
+    </div>
+
+</form>
 

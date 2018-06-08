@@ -1,0 +1,61 @@
+﻿@using JasperSiteCore.Models.Database
+@using JasperSiteCore.Models
+@using JasperSiteCore.Helpers
+@{
+    Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
+    ViewData["Title"] = "Hlavní stránka";
+}
+@inject DatabaseContext databaseContext
+
+
+
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1>Hlavní stránka</h1>
+    </div>
+
+    <div>
+        @J.Holder("MainPageHolder", databaseContext)
+    </div>
+
+
+
+    @foreach (Category c in J.Db(databaseContext).GetAllCategories())
+    {
+
+        <h2 style="margin:10px"><i class="fa fa-star-o" aria-hidden="true"></i> @c.Name</h2>
+        @if (J.Db(databaseContext).GetAllArticles(c.Id).Count > 0)
+        {
+            @foreach (Article article in J.Db(databaseContext).GetAllArticles(c.Id))
+            {
+
+                <div class="list-group">
+                    <a href="/Home/Article?id=@article.Id" class="list-group-item list-group-item-action flex-column align-items-start ">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">@article.Name</h5>
+                            <small>@article.PublishDate.ToLongDateString()</small>
+                        </div>
+                        <p class="mb-1"><i></i></p>
+                        <small>@article.Category.Name</small>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action flex-column align-items-start ">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Žádné články k dispozici</h5>
+
+                    </div>
+
+                </div>
+            </div>
+
+        }
+
+    }
+
+</div>

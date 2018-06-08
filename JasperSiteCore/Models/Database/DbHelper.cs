@@ -20,9 +20,11 @@ namespace JasperSiteCore.Models.Database
         public DbHelper(IDatabaseContext database)
         {
             this._db = database ?? throw new DatabaseContextNullException();
+          
         }
 
         public IDatabaseContext _db;
+        
 
         public List<Article> GetAllArticles()
         {
@@ -71,7 +73,11 @@ namespace JasperSiteCore.Models.Database
             {
                 HtmlContent = "Váš článek začíná zde...",
                 Name = "Nový článek",
-                PublishDate = DateTime.Now
+                PublishDate = DateTime.Now,
+
+                // New article will be automatically assigned to uncategorized category
+                CategoryId = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single().Id
+               
             };
             database.Articles.Add(articleEntity);
             database.SaveChanges();
@@ -393,6 +399,58 @@ namespace JasperSiteCore.Models.Database
             User goner = _db.Users.Where(u => u.Id == id).Single();
             _db.Users.Remove(goner);
             _db.SaveChanges();
+        }
+
+
+        /*FORMERLY IN THEME HELPER CLASS*/
+        
+
+        /// <summary>
+        /// Sometimes user can manually add a theme, without registering that change in the database.
+        /// Therefore it is necessary to check whether folder strucure is in accord with database.
+        /// </summary>
+        public List<string> CheckThemeFolderAndDatabaseIntegrity()
+        {
+            List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo();
+            List<Theme> themesStoredInDb = GetAllThemes();
+
+            // All names that are to be found in DB will be removed from this list
+            // Eventually this list will contain all names that has not yet been stored in DB
+            List<string> allNamesInFolder = themeInfosFromFolder.Select(t => t.ThemeName.Trim()).ToList();
+
+            foreach (ThemeInfo folder in themeInfosFromFolder)
+            {
+                foreach (Theme db in themesStoredInDb)
+                {
+                    if (folder.ThemeName.Trim() == db.Name.Trim())
+                    {
+                        allNamesInFolder.Remove(folder.ThemeName.Trim());
+                    }
+                }
+            }
+
+            return allNamesInFolder;
+        }
+
+        public List<string> FindManuallyDeletedThemes()
+        {
+            List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo();
+            List<Theme> themesStoredInDb = GetAllThemes();
+
+
+            List<string> themeNamesOnlyInDatabaseAndNotInFolder = themesStoredInDb.Select(n => n.Name).ToList();
+
+            foreach (Theme dbName in themesStoredInDb)
+            {
+                foreach (ThemeInfo folderName in themeInfosFromFolder)
+                {
+                    if (dbName.Name == folderName.ThemeName)
+                    {
+                        themeNamesOnlyInDatabaseAndNotInFolder.Remove(dbName.Name);
+                    }
+                }
+            }
+            return themeNamesOnlyInDatabaseAndNotInFolder;
         }
 
     }

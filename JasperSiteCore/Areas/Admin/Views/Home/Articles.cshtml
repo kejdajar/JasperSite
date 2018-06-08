@@ -1,5 +1,6 @@
 ﻿@using JasperSiteCore.Models.Database
 @using JasperSiteCore.Models
+@inject DatabaseContext databaseContext
 
 @section Scripts {
     <script>
@@ -29,11 +30,11 @@
     <table class="table table-bordered j-left-border-block">
         <tr>
             <td>Celkový počet článků</td>
-            <td>@Configuration.DbHelper.GetAllArticles().Count()</td>
+            <td>@J.Db(databaseContext).GetAllArticles().Count()</td>
         </tr>
         <tr>
             <td>Celkový počet rubrik</td>
-            <td>@Configuration.DbHelper.GetAllCategories().Count()</td>
+            <td>@J.Db(databaseContext).GetAllCategories().Count()</td>
         </tr>
 
     </table>
@@ -82,7 +83,7 @@
 <div class="table-responsive">
     <table class="table table-bordered j-table j-table-text-center" id="articleTable">
         <tr><th>Jméno článku</th><th>Rubrika</th><th>Publikováno</th><th>Akce</th></tr>
-        @foreach (Article a in Configuration.DbHelper.GetAllArticles())
+        @foreach (Article a in J.Db(databaseContext).GetAllArticles())
         {
         <tr data-href="@a.Id">
             <td>@a.Name</td>
