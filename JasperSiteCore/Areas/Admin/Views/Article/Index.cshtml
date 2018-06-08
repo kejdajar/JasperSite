@@ -9,12 +9,42 @@
 @section Scripts {
     <script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
     <script src="~/Areas/Admin/Content/Scripts/EditArticle.js"></script>
-
-    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>    
-
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
 
 
 
+    <script>
+        /* AJAX TINYMCE SUBMIT */
+        $(document).ready(function () {
+            
+
+            $('#btnSaveTinymce').click(function (e) {
+                
+                e.preventDefault();
+
+                var textarea = tinyMCE.activeEditor.getContent();
+                var model = {
+                    Id: $("#hiddenId").val(),
+                    Name: $("#tbName").val(),
+                    HtmlContent: textarea,
+                    PublishDate: $("#publishDate").val(),
+                    SelectedCategoryId: $("#selectCategory").val()
+
+                };
+
+                $.ajax({
+                    type: 'post',
+                    url: '@Url.Action("Index","Article")',
+                    data: model,
+                    dataType: 'HTML',
+                    success: function (data) {
+                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                    }
+                });
+            });
+
+        });
+    </script>
 
 }
 @section Styles {
@@ -27,10 +57,12 @@
         z-index: 99999999999999999999;
     }
 </style>
-<h2><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Úprava článku</h2>
+<div class="jumbotron j-jumbotron"><h1><i class="fa fa-pencil-square-o j-icon" aria-hidden="true"></i> Úprava článku</h1></div>
 
-@* Invokes View Component that renders edit fields *@
 
+<section class="j-admin-section" >
 <div id="mainForm">
+    @* Invokes View Component that renders edit fields *@
     @await Component.InvokeAsync("EditArticle", new { articleId = Model })
 </div>
+</section>
