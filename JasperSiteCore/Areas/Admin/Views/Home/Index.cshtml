@@ -1,64 +1,135 @@
-﻿
+﻿@using JasperSiteCore.Models.Database
+@inject DatabaseContext databaseContext
 @{
     ViewBag.Title = "Index";
 }
 
 
-<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Přehled</h1></div>
+<script src="~/lib/chart.js/dist/Chart.min.js"></script>
+<script>
 
-<h3>Začínáme</h3>
-<ul>
-    <li>
-        Vítejte v administraci redakčního systému <b>J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span>. </b>
-    </li>
-</ul>
+    $(document).ready(function () {
+        var ctx = $("#chartCanvas");
 
-<h4><i class="fa fa-sticky-note j-icon" aria-hidden="true"></i>Tipy a triky</h4>
+        var options = {
+          
+                legend: { display: false },
+            
+        };
+
+        var data = {
+
+           
+            labels: [
+
+                @foreach(var category in J.Db(databaseContext).GetAllCategories())
+                {
+
+                  @:"@Html.Raw(category.Name)",
+
+                }
+            ],
+            datasets: [
+                {
+                    label: "Počet článků v rubrice",
+                    backgroundColor: [
+                        @foreach(var category in J.Db(databaseContext).GetAllCategories())
+                        {
+                            var random = new Random();
+                            var color = String.Format("#{0:X6}", random.Next(0x1000000));
+                            @:"@color",
+                        }
+                    ],
+                    data: [
+                        @foreach (var category in J.Db(databaseContext).GetAllCategories())
+                        {
+
+                            var articles = from a in J.Db(databaseContext).GetAllArticles()
+                                           where a.CategoryId == category.Id
+                                           select a;
+
+                            var count = articles.Count();
+
+
+                           @:"@count",
+
+                }
+                    ]
+                }
+            ]
+        };
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
+
+    });
+</script>
 
 
 
+<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Přehled  </h1></div>
 
+<section class="j-admin-section">
+    <i>Vítejte v redakčním systému <b>J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span>. </b></i>
+</section>
 
-<div class="alert alert-info alert-dismissible fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    Vaší stránku si můžete zobrazit pomocí následujícího tlačítka v horní liště nástrojů: <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
-</div>
-
-
-<div class="alert alert-info alert-dismissible fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    Na tuto stránku se vždy můžete vrátit tlačítkem domů:     <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
-</div>
-
-<div class="alert alert-info alert-dismissible fade show" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-    Vyhledávat můžete pomocí následujícího tlačítka: <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></button>
-</div>
+<section class="j-admin-section">
+    <h2><i class="fa fa-bar-chart j-icon"  aria-hidden="true"></i>Přehled rubrik a jejich článků</h2>
+    <div style="width:500px">
+        <canvas id="chartCanvas"></canvas>
+    </div>
 
 
 
+</section>
 
 
-@if (User.Identity.IsAuthenticated)
-{
+<section class="j-admin-section">
+    <h2><i class="fa fa-sticky-note j-icon" aria-hidden="true"></i>Tipy a triky</h2>
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        Vaší stránku si můžete zobrazit pomocí následujícího tlačítka v horní liště nástrojů: <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+    </div>
+
 
     <div class="alert alert-info alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        Odhlásit se můžete pomocí tlačítka s vaším uživatelským jménem:
+        Na tuto stránku se vždy můžete vrátit tlačítkem domů:     <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+    </div>
 
-        <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name - odhlásit</a>
+    <div class="alert alert-info alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        Vyhledávat můžete pomocí následujícího tlačítka: <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></button>
     </div>
 
 
 
-}
 
 
+    @if (User.Identity.IsAuthenticated)
+    {
+
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            Odhlásit se můžete pomocí tlačítka s vaším uživatelským jménem:
+
+            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name - odhlásit</a>
+        </div>
+
+
+
+    }
+
+
+</section>
