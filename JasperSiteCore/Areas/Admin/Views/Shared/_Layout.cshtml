@@ -142,7 +142,7 @@
 
 
 <div class="j-link-container">
-    <a class="j-link  @(ViewContext.RouteData.Values["action"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Home" asp-action="Themes">  <i class="fa fa-user-circle j-fa-margin "  aria-hidden="true"></i>
+    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Themes" asp-action="Index">  <i class="fa fa-user-circle j-fa-margin "  aria-hidden="true"></i>
                 Vzhled</a></div>
 
  <div class="j-link-container">

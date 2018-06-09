@@ -32,7 +32,7 @@
 
                     $.ajax({
                         type: 'get',
-                        url: '@Url.Action("DeleteTheme","Home")',
+                        url: '@Url.Action("DeleteTheme","Themes")',
                         data: { themeName: themeName },
                         dataType: 'HTML',
                         success: function (data) {
@@ -61,7 +61,7 @@
                     var themeName = currentLink.data("activateName");
                     $.ajax({
                         type: 'get',
-                        url: '@Url.Action("ActivateTheme","Home")',
+                        url: '@Url.Action("ActivateTheme","Themes")',
                         data: { themeName: themeName },
                         dataType: 'HTML',
                         success: function (data) {
@@ -80,7 +80,7 @@
 
 
 
-<form asp-action="Themes" asp-controller="Home" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1">
+<form asp-action="Index" asp-controller="Themes" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1">
 
     <div class="table-responsive">
         <table class="table table-bordered j-table j-table-text-center j-theme-table" id="articleTable">
@@ -101,9 +101,9 @@
                             if (info.ThemeName != Model.SelectedThemeName)
                             {
                                 
-                                <a data-toggle="tooltip" title="Aktivovat" asp-area="Admin" asp-controller="Home" asp-action="ActivateTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper" data-activate-name="@info.ThemeName"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a>
+                                <a data-toggle="tooltip" title="Aktivovat" asp-area="Admin" asp-controller="Themes" asp-action="ActivateTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper" data-activate-name="@info.ThemeName"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a>
                                 <span data-toggle="modal" data-target="#myModal">
-                                    <a data-toggle="tooltip" title="Odstranit" asp-area="Admin" asp-controller="Home" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" data-delete-name="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                                    <a data-toggle="tooltip" title="Odstranit" asp-area="Admin" asp-controller="Themes" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" data-delete-name="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
                                 </span>
                             }
                             else
@@ -121,11 +121,7 @@
     </div>
     <input type="hidden" asp-for="PageNumber" />
     @Html.Partial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.PageNumber, TotalNumberOfPages = Model.TotalNumberOfPages })
-  
-
-
-   
-
+    
 </form>
     
 
