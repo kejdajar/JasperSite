@@ -1,10 +1,15 @@
 ﻿@using JasperSiteCore
+@using JasperSiteCore.Models
+@using JasperSiteCore.Models.Database
+@using JasperSiteCore.Helpers
 
+@using Microsoft.AspNetCore.Http.Extensions
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @* Contains custom TAG helpers *@
 @addTagHelper *, JasperSiteCore
 
-@* Contains custom HTML helpers *@
-@using JasperSiteCore.Helpers
+@*Injects database context into every theme view*@
+@inject DatabaseContext databaseContext
 
+ 
