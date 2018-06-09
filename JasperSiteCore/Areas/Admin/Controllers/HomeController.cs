@@ -50,68 +50,9 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public ActionResult Index()
         {          
             return View();
-        }
-
-       
-
-        public ActionResult Articles()
-        {
-            return View();
-        }
+        }  
 
         
-
-        [HttpGet]
-        public ActionResult Categories()
-        {            
-            return View(UpdateCategoryPage());
-        }
-
-        public CategoriesViewModel UpdateCategoryPage()
-        {
-            CategoriesViewModel model = new CategoriesViewModel();
-            model.Categories =dbHelper.GetAllCategories();
-            return model;
-        }
-
-        [HttpPost]
-        public IActionResult CreateNewCategory(string btnCategoryName)
-        {
-            dbHelper.AddNewCategory(btnCategoryName);
-
-            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest"; 
-            if(isAjaxCall)
-            {
-
-                return PartialView("AddNewCategoryPartialView", UpdateCategoryPage());
-            }
-            else
-            {
-                return RedirectToAction("Categories");
-            }
-            
-        }
-
-        [HttpGet]
-        public IActionResult DeleteCategory(CategoriesViewModel model,int id)
-        {
-            dbHelper.DeleteCategory(id);
-            CategoriesViewModel viewModel = new CategoriesViewModel();
-            viewModel.Categories = dbHelper.GetAllCategories();
-            ModelState.Clear();
-
-
-            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
-            if (isAjaxCall)
-            {
-                return PartialView("AddNewCategoryPartialView", viewModel);
-            }
-            else
-            {
-                return View("Categories", viewModel);
-            }
-                
-        }
 
 
         

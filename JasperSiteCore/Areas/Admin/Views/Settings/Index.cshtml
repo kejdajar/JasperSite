@@ -13,31 +13,47 @@
 
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Nastavení</h1></div>
 
-<div id="mainForm">
-    <form asp-action="SaveSettings" asp-controller="Settings" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')">
-        <div class="form-horizontal">
+<section class="j-admin-section">
+    <h2><i class="fa fa-file-text  j-icon" aria-hidden="true"></i> Název webové stránky</h2>
+    <div id="mainForm">
+        <form asp-action="SaveSettings" asp-controller="Settings" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')">
+            <div class="form-horizontal">
 
-            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                @*<div asp-validation-summary="All" class="text-danger"></div>*@
 
-            <div class="form-group">
-                <label asp-for="WebsiteName"></label>
+                <div class="form-group">
+                    <label asp-for="WebsiteName"></label>
 
-                <input asp-for="WebsiteName" class="form-control" />
-                <span asp-validation-for="WebsiteName" class="text-danger"></span>
+                    <input asp-for="WebsiteName" class="form-control" />
+                    <span asp-validation-for="WebsiteName" class="text-danger"></span>
 
+                </div>
+
+
+                <div class="form-group">
+
+
+                    <button type="submit" asp-area="Admin" asp-controller="Settings" asp-action="SaveSettings" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+
+
+
+                </div>
             </div>
 
+        </form>
 
-            <div class="form-group">
-
-
-                <button type="submit" asp-area="Admin" asp-controller="Settings" asp-action="SaveSettings" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
-
+    </div>
+</section>
 
 
-            </div>
-        </div>
+<section class="j-admin-section">
+    <h2><i class="fa fa-database j-icon" aria-hidden="true"></i> Instalace systému a správa databáze</h2>
 
-    </form>
+ 
+        <table class="table j-table-no-hover table-bordered">
+            <tr><th>Akce</th><th>Popis</th></tr>
+            <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="Install" asp-action="Index" asp-area="Admin">Zobrazit instalační okno</a></td><td>Tato možnost zobrazí instalační okno, pomocí něhož je možné obnovit tovární nastavení redakčního systému.</td></tr>
+        </table>
+    
 
-</div>
+</section>

@@ -42,7 +42,7 @@
 <hr />
 
 <h2><i class="fa fa-pencil  j-icon" aria-hidden="true"></i>  Nový článek</h2>
-<a asp-area="Admin" asp-controller="Article" asp-action="Add" class="btn btn-jasper" style="width:200px">Vyvořit</a>
+<a asp-area="Admin" asp-controller="Articles" asp-action="Add" class="btn btn-jasper" style="width:200px">Vytvořit</a>
 
 <hr />
 
@@ -90,7 +90,7 @@
             <td>@a.Category.Name</td>
             <td>@a.PublishDate</td>
 
-            <td><a href="/Admin/Article/Index?id=@a.Id" class="btn btn-jasper">Upravit</a></td>
+            <td><a href="/Admin/Articles/GetArticle?id=@a.Id" class="btn btn-jasper">Upravit</a></td>
         </tr>
         }
     </table>

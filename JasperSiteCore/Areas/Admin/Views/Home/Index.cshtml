@@ -13,7 +13,15 @@
 
         var options = {
           
-                legend: { display: false },
+            legend: { display: false },
+
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
             
         };
 
@@ -66,19 +74,29 @@
         });
 
     });
+
+
+    
+
+
+
+
+    
+
 </script>
 
 
 
-<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Přehled  </h1></div>
+<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Přehled  </h1>
+                                   <h5> <i>Vítejte v redakčním systému <b>J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span>. </b></i></h5>
+    </div>
+
+
 
 <section class="j-admin-section">
-    <i>Vítejte v redakčním systému <b>J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span>. </b></i>
-</section>
 
-<section class="j-admin-section">
     <h2><i class="fa fa-bar-chart j-icon"  aria-hidden="true"></i>Přehled rubrik a jejich článků</h2>
-    <div style="width:500px">
+    <div style="max-width:800px">
         <canvas id="chartCanvas"></canvas>
     </div>
 

@@ -34,7 +34,7 @@
 
                 $.ajax({
                     type: 'post',
-                    url: '@Url.Action("Index","Article")',
+                    url: '@Url.Action("PostArticle","Articles")',
                     data: model,
                     dataType: 'HTML',
                     success: function (data) {

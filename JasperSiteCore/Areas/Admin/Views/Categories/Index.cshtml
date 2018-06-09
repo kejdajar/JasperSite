@@ -19,7 +19,7 @@
 
     $.ajax({
     type: 'post',
-    url: '@Url.Action("CreateNewCategory", "Home")',
+    url: '@Url.Action("CreateNewCategory", "Categories")',
     data: { btnCategoryName: categoryName },
     dataType: 'HTML',
     success: function (data) {

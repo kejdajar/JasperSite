@@ -133,16 +133,16 @@
 
 
 <div class="j-link-container">
-    <a class="j-link  @(ViewContext.RouteData.Values["action"].ToString() == "Categories" ? "j-menu-highlight" : "" )" asp-controller="Home" asp-action="Categories" >  <i class="fa fa-folder j-fa-margin"  aria-hidden="true"></i>
+    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Categories" ? "j-menu-highlight" : "" )" asp-controller="Categories" asp-action="Index" >  <i class="fa fa-folder j-fa-margin"  aria-hidden="true"></i>
                   Rubriky</a></div>
 
 <div class="j-link-container">
-    <a class="j-link @(ViewContext.RouteData.Values["action"].ToString() == "Articles" ? "j-menu-highlight" : "" )" asp-controller="Home" asp-action="Articles">  <i class="fa fa-edit j-fa-margin"  aria-hidden="true"></i>
+    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Articles" ? "j-menu-highlight" : "" )" asp-controller="Articles" asp-action="Index">  <i class="fa fa-edit j-fa-margin"  aria-hidden="true"></i>
                   Články</a></div>
 
 
 <div class="j-link-container">
-    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Themes" asp-action="Index">  <i class="fa fa-user-circle j-fa-margin "  aria-hidden="true"></i>
+    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Themes" asp-action="Index">  <i class="fa fa-paint-brush j-fa-margin "  aria-hidden="true"></i>
                 Vzhled</a></div>
 
  <div class="j-link-container">
@@ -151,7 +151,7 @@
 
  <div class="j-link-container">
      <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Images" ? "j-menu-highlight" : "" )" asp-controller="Images" asp-action="Index">
-         <i class="fa fa-user-circle-o j-fa-margin" aria-hidden="true"></i>
+         <i class="fa fa-image j-fa-margin" aria-hidden="true"></i>
          Obrázky
      </a>
  </div>
@@ -160,13 +160,11 @@
     <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "j-menu-highlight" : "" )" asp-controller="Users" asp-action="Index">  <i class="fa fa-user-circle-o j-fa-margin"  aria-hidden="true"></i>
                   Uživatelé</a></div>
 
- <div class="j-link-container">
-    <a class="j-link" href="#">  <i class="fa fa-database j-fa-margin"  aria-hidden="true"></i>
-                Databáze</a></div>
+ 
 
 <div class="j-link-container">
     <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Settings" ? "j-menu-highlight" : "" )" asp-controller="Settings" asp-action="Index">
-        <i class="fa fa-user-circle-o j-fa-margin" aria-hidden="true"></i>
+        <i class="fa fa-cogs j-fa-margin" aria-hidden="true"></i>
         Nastavení
     </a></div>
 
@@ -309,9 +307,13 @@
             <div class="container-fluid j-margin-top">
                 <div class="row">  
                         <!--Content will not take all space when LG-->
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 ">                          
+                    @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 ">                          
                         @RenderBody()
-                    </div>                       
+                    </div>*@ 
+                    <div class="col-12">
+                        @RenderBody()
+                    </div>
+
                 </div>
             </div>
         </div>

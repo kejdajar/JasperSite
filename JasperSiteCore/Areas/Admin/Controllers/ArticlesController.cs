@@ -14,7 +14,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 {    
     [Authorize]
     [Area("Admin")]
-    public class ArticleController : Controller
+    public class ArticlesController : Controller
     {
         // Firstly, the installation must have already been completed before accesing administration panel
         public override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -34,21 +34,27 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
-        public ArticleController(DatabaseContext dbContext)
+        public ArticlesController(DatabaseContext dbContext)
         {
             this.databaseContext = dbContext;
             this.dbHelper = new DbHelper(dbContext);
         }
 
         [HttpGet]
-        public IActionResult Index(int id)
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetArticle(int id)
         {
             
-            return View(id);   
+            return View("ArticleEdit",id);   
         }
 
         [HttpPost]
-        public IActionResult Index(EditArticleViewModel model)
+        public IActionResult PostArticle(EditArticleViewModel model)
         {
             
 
@@ -73,7 +79,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
           
             int articleId =  dbHelper.AddArticle();
-            return Redirect("/Admin/Article/Index?id=" + articleId);
+            return Redirect("/Admin/Articles/GetArticle?id=" + articleId);
         }
 
         [HttpGet]
@@ -81,7 +87,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             
             dbHelper.DeleteArticle(id);
-            return RedirectToAction("Articles", "Home");
+            return RedirectToAction("Index", "Articles");
         }
 
     }
