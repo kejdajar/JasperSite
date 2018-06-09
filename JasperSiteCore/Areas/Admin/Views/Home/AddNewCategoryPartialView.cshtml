@@ -1,6 +1,34 @@
 ﻿@model JasperSiteCore.Areas.Admin.ViewModels.CategoriesViewModel
 @using JasperSiteCore.Models.Database;
 
+<script>
+/* AJAX REMOVE CATEGORY */
+    $(document).ready(function () {
+
+            var allRemoveLinks = $('a[data-delete-id]').click(function (e) {
+
+                e.preventDefault();
+                var singleLink = $(this);
+
+                var categoryToBeRemovedId = singleLink.data('deleteId');
+
+
+                $.ajax({
+                    type: 'get',
+                    url: '@Url.Action("DeleteCategory","Home")',
+                    data: { id: categoryToBeRemovedId },
+                    dataType: 'HTML',
+                    success: function (data) {
+
+                        $("#categoryPartialForm").html(data);
+
+                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                    }
+                });
+            });
+        });
+</script>
+
 <section class="j-admin-section">
     <form asp-action="CreateNewCategory" asp-controller="Home" method="post">
         <div class="input-group">
@@ -22,7 +50,7 @@
             <tr><th>Akce</th><th class="col-sm" style="text-align:left">Název</th> </tr>
             @foreach (Category c in Model.Categories)
             {
-                <tr><td><a asp-controller="Home" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></td><td>@c.Name</td></tr>
+                <tr><td><a data-delete-id="@c.Id" asp-controller="Home" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></td><td>@c.Name</td></tr>
             }
         </table>
 

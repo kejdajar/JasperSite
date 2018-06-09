@@ -327,13 +327,21 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult DeleteCategory(CategoriesViewModel model,int id)
         {
             dbHelper.DeleteCategory(id);
-
             CategoriesViewModel viewModel = new CategoriesViewModel();
             viewModel.Categories = dbHelper.GetAllCategories();
             ModelState.Clear();
 
 
-            return View("Categories", viewModel);
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            if (isAjaxCall)
+            {
+                return PartialView("AddNewCategoryPartialView", viewModel);
+            }
+            else
+            {
+                return View("Categories", viewModel);
+            }
+                
         }
 
 
