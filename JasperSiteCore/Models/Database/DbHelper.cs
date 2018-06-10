@@ -136,12 +136,34 @@ namespace JasperSiteCore.Models.Database
             database.SaveChanges();
         }
 
+        /// <summary>
+        /// Deletes category with corresponding Id and marks assigned articles as uncategorized.
+        /// </summary>
+        /// <param name="categoryId">Id of the category to be removed.</param>
+        /// <exception cref="DatabaseHelperException"></exception>
         public void DeleteCategory(int categoryId)
         {
-            IDatabaseContext database = _db;
-            Category goner = database.Categories.Where(c => c.Id == categoryId).Single();
-            database.Categories.Remove(goner);
-            database.SaveChanges();
+              IDatabaseContext database = _db;
+
+                // EF Core - default on delete cascade - assigned articles would be removed by default
+                // This will prevent assigned articles to be deleted
+                List<Article> assignedArticles = (from a in GetAllArticles()
+                                                  where a.CategoryId == categoryId
+                                                  select a).ToList();
+
+                // Articles will be now returned to the DB as uncategorized
+                Category unassignedCategory = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single();
+                foreach (Article returningArticle in assignedArticles)
+                {
+                    returningArticle.CategoryId = unassignedCategory.Id;
+                }
+                database.SaveChanges();
+
+                Category goner = database.Categories.Where(c => c.Id == categoryId).Single();
+                database.Categories.Remove(goner);
+                database.SaveChanges();
+           
+            
         }
 
 

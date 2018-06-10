@@ -152,4 +152,30 @@ namespace JasperSiteCore.Models
         }
 
     }
+
+    public class DatabaseHelperException : Exception
+    {
+        private static string _message = "Database helper was unable to perform requested action.";
+        public DatabaseHelperException() : base(_message)
+        {
+
+        }
+        public DatabaseHelperException(string message)
+            : base(message)
+        {
+        }
+
+        public DatabaseHelperException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public DatabaseHelperException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
+
 }

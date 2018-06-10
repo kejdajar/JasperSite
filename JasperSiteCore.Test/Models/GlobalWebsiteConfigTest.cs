@@ -9,17 +9,17 @@ using JasperSiteCore.Models.Providers;
 
 namespace JasperSiteCore.Test.Models
 {
-    [TestFixture]
-    class GlobalWebsiteConfigTest
-    {
-        [Test]
-        public void GlobalWebsiteConfig_ParameterNull_ThrowsException()
-        {
-            //// Arrange
-            //GlobalConfigData globalConfigData = null;            
+//    [TestFixture]
+//    class GlobalWebsiteConfigTest
+    //{
+    //    [Test]
+    //    public void GlobalWebsiteConfig_ParameterNull_ThrowsException()
+    //    {
+    //        //// Arrange
+    //        //GlobalConfigData globalConfigData = null;            
 
-            //// Act, Assert
-            //Assert.That(()=>  new GlobalWebsiteConfig(globalConfigData),Throws.TypeOf<GlobalConfigDataException>());
-        }
-    }
+    //        //// Act, Assert
+    //        //Assert.That(()=>  new GlobalWebsiteConfig(globalConfigData),Throws.TypeOf<GlobalConfigDataException>());
+    //    }
+    //}
 }

@@ -26,6 +26,7 @@ namespace JasperSiteCore.Models.Database
         DbSet<ImageData> ImageData { get; set; }
 
         int SaveChanges();
+        
     }
 
     public class DatabaseContext: DbContext,IDatabaseContext
@@ -46,7 +47,8 @@ namespace JasperSiteCore.Models.Database
             }            
           
         }
-
+       
+        
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<Category> Categories{ get; set; }
         public virtual DbSet<Role> Roles { get; set; }
