@@ -1,5 +1,10 @@
 ﻿/* Design for admin section */
 
+* {
+    margin:0px;
+    padding:0px;
+}
+
 body {
     font-size: 1em;
     background-color: white;
