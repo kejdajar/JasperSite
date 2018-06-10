@@ -166,11 +166,14 @@
         Nastavení
     </a></div>
 
+<div class="j-link-container">
+    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "j-menu-highlight" : "" )" asp-controller="About" asp-action="Index">
+        <i class="fa fa-info-circle j-fa-margin" aria-hidden="true"></i>
+       O systému
+    </a>
+</div>
 
-
-            <!-- New design test -->
             
-            <!-- New design test END-->
         </div>
     </nav>
     <!---------------------------------END Sidebar--------------------------------------->
@@ -303,16 +306,16 @@
     <main >
         <div id="page-content-wrapper">
             <div class="container-fluid j-margin-top">
-                <div class="row">  
+                
                         <!--Content will not take all space when LG-->
                     @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 ">                          
                         @RenderBody()
                     </div>*@ 
-                    <div class="col-12">
+                    
                         @RenderBody()
-                    </div>
+                   
 
-                </div>
+               
             </div>
         </div>
     </main>
