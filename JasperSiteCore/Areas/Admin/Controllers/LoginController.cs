@@ -55,7 +55,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel model, string returnUrl)
         {
+            // Input data cleansing: username IS CASE-INSENSITIVE, with no leading and trailing whitespaces
+            model.Username = model.Username.ToLower().Trim();
+
             User user =_dbHelper.GetUserWithUsername(model.Username);
+            
             string filledInPassword = model.Password;
             bool isPswdCorrect = user.ComparePassword(filledInPassword);
 

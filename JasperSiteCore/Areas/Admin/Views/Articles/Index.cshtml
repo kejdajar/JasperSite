@@ -7,14 +7,14 @@
 
         $(function () {
 
-            $("#selCategory").chosen(/*{ width: "100%" }*/);
+            //$("#selCategory").chosen(/*{ width: "100%" }*/);
 
             $("#articleTable").addClass("j-table-clickable");/* If JS is enabled, table is clickable */
 
             /*Table row is clickable as a whole*/
             $("#articleTable tr").click(function () {
                 var id = $(this).data("href")
-                window.location = "/Admin/Article/Index?id=" + id;
+                window.location = "/Admin/Articles/GetArticle?id=" + id;                
             });
         });
 
