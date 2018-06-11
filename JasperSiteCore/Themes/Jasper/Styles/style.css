@@ -1,20 +1,39 @@
-﻿body {
-    background-image: url(../Images/noise2.jpg);
+﻿
+@import url(https://fonts.googleapis.com/css?family=Noto+Serif|Oldenburg|Noto+Serif&subset=latin,latin-ext);
+
+body {
+    background-image: url(../Images/arizona_beam.jpg);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
+    /*font-family: "Helvetica Neue", Helvetica, Arial, "sans-serif";*/
+    font-family: "Noto Serif";
+}
+.article-text {
+    font-family: "Oldenburg";
+  
+}
+.j-render-container {
+   
 }
 
 .container {
     
 }
 
+.j-footer {
+    background-color:rgba(226, 177, 173, 0.51);
+}
+
+.website-name-title {
+    color: #E2B1AD;
+   font-size:1.1em;
+    
+}
+
 .jasper-container-outer {
-   
     padding: 0px;
-  
-   
-   background-color:white;
+    background-color: white;
    
 }
 .jasper-container-inner {

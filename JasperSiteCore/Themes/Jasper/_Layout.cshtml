@@ -37,7 +37,7 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <a class="navbar-brand" href="/"><span style="color:#edccff">@J.Db(databaseContext).GetWebsiteName()</span></a>
+            <a class="navbar-brand" href="/"><span class="website-name-title">@J.Db(databaseContext).GetWebsiteName()</span></a>
             <div class="collapse navbar-collapse" id="containerNavbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
@@ -67,7 +67,7 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
 
 
 
-        <div class="container-fluid" style="margin-top:20px">
+        <div class="container-fluid j-render-container" style="margin-top:20px">
 
             @RenderBody()
         </div>
@@ -77,10 +77,10 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
 
 
 
-        <hr />
-        <div class="container-fluid">
-            <footer>
-                <p style="padding-bottom:10px">&copy; 2017-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core,  <a class="nav-link" href="/Admin/">Vstup do administrace</a></p>
+        
+        <div class="container-fluid j-footer">
+            <footer style="padding:10px">
+                <p style="padding-bottom:10px">&copy; 2017-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core,  <a href="/Admin/">Vstup do administrace</a></p>
             </footer>
         </div>
     </div>
