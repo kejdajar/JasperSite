@@ -19,15 +19,6 @@
         }
     </style>
 }
-
-
-
-
-
-
-
-
-
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-bottom:5px">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -36,25 +27,25 @@
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/daylight-heaven.jpg")" alt="First slide">
+                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/mountains.jpg")" alt="First slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h3>JasperSiteCore</h3>
-                    <p>Jednoduchý redakční systém</p>
+                    <p>Jednoduchý redakční systém.</p>
                 </div>
 
             </div>
             <div class="carousel-item">
-                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/blue_bg3.jpg")" alt="Second slide">
+                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/brush.jpg")" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block">
-                    <h3>Vytvářejte vlastní vzhledy</h3>
-                    <p>Pro pokročilejší uživatele</p>
+                    <h3>Vytvářejte své vlastní vzhledy</h3>
+                    <p>Pro pokročilejší uživatele.</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/paint_brush.jpg")" alt="Third slide">
+                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/stones.jpg")" alt="Third slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h3>Široká volba možností</h3>
-                    <p>Systém se vám přizpůsobí na míru</p>
+                    <p>Systém se vám přizpůsobí na míru.</p>
                 </div>
             </div>
         </div>
@@ -70,38 +61,101 @@
 
 
     <div class="container jasper-container-inner">
-    <div class="row">
-        <div class="col-md-4">
-           
-            <ul class="list-group">
-                <li class="list-group-item active"> <h2 style="text-align:center">Vítejte</h2></li>
-                <li class="list-group-item">J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span> je redakční systém na platformě ASP.NET Core MVC</li>
-                <li class="list-group-item">Umožňuje rychle vytvářet vlastní webové stránky</li>
-                <li class="list-group-item">Momentálně se nacházíte na ukázkové stránkce, která byla pro vás vytvořena</li>
-            </ul>
-        </div>
-        
-        <div class="col-md-4" > 
-          
-            <ul class="list-group">
-                <li class="list-group-item active">  <h2 style="text-align:center">Krok za krokem</h2></li>
-                <li class="list-group-item">Nejprve se přihlašte do administrace, použijte předpřipravený účet: uživatel:admin, heslo:admin</li>
-                <li class="list-group-item">Lze se i přihlásit účtem redaktora: uživatel:red, heslo:red</li>
-                <li class="list-group-item">Změňte v redakčním systému název vašeho webu</li>
-                <li class="list-group-item">Vyberte si jeden z dostupných vzhledů, nebo si vytvořte vlastní</li>
-           </ul>
-        </div>
-        <div class="col-md-4" >
-          
-            <ul class="list-group">
-                <li class="list-group-item active">  <h2 style="text-align:center">Studentský projekt</h2></li>
-                <li class="list-group-item">
-                    Tento projekt vznikl jako praktická část diplomové práce na PEF ČZU PRAHA, obor INFON.
-                    <img src="@Helper.JasperUrl("./Images/logo.gif")" class="img-fluid"  />
-                </li>
-            </ul>
-           
-        </div>
-    </div>
 
-</div>
+        <section class="j-section">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <ul class="list-group">
+                        <li class="list-group-item active"> <h3 style="text-align:center">Vítejte</h3></li>
+                        <li class="list-group-item">JasperSiteCore je redakční systém na platformě ASP.NET Core MVC.</li>
+                        <li class="list-group-item">Umožňuje rychle vytvářet vlastní webové stránky.</li>
+                        <li class="list-group-item">Obsahuje správu článků, rubrik, uživatelů, vzhledů a další nastavení.</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6">
+
+                    <ul class="list-group">
+                        <li class="list-group-item active">  <h3 style="text-align:center">Studentský projekt</h3></li>
+                        <li class="list-group-item">
+                            Tento projekt vznikl jako praktická část diplomové práce na PEF ČZU PRAHA, obor INFON.
+                            <img src="@Helper.JasperUrl("./Images/logo.gif")" class="img-fluid" style="max-height:145px" />
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="j-section">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="list-group">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start active">
+                            <h3 style="text-align:center">Krok za krokem</h3>
+                        </div>
+                        <div  class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Ukázková stránka</h5>
+                                <small class="text-muted">1. krok</small>
+                            </div>
+                            <p class="mb-1">Právě se nacházíte na ukázkové stránce. Tato stránka je samostatný vzhled, ale neukazuje vámi žádný vytvořený obsah.</p>
+                            <small class="text-muted">Podobně může vypadat i vaše stránka.</small>
+                        </div>
+                        <a asp-action="index" asp-area="admin" asp-controller="login" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Přihlášení</h5>
+                                <small class="text-muted">2. krok</small>
+                            </div>
+                            <p class="mb-1">
+                                Přihlaste se do administrace pomocí předpřipraveného administrátorského účtu:
+                                <ul><li>jméno: admin</li><li>heslo: admin</li></ul>
+                                <small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>
+                            </p>
+
+                        </a>
+
+                        <a asp-action="index" asp-area="admin" asp-controller="users" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Změna hesla</h5>
+                                <small class="text-muted">3. krok</small>
+                            </div>
+                            <p class="mb-1">
+                                V sekci uživatelé si změnte svoje administrátorské heslo na nějaké bezpečnější.
+
+                            </p>
+                            <p class="mb-1">
+                                <small class="text-muted">Používejte malá a velká písmena, číslice a speciální znaky pro zvýšení bezpečnosti hesla.</small>
+                            </p>
+
+                        </a>
+
+                        <a asp-action="index" asp-area="admin" asp-controller="home" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Dokončení nastavení</h5>
+                                <small class="text-muted">4. krok</small>
+                            </div>
+                            <p class="mb-1">
+                                Nakonec přidejte další uživatele s omezenými právy (role redaktor), změntě název 
+                                vaší stránky a vyberte si vhodný vzhled. Dále můžete již dle libosti přidávat 
+                                další rubriky a články.
+                            </p>
+                            <p class="mb-1">
+                                <small class="text-muted">Tento redakční systém toho umí pochopitelně mnohem více!</small>
+                            </p>
+
+                        </a>
+
+                    </div>
+
+
+
+
+
+                   
+                </div>
+            </div>
+            </section>
+    </div>

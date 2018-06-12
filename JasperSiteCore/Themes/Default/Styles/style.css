@@ -1,17 +1,26 @@
 ﻿body {
-    background-image: url(../Images/art1.jpg);
+    background-image: url(../Images/background.jpg);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .j-footer {
-    background-color:#e9e9e9;
+   
     margin-top: 20px;
+    
+}
+
+.j-icon {
+    color:#0275D8;
+        padding-right: 10px;
 }
 
 .container {
     
+}
+ .j-section {
+    margin-bottom: 20px;
 }
 
 .jasper-container-outer {

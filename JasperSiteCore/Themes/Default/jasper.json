@@ -22,14 +22,7 @@
       "value": "value01"
     }
   ],
-  "customPageMapping": [
-    {
-      "routes": [
-        "/Home/Tutorial",
-        "/Home/Tutorial/"
-      ],
-      "file": "Tutorial.cshtml"
-    },
+  "customPageMapping": [   
     {
       "routes": [
         "/Home/Article",

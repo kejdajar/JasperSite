@@ -6,22 +6,91 @@
 
 
 <div class="container-fluid">
+    <style>
+        p {
+            text-align: justify;
+        }
+
+        dl dt, dd {
+            text-align: justify;
+        }
+    </style>
+
     <div class="jumbotron">
-        <h1>O Projektu</h1>
+        <h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> O projektu </h1>
     </div>
 
-    <p>
-        Redakční systém <b>J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span> </b>je systém pro správu
-        webového obsahu, tzv. CMS (content management system). Umožňuje tedy svým uživatelům vytvářet webové stránky, přidávat nové 
-        příspěvky a mnoho dalších věcí.   
-    </p>
 
-    <p>
-        Tento systém byl navrhnut a implementován v rámci diplomové práce na téma: <b><i>Návrh a implementace redakčního systému
-        v ASP.NET Core</i></b>. Autorem této práce je <b>Bc. Jaromír Kejda</b>, student posledního ročníku navazujícího studia informatiky
-        na PEF ČZU v Praze.
-    </p>
+    <div class="row">
 
-  
+        <section class="j-section col-lg-6 col-sm-12">
+
+            <h2><i class="fa fa-desktop j-icon" aria-hidden="true"></i>Redakční systém</h2>
+            <p>
+                Tento redakční systém byl nazván    <b>J<span style="color:tomato">asp</span>erSite<span style="color:deepskyblue">Core</span></b>, zkráceně <b>JSC</b>.
+                Původ tohoto názvu je následující:
+                <dl>
+                    <dt>J<span style="color:tomato">asp</span>er</dt>
+                    <dd>
+                        Toto slovo znamená v překladu z angličtiny jaspis, což je minerál mnoha různých barev.
+                        Dále se jedná o slovní hríčku, kde tři písmena <b>ASP</b> odkazují na název technologie
+                        ASP.NET (<i>Active Server Pages</i>), která byla použita pro implementaci tohoto systému. Nakonec
+                        první dvě písmena <b>JA</b> odpovídají prvním písmenům autorova křestního jména.
+                    </dd>
+                    <dt>Site</dt>
+                    <dd>Slovo site je referencí na webovou stránku, ang. <i>website.</i></dd>
+                    <dt><span style="color:deepskyblue">Core</span></dt>
+                    <dd>
+                        Toto slovo je odkazem na novou multiplatformní technologii .NET Core od společnosti
+                        Microsoft, která byla použita pro implementaci tohoto systému. Dále slouží pro odlišení od
+                        starší verze tohoto systému, na kterém autor pracoval dříve a který nevyužíval platformy ASP.NET MVC Core, ale
+                        byl postaven na starších technologiích, nejprve na ASP.NET a poté na novější technologii ASP.NET MVC.
+                    </dd>
+                </dl>
+            </p>
+
+        </section>
+        <section class="j-section col-lg-6 col-sm-12 ">
+
+            <h2><i class="fa fa-graduation-cap j-icon" aria-hidden="true"></i>Diplomová práce</h2>
+            <p>
+                Tento redakční systém <i>(CMS - Content Management System)</i> vznikl jako součást
+                diplomové práce spadající pod Českou zemědělskou univerzitu v Praze, Provozně ekonomickou fakultu, Katedru systémového inženýrství.
+            </p>
+            <p>
+                Autorem tohoto projektu je student navazujícího magisterského studijního programu INFON, Bc. Jaromír Kejda. Tento projekt je
+                součástí praktické části diplomové práce: <i>Návrh a implementace redakčního systému v ASP.NET Core.</i>
+            </p>
+
+            <img src="~/Areas/Admin/Content/Images/logo.png" />
+            <img src="~/Areas/Admin/Content/Images/logo_pef.png" />
+
+
+        </section>
+
+
+
+    </div>
+    <div class="row">
+        <section class="j-section col-lg-6 col-sm-12 ">
+
+            <h2><i class="fa fa-code-fork j-icon" aria-hidden="true"></i>Verze</h2>
+            <table class="table table-responsive table-bordered j-table-no-hover">
+                <tr><th>Název</th><th>Vlastnost</th></tr>
+                <tr>
+                    <td>Verze</td>
+                    <td>1.0.0</td>
+                </tr>
+                <tr> <td>Poslední aktualizace</td> <td>10.6.2018</td></tr>
+                <tr>  <td>Autor</td> <td>Bc. Jaromír Kejda</td> </tr>
+                <tr>   <td>Dostupné jako</td> <td>Součást diplomové práce: Návrh a implementace redakčního systému v ASP.NET MVC Core</td></tr>
+
+            </table>
+
+        </section>
+    </div>
+
+
+
 
 </div>

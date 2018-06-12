@@ -47,10 +47,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Admin/Install/Index">Instalace</a>
-                    </li>
-                    <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/Tutorial") ? "active":"")">
-                        <a class="nav-link" href="/Home/Tutorial/">Návody</a>
-                    </li>
+                    </li>                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Další</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown04">
@@ -91,9 +88,9 @@
 
         @RenderBody()
 
-        <div class="container-fluid j-footer">
+        <div class="container-fluid j-footer bg-inverse" >
             <footer style="padding:10px">
-                <p class="text-muted">
+                <p style="color:#949596">
                     &copy;2018-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core,
                     vytvořeno pomocí redakčního systému JasperSiteCore.
                    
