@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class ThemesController : Controller
     {

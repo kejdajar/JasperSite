@@ -65,11 +65,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             if (ModelState.IsValid && isPswdCorrect)
             {
-                
+
 
                 List<Claim> claims = new List<Claim>
                     {
-                       new Claim(ClaimTypes.Name,model.Username )
+                       new Claim(ClaimTypes.Name,model.Username),
+                       new Claim (ClaimTypes.Role,user.Role.Name)
                     };
                 ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
@@ -90,6 +91,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 return Content("error");
            
                  
+        }
+
+        [HttpGet]
+        public ActionResult UnauthorizedUser()
+        {
+           
+            return View("_Unauthorized");
+ 
         }
 
         [HttpGet]

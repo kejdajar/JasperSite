@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using JasperSiteCore.Areas.Admin.ViewModels;
 using JasperSiteCore.Models;
 using JasperSiteCore.Models.Database;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="Admin")]
     [Area("Admin")]
     public class SettingsController : Controller
     {
@@ -38,5 +41,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
            
             return View(model);
         }
+
+       
     }
 }

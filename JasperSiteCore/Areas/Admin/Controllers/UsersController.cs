@@ -7,9 +7,11 @@ using JasperSiteCore.Models.Database;
 using JasperSiteCore.Models;
 using JasperSiteCore.Areas.Admin.ViewModels;
 using JasperSiteCore.Models.Security;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class UsersController : Controller
     {

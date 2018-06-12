@@ -172,7 +172,7 @@ namespace JasperSiteCore.Models.Database
         // **************** USERS **************** //
         public User GetUserWithUsername(string username)
         {
-            return _db.Users.Where(u => u.Username.Trim() == username.Trim()).Single();
+            return _db.Users.Include(u=>u.Role).Where(u => u.Username.Trim() == username.Trim()).Single();
         }
 
         public User GetUserById(int userId)

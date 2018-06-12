@@ -15,6 +15,7 @@ using JasperSiteCore.Models.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
+
 namespace JasperSiteCore
 {
     public class Startup
@@ -43,13 +44,18 @@ namespace JasperSiteCore
         public void ConfigureServices(IServiceCollection services)
         {
             // Authentication
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => { options.LoginPath = "/Admin/Login"; });
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
+                options.LoginPath = "/Admin/Login";
+                options.AccessDeniedPath = "/Admin/Login/UnauthorizedUser";
+            });
 
             services.AddMvc();
 
             services.AddDbContext<DatabaseContext>();
             // Add framework services.
-           // services.AddMvc();           
+            // services.AddMvc();     
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +72,8 @@ namespace JasperSiteCore
             JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext);
 
             app.UseAuthentication(); // authentication
+
+            
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

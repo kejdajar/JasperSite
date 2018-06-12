@@ -76,6 +76,18 @@ namespace JasperSiteCore.Helpers
         }
     }
 
+    [HtmlTargetElement("j-date", TagStructure = TagStructure.WithoutEndTag)]
+    public class JDateTagHelper : TagHelper
+    {
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            DataTransfer data = (DataTransfer)context.Items[typeof(JArticleTagHelper)];
+            output.TagName = "";
+            output.Content.SetHtmlContent(HtmlEncoder.Default.Encode(data.Article.PublishDate.ToLongDateString()+", "+data.Article.PublishDate.ToLongTimeString()));
+
+        }
+    }
+
     [HtmlTargetElement("j-content", TagStructure = TagStructure.WithoutEndTag)]
     public class JContentTagHelper : TagHelper
     {
