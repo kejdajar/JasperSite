@@ -2,7 +2,7 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Serif|Oldenburg|Noto+Serif&subset=latin,latin-ext);
 
 body {
-    background-image: url(../Images/arizona_beam.jpg);
+    background-image: url(../Images/background.jpg);
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;

@@ -20,7 +20,7 @@
     <Content Remove="Areas\Admin\Views\Shared\TinyMceSettingsPartialView.cshtml" />
     <Content Remove="Themes\Default\AboutAuthor.cshtml" />
     <Content Remove="Themes\Default\AboutProject.cshtml" />
-    <Content Remove="Themes\Ruby\About.cshtml" />
+    <Content Remove="Themes\Emerald\About.cshtml" />
     <Content Remove="Themes\Onyx\About.cshtml" />
     <Content Remove="Themes\Jasper\About.cshtml" />
   </ItemGroup>
@@ -38,14 +38,14 @@
     <None Remove="Areas\Admin\ViewModels\SettingsViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\UsersViewModel.cs" />
     <None Remove="Areas\Admin\Views\Users\AddUser.cshtml" />
-    <None Remove="Themes\Ruby\Article.cshtml" />
-    <None Remove="Themes\Ruby\Category.cshtml" />
-    <None Remove="Themes\Ruby\Error.cshtml" />
-    <None Remove="Themes\Ruby\Index.cshtml" />
-    <None Remove="Themes\Ruby\jasper.json" />
-    <None Remove="Themes\Ruby\SingleCategory.cshtml" />
-    <None Remove="Themes\Ruby\_Layout.cshtml" />
-    <None Remove="Themes\Ruby\_ViewImports.cshtml" />
+    <None Remove="Themes\Emerald\Article.cshtml" />
+    <None Remove="Themes\Emerald\Category.cshtml" />
+    <None Remove="Themes\Emerald\Error.cshtml" />
+    <None Remove="Themes\Emerald\Index.cshtml" />
+    <None Remove="Themes\Emerald\jasper.json" />
+    <None Remove="Themes\Emerald\SingleCategory.cshtml" />
+    <None Remove="Themes\Emerald\_Layout.cshtml" />
+    <None Remove="Themes\Emerald\_ViewImports.cshtml" />
     <None Remove="Themes\Onyx\Article.cshtml" />
     <None Remove="Themes\Onyx\Category.cshtml" />
     <None Remove="Themes\Onyx\Error.cshtml" />
