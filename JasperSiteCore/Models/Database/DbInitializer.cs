@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JasperSiteCore.Models;
 using JasperSiteCore.Areas.Admin.Models;
 using JasperSiteCore.Models.Providers;
+using System.IO;
 
 namespace JasperSiteCore.Models.Database
 {
@@ -28,10 +29,12 @@ namespace JasperSiteCore.Models.Database
 
       public void Initialize(bool ensureDbIsDeleted = false)
             {
-           
-           //Configuration.DbHelper = new DbHelper(DatabaseContext); // Old implementation without dependency injection
+            // Resets the configuration file in case it was modified
+           // Configuration.GlobalWebsiteConfig.ResetToDefaults();
 
-            if(ensureDbIsDeleted) DatabaseContext.Database.EnsureDeleted();
+            //Configuration.DbHelper = new DbHelper(DatabaseContext); // Old implementation without dependency injection
+
+            if (ensureDbIsDeleted) DatabaseContext.Database.EnsureDeleted();
            
 
             DatabaseContext.Database.EnsureCreated();
@@ -46,7 +49,8 @@ namespace JasperSiteCore.Models.Database
             Category[] categories = new Category[]
             {
                 new Category(){Name="Nezařazeno"},
-                new Category(){Name="Programování"},
+                new Category(){Name="První rubrika"},
+                new Category(){Name="Druhá rubrika"},
             };
 
             foreach (Category c in categories)
@@ -55,12 +59,19 @@ namespace JasperSiteCore.Models.Database
             }
             DatabaseContext.SaveChanges();
 
+
+
+            // Demo article
+            StreamReader sr = new StreamReader(Env.Hosting.ContentRootPath+"/Areas/Admin/DemoDataResources/DemoArticle.txt");
+            string articleContent = sr.ReadToEnd();
+
             Article[] articles = new Article[]
             {
-                new Article {Name="První článek", HtmlContent="<b>tučný text</b>",PublishDate = DateTime.Now,Category=categories[0]},
-                 new Article {Name="Druhý článek", HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[0]},
-                   new Article {Name="Třetí článek", HtmlContent="<h2>nadpis text</h2>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(120),Category=categories[1]},
-                    new Article {Name="Čtvrtý článek", HtmlContent="test", PublishDate = DateTime.Now + TimeSpan.FromMinutes(180),Category=categories[1]},
+                new Article {Name="Ukázkový článek", HtmlContent=articleContent,PublishDate = DateTime.Now,Category=categories[0]},
+                 new Article {Name="Druhý článek", HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[1]},
+                 new Article {Name="Třetí článek", HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[1]},
+                   new Article {Name="Čtvrtý článek", HtmlContent="<h2>nadpis text</h2>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(120),Category=categories[2]},
+                    new Article {Name="Pátý článek", HtmlContent="test", PublishDate = DateTime.Now + TimeSpan.FromMinutes(180),Category=categories[2]},
             };
 
             foreach(Article a in articles)
@@ -112,15 +123,16 @@ namespace JasperSiteCore.Models.Database
                 ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
                 WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
 
-
-                TextBlock textBlock1 = new TextBlock() { Name = "WelcomePageTextBlock", Content = "Uvítací stránka - obsah tohoto bloku upravte pomocí redakčního systému." };
-                TextBlock textBlock2 = new TextBlock() { Name = "AboutPageTextBlock", Content = "Informace o autorovi - obsah tohoto bloku upravte pomocí redakčního systému." };
-                TextBlock textBlock3 = new TextBlock() { Name = "InfoPageTextBlock", Content = "Informační blok - obsah tohoto bloku upravte pomocí redakčního systému." };
-                _databaseContext.TextBlocks.Add(textBlock1);
-                _databaseContext.TextBlocks.Add(textBlock2);
-                _databaseContext.TextBlocks.Add(textBlock3);
-                _databaseContext.SaveChanges();
-
+                if (ti.ThemeName == "Default")
+                {
+                    TextBlock textBlock1 = new TextBlock() { Name = "WelcomePageTextBlock", Content = "Uvítací stránka - obsah tohoto bloku upravte pomocí redakčního systému." };
+                    TextBlock textBlock2 = new TextBlock() { Name = "AboutPageTextBlock", Content = "Informace o autorovi - obsah tohoto bloku upravte pomocí redakčního systému." };
+                    TextBlock textBlock3 = new TextBlock() { Name = "FooterPageTextBlock", Content = "&copy;2018-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core, vytvořeno pomocí redakčního systému JasperSiteCore." };
+                    _databaseContext.TextBlocks.Add(textBlock1);
+                    _databaseContext.TextBlocks.Add(textBlock2);
+                    _databaseContext.TextBlocks.Add(textBlock3);
+                    _databaseContext.SaveChanges();
+                
 
                 List<string> holders = websiteConfig.BlockHolders;
                 
@@ -147,6 +159,24 @@ Holder_Block hb2 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = t
 
                 }
                 _databaseContext.SaveChanges();
+                }
+
+                // DemoImages
+                string imgPath =Env.Hosting.ContentRootPath+ "/Areas/Admin/DemoDataResources/demo_background.jpg";              
+                byte[] bytes = System.IO.File.ReadAllBytes(imgPath);
+                Image img = new Image();
+                img.Name = "Ukázkový obrázek";
+
+                ImageData imgData = new ImageData() { Data = bytes };
+
+                img.ImageData = imgData;
+
+                _databaseContext.Images.Add(img);
+                _databaseContext.ImageData.Add(imgData);
+                
+                _databaseContext.SaveChanges();
+
+            
 
             }            
 
@@ -154,9 +184,7 @@ Holder_Block hb2 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = t
             
 
            
-           // _databaseContext.SaveChanges();
-
-            //  List<string> holders = JasperSiteCore.Models.Configuration.WebsiteConfig.BlockHolders;
+           
 
 
 

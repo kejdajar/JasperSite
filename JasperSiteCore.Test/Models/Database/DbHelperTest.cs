@@ -76,7 +76,6 @@ namespace JasperSiteCore.Test.Models.Database
             dbSetMock.As<IQueryable<T>>().Setup(m => m.GetEnumerator()).Returns(elementsAsQueryable.GetEnumerator());
             dbSetMock.Setup(d => d.Add(It.IsAny<T>())).Callback<T>(s => elements.Add(s));
             dbSetMock.Setup(d => d.Remove(It.IsAny<T>())).Callback<T>(s => elements.Remove(s));
-
             return dbSetMock;
         }
 

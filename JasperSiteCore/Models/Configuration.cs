@@ -46,6 +46,8 @@ namespace JasperSiteCore.Models
                         
         }
 
+        
+
         public static void CreateAndSeedDb(DatabaseContext dbContext,bool ensureDbIsDeleted = false)
         {
             if (GlobalWebsiteConfig.InstallationCompleted)

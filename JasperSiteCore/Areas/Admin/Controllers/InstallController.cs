@@ -72,11 +72,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public IActionResult ResetGlobalConfigJson()
         {
-            Configuration.GlobalWebsiteConfig.ConnectionString = "";
-            Configuration.GlobalWebsiteConfig.InstallationCompleted = false;
-            Configuration.GlobalWebsiteConfig.ThemeFolder = "Themes";
-            Configuration.GlobalWebsiteConfig.ThemeName = "Default";
-            Configuration.GlobalWebsiteConfig.TypeOfDatabase = "mssql";
+            Configuration.GlobalWebsiteConfig.ResetToDefaults();
             return RedirectToAction("Index");
         }
     }

@@ -80,9 +80,11 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
         
         <div class="container-fluid j-footer">
             <footer style="padding:10px">
-                <p class="text-muted">&copy;2018-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core, 
-                vytvořeno pomocí redakčního systému JasperSiteCore.
-                <a href="/Admin/">Vstup do administrace</a>.</p>
+                <p class="text-muted">
+                    @J.Holder("FooterHolder", databaseContext)
+                    <a href="/Admin/">Vstup do administrace</a>.
+                </p>
+                    
             </footer>
         </div>
     </div>

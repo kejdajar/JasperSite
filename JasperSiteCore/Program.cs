@@ -49,7 +49,7 @@ namespace JasperSiteCore
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
             .UseStartup<Startup>()
-            .UseUrls("http://*:5000") // Kestrer server is available from another computer in LAN on port 5000 and IP address
+            .UseUrls("http://*:5000") // Kestrel server is available from another computer in LAN on port 5000 and IP address
             .Build();
     }
 }

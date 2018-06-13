@@ -96,6 +96,15 @@ namespace JasperSiteCore.Models
             this.ConfigurationDataObject = GlobalConfigDataProvider.GetFreshData();
         }
 
+        public void ResetToDefaults()
+        {
+            Configuration.GlobalWebsiteConfig.ConnectionString = "";
+            Configuration.GlobalWebsiteConfig.InstallationCompleted = false;
+            Configuration.GlobalWebsiteConfig.ThemeFolder = "Themes";
+            Configuration.GlobalWebsiteConfig.ThemeName = "Default";
+            Configuration.GlobalWebsiteConfig.TypeOfDatabase = "mssql";
+        }
+
     }
 
     public interface IGlobalWebsiteConfigProvider
