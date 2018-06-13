@@ -22,14 +22,13 @@ body {
 }
 
 .j-footer {
-    background-color:rgba(226, 177, 173, 0.51);
-    margin-top:20px;
+    background-color: #aee4ec;
+    margin-top: 20px;
 }
 
 .website-name-title {
-    color:#c0f7ff;
-   font-size:1.1em;
-    
+    color: #aee4ec;
+    font-size: 1.1em;
 }
 
 .jasper-container-outer {
