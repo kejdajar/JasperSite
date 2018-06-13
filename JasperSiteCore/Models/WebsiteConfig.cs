@@ -85,6 +85,15 @@ namespace JasperSiteCore.Models
             }
         }
 
+        public string MissingImagePath
+        {
+            get { return _configurationObject.MissingImagePath; }
+            set
+            {
+                _configurationObject.MissingImagePath = value;
+            }
+        }
+
     }
 
     public interface IWebsiteConfigProvider
@@ -98,6 +107,9 @@ namespace JasperSiteCore.Models
     /// </summary>
     public class ConfigurationObject
     {
+        [JsonProperty("missingImagePath")]
+        public string MissingImagePath { get; set; }
+
         [JsonProperty("blockHolders")]
         public List<string> BlockHolders { get; set; }
 

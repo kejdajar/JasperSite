@@ -62,13 +62,28 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// If the image has been already deleted, deleted image placeholder will be returned instead.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public FileResult GetImage(int id)
         {                       
            // Query using navigation property + include in DbHelper class
            // Query must be Async in order to display all images one after another as they are being loaded
-           Task<Image> image = _databaseContext.Images.Include(i=>i.ImageData).Where(i => i.Id == id).SingleAsync();
-            
-            return  File(image.Result.ImageData.Data,"image/jpg");
+           try
+            {
+                Task<Image> image = _databaseContext.Images.Include(i => i.ImageData).Where(i => i.Id == id).SingleAsync();
+                return File(image.Result.ImageData.Data, "image/jpg");
+            }
+            catch
+            {
+                string missingImagePlaceholderRelativePath = Configuration.WebsiteConfig.MissingImagePath;
+                string absolutePath = Configuration.CustomRouting.RelativeThemePathToRootRelativePath(missingImagePlaceholderRelativePath);
+                byte[] bytes = System.IO.File.ReadAllBytes(absolutePath);                
+                return File(bytes, "image/jpg");
+            }
+           
         }
 
         [HttpGet]
