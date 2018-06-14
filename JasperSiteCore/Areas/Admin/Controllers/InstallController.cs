@@ -35,28 +35,32 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+           return View(UpdateModel());
+        }
+
+        public InstallViewModel UpdateModel()
+        {
             // Every request will be granted the most up-to-date data
             Configuration.GlobalWebsiteConfig.RefreshData();
 
             // View model
             InstallViewModel model = new InstallViewModel();
             // HTML Select 
-            model.AllDatabases = new List<DatabaseListItem>() { new DatabaseListItem() { Id = 1, Name = "MSSQL" }, new DatabaseListItem() { Id = 2, Name = "MySQL" }  };      
-            
+            model.AllDatabases = new List<DatabaseListItem>() { new DatabaseListItem() { Id = 1, Name = "MSSQL" }, new DatabaseListItem() { Id = 2, Name = "MySQL" } };
+
             // If the installation was completed, the user is shown actual connection string and database in use
-            if(Configuration.GlobalWebsiteConfig.InstallationCompleted)
+            if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
             {
                 int idOfDb = 1;
-               switch(Configuration.GlobalWebsiteConfig.TypeOfDatabase)
+                switch (Configuration.GlobalWebsiteConfig.TypeOfDatabase)
                 {
-                    case "mssql":idOfDb = 1;break;
-                    case "mysql":idOfDb = 2;break;
+                    case "mssql": idOfDb = 1; break;
+                    case "mysql": idOfDb = 2; break;
                 }
                 model.SelectedDatabase = idOfDb;
                 model.ConnectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
             }
-
-            return View(model);
+            return model;
         }
 
         [HttpPost]
@@ -79,14 +83,25 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             // DATABASE INSTALLATION
             if(ModelState.IsValid)
             {
-               // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
-                DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>();
-                JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext,true);                                
-                return RedirectToAction("Index", "Home", new { area = "admin" });
+                try
+                {
+                    // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
+                    DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>();
+                    JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext, true);
+                    return RedirectToAction("Index", "Home", new { area = "admin" });
+
             }
+                catch(Exception ex)
+            {
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = ex.Message+", "+ex.InnerException;
+                return View(UpdateModel());
+            }
+
+        }
             else
-            {               
-                return View(model);
+            {
+               return View(model);
             }
             
 
