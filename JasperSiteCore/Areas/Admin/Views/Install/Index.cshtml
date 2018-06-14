@@ -131,9 +131,7 @@
 
                     <div class="form-group">
                         <label>Zvolte databázi</label>
-                        <select class="form-control" asp-for="SelectedDatabase">
-                            <option value="mssql">MSSQL</option>
-                            <option value="mysql">MySQL</option>
+                        <select class="form-control" asp-for="SelectedDatabase" asp-items="@(new SelectList(Model.AllDatabases,"Id","Name"))">                        
                         </select>
                         <span asp-validation-for="SelectedDatabase" class="text-danger"></span>
                     </div>
@@ -174,18 +172,6 @@
                                </div>
                           </div>
                          
-
-
-
-
-
-
-
-
-
-
-
-
 
                             </div>
 

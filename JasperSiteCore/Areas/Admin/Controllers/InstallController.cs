@@ -35,22 +35,48 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            // Every request will be granted the most up-to-date data
+            Configuration.GlobalWebsiteConfig.RefreshData();
+
+            // View model
             InstallViewModel model = new InstallViewModel();
+            // HTML Select 
+            model.AllDatabases = new List<DatabaseListItem>() { new DatabaseListItem() { Id = 1, Name = "MSSQL" }, new DatabaseListItem() { Id = 2, Name = "MySQL" }  };      
             
+            // If the installation was completed, the user is shown actual connection string and database in use
+            if(Configuration.GlobalWebsiteConfig.InstallationCompleted)
+            {
+                int idOfDb = 1;
+               switch(Configuration.GlobalWebsiteConfig.TypeOfDatabase)
+                {
+                    case "mssql":idOfDb = 1;break;
+                    case "mysql":idOfDb = 2;break;
+                }
+                model.SelectedDatabase = idOfDb;
+                model.ConnectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
+            }
+
             return View(model);
         }
 
         [HttpPost]
         public IActionResult Index(InstallViewModel model)
         {
-            string selectedDb = model.SelectedDatabase;
+           string selectedDb = string.Empty;
+           int selectedDbId = model.SelectedDatabase;
+           switch(selectedDbId)
+            {
+                case 1: selectedDb = "mssql";break;
+                case 2: selectedDb = "mysql";break;
+            }
+
             string connectionString = model.ConnectionString;           
 
             Configuration.GlobalWebsiteConfig.TypeOfDatabase = selectedDb;
             Configuration.GlobalWebsiteConfig.ConnectionString = connectionString;
             Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
-            //Configuration.GlobalWebsiteConfig.CommitChanges();
-
+           
+            // DATABASE INSTALLATION
             if(ModelState.IsValid)
             {
                // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
@@ -59,12 +85,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 return RedirectToAction("Index", "Home", new { area = "admin" });
             }
             else
-            {
-                //InstallViewModel model2 = new InstallViewModel();
-                //Configuration.GlobalWebsiteConfig.RefreshData(); // Refreshes data from file
-                //model2.ConnectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
-                //model2.SelectedDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
-                //ModelState.Clear();
+            {               
                 return View(model);
             }
             
@@ -76,5 +97,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             Configuration.GlobalWebsiteConfig.ResetToDefaults();
             return RedirectToAction("Index");
         }
+    }
+
+    public class DatabaseListItem
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
