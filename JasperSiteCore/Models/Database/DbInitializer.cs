@@ -30,7 +30,7 @@ namespace JasperSiteCore.Models.Database
       public void Initialize(bool ensureDbIsDeleted = false)
             {
             // Resets the configuration file in case it was modified
-           // Configuration.GlobalWebsiteConfig.ResetToDefaults();
+            Configuration.GlobalWebsiteConfig.ThemeName = "Default";
 
             //Configuration.DbHelper = new DbHelper(DatabaseContext); // Old implementation without dependency injection
 
@@ -123,43 +123,48 @@ namespace JasperSiteCore.Models.Database
                 ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
                 WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
 
+
+                TextBlock textBlock1 = new TextBlock() { Name = "WelcomePageTextBlock", Content = "Uvítací stránka - obsah tohoto bloku upravte pomocí redakčního systému." };
+                TextBlock textBlock2 = new TextBlock() { Name = "AboutPageTextBlock", Content = "Informace o autorovi - obsah tohoto bloku upravte pomocí redakčního systému." };
+                TextBlock textBlock3 = new TextBlock() { Name = "FooterPageTextBlock", Content = "&copy;2018-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core, vytvořeno pomocí redakčního systému JasperSiteCore." };
                 if (ti.ThemeName == "Default")
                 {
-                    TextBlock textBlock1 = new TextBlock() { Name = "WelcomePageTextBlock", Content = "Uvítací stránka - obsah tohoto bloku upravte pomocí redakčního systému." };
-                    TextBlock textBlock2 = new TextBlock() { Name = "AboutPageTextBlock", Content = "Informace o autorovi - obsah tohoto bloku upravte pomocí redakčního systému." };
-                    TextBlock textBlock3 = new TextBlock() { Name = "FooterPageTextBlock", Content = "&copy;2018-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core, vytvořeno pomocí redakčního systému JasperSiteCore." };
                     _databaseContext.TextBlocks.Add(textBlock1);
                     _databaseContext.TextBlocks.Add(textBlock2);
                     _databaseContext.TextBlocks.Add(textBlock3);
                     _databaseContext.SaveChanges();
-                
+                }
 
                 List<string> holders = websiteConfig.BlockHolders;
-                
-                foreach(string holderName in holders)
+                foreach (string holderName in holders)
                 {
                     BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
                     _databaseContext.BlockHolders.Add(blockHolder);
 
-                    if(holderName.Contains("Main"))
+                    if(ti.ThemeName=="Default")
                     {
-Holder_Block hb1 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock1 };
-_databaseContext.Holder_Block.Add(hb1);
-                    }
-                    else if (holderName.Contains("About"))
-                    {
-Holder_Block hb2 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock2 };
- _databaseContext.Holder_Block.Add(hb2);
-                    }
-                    else
-                    {
-                        Holder_Block hb3 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock3 };
-                        _databaseContext.Holder_Block.Add(hb3);
+                        if (holderName.Contains("Main"))
+                        {
+                            Holder_Block hb1 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock1, Order=1};
+                            _databaseContext.Holder_Block.Add(hb1);
+                        }
+                        else if (holderName.Contains("About"))
+                        {
+                            Holder_Block hb2 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock2, Order = 1};
+                            _databaseContext.Holder_Block.Add(hb2);
+                        }
+                        else
+                        {
+                            Holder_Block hb3 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock3, Order = 1};
+                            _databaseContext.Holder_Block.Add(hb3);
+                        }
+                        _databaseContext.SaveChanges();
                     }
 
                 }
-                _databaseContext.SaveChanges();
-                }
+
+
+               
 
                 // DemoImages
                 string imgPath =Env.Hosting.ContentRootPath+ "/Areas/Admin/DemoDataResources/demo_background.jpg";              

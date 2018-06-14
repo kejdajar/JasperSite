@@ -3,18 +3,18 @@
 <p>Va&scaron;e čl&aacute;nky mohou obsahovat obr&aacute;zky:</p>
 <p><img src="/Admin/Images/GetImage?id=1" alt="demo_background.jpg" width="800" height="303" /></p>
 <p>D&aacute;le tak&eacute; tabulky:</p>
-<table style="border-collapse: collapse; width: 22.0243%; height: 39px;" border="1">
+<table style="border-collapse: collapse; width: 24.1041%; height: 53px;" border="1">
 <tbody>
-<tr>
-<td style="width: 50%;"><strong>Město</strong></td>
-<td style="width: 50%;"><strong>Počet obyvatel</strong></td>
+<tr style="height: 16px;">
+<td style="width: 50%; height: 16px;"><strong>Město</strong></td>
+<td style="width: 50%; height: 16px;"><strong>Počet obyvatel</strong></td>
 </tr>
-<tr>
-<td style="width: 50%;">Praha</td>
-<td style="width: 50%;">1,3 mil</td>
+<tr style="height: 16px;">
+<td style="width: 50%; height: 16px;">Praha</td>
+<td style="width: 50%; height: 16px;">1,3 mil</td>
 </tr>
 </tbody>
-</table>
+</table> <br/>
 <p>Je možn&eacute; použ&iacute;vat i zv&yacute;razněn&iacute; syntaxe pro jazyky jako: C#, F#, CSS, HTML, JavaScript, Smalltalk a dal&scaron;&iacute;:</p>
 <pre class="language-csharp"><code>// Uk&aacute;zka k&oacute;du tohoto redakčn&iacute;ho sys&eacute;tmu
 private static Mock&lt;DbSet&lt;T&gt;&gt; CreateDbSetMock&lt;T&gt;(List&lt;T&gt; elements) where T : class
@@ -30,5 +30,6 @@ private static Mock&lt;DbSet&lt;T&gt;&gt; CreateDbSetMock&lt;T&gt;(List&lt;T&gt;
             dbSetMock.Setup(d =&gt; d.Remove(It.IsAny&lt;T&gt;())).Callback&lt;T&gt;(s =&gt; elements.Remove(s));
             return dbSetMock;
         }</code></pre>
-<p>Můžete přid&aacute;vat i videa:</p>
+<p>Můžete přid&aacute;vat i videa,&nbsp;<a title="web ČZU" href="https://www.czu.cz/cs/" target="_blank" rel="noopener">odkazy</a>, nebo emotikony&nbsp;<img src="http://localhost:44372/lib/tinymce/plugins/emoticons/img/smiley-smile.gif" alt="smile" /> :</p>
 <p><iframe src="//www.youtube.com/embed/gyZ-nNYCZ2c" width="560" height="314" allowfullscreen="allowfullscreen"></iframe></p>
+<p>&nbsp;</p>
