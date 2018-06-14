@@ -36,6 +36,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult Index()
         {
             InstallViewModel model = new InstallViewModel();
+            
             return View(model);
         }
 

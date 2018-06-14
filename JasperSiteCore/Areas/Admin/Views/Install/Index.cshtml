@@ -139,27 +139,59 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Zadejte connection string</label>
+                        <label>Zadejte připojovací řetězec</label>
                         @*Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True"*@
                         <input class="form-control" type="text" asp-for="ConnectionString" />
                         <span asp-validation-for="ConnectionString" class="text-danger"></span><br />
 
-                    <div class="alert alert-info" role="alert">
-                        <b>Ukázka připojovacích řetězců:</b>  <br />
-                                                              <ul style="margin-left:20px;margin-top:5px">
-                                                                  <li>
-                                                                      <i>MSSQL:</i> Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True
-                                                                  </li>
-                                                                  <li>
-                                                                  <i>MySQL:</i> Server=localhost;Database=nightdb;Uid=root;Pwd=root;
-                                                                 </li>
-                                                              </ul>
-                    </div>
-                        </div>
 
-                        <div class="form-group">
-                            <input type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
-                        </div>
+                        
+                       
+
+
+
+
+                  
+                            <div class="list-group">
+                                                              
+                                <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1"><b>Příklady připojovacích řetězců</b></h5>
+                                        <small class="text-muted">Tip!</small>
+                                    </div>
+                                    <p class="mb-1">
+                                        <ul style="margin-left:20px;margin-top:5px">
+                                            <li>
+                                                <i>MSSQL:</i><br/> Data Source=název_serveru;Initial Catalog=název_databáze;Integrated Security=True
+                                            </li>
+                                            <li>
+                                                <i>MySQL:</i> <br/>Server=název_serveru;Database=název_databáze;Uid=root;Pwd=root;
+                                            </li>
+                                        </ul>
+                                        <small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>
+                                    </p>
+
+                               </div>
+                          </div>
+                         
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            </div>
+
+                            <div class="form-group">
+                                <input type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
+                            </div>
 </form>
 
             </section>
