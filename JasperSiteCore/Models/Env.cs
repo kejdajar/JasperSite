@@ -9,5 +9,7 @@ namespace JasperSiteCore.Models
     public static class Env
     {
         public static IHostingEnvironment Hosting;
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection Services { get; set; }
+        public static System.IServiceProvider ServiceProvider { get; set; }
     }
 }

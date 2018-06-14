@@ -38,13 +38,16 @@ namespace JasperSiteCore.Models.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string typeOfDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
-            switch(typeOfDatabase)
-            {
-                case "mssql": optionsBuilder.UseSqlServer(Configuration.GlobalWebsiteConfig.ConnectionString); break;
-                case "mysql": optionsBuilder.UseMySQL(Configuration.GlobalWebsiteConfig.ConnectionString); break;
-                default: throw new NotSupportedDatabaseException();
-            }            
+           
+                string typeOfDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
+                switch (typeOfDatabase)
+                {
+                    case "mssql": optionsBuilder.UseSqlServer(Configuration.GlobalWebsiteConfig.ConnectionString); break;
+                    case "mysql": optionsBuilder.UseMySQL(Configuration.GlobalWebsiteConfig.ConnectionString); break;
+                    default: throw new NotSupportedDatabaseException();
+                }
+            
+           
           
         }
        

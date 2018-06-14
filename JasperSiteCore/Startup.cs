@@ -34,8 +34,6 @@ namespace JasperSiteCore
             // Save IHostingEnvironment to static class (ie. to get Root path from controllers/other classes)
            JasperSiteCore.Models.Env.Hosting = env;
            
-           // APPLICATION ENTRY POINT
-      
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -52,6 +50,8 @@ namespace JasperSiteCore
             services.AddMvc();
 
             services.AddDbContext<DatabaseContext>();
+            Env.Services = services;
+
             // Add framework services.
             // services.AddMvc();     
 
@@ -61,15 +61,17 @@ namespace JasperSiteCore
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
-            // APPLICATON DATABASE SEEDING
-            DatabaseContext dbContext = ((ServiceProvider)serviceProvider).GetRequiredService<DatabaseContext>();
+            //    // APPLICATON DATABASE SEEDING
+            //    DatabaseContext dbContext = ((ServiceProvider)serviceProvider).GetRequiredService<DatabaseContext>();
 
-            // Initializes GlobalWebsiteConfig, WebsiteCongig, ThemeHelper, CustomRouting
-            // Does not require DB Context, only reads data from text files on disc
-            JasperSiteCore.Models.Configuration.Initialize();
-            
-            // Initializes and runs DbInitializer class (formerly called automatically inside Configuration.Initialize())
-            JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext);
+            //    // Initializes GlobalWebsiteConfig, WebsiteCongig, ThemeHelper, CustomRouting
+            //    // Does not require DB Context, only reads data from text files on disc
+               JasperSiteCore.Models.Configuration.Initialize();
+
+            //    // Initializes and runs DbInitializer class (formerly called automatically inside Configuration.Initialize())
+            //    JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext);
+
+            Env.ServiceProvider = serviceProvider;
 
             app.UseAuthentication(); // authentication
 

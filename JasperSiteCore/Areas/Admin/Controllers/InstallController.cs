@@ -8,17 +8,28 @@ using JasperSiteCore.Models;
 using JasperSiteCore.Models.Providers;
 using JasperSiteCore.Models.Database;
 
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class InstallController : Controller
     {
-        private readonly DatabaseContext dbContext;
+        //private readonly DatabaseContext dbContext;
 
-        public InstallController(DatabaseContext context)
-        {
-            this.dbContext = context;
-        }
+        //public InstallController(DatabaseContext context)
+        //{
+        //    this.dbContext = context;
+        //}
 
         [HttpGet]
         public IActionResult Index()
@@ -47,7 +58,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             if(ModelState.IsValid)
             {
-                Configuration.CreateAndSeedDb(dbContext,true); // Checks if Db contains another data, if it does, they are all deleted.
+               // Env.Services.AddDbContext<DatabaseContext>();
+                DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>();
+                JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext);
+
+                //  Configuration.CreateAndSeedDb(dbContext,true); // Checks if Db contains another data, if it does, they are all deleted.
                 return RedirectToAction("Index", "Home", new { area = "admin" });
             }
 
