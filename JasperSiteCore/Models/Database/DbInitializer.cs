@@ -32,20 +32,22 @@ namespace JasperSiteCore.Models.Database
             // Resets the configuration file in case it was modified
             Configuration.GlobalWebsiteConfig.ThemeName = "Default";
 
+               DatabaseContext.Database.EnsureCreated();
+
             //Configuration.DbHelper = new DbHelper(DatabaseContext); // Old implementation without dependency injection
 
             if (ensureDbIsDeleted) DatabaseContext.Database.EnsureDeleted();
-           
 
-            DatabaseContext.Database.EnsureCreated();
-
-                // If there is at least one user, the DB was already seeded
-                if (DatabaseContext.Users.Any())
-                {
-                    return;   // DB has been seeded
-                }
 
            
+
+            // If there is at least one user, the DB was already seeded
+            if (DatabaseContext.Users.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+
             Category[] categories = new Category[]
             {
                 new Category(){Name="Nezařazeno"},
@@ -57,7 +59,7 @@ namespace JasperSiteCore.Models.Database
             {
                 DatabaseContext.Categories.Add(c);
             }
-            DatabaseContext.SaveChanges();
+//DatabaseContext.SaveChanges();
 
 
 
@@ -78,13 +80,13 @@ namespace JasperSiteCore.Models.Database
             {
                 DatabaseContext.Articles.Add(a);
             }
-            DatabaseContext.SaveChanges();
+//DatabaseContext.SaveChanges();
 
             Role adminRole = new Role() { Name = "Admin" };
             Role redactorRole = new Role() { Name = "Redaktor" };
             DatabaseContext.Roles.Add(adminRole);
             DatabaseContext.Roles.Add(redactorRole);
-            DatabaseContext.SaveChanges();
+ //DatabaseContext.SaveChanges();
 
             User admin = new User() { Nickname = "Administrátor", Username = "admin",Role=adminRole };
             string salt, hashedPassword;
@@ -100,12 +102,12 @@ namespace JasperSiteCore.Models.Database
             redactor.Salt = salt2;
             DatabaseContext.Users.Add(redactor);
 
-            DatabaseContext.SaveChanges();
+//DatabaseContext.SaveChanges();
 
             // Settings
             Setting websiteNameSetting = new Setting() { Key = "WebsiteName", Value = "Název vašeho webu" };
             _databaseContext.Settings.Add(websiteNameSetting);
-            DatabaseContext.SaveChanges();
+ //DatabaseContext.SaveChanges();
 
             // Text blocks
 
@@ -114,7 +116,7 @@ namespace JasperSiteCore.Models.Database
             {
                 Theme theme = new Theme() { Name = ti.ThemeName };
                 _databaseContext.Themes.Add(theme);
-                _databaseContext.SaveChanges();
+ //_databaseContext.SaveChanges();
 
                 // Emulation of website configuration for every theme
                 GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
@@ -129,10 +131,26 @@ namespace JasperSiteCore.Models.Database
                 TextBlock textBlock3 = new TextBlock() { Name = "FooterPageTextBlock", Content = "&copy;2018-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core, vytvořeno pomocí redakčního systému JasperSiteCore." };
                 if (ti.ThemeName == "Default")
                 {
+                    // Demo text blocks
                     _databaseContext.TextBlocks.Add(textBlock1);
                     _databaseContext.TextBlocks.Add(textBlock2);
                     _databaseContext.TextBlocks.Add(textBlock3);
-                    _databaseContext.SaveChanges();
+ //_databaseContext.SaveChanges();
+
+                    // DemoImages
+                    string imgPath = Env.Hosting.ContentRootPath + "/Areas/Admin/DemoDataResources/demo_background.jpg";
+                    byte[] bytes = System.IO.File.ReadAllBytes(imgPath);
+                    Image img = new Image();
+                    img.Name = "Ukázkový obrázek";
+
+                    ImageData imgData = new ImageData() { Data = bytes };
+
+                    img.ImageData = imgData;
+
+                    _databaseContext.Images.Add(img);
+                    _databaseContext.ImageData.Add(imgData);
+
+ //_databaseContext.SaveChanges();
                 }
 
                 List<string> holders = websiteConfig.BlockHolders;
@@ -158,7 +176,7 @@ namespace JasperSiteCore.Models.Database
                             Holder_Block hb3 = new Holder_Block() { BlockHolder = blockHolder, TextBlock = textBlock3, Order = 1};
                             _databaseContext.Holder_Block.Add(hb3);
                         }
-                        _databaseContext.SaveChanges();
+//_databaseContext.SaveChanges();
                     }
 
                 }
@@ -166,31 +184,17 @@ namespace JasperSiteCore.Models.Database
 
                
 
-                // DemoImages
-                string imgPath =Env.Hosting.ContentRootPath+ "/Areas/Admin/DemoDataResources/demo_background.jpg";              
-                byte[] bytes = System.IO.File.ReadAllBytes(imgPath);
-                Image img = new Image();
-                img.Name = "Ukázkový obrázek";
-
-                ImageData imgData = new ImageData() { Data = bytes };
-
-                img.ImageData = imgData;
-
-                _databaseContext.Images.Add(img);
-                _databaseContext.ImageData.Add(imgData);
-                
-                _databaseContext.SaveChanges();
+               
 
             
 
-            }            
+            }
 
-            
-            
 
-           
-           
 
+
+
+            _databaseContext.SaveChanges();
 
 
         }

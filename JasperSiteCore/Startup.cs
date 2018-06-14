@@ -49,33 +49,33 @@ namespace JasperSiteCore
 
             services.AddMvc();
 
+            // DB Context service has to be added in ConfigureServices() method
             services.AddDbContext<DatabaseContext>();
-            Env.Services = services;
 
-            // Add framework services.
-            // services.AddMvc();     
-
-           
+            // Stores services for accessing DatabaseContext from installation page, where
+            // dependecy injection does not work, because the context was not build at that time yet
+            // DbContext fetched from this static property is not uniqe per request, thus not suitable
+            // for use in other controllers
+            Env.Services = services;            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
-            //    // APPLICATON DATABASE SEEDING
+            //    APPLICATON DATABASE SEEDING
             //    DatabaseContext dbContext = ((ServiceProvider)serviceProvider).GetRequiredService<DatabaseContext>();
 
-            //    // Initializes GlobalWebsiteConfig, WebsiteCongig, ThemeHelper, CustomRouting
-            //    // Does not require DB Context, only reads data from text files on disc
+            //    Initializes GlobalWebsiteConfig, WebsiteCongig, ThemeHelper, CustomRouting
+            //    Does not require DB Context, only reads data from text files on disc
                JasperSiteCore.Models.Configuration.Initialize();
 
-            //    // Initializes and runs DbInitializer class (formerly called automatically inside Configuration.Initialize())
+            //    DATABASE CAN NOT BE SEEDED HERE, BECAUSE THE CONNECTION STRING IS NOT AVAILABLE RIGH NOW
             //    JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext);
 
             Env.ServiceProvider = serviceProvider;
-
-            app.UseAuthentication(); // authentication
-
             
+            // authentication - maybe not necessary here
+            app.UseAuthentication();             
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();

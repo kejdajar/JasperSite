@@ -24,13 +24,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Area("Admin")]
     public class InstallController : Controller
     {
+        //DEPENDECY INJECTION - NOT WORKING HERE, BECAUSE CONTEXT WAS NOT BUILT YET
         //private readonly DatabaseContext dbContext;
-
         //public InstallController(DatabaseContext context)
         //{
         //    this.dbContext = context;
         //}
 
+        
         [HttpGet]
         public IActionResult Index()
         {
@@ -42,46 +43,30 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult Index(InstallViewModel model)
         {
             string selectedDb = model.SelectedDatabase;
-            string connectionString = model.ConnectionString;
-
-            //GlobalConfigData oldData = Configuration.GlobalWebsiteConfig.ConfigurationDataObject;
-            //oldData.TypeOfDatabase = selectedDb;
-            //oldData.ConnectionString = connectionString;
-            //oldData.InstallationCompleted = "true";
-
-            //Configuration.GlobalWebsiteConfig.SaveData(oldData);
+            string connectionString = model.ConnectionString;           
 
             Configuration.GlobalWebsiteConfig.TypeOfDatabase = selectedDb;
             Configuration.GlobalWebsiteConfig.ConnectionString = connectionString;
             Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
-            Configuration.GlobalWebsiteConfig.CommitChanges();
+            //Configuration.GlobalWebsiteConfig.CommitChanges();
 
             if(ModelState.IsValid)
             {
-               // Env.Services.AddDbContext<DatabaseContext>();
+               // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
                 DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>();
-                JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext);
-
-                //  Configuration.CreateAndSeedDb(dbContext,true); // Checks if Db contains another data, if it does, they are all deleted.
+                JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext,true);                                
                 return RedirectToAction("Index", "Home", new { area = "admin" });
             }
-
-            // Reload configuration data
-
-            //GlobalConfigData updatedConfigData = Configuration.GlobalWebsiteConfig.ConfigurationDataObject;
-            //    InstallViewModel model2 = new InstallViewModel();
-            //    model2.ConnectionString = updatedConfigData.ConnectionString;
-            //    model2.SelectedDatabase = updatedConfigData.TypeOfDatabase;
-
-            InstallViewModel model2 = new InstallViewModel();
-            Configuration.GlobalWebsiteConfig.RefreshData(); // Refreshes data from file
-            model2.ConnectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
-            model2.SelectedDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
-
-            ModelState.Clear();
-           return View(model2);          
-           
-
+            else
+            {
+                //InstallViewModel model2 = new InstallViewModel();
+                //Configuration.GlobalWebsiteConfig.RefreshData(); // Refreshes data from file
+                //model2.ConnectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
+                //model2.SelectedDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
+                //ModelState.Clear();
+                return View(model);
+            }
+            
 
         }
 
