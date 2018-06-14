@@ -43,7 +43,7 @@ namespace JasperSiteCore.Models.Database
                 switch (typeOfDatabase)
                 {
                     case "mssql": optionsBuilder.UseSqlServer(Configuration.GlobalWebsiteConfig.ConnectionString); break;
-                    case "mysql": optionsBuilder.UseMySQL(Configuration.GlobalWebsiteConfig.ConnectionString); break;
+                    case "mysql": optionsBuilder.UseMySql(Configuration.GlobalWebsiteConfig.ConnectionString); break;
                     default: throw new NotSupportedDatabaseException();
                 }
             

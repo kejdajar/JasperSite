@@ -32,20 +32,21 @@ namespace JasperSiteCore.Models.Database
             // Resets the configuration file in case it was modified
             Configuration.GlobalWebsiteConfig.ThemeName = "Default";
 
-               DatabaseContext.Database.EnsureCreated();
+            if (ensureDbIsDeleted) DatabaseContext.Database.EnsureDeleted();
+            DatabaseContext.Database.EnsureCreated();
 
             //Configuration.DbHelper = new DbHelper(DatabaseContext); // Old implementation without dependency injection
 
-            if (ensureDbIsDeleted) DatabaseContext.Database.EnsureDeleted();
+          
 
 
            
 
             // If there is at least one user, the DB was already seeded
-            if (DatabaseContext.Users.Any())
-            {
-                return;   // DB has been seeded
-            }
+//if (DatabaseContext.Users.Any())
+//{
+//    return;   // DB has been seeded
+//}
 
 
             Category[] categories = new Category[]
