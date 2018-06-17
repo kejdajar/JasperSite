@@ -12,7 +12,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
      
         public int SelectedDatabase { get; set; }
 
-        [Required(ErrorMessage = "Connection String je povinné pole.")]
+        [Required(ErrorMessage = "Zadejte připojovací řetězec")]
         public string ConnectionString { get; set; }
 
         public List<DatabaseListItem> AllDatabases { get; set; }

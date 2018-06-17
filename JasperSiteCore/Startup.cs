@@ -84,6 +84,7 @@ namespace JasperSiteCore
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+              
             }
             else
             {    //TODO: Exception Handling

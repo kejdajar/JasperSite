@@ -76,15 +76,19 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             string connectionString = model.ConnectionString;           
 
-            Configuration.GlobalWebsiteConfig.TypeOfDatabase = selectedDb;
-            Configuration.GlobalWebsiteConfig.ConnectionString = connectionString;
-            Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
+       
            
             // DATABASE INSTALLATION
             if(ModelState.IsValid)
             {
+                string oldConnString = Configuration.GlobalWebsiteConfig.ConnectionString;
+                bool oldInstallationCompleted = Configuration.GlobalWebsiteConfig.InstallationCompleted;
                 try
                 {
+                    Configuration.GlobalWebsiteConfig.TypeOfDatabase = selectedDb;
+                    Configuration.GlobalWebsiteConfig.ConnectionString = connectionString;
+                    Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
+
                     // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
                     DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>();
                     JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext, true);
@@ -95,6 +99,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 ViewBag.Error = "1"; // Automatically shows error modal
                 ViewBag.ErrorMessage = ex.Message+", "+ex.InnerException;
+                
+                // Reset settings 
+                Configuration.GlobalWebsiteConfig.ConnectionString = oldConnString;
+                Configuration.GlobalWebsiteConfig.InstallationCompleted = oldInstallationCompleted;
+
                 return View(UpdateModel());
             }
 
