@@ -48,10 +48,13 @@
 
     <p>
         <table class="table table-bordered j-table">
-            <tr><th>Akce</th><th class="col-sm" style="text-align:left">Název</th> </tr>
+            <tr><th>Akce</th><th class="col-sm" style="text-align:left">Název</th><th>Počet článků</th> </tr>
             @foreach (Category c in Model.Categories)
             {
-                <tr><td><a data-delete-id="@c.Id" asp-controller="Categories" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></td><td>@c.Name</td></tr>
+                <tr><td><a data-delete-id="@c.Id" asp-controller="Categories" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></td>
+            <td>@c.Name</td>
+            <td>@c.Articles.Count()</td>
+            </tr>
             }
         </table>
 

@@ -116,7 +116,7 @@ namespace JasperSiteCore.Models.Database
             IDatabaseContext database = _db;
             if (database.Categories.Any())
             {
-                return database.Categories.ToList();
+                return database.Categories.Include(c=>c.Articles).ToList();
             }
             else
             {
