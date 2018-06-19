@@ -1,2 +1,1 @@
-﻿<b>Jasper</b> je základní výchozí vzhled vaší webové stránky. Poskytuje 
-přehlednou prezentaci informací jak na počítači, tak i na mobilních zařízeních. 
+﻿<b>Emerald</b> je základní vzhled vaší webové stránky v zeleném odstínu. 

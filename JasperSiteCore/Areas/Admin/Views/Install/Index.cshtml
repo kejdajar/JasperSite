@@ -165,13 +165,13 @@
                                     <p class="mb-1">
                                         <ul style="margin-left:20px;margin-top:5px">
                                             <li>
-                                                <i>MSSQL:</i><br/> Data Source=název_serveru;Initial Catalog=název_databáze;Integrated Security=True
+                                                <i>MSSQL:</i><br/> Data Source=název_serveru; Initial Catalog=název_databáze; Integrated Security=True
                                             </li>
                                             <li>
-                                                <i>MySQL:</i> <br/>Server=název_serveru;Database=název_databáze;Uid=root;Pwd=root;
+                                                <i>MySQL:</i> <br/>Server=název_serveru; Database=název_databáze; Uid=root;Pwd=root;
                                             </li>
                                         </ul>
-                                        <small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>
+                                        @*<small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>*@
                                     </p>
 
                                </div>
@@ -228,7 +228,7 @@
                                 <div class="alert alert-warning" role="alert" style="margin-bottom:0px">
                                     <b>Aktuální nastavení</b><br />
                                     Dokončení instalace:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.InstallationCompleted <br />
-                                    Připojovací řetězec string:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ConnectionString <br />
+                                    Připojovací řetězec:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ConnectionString <br />
                                     Typ databáze:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.TypeOfDatabase<br />
                                     Název aktivního vzhledu:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeName<br />
                                     Složka se vzhledy: @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeFolder </br>

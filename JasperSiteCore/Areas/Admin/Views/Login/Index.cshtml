@@ -134,7 +134,7 @@ Layout = null;
                 </div>
                 <div class="clearfix">
                     <label class="pull-left checkbox-inline"><input asp-for="Remember" type="checkbox"> Zapamatovat si</label>
-                    <a href="#" class="pull-right">Zapomenuté heslo?</a>
+                    @*<a href="#" class="pull-right">Zapomenuté heslo?</a>*@
                 </div>
 
                 @if (!string.IsNullOrEmpty(Context.Request.Query["ReturnUrl"]))

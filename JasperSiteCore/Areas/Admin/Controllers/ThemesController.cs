@@ -57,7 +57,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Index(ThemesViewModel model, IFormCollection collection)
         {
-            int itemsPerPage = 3;
+            int itemsPerPage = 4;
             int currentPage = model.PageNumber;
 
             string next = collection["next"];
