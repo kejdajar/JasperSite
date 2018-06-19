@@ -23,21 +23,20 @@ namespace JasperSiteCore.Controllers
             {
                 return RedirectToAction("Index", "Install", new { area = "admin" });
             }
-
-                // předtím Request.RawUrl
-                string rawUrl = Request.Path; // Získá např: /MyController/MyActionName
+               
+            string rawUrl = Request.Path; // Gets ie.: /MyController/MyActionName
             string file;
-            if (Configuration.CustomRouting.IsHomePage(rawUrl)) // Pouze pro hlavní stránku
+            if (Configuration.CustomRouting.IsHomePage(rawUrl)) // For the main (index) page only
             {
                 return View(Configuration.CustomRouting.GetHomePageFile());
             }
-            else if (!string.IsNullOrEmpty(file = Configuration.CustomRouting.MapUrlToFile(rawUrl))) // Mapping pro ostatní stránky
+            else if (!string.IsNullOrEmpty(file = Configuration.CustomRouting.MapUrlToFile(rawUrl))) // Other pages are mapped as well
             {
                 return View(file);
             }
             else
             {
-                //  return Content("špatný požadavek na server");
+                // Error page
                 if (!Env.Hosting.IsDevelopment())
                     return View(Configuration.CustomRouting.GetErrorPageFile());
                 else return View();
