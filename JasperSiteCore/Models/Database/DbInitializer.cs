@@ -96,9 +96,9 @@ namespace JasperSiteCore.Models.Database
             admin.Salt = salt;
             DatabaseContext.Users.Add(admin);
 
-            User redactor = new User() { Nickname = "Redaktor", Username = "red", Role = redactorRole };
+            User redactor = new User() { Nickname = "Redaktor", Username = "redaktor", Role = redactorRole };
             string salt2, hashedPassword2;
-            JasperSiteCore.Models.Security.Authentication.HashPassword("red", out salt2, out hashedPassword2);
+            JasperSiteCore.Models.Security.Authentication.HashPassword("redaktor", out salt2, out hashedPassword2);
             redactor.Password = hashedPassword2;
             redactor.Salt = salt2;
             DatabaseContext.Users.Add(redactor);
