@@ -42,7 +42,7 @@
 
                 @foreach(Image img in J.Db(databaseContext).GetAllImages())
                 {
-                    @: { title: '@img.Name', value: '@Url.Action("GetImage","Images",new { id=img.Id})' },
+                    @: { title: '@Html.Raw(img.Name)', value: '@Url.Action("GetImage","Images",new { id=img.Id})' },
                 }
             ]
         })
