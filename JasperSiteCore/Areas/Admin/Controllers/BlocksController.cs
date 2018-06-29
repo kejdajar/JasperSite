@@ -115,12 +115,16 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             EditBlockViewModel model = new EditBlockViewModel();
           
-            model.HolderManagement = new AddedAndLooseHoldersViewModel();
-            model.HolderManagement.CurrentTextBoxId = blockId;
+            //model.HolderManagement = new AddedAndLooseHoldersViewModel();
+            //model.HolderManagement.CurrentTextBoxId = blockId;
+
             model.TextBlock = new EditTextBlock() { Name=tbToEdit.Name,Content=tbToEdit.Content,Id=tbToEdit.Id};
-            model.HolderManagement.CorrespondingBlockHolders = correspondingBlockHolders;
-            model.HolderManagement.AllBlockHolders = _dbHelper.GetAllBlockHolders().ToList();
-            model.HolderManagement.CorrespondingHolder_Blocks = GetCorrespondingHolder_Blocks(blockId);
+
+            //model.HolderManagement.CorrespondingBlockHolders = correspondingBlockHolders;
+            //model.HolderManagement.AllBlockHolders = _dbHelper.GetAllBlockHolders().ToList();
+            //model.HolderManagement.CorrespondingHolder_Blocks = GetCorrespondingHolder_Blocks(blockId);
+            model.HolderManagement = GetBlockManagementModel(blockId);
+
             return View(model);
         }
 
@@ -209,9 +213,18 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public AddedAndLooseHoldersViewModel GetBlockManagementModel(int blockId)
         {
             AddedAndLooseHoldersViewModel model = new AddedAndLooseHoldersViewModel();
-            model.CorrespondingBlockHolders = GetCorrespondingBlockHolders(blockId);
-            model.AllBlockHolders = _dbHelper.GetAllBlockHolders().ToList();
+            var correspondingBlockHolders = GetCorrespondingBlockHolders(blockId);
+            var allBlockHolders = _dbHelper.GetAllBlockHolders().ToList();
             model.CurrentTextBoxId = blockId;
+
+            // Display items only relevant to currently acctivated theme
+            string currentThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
+            var filteredCorrespondingBlockHolders= correspondingBlockHolders.Where(bh => bh.Theme.Name == currentThemeName).ToList();
+            var filteredAllBlockHolders = allBlockHolders.Where(bh => bh.Theme.Name == currentThemeName).ToList();
+            ;
+            model.CorrespondingBlockHolders = filteredCorrespondingBlockHolders;
+            model.AllBlockHolders = filteredAllBlockHolders;
+                       
             return model;
         }
 

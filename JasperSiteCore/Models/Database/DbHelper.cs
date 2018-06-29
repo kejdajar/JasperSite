@@ -219,7 +219,7 @@ namespace JasperSiteCore.Models.Database
         // Holders
         public List<BlockHolder> GetAllBlockHolders()
         {
-            return _db.BlockHolders.ToList();
+            return _db.BlockHolders.Include(b=>b.Theme).ToList();
         }
 
         public List<Theme> GetAllThemes()
