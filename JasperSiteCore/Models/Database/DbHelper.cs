@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using JasperSiteCore.Areas.Admin.Models;
 using JasperSiteCore.Models.Database;
 using JasperSiteCore.Models.Providers;
+using JasperSiteCore.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace JasperSiteCore.Models.Database
@@ -144,18 +145,23 @@ namespace JasperSiteCore.Models.Database
         public void DeleteCategory(int categoryId)
         {
               IDatabaseContext database = _db;
+              Category categoryToBeRemoved = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single();
 
-                // EF Core - default on delete cascade - assigned articles would be removed by default
-                // This will prevent assigned articles to be deleted
-                List<Article> assignedArticles = (from a in GetAllArticles()
+            if(categoryToBeRemoved.Name=="Nezařazeno")
+            {
+                throw new DatabaseHelperException("Výchozí rubriku \"nezařazeno\" není možné odstranit.");
+            }
+
+            // EF Core - default on delete cascade - assigned articles would be removed by default
+            // This will prevent assigned articles to be deleted
+            List<Article> assignedArticles = (from a in GetAllArticles()
                                                   where a.CategoryId == categoryId
                                                   select a).ToList();
 
-                // Articles will be now returned to the DB as uncategorized
-                Category unassignedCategory = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single();
+                // Articles will be now returned to the DB as uncategorized               
                 foreach (Article returningArticle in assignedArticles)
                 {
-                    returningArticle.CategoryId = unassignedCategory.Id;
+                    returningArticle.CategoryId = categoryToBeRemoved.Id;
                 }
                 database.SaveChanges();
 

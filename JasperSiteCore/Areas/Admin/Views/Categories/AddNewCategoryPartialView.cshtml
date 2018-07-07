@@ -23,17 +23,18 @@
                         $("#categoryPartialForm").html(data);
 
                         savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
-                        
+
                     }
                 });
             });
         });
 </script>
 
+
 <section class="j-admin-section">
     <form asp-action="CreateNewCategory" asp-controller="Categories" method="post">
         <div class="input-group">
-            <input autofocus  id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="Název rubriky" class="form-control" name="btnCategoryName" />
+            <input autofocus id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="Název rubriky" class="form-control" name="btnCategoryName" />
             <span asp-validation-for="NewCategory.NewCategoryName" class="text-danger"></span>
 
             <div class="input-group-btn">
@@ -41,7 +42,7 @@
             </div>
         </div>
     </form>
-    </section>
+</section>
 
 <section class="j-admin-section">
     <h2><i class="fa fa-table  j-icon" aria-hidden="true"></i> Přehled rubrik</h2>
@@ -51,12 +52,22 @@
             <tr><th>Akce</th><th class="col-sm" style="text-align:left">Název</th><th>Počet článků</th> </tr>
             @foreach (Category c in Model.Categories)
             {
-                <tr><td><a data-delete-id="@c.Id" asp-controller="Categories" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></td>
-            <td>@c.Name</td>
-            <td>@c.Articles.Count()</td>
-            </tr>
+                <tr>
+                    <td>
+                        @if (c.Name != "Nezařazeno")
+                        {
+                            <a data-delete-id="@c.Id" asp-controller="Categories" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
+                        }
+                        else
+                        {
+                            <i class="fa fa-trash fa-1x disabled btn btn-jasper btn-jasper-delete" aria-hidden="true" title="Tuto výchozí rubriku není možné odstranit."></i>
+                        }
+                    </td>
+                    <td>@c.Name</td>
+                    <td>@c.Articles.Count()</td>
+                </tr>
             }
         </table>
 
     </p>
-    </section>
+</section>

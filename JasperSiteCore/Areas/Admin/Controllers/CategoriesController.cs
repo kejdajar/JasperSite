@@ -53,7 +53,16 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DeleteCategory(int id)
         {
-            _dbHelper.DeleteCategory(id);   
+            try
+            {
+                _dbHelper.DeleteCategory(id);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Index", UpdateCategoryPage());
+            }           
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
