@@ -10,7 +10,7 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
     <title>@ViewData["Title"]</title>
 
     @*
-        Loads all scripts and css files (some throught CDN, or locally, if development flag is set)
+        Loads all scripts and css files (some through CDN, or locally, if development flag is set),
         such as jQuery, Tether, Bootstrap 4, Prism.js
     *@
     @Html.Partial("_ThemeDependencies")
@@ -19,11 +19,16 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
     @RenderSection("Scripts", required: false)
     @RenderSection("Styles", required: false)
 
-    <!--TODO: Link minification-->
-    <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" />
 
-    <!--Scripts -->
-    <script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>
+    <environment include="Development">
+        <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" />
+        <script src="@Helper.JasperUrl("./Scripts/script.js")"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.min.css")" />
+        <script src="@Helper.JasperUrl("./Scripts/script.min.js")"></script>
+    </environment>
 
 </head>
 <body>

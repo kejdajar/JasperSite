@@ -23,8 +23,15 @@
     @RenderSection("Scripts", required: false)
     @RenderSection("Styles", required: false)
 
-    <!--TODO: Link minification-->
-    <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" />
+    <environment include="Development">
+        <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" />
+        <script src="@Helper.JasperUrl("./Scripts/script.js")"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.min.css")" />
+        <script src="@Helper.JasperUrl("./Scripts/script.min.js")"></script>
+    </environment>
 
 </head>
 <body>

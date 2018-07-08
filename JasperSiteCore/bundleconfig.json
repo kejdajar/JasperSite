@@ -1,25 +1,99 @@
 ﻿// Configure bundling and minification for the project.
-// More info at https://go.microsoft.com/fwlink/?LinkId=808241
 [
+  // **** ADMIN SECTION MINIFICATION *****
   {
-    "outputFileName": "wwwroot/css/site.min.css",
-    // An array of relative input file paths. Globbing patterns supported
+    "outputFileName": "Areas/Admin/Content/Styles/login-page.min.css",
     "inputFiles": [
-      "wwwroot/css/site.css"
+      "Areas/Admin/Content/Styles/login-page.css"
     ]
   },
   {
-    "outputFileName": "wwwroot/js/site.min.js",
+    "outputFileName": "Areas/Admin/Content/Styles/design-with-sidebar.min.css",
     "inputFiles": [
-      "wwwroot/js/site.js"
-    ],
-    // Optionally specify minification options
-    "minify": {
-      "enabled": true,
-      "renameLocals": true
-      
-    },
-    // Optionally generate .map file
-    "sourceMap": false    
+      "Areas/Admin/Content/Styles/design.css",
+      "Areas/Admin/Content/Styles/simple-sidebar.css"
+    ]
+  },
+  {
+    "outputFileName": "Areas/Admin/Content/Styles/design.min.css",
+    "inputFiles": [
+      "Areas/Admin/Content/Styles/design.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/customLib/prism.min.css",
+    "inputFiles": [
+      "wwwroot/customLib/prism.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/customLib/prism.min.js",
+    "inputFiles": [
+      "wwwroot/customLib/prism.js"
+    ]
+  },
+  // BUILT-IN THEMES MINIFICATION
+  {
+    "outputFileName": "Themes/Default/Styles/style.min.css",
+    "inputFiles": [
+      "Themes/Default/Styles/style.css"
+    ]
+  },
+  {
+    "outputFileName": "Themes/Jasper/Styles/style.min.css",
+    "inputFiles": [
+      "Themes/Jasper/Styles/style.css"
+    ]
+  },
+  {
+    "outputFileName": "Themes/Onyx/Styles/style.min.css",
+    "inputFiles": [
+      "Themes/Onyx/Styles/style.css"
+    ]
+  },
+  {
+    "outputFileName": "Themes/Emerald/Styles/style.min.css",
+    "inputFiles": [
+      "Themes/Emerald/Styles/style.css"
+    ]
+  },
+  {
+    "outputFileName": "Themes/Default/Scripts/script.min.js",
+    "inputFiles": [
+      "Themes/Default/Scripts/script.js"
+    ]
+  },
+  {
+    "outputFileName": "Themes/Jasper/Scripts/script.min.js",
+    "inputFiles": [
+      "Themes/Jasper/Scripts/script.js"
+    ]
+  },
+  {
+    "outputFileName": "Themes/Onyx/Scripts/script.min.js",
+    "inputFiles": [
+      "Themes/Onyx/Scripts/script.js"
+    ]
+  },
+  {
+    "outputFileName": "Themes/Emerald/Scripts/script.min.js",
+    "inputFiles": [
+      "Themes/Emerald/Scripts/script.js"
+    ]
   }
+
+  //{
+  //  "outputFileName": "wwwroot/js/site.min.js",
+  //  "inputFiles": [
+  //    "wwwroot/js/site.js"
+  //  ],
+  //  // Optionally specify minification options
+  //  "minify": {
+  //    "enabled": true,
+  //    "renameLocals": true
+
+  //  },
+  //  // Optionally generate .map file
+  //  "sourceMap": false
+  //}
 ]

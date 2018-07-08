@@ -8,174 +8,108 @@ Layout = null;
     <link rel="shortcut icon" href="~/Areas/Admin/Content/Images/favicon.ico" type="image/x-icon">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>Přihlášení do administrace</title>
 
-    <environment names="Development">
+    @* ===============================STYLES================================ *@
+   
+    <environment include="Development">
+        <link href="~/lib/tether/dist/css/tether.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
-
-    </environment>
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <!-- TODO: Nalinkovat minifikaci -->
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" asp-append-version="true" />
-
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/login-page.css" />
     </environment>
 
-    @************************************************************** Scripts ****************************************************************************@
-    <environment names="Development">
+    <environment exclude="Development">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.min.css" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/login-page.min.css" />
+    </environment>
+
+    @* ===============================SCRIPTS================================ *@
+    <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/tether/dist/js/tether.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
     </environment>
-    <environment names="Staging,Production">
+
+    <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
         </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <!-- TODO: Nalinkovat minifikaci -->
-        @*<script src="@Helper.JasperUrl("./Scripts/script.js")" asp-append-version="true"></script>*@
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
     </environment>
 
 
-
-
-
-
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
-    <link href="~/css/LoginPageStyle.css" rel="stylesheet" />
-    @*<style>
-            /* Login section */
-            body {
-                margin-top: 80px;
-            }
-
-            #loginBox {
-                max-width: 600px;
-                margin: 0px auto;
-                margin-bottom: 50px;
-                margin-top: 20px;
-                padding: 5px;
-            }
-
-                #loginBox div.login-row {
-                    display: flex;
-                    padding: 5px;
-                }
-
-                    #loginBox div.login-row input[type=password], input[type=text], input[type=submit] {
-                        flex: 1;
-                    }
-
-                    #loginBox div.login-row div:first-child {
-                        width: 100px;
-                    }
-        </style>*@
-   
 
 </head>
 <body>
 
- 
+    <div class="flexbox-container">
+       
 
-    
+            @if (!User.Identity.IsAuthenticated)
+            {
 
-        @*<div id="loginBox">
-            <form asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
-                <h2>Přihlášení do administrace</h2>
-                <div class="login-row">
-                    <div class="hidden-xs-down">Login</div>
-                    <input asp-for="Username" type="text" placeholder="Zadejte uživatelské jméno" class="form-control" />
-                </div>
-                <div class="login-row">
-                    <div class="hidden-xs-down">Heslo</div>
-                    <input asp-for="Password" type="password" placeholder="Zadejte heslo" class="form-control" />
-                </div>
-                <div class="login-row">
-                    <div> Zapamatovat si přihlášení </div>
-                    <input asp-for="Remember" type="checkbox" class="form-control" />
-                </div>
-                <div class="login-row">
-                    <input type="submit" value="Přihlásit se" class="btn btn-jasper" />
-                </div>
-                <input type="hidden" name="returnUrl" value="@Context.Request.Query["ReturnUrl"]" />
-            </form>
-        </div>*@
+                <div class="login-form">
+                    <form asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
+                        <h2 class="text-center">J<span style="color:#BA68C8">asp</span>er Site <span style="color:#BA68C8">Core </span></h2>
+
+                        <div class="form-group">
+                            <input asp-for="Username" type="text" class="form-control" placeholder="Uživatelské jméno" required="required">
+                        </div>
+                        <div class="form-group">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Heslo" required="required">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-jasper" style="width:100%">Přihlásit se</button>
+                        </div>
+                      
+                        <div class="clearfix">
+                            <label class="pull-left checkbox-inline"><input asp-for="Remember" type="checkbox"> Zapamatovat si</label> <br />
+                            <a asp-area="" asp-controller="Home" asp-action="Index">Zpátky na web</a>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Context.Request.Query["ReturnUrl"]))
+                        {
+                            <input type="hidden" name="returnUrl" value="@Context.Request.Query["ReturnUrl"]" />
+
+                        }
 
 
+                    </form>
 
-
-
-        @if (!User.Identity.IsAuthenticated)
-        {
-
-        <div class="login-form">
-            <form asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
-                <h2 class="text-center">J<span style="color:#BA68C8">asp</span>er Site <span style="color:#BA68C8">Core </span></h2>
-               
-                <div class="form-group">
-                    <input asp-for="Username" type="text" class="form-control" placeholder="Uživatelské jméno" required="required">
-                </div>
-                <div class="form-group">
-                    <input asp-for="Password" type="password" class="form-control" placeholder="Heslo" required="required">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-jasper" style="width:100%">Přihlásit se</button>
-                </div>
-                <div class="clearfix">
-                    <label class="pull-left checkbox-inline"><input asp-for="Remember" type="checkbox"> Zapamatovat si</label>
-                    @*<a href="#" class="pull-right">Zapomenuté heslo?</a>*@
                 </div>
 
-                @if (!string.IsNullOrEmpty(Context.Request.Query["ReturnUrl"]))
-    {
-            <input type="hidden" name="returnUrl" value="@Context.Request.Query["ReturnUrl"]" />
+            }
+            else
+            {
 
-}
-
-
-            </form>
-
-        </div>
-
-        }
-        else
-        {
-
-    <div class="login-form">
-        <form>
-            <h2 class="text-center">J<span style="color:#BA68C8">asp</span>er Site <span style="color:#BA68C8">Core </span></h2>
-            
-
-            <div class="form-group">
-                <a style="width:100%" asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-jasper">Administrace</a>
-                <a asp-area="Admin" asp-controller="Login" asp-action="SignOut" class="btn btn-jasper btn-leave">Odhlásit se</a>
-            </div>
-        </form>
-        </div>
+                <div class="login-form">
+                    <form>
+                        <h2 class="text-center">J<span style="color:#BA68C8">asp</span>er Site <span style="color:#BA68C8">Core </span></h2>
 
 
+                        <div class="form-group">
+                            <a style="width:100%" asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-jasper">Administrace</a>
+                            <a asp-area="Admin" asp-controller="Login" asp-action="SignOut" class="btn btn-jasper btn-leave">Odhlásit se</a>
+                            
+                        </div>
+                        <div>
+                            <a asp-area="" asp-controller="Home" asp-action="Index">Zpátky na web</a>
+                        </div>
+                    </form>
+                </div>
+            }
         
+    </div>
 
-
-
-
-
-
-        @*@:Odhlášení: <br />
-        <a asp-action="SignOut" asp-controller="Login" asp-area="admin">Odhlásit se</a>*@
-
-    
-        }
 </body>
 </html>

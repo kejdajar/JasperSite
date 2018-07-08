@@ -1,20 +1,18 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>   
+<head>
     <link rel="shortcut icon" href="~/Areas/Admin/Content/Images/favicon.ico" type="image/x-icon">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>JasperSiteCore</title>
 
-    @*********************************************************************** Styles ****************************************************************************@
+    @* ===============================STYLES================================ *@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link href="~/lib/tether/dist/css/tether.css" rel="stylesheet" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
-        @*<link href="~/lib/chosen/chosen.css" rel="stylesheet" />*@  <!--Classic Chosen CSS -->
-        <link href="~/lib/chosen-bootstrap/chosen.bootstrap.css" rel="stylesheet" />  <!--Bootstrap style Chosen CSS -->
-        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />    
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
     </environment>
 
     <environment exclude="Development">
@@ -26,21 +24,15 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" rel="stylesheet"
               asp-fallback-href="~/lib/tether/dist/css/tether.css" />
 
-        <!--Nalinkovat minifikaci-->
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
-
-        <link href="~/lib/chosen-bootstrap/chosen.bootstrap.css" rel="stylesheet" />  <!--Without CDN-->
-
-        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" /> <!--Font awesome 4.7 local-->
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design-with-sidebar.min.css" />     
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
     </environment>
 
-   @*********************************************************************** Scripts ****************************************************************************@
+    @* ===============================SCRIPTS================================ *@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/tether/dist/js/tether.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>     
-        <script src="~/lib/chosen/chosen.jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>        
         <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
     </environment>
 
@@ -50,8 +42,8 @@
                 asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>       
-        
+        </script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" asp-fallback-href="~/lib/tether/dist/js/tether.min.js"></script>
 
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
@@ -60,28 +52,25 @@
                 crossorigin="anonymous"
                 integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn">
         </script>
-   
-        <!-- Without CDN -->
-        <script src="~/lib/chosen/chosen.jquery.js"></script>      
-        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
-    </environment>
 
-    @{Html.RenderPartial("_ValidationScriptsPartial");}
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    </environment>
 
     @RenderSection("Scripts", required: false)
     @RenderSection("Styles", required: false)
-    
 
+    @* Renders popup with error messages *@
+    @{Html.RenderPartial("_ValidationScriptsPartial");}
+    
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
     
-
     <!-- Menu switching -->
     <script>
         $(document).ready(function () {
             $("#menu-toggle").click(function (e) {
                 e.preventDefault();
-                $("#wrapper").toggleClass("toggled"); 
+                $("#wrapper").toggleClass("toggled");
             });
         });
     </script>
@@ -89,240 +78,184 @@
 
 <body>
     
-<div id="wrapper">
+    <div id="wrapper">
 
-    <!----------------------------------Sidebar------------------------------------------>
-    <nav>
-        <div id="sidebar-wrapper">
-          <!--   <ul class="fa-ul sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="@Url.Action("Index","Home")">Dashboard</a>
-        
-                   
-                </li>
-                <li>
-                    <a href="@Url.Action("Categories","Home")">Rubriky</a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Articles","Home")">Články</a>
-                </li>
-                <li>
-                    <a href="@Url.Action("Themes","Home")">Vzhled</a>
-                </li>
-                <li style="height:40px">
-                    <i class="fa fa-li fa-user-circle fa-lg"  aria-hidden="true"></i>
-                  <a href="#"> Uživatel</a>
-                </li>
-                <li>
-                    <a href="#">Nastavení</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Nápověda</a>
-                </li>
-            </ul> -->
+        <!---------------------------------------Sidebar-------------------------------------------->
+        <nav>
+            <div id="sidebar-wrapper">
 
+                <div class="j-sidebar-brand">
+                    <a href="@Url.Action("Index","Home")">Přehled</a>
+                </div>
 
-<div class="j-sidebar-brand">
-     <a href="@Url.Action("Index","Home")">Přehled</a>
-</div>
-
-
-<div class="j-link-container">
-    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Categories" ? "j-menu-highlight" : "" )" asp-controller="Categories" asp-action="Index" >  <i class="fa fa-folder j-fa-margin"  aria-hidden="true"></i>
-                  Rubriky</a></div>
-
-<div class="j-link-container">
-    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Articles" ? "j-menu-highlight" : "" )" asp-controller="Articles" asp-action="Index">  <i class="fa fa-edit j-fa-margin"  aria-hidden="true"></i>
-                  Články</a></div>
-
-
-<div class="j-link-container">
-    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Themes" asp-action="Index">  <i class="fa fa-paint-brush j-fa-margin "  aria-hidden="true"></i>
-                Vzhled</a></div>
-
- <div class="j-link-container">
-    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Blocks" ? "j-menu-highlight" : "" )"  asp-controller="Blocks" asp-action="Index">  <i class="fa fa-comment-o j-fa-margin"  aria-hidden="true"></i>
-                 Bloky</a></div>
-
- <div class="j-link-container">
-     <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Images" ? "j-menu-highlight" : "" )" asp-controller="Images" asp-action="Index">
-         <i class="fa fa-image j-fa-margin" aria-hidden="true"></i>
-         Obrázky
-     </a>
- </div>
-
-                  <div class="j-link-container">
-    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "j-menu-highlight" : "" )" asp-controller="Users" asp-action="Index">  <i class="fa fa-user-circle-o j-fa-margin"  aria-hidden="true"></i>
-                  Uživatelé</a></div>
-
- 
-
-<div class="j-link-container">
-    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Settings" ? "j-menu-highlight" : "" )" asp-controller="Settings" asp-action="Index">
-        <i class="fa fa-cogs j-fa-margin" aria-hidden="true"></i>
-        Nastavení
-    </a></div>
-
-<div class="j-link-container">
-    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "j-menu-highlight" : "" )" asp-controller="About" asp-action="Index">
-        <i class="fa fa-info-circle j-fa-margin" aria-hidden="true"></i>
-       O systému
-    </a>
-</div>
-
-            
-        </div>
-    </nav>
-    <!---------------------------------END Sidebar--------------------------------------->
-   
-       
-        
-        
-        
-    <!---------------------------------Header Panel--------------------------------------->
-    <header>
-        <div id="headerPanel">
-
-            <!--Menu button-->
-            <div class="j-flex-row">
-                <div class="mainToggleButton">
-                    @*<a href="#menu-toggle" id="menu-toggle">
-                    <img src="~/Areas/Admin/Content/Images/menuIcon.svg" alt="menu" />
-                </a>*@
-                    <a href="#menu-toggle" id="menu-toggle">
-                        <i class="fa fa-bars fa-2x j-hamburger-menu" aria-hidden="true" alt="menu"></i>
+                <div class="j-link-container">
+                    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Categories" ? "j-menu-highlight" : "" )" asp-controller="Categories" asp-action="Index">
+                        <i class="fa fa-folder j-fa-margin" aria-hidden="true"></i>
+                        Rubriky
                     </a>
                 </div>
 
-                <div class="headerLine">
-                    <div class="mainTitle">
-                        <span class="jasperHeading"> J<span class="j-gray-color">asp</span>er Site <span class="j-core-color">Core</span></span>
-                    </div>
-
+                <div class="j-link-container">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Articles" ? "j-menu-highlight" : "" )" asp-controller="Articles" asp-action="Index">
+                        <i class="fa fa-edit j-fa-margin" aria-hidden="true"></i>
+                        Články
+                    </a>
                 </div>
 
+                <div class="j-link-container">
+                    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Themes" asp-action="Index">
+                        <i class="fa fa-paint-brush j-fa-margin " aria-hidden="true"></i>
+                        Vzhled
+                    </a>
+                </div>
+
+                <div class="j-link-container">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Blocks" ? "j-menu-highlight" : "" )" asp-controller="Blocks" asp-action="Index">
+                        <i class="fa fa-comment-o j-fa-margin" aria-hidden="true"></i>
+                        Bloky
+                    </a>
+                </div>
+
+                <div class="j-link-container">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Images" ? "j-menu-highlight" : "" )" asp-controller="Images" asp-action="Index">
+                        <i class="fa fa-image j-fa-margin" aria-hidden="true"></i>
+                        Obrázky
+                    </a>
+                </div>
+
+                <div class="j-link-container">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "j-menu-highlight" : "" )" asp-controller="Users" asp-action="Index">
+                        <i class="fa fa-user-circle-o j-fa-margin" aria-hidden="true"></i>
+                        Uživatelé
+                    </a>
+                </div>
+
+                <div class="j-link-container">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Settings" ? "j-menu-highlight" : "" )" asp-controller="Settings" asp-action="Index">
+                        <i class="fa fa-cogs j-fa-margin" aria-hidden="true"></i>
+                        Nastavení
+                    </a>
+                </div>
+
+                <div class="j-link-container">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "j-menu-highlight" : "" )" asp-controller="About" asp-action="Index">
+                        <i class="fa fa-info-circle j-fa-margin" aria-hidden="true"></i>
+                        O systému
+                    </a>
+                </div>
 
             </div>
+        </nav>
+        <!----------------------------------END Sidebar------------------------------------------->
 
+        <!---------------------------------Header Panel-------------------------------------------->
+        <header>
+            <div id="headerPanel">
 
+                <!--Menu button-->
+                <div class="j-flex-row">
+                    <div class="mainToggleButton">
+                        <a href="#menu-toggle" id="menu-toggle">
+                            <i class="fa fa-bars fa-2x j-hamburger-menu" aria-hidden="true" alt="menu"></i>
+                        </a>
+                    </div>
 
-            <!--Noscript notification-->
-            <div class="j-flex-row" style="background-color:red">
-                <noscript>  Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</noscript>
-            </div>
-
-
-            <!--Desktop version of horizontal header panel -->
-            <div class="j-flex-row j-secondary-header desktop">
-
-
-                <!--View page button-->
-                <div class="j-header-group">
-                    <div class="j-header-group-item">
-                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+                    <div class="headerLine">
+                        <div class="mainTitle">
+                            <span class="jasperHeading"> J<span class="j-gray-color">asp</span>er Site <span class="j-core-color">Core</span></span>
+                        </div>
                     </div>
                 </div>
 
-                <!--View page button-->
-                <div class="j-header-group">
-                    <div class="j-header-group-item">
-                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
-                    </div>
+                <!--Noscript notification-->
+                <div class="j-flex-row" style="background-color:red">
+                    <noscript>  Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</noscript>
                 </div>
 
-                <!--Search button-->
-                <div class="j-header-group">
-                    <div class="j-header-group-item  ">
-                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Search" asp-area="Admin" asp-action="Index">   <i class="fa fa-search fa-1x" aria-hidden="true"></i> </a>
+                <!-----------------------------Desktop version of horizontal header panel -------------------------------------->
+                <div class="j-flex-row j-secondary-header desktop">
 
-                    </div>
-                </div>
 
-                <div class="j-header-group">
-                    @if (User.Identity.IsAuthenticated)
-            {
-
-                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
-    }
-    else
-    {
-
-    }
-                </div>
-
-                <!--Navigation Button-->
-                @*<div class="j-header-group">
-                <div class="j-header-group-item  "><b>Články / Článek </b></div>
-            </div>*@
-
-            </div>  <!--END Desktop version of horizontal header panel -->
-            <!--Mobile version of horizontal header panel -->
-            <div class="j-flex-row j-secondary-header mobile">
-
-                <div class="j-header-group">
-
-                    <div class="j-header-group-item">
-                        <a asp-controller="Home" asp-area="Admin" asp-action="Index" class="btn btn-jasper btn-jasper-icon">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+                    <!--View page button-->
+                    <div class="j-header-group">
+                        <div class="j-header-group-item">
+                            <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+                        </div>
                     </div>
 
-                    <div class="j-header-group-item">
-                        <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+                    <!--View page button-->
+                    <div class="j-header-group">
+                        <div class="j-header-group-item">
+                            <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+                        </div>
                     </div>
 
-                    <div class="j-header-group-item">
-                        <a href="#" class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></a>
+                    <!--Search button-->
+                    <div class="j-header-group">
+                        <div class="j-header-group-item  ">
+                            <a class="btn btn-jasper btn-jasper-icon" asp-controller="Search" asp-area="Admin" asp-action="Index">   <i class="fa fa-search fa-1x" aria-hidden="true"></i> </a>
+                        </div>
                     </div>
+
                     <div class="j-header-group">
                         @if (User.Identity.IsAuthenticated)
-                {
+                        {
+                            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
+                        }
+                        else
+                        {
 
-                    <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> Odhlásit</a>
-        }
-        else
-        {
-
-        }
+                        }
                     </div>
 
                 </div>
+                <!--------------------------END Desktop version of horizontal header panel --------------------------->
+                <!--------------------------Mobile version of horizontal header panel --------------------------------->
+                <div class="j-flex-row j-secondary-header mobile">
+
+                    <div class="j-header-group">
+
+                        <div class="j-header-group-item">
+                            <a asp-controller="Home" asp-area="Admin" asp-action="Index" class="btn btn-jasper btn-jasper-icon">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+                        </div>
+
+                        <div class="j-header-group-item">
+                            <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+                        </div>
+
+                        <div class="j-header-group-item">
+                            <a href="#" class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></a>
+                        </div>
+                        <div class="j-header-group">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+
+                                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> Odhlásit</a>
+                            }
+                            else
+                            {
+
+                            }
+                        </div>
+
+                    </div>
+                </div> 
+                <!--------------------------END Mobile version of horizontal header panel --------------------------------->
+
             </div>
+        </header>
+        <!-------------------------------------------------END Header Panel------------------------------------------------>
 
-
-
-           
-
-
-        </div>
-
-
-    </header>
-    <!--------------------------------END Header Panel------------------------------->
-    
-
-    <!-------------------Page Content--------------------------->
-    <main >
-        <div id="page-content-wrapper">
-            <div class="container-fluid j-margin-top">
-                
-                        <!--Content will not take all space when LG-->
-                    @*<div class="col-xs-12 col-sm-12 col-md-12 col-lg-10 offset-lg-1 ">                          
-                        @RenderBody()
-                    </div>*@ 
-                    
-                        @RenderBody()
-                   
-
-               
+        <!-----------------------------------Page Content--------------------------->
+        <main>
+            <div id="page-content-wrapper">
+                <div class="container-fluid j-margin-top">                                    
+                    @RenderBody()
+                </div>
             </div>
-        </div>
-    </main>
-    <!-------------------END Page Content---------------------->
-   
-</div>
+        </main>
+        <!------------------------------------END Page Content---------------------->
 
-   
+    </div>   
 </body>
 </html>
