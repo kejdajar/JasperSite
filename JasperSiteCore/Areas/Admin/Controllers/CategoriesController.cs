@@ -60,8 +60,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             catch (Exception ex)
             {
                 ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = ex.Message;
-                return View("Index", UpdateCategoryPage());
+                ViewBag.ErrorMessage = ex.Message;              
             }           
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";

@@ -145,9 +145,10 @@ namespace JasperSiteCore.Models.Database
         public void DeleteCategory(int categoryId)
         {
               IDatabaseContext database = _db;
-              Category categoryToBeRemoved = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single();
+              Category categoryToBeRemoved = GetAllCategories().Where(c => c.Id == categoryId).Single();
+              Category  categoryForUnassignedArticles = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single();
 
-            if(categoryToBeRemoved.Name=="Nezařazeno")
+            if (categoryToBeRemoved.Name=="Nezařazeno")
             {
                 throw new DatabaseHelperException("Výchozí rubriku \"nezařazeno\" není možné odstranit.");
             }
@@ -165,8 +166,8 @@ namespace JasperSiteCore.Models.Database
                 }
                 database.SaveChanges();
 
-                Category goner = database.Categories.Where(c => c.Id == categoryId).Single();
-                database.Categories.Remove(goner);
+               
+                database.Categories.Remove(categoryToBeRemoved);
                 database.SaveChanges();
            
             

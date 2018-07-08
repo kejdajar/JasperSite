@@ -37,7 +37,12 @@ $(document).ready(function () {
 
 
 
-           var error = @ViewBag.Error;
+    var error = 0;
+    @if(!string.IsNullOrEmpty(ViewBag.Error))
+    {
+       <text>var error = @ViewBag.Error;</text>
+    }
+   
         if (error == 1) {
 
 

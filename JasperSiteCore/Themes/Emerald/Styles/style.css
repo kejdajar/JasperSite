@@ -69,6 +69,31 @@ body {
 }
 
 
+/*
+  Overides bootstrap navbar: fully expanded menu is wraping it's content. 
+*/
+@media (min-width:992px) {
+    #containerNavbar ul {
+       
+        display: inline-block;
+    }
+
+        #containerNavbar ul li {
+            
+            display: block;
+            display: inline-block;
+        }
+
+            #containerNavbar ul li a {
+                
+                display: block;
+                white-space: nowrap;
+                display: inline-block;
+            }
+}
+
+
+
  /*@media (min-width: 576px) {
     
      .container {

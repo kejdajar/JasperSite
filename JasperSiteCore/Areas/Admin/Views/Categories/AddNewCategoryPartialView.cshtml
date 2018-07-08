@@ -26,15 +26,19 @@
 
                     }
                 });
-            });
         });
+
+        $("#tbCategoryName").focus();
+    });
+    
 </script>
 
+@Html.Partial("_ErrorModalPartialView")
 
 <section class="j-admin-section">
     <form asp-action="CreateNewCategory" asp-controller="Categories" method="post">
         <div class="input-group">
-            <input autofocus id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="Název rubriky" class="form-control" name="btnCategoryName" />
+            <input id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="Název rubriky" class="form-control" name="btnCategoryName" />
             <span asp-validation-for="NewCategory.NewCategoryName" class="text-danger"></span>
 
             <div class="input-group-btn">
