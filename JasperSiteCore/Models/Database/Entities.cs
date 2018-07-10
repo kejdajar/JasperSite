@@ -24,9 +24,8 @@ namespace JasperSiteCore.Models.Database
         [Required]
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
-        public Category Category { get; set; }
-     
-        public ICollection<User> Users { get; set; }
+        public Category Category { get; set; }     
+        
     }
 
     public class Category

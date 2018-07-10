@@ -86,8 +86,9 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             
-            dbHelper.DeleteArticle(id);
-            return RedirectToAction("Index", "Articles");
+            dbHelper.DeleteArticle(id);     
+
+            return RedirectToAction("Index");
         }
 
     }

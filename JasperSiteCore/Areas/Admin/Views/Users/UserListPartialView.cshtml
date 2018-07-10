@@ -7,6 +7,8 @@
      /* AJAX delete user */
     var allDeleteLinks = $('a[data-remove-id]').click(function (e) {
 
+        e.stopPropagation(); // table row click will not trigger simultaneously
+
             e.preventDefault();
             var singleLink = $(this);
 
@@ -31,9 +33,10 @@
         $("#usersTable").addClass("j-table-clickable");/* If JS is enabled, table is clickable */
 
         /*Table row is clickable as a whole*/
-        $("#usersTable tr").click(function () {
+        $("#usersTable tr").click(function (e) {
             var id = $(this).data("href")
             window.location = "/Admin/Users/EditUser?id=" + id;
+          
         });
    
 
