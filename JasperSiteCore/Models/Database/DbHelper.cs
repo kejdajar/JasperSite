@@ -29,14 +29,9 @@ namespace JasperSiteCore.Models.Database
 
         public List<Article> GetAllArticles()
         {
-            if (_db.Articles.Any())
-            {
-                return _db.Articles.ToList();
-            }
-            else
-            {
-                return null;
-            }
+           
+                return _db.Articles.Include(a=>a.Category).ToList();
+            
         }
 
         public List<Article> GetAllArticles(int categoryId)

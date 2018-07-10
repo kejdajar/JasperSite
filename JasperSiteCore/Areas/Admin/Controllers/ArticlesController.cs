@@ -34,16 +34,26 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
+
         public ArticlesController(DatabaseContext dbContext)
         {
             this.databaseContext = dbContext;
             this.dbHelper = new DbHelper(dbContext);
         }
 
+        public ArticlesViewModel UpdatePage()
+        {
+            ArticlesViewModel model = new ArticlesViewModel();
+            model.Articles = dbHelper.GetAllArticles();
+            model.NumberOfCategories = dbHelper.GetAllCategories().Count();
+            model.NumberOfArticles = model.Articles.Count();
+            return model;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return View(UpdatePage());
         }
 
         [HttpGet]
@@ -86,9 +96,17 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             
-            dbHelper.DeleteArticle(id);     
+            dbHelper.DeleteArticle(id);
 
-            return RedirectToAction("Index");
+            bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+            if (isAjax)
+            {
+                return PartialView("ArticlesListPartialView", dbHelper.GetAllArticles());
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
     }

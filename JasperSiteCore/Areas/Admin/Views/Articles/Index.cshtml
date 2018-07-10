@@ -1,24 +1,16 @@
 ﻿@using JasperSiteCore.Models.Database
 @using JasperSiteCore.Models
 @inject DatabaseContext databaseContext
+@model JasperSiteCore.Areas.Admin.ViewModels.ArticlesViewModel
 
 @section Scripts {
     <script>
 
-        $(function () {
 
-            //$("#selCategory").chosen(/*{ width: "100%" }*/);
+    </script>   
 
-            $("#articleTable").addClass("j-table-clickable");/* If JS is enabled, table is clickable */
-
-            /*Table row is clickable as a whole*/
-            $("#articleTable tr").click(function () {
-                var id = $(this).data("href")
-                window.location = "/Admin/Articles/GetArticle?id=" + id;                
-            });
-        });
-
-    </script>
+   <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+    
 }
 
 
@@ -30,11 +22,11 @@
     <table class="table table-bordered j-left-border-block">
         <tr>
             <td>Celkový počet článků</td>
-            <td>@J.Db(databaseContext).GetAllArticles().Count()</td>
+            <td>@Model.NumberOfArticles</td>
         </tr>
         <tr>
             <td>Celkový počet rubrik</td>
-            <td>@J.Db(databaseContext).GetAllCategories().Count()</td>
+            <td>@Model.NumberOfCategories</td>
         </tr>
 
     </table>
@@ -53,50 +45,33 @@
 @*TODO:FILTER PANEL NOT YET IMPLEMENTED*@
 @*<div class="j-filter-panel">
 
-    <div class="j-filter-container">
-        <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Kategorie</div></div>
-        <div class="j-input-container" style="width:140px">
-            <select id="selCategory">
-                @foreach (Category c in Configuration.DbHelper.GetAllCategories())
-                {
-                    <option value="@c.Id">@c.Name</option>
-                }
-            </select>
+        <div class="j-filter-container">
+            <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Kategorie</div></div>
+            <div class="j-input-container" style="width:140px">
+                <select id="selCategory">
+                    @foreach (Category c in Configuration.DbHelper.GetAllCategories())
+                    {
+                        <option value="@c.Id">@c.Name</option>
+                    }
+                </select>
+            </div>
         </div>
-    </div>
 
-    <div class="j-filter-container">
-        <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Počet</div></div>
-        <div class="j-input-container">
-            <select id="selCategory" class="custom-select" style="width:140px">
-                @for (int i = 1; i <= 10; i++)
-                {
-                    <option value="@i">@i</option>
-                }
-            </select>
+        <div class="j-filter-container">
+            <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Počet</div></div>
+            <div class="j-input-container">
+                <select id="selCategory" class="custom-select" style="width:140px">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
         </div>
-    </div>
 
-</div>*@
+    </div>*@
 
-
-<div class="table-responsive">
-    <table class="table table-bordered j-table j-table-text-center" id="articleTable">
-        <tr><th>Jméno článku</th><th>Rubrika</th><th>Publikováno</th><th>Akce</th></tr>
-        @foreach (Article a in J.Db(databaseContext).GetAllArticles())
-        {
-        <tr data-href="@a.Id">
-            <td>@a.Name</td>
-            <td>@a.Category.Name</td>
-            <td>@a.PublishDate</td>
-
-            <td>
-                <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-id="@a.Id" data-remove-id="@a.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
-                <a href="/Admin/Articles/GetArticle?id=@a.Id" class="btn btn-jasper">Upravit</a>
-            </td>
-        </tr>
-        }
-    </table>
+<div id="listOfArticles">
+    @Html.Partial("ArticlesListPartialView",Model.Articles)
 </div>
-
 
