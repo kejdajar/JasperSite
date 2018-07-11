@@ -89,56 +89,56 @@
                 </div>
 
                 <div class="j-link-container">
-                    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Categories" ? "j-menu-highlight" : "" )" asp-controller="Categories" asp-action="Index">
+                    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Categories" ? "j-menu-highlight" : "" )" asp-controller="Categories" asp-action="Index" asp-area="Admin">
                         <i class="fa fa-folder j-fa-margin" aria-hidden="true"></i>
                         Rubriky
                     </a>
                 </div>
 
                 <div class="j-link-container">
-                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Articles" ? "j-menu-highlight" : "" )" asp-controller="Articles" asp-action="Index">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Articles" ? "j-menu-highlight" : "" )" asp-controller="Articles" asp-action="Index" asp-area="Admin">
                         <i class="fa fa-edit j-fa-margin" aria-hidden="true"></i>
                         Články
                     </a>
                 </div>
 
                 <div class="j-link-container">
-                    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Themes" asp-action="Index">
+                    <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Themes" asp-action="Index" asp-area="Admin">
                         <i class="fa fa-paint-brush j-fa-margin " aria-hidden="true"></i>
                         Vzhled
                     </a>
                 </div>
 
                 <div class="j-link-container">
-                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Blocks" ? "j-menu-highlight" : "" )" asp-controller="Blocks" asp-action="Index">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Blocks" ? "j-menu-highlight" : "" )" asp-controller="Blocks" asp-action="Index" asp-area="Admin">
                         <i class="fa fa-comment-o j-fa-margin" aria-hidden="true"></i>
                         Bloky
                     </a>
                 </div>
 
                 <div class="j-link-container">
-                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Images" ? "j-menu-highlight" : "" )" asp-controller="Images" asp-action="Index">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Images" ? "j-menu-highlight" : "" )" asp-controller="Images" asp-action="Index" asp-area="Admin">
                         <i class="fa fa-image j-fa-margin" aria-hidden="true"></i>
                         Obrázky
                     </a>
                 </div>
 
                 <div class="j-link-container">
-                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "j-menu-highlight" : "" )" asp-controller="Users" asp-action="Index">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "j-menu-highlight" : "" )" asp-controller="Users" asp-action="Index" asp-area="Admin">
                         <i class="fa fa-user-circle-o j-fa-margin" aria-hidden="true"></i>
                         Uživatelé
                     </a>
                 </div>
 
                 <div class="j-link-container">
-                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Settings" ? "j-menu-highlight" : "" )" asp-controller="Settings" asp-action="Index">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Settings" ? "j-menu-highlight" : "" )" asp-controller="Settings" asp-action="Index" asp-area="Admin">
                         <i class="fa fa-cogs j-fa-margin" aria-hidden="true"></i>
                         Nastavení
                     </a>
                 </div>
 
                 <div class="j-link-container">
-                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "j-menu-highlight" : "" )" asp-controller="About" asp-action="Index">
+                    <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "j-menu-highlight" : "" )" asp-controller="About" asp-action="Index" asp-area="Admin">
                         <i class="fa fa-info-circle j-fa-margin" aria-hidden="true"></i>
                         O systému
                     </a>

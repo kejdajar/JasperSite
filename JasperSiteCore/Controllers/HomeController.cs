@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using JasperSiteCore.Models;
 using Microsoft.AspNetCore.Hosting;
 
+
 namespace JasperSiteCore.Controllers
 {
     public class HomeController : Controller
@@ -34,24 +35,32 @@ namespace JasperSiteCore.Controllers
             {
                 return View(file);
             }
-            else
+            else // page was not found
             {
-                // Error page
-                if (!Env.Hosting.IsDevelopment())
-                    return View(Configuration.CustomRouting.GetErrorPageFile());
-                else return View();
+                bool isRequestFromAdminArea = (rawUrl.ToLower()).StartsWith("/admin") ? true : false;
+                if(isRequestFromAdminArea)
+                {
+                    // Admin error page
+                    if (!Env.Hosting.IsDevelopment())
+                         return RedirectToAction("Error", "Home", new { area = "admin" }); // URL will be changed
+                      //  return View("~/Areas/Admin/Views/Shared/_Error.cshtml"); // URL will remain the same
+                    else return View();
+                }
+                else
+                {
+                    // Website error page
+                    if (!Env.Hosting.IsDevelopment())
+                        return View(Configuration.CustomRouting.GetErrorPageFile()); // URL will remain unchanged
+                    else return View();
+                }
+                
             }
 
         }
 
       
 
-        [HttpGet("/Error/{statusCode}")]
-        public IActionResult Error(int statusCode)
-        {
-            // return Content("errr"+ statusCode);
-            return View(Configuration.CustomRouting.GetErrorPageFile(),model:statusCode);
-        }
+       
 
     }
 }

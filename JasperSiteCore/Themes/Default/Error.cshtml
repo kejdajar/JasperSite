@@ -1,9 +1,15 @@
-﻿@model int
-@{
-    ViewBag.Title = "Error";
-    Layout = "~/Themes/Jasper/_Layout.cshtml";
+﻿@{
+    ViewData["Title"] = "Chyba";
+    Layout = "~/Themes/Default/_Layout.cshtml";
 }
 
-<h2>Error @Model</h2>
+<div class="jumbotron">
+    <h1><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>  Něco se pokazilo </h1>
+</div>
 
-<p>Je nám líto, ale požadovaná stránka nebyla nalezena.</p>
+
+<div class="alert alert-warning">
+    <strong>Chyba.</strong>  Na stránce se vyskytla neočekávaná chyba, nebo daná adresa neexistuje.
+</div>
+
+

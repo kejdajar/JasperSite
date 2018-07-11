@@ -90,8 +90,8 @@ namespace JasperSiteCore
             {    //TODO: Exception Handling
                 //app.UseExceptionHandler("/Home/Error/");
 
-            // Redirects http status code errors to error controller
-            app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            // Redirects http status code errors to error controller with actual theme look
+            app.UseStatusCodePagesWithReExecute(JasperSiteCore.Models.Configuration.CustomRouting.GetErrorPageFile());
             }
           
             
