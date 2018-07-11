@@ -1,5 +1,5 @@
 ﻿
-@import url(https://fonts.googleapis.com/css?family=Noto+Serif|Oldenburg|Noto+Serif&subset=latin,latin-ext);
+@import url(https://fonts.googleapis.com/css?family=Noto+Serif|Open+Sans|Noto+Serif|Noto+Sans&subset=latin,latin-ext);
 
 body {
     background-image: url(../Images/background.jpg);
@@ -7,10 +7,10 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     /*font-family: "Helvetica Neue", Helvetica, Arial, "sans-serif";*/
-    font-family: "Noto Serif";
+    font-family: "Noto Sans";
 }
 .article-text {
-    font-family: "Oldenburg";
+    font-family: "Open Sans";
   
 }
 .j-render-container {
