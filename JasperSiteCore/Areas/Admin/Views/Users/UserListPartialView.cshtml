@@ -15,13 +15,18 @@
             e.preventDefault();
             var singleLink = $(this);
 
-            var Id = singleLink.data('removeId');
+        var Id = singleLink.data('removeId');
+        var userName = singleLink.data('userName');
 
-        ajaxCall(Id);
+        appendWindow("Skutečně odstranit uživatele?", `Uživatel (uživatelské jméno: <b> ${userName}</b>) bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv");
+
+        
            
      });
 
      function ajaxCall(userId) {
+
+         toggleWindow();
 
           $.ajax({
             type: 'get',
@@ -69,7 +74,7 @@
     }
     else
     {
-                                <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-id="@u.Id" data-remove-id="@u.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                                <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-id="@u.Id" data-remove-id="@u.Id" data-user-name="@u.Username" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
 
 
 }

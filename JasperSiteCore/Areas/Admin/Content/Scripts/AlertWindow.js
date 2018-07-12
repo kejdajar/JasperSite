@@ -53,9 +53,9 @@
         $("#deleteModalButton").click(action);
 
         $("#alertWindow").modal("toggle");
-        $('.modal-dialog').draggable({
-            handle: ".modal-header"
-        });
+        //$('.modal-dialog').draggable({
+        //    handle: ".modal-header"
+        //});
     }
 
     function toggleWindow() {

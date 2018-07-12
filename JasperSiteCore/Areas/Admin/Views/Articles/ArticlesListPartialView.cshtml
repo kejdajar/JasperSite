@@ -20,7 +20,14 @@
             var Id = singleLink.data('removeId');
             var articleName = singleLink.data('articleName');
 
-            function ajaxCall(articleId) {
+          
+            appendWindow("Skutečně odstranit článek?", `Článek <b> ${articleName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv");
+
+
+
+        });
+
+          function ajaxCall(articleId) {
                 toggleWindow();
                  $.ajax({
                     type: 'get',
@@ -34,11 +41,6 @@
                 });
             }
 
-            appendWindow("Skutečně odstranit článek?", `Článek <b> ${articleName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv");
-
-
-
-        });
 
 
         /* Clickable row */
