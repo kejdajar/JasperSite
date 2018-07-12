@@ -1,6 +1,6 @@
 ﻿@model JasperSiteCore.Areas.Admin.ViewModels.CategoriesViewModel
 @using JasperSiteCore.Models.Database;
-
+<script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
 <script>
 /* AJAX REMOVE CATEGORY */
     $(document).ready(function () {
@@ -11,8 +11,15 @@
                 var singleLink = $(this);
 
                 var categoryToBeRemovedId = singleLink.data('deleteId');
+                var categoryName = singleLink.data('categoryName');
+
+                appendWindow("Skutečně odstranit rubriku?", `Rubrika  <b> ${categoryName}</b> bude nenávratně odstraněna.`, function () { return ajaxCall(categoryToBeRemovedId); }, "#modalTargetDiv");
+        });
 
 
+        function ajaxCall(categoryToBeRemovedId) {
+
+            toggleWindow();
                 $.ajax({
                     type: 'get',
                     url: '@Url.Action("DeleteCategory","Categories")',
@@ -26,7 +33,8 @@
 
                     }
                 });
-        });
+        }
+
 
         $("#tbCategoryName").focus();
     });
@@ -60,7 +68,7 @@
                     <td>
                         @if (c.Name != "Nezařazeno")
                         {
-                            <a data-delete-id="@c.Id" asp-controller="Categories" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
+                            <a data-delete-id="@c.Id" data-category-name="@c.Name" asp-controller="Categories" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
                         }
                         else
                         {
