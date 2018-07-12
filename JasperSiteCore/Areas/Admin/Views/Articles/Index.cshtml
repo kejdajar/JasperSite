@@ -3,16 +3,13 @@
 @inject DatabaseContext databaseContext
 @model JasperSiteCore.Areas.Admin.ViewModels.ArticlesViewModel
 
+
+
 @section Scripts {
-    <script>
-
-
-    </script>   
-
-   <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
     
-}
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
 
+}
 
 
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Články</h1></div>
@@ -72,6 +69,7 @@
     </div>*@
 
 <div id="listOfArticles">
-    @Html.Partial("ArticlesListPartialView",Model.Articles)
+    @Html.Partial("ArticlesListPartialView", Model.Articles)
 </div>
+<div id="modalTargetDiv" ></div>
 

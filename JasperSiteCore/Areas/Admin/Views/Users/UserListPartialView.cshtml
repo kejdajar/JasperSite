@@ -1,5 +1,8 @@
 ﻿@using JasperSiteCore.Models.Database;
 @model JasperSiteCore.Areas.Admin.ViewModels.UsersViewModel
+
+<script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+
 <script>
 /* AJAX REMOVE HOLDER */
  $(document).ready(function () {
@@ -14,10 +17,16 @@
 
             var Id = singleLink.data('removeId');
 
-            $.ajax({
+        ajaxCall(Id);
+           
+     });
+
+     function ajaxCall(userId) {
+
+          $.ajax({
             type: 'get',
-            url: '@Url.Action("DeleteUser", "Users")',
-            data: { id:Id },
+              url: '@Url.Action("DeleteUser", "Users")',
+              data: { id: userId },
             dataType: 'HTML',
             success: function (data)
             {
@@ -25,7 +34,8 @@
             savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
             }
       });
-     });
+
+     }
 
      // Clickable table rows
            
