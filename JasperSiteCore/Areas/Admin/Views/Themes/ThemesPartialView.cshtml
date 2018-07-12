@@ -18,17 +18,18 @@
 
             /* DELETE THEME AJAX*/
 
-            $('[data-toggle="modal"] a').click(function (e) {
+            $('[data-delete-name]').click(function (e) {
                 e.preventDefault();
                 var themeName = $(this).data("deleteName");
 
-                $("#themeNameModal").text(themeName);
-                $("#deleteModalButton").attr("href", "./DeleteTheme?ThemeName=" + themeName);
+               
 
-                /* use AJAX in modal pop-up*/
-                $("#deleteModalButton").click(function (e) {
-                    e.preventDefault();
+                appendWindow("Skutečně odstranit vzhled?", `Vzhled  <b> ${themeName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(themeName); }, "#modalTargetDiv");
 
+            });
+
+            function ajaxCall(themeName) {
+                toggleWindow();
                     $.ajax({
                         type: 'get',
                         url: '@Url.Action("DeleteTheme","Themes")',
@@ -37,7 +38,7 @@
                         success: function (data) {
 
                             $("#mainForm1").html(data);
-                            $("#myModal").modal('toggle');
+                            
                             savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                         },
                         error: function () {
@@ -45,9 +46,7 @@
                         }
 
                     });
-                });
-
-            });
+            }
 
 
 

@@ -7,6 +7,7 @@
 }
 @section Scripts {
     <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+    <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
     <script>
         /* SUBMIT BUTTON FOR THEME UPLOAD IS DISABLED IF NO FILE HAS BEEN UPLOADED YET  */
         $(document).ready(
@@ -14,7 +15,7 @@
                 $('#files').change(
                     function () {
                         if ($(this).val()) {
-                            $('#submitThemeFile').attr('disabled', false);                           
+                            $('#submitThemeFile').attr('disabled', false);
                         }
                         else {
 
@@ -44,9 +45,9 @@
             uložit. Neregistrované vzhledy:
             <ul style="list-style-type:disc">
                 @foreach (string name in Model.NotRegisteredThemeNames)
-                  {
-                       <li>@name</li>
-                   }
+                {
+                    <li>@name</li>
+                }
             </ul>
             <a class="btn btn-jasper" asp-controller="Themes" asp-action="AddNewAddedThemesToDb" asp-area="Admin">Registrovat nové vzhledy do databáze.</a>
 
@@ -64,10 +65,10 @@
             Ve složce: <i> @Configuration.GlobalWebsiteConfig.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, které je nutné
             uložit. Manuálně odstraněné vzhledy:
             <ul style="list-style-type:disc">
-                     @foreach (string name in Model.ManuallyDeletedThemeNames)
-                   {
-                <li>@name</li>  
-                   }
+                @foreach (string name in Model.ManuallyDeletedThemeNames)
+                {
+                    <li>@name</li>
+                }
             </ul>
             <a class="btn btn-jasper" asp-controller="Themes" asp-action="RemoveManuallyDeletedThemesFromDb" asp-area="Admin">Odstranit nedostupné vzhledy z datbáze.</a>
         </div>
@@ -137,92 +138,25 @@ else
 
 <h2> <i class="fa fa-cog j-icon" aria-hidden="true"></i> Pokročilé možnosti </h2>
 <section class="j-admin-section">
-    
-        <p>Pokud jste manuálně modifikovali vzhledy na serveru, nebo upravovali konfigurační nastavení aplikace, můžou se hodit následující možnosti:</p>
-        
-   
 
-    
-        
-    
+    <p>Pokud jste manuálně modifikovali vzhledy na serveru, nebo upravovali konfigurační nastavení aplikace, můžou se hodit následující možnosti:</p>
 
-        <table class="table j-table-no-hover table-bordered table-responsive">
-            <tr><th>Akce</th><th>Popis</th></tr>
-            <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateConfiguration" asp-area="Admin">Aplikovat data z konfiguračních souborů</a></td><td>Všechna konfigurační data, která byla dočasně uložena do paměti budou znovu načtena z konfiguračníchj souborů.</td></tr>
-            <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze vzhledů</a></td><td>V případě poškození databáze vzhledů tato možnost zresetuje databázi vzhledů a odstraní přiřazené textové bloky k jednotlivým kontejnerům příslušných vzhledů. </td></tr>
-        </table>
+
+
+
+
+
+
+    <table class="table j-table-no-hover table-bordered table-responsive">
+        <tr><th>Akce</th><th>Popis</th></tr>
+        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateConfiguration" asp-area="Admin">Aplikovat data z konfiguračních souborů</a></td><td>Všechna konfigurační data, která byla dočasně uložena do paměti budou znovu načtena z konfiguračníchj souborů.</td></tr>
+        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze vzhledů</a></td><td>V případě poškození databáze vzhledů tato možnost zresetuje databázi vzhledů a odstraní přiřazené textové bloky k jednotlivým kontejnerům příslušných vzhledů. </td></tr>
+    </table>
 
 
 </section>
 
+<div id="modalTargetDiv"></div>
 
 
 
-
-<!-- Delete Theme Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" style="margin-left:20px">Skutečně odstranit vzhled?</h4>
-            </div>
-            <div class="modal-body">
-                Chystáte se odstranit vzhled <span id="themeNameModal"></span>
-
-            </div>
-            <div class="modal-footer">
-                <a id="deleteModalButton" title="Odstranit" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i> Trvale odstranit  </a>
-                <button type="button" class="btn btn-jasper" data-dismiss="modal" title="Zrušit">Zrušit</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-@*<!-- Error Modal -->
-    <div id="myErrorModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" style="margin-left:20px">Chyba</h4>
-                </div>
-                <div class="modal-body">
-                    Při operaci došlo k chybě. <span id="themeNameModal"></span>
-                </div>
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-jasper" data-dismiss="modal" title="Zrušit">Zavřít</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Success Modal -->
-    <div id="mySuccessModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" style="margin-left:20px">Úspěch</h4>
-                </div>
-                <div class="modal-body">
-                    Operace byla provedena úspěšně. <span id="themeNameModal"></span>
-                </div>
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-jasper" data-dismiss="modal" title="Zrušit">Zavřít</button>
-                </div>
-            </div>
-
-        </div>
-    </div>*@
