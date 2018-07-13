@@ -16,21 +16,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Area("Admin")]
     public class ArticlesController : Controller
     {
-        // Firstly, the installation must have already been completed before accesing administration panel
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            if (!Configuration.InstallationCompleted())
-            {
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary {
-                { "Controller", "Install" },
-                { "Action", "Index" },
-                        {"Area","Admin" }
-                    });
-            }
 
-            base.OnActionExecuting(filterContext);
-        }
 
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;

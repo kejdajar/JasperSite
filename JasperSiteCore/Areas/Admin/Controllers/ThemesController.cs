@@ -20,23 +20,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class ThemesController : Controller
-    {
-               
-        // Firstly, the installation must have already been completed before accesing administration panel
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
-        {
-            if (!Configuration.InstallationCompleted())
-            {
-                filterContext.Result = new RedirectToRouteResult(
-                    new RouteValueDictionary {
-                { "Controller", "Install" },
-                { "Action", "Index" },
-                        {"Area","Admin" }
-                    });
-            }
-
-            base.OnActionExecuting(filterContext);
-        }
+    {             
 
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
@@ -49,15 +33,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            //ModelState.Clear();
-
             return View(UpdatePage());
         }
 
         [HttpPost]
         public ActionResult Index(ThemesViewModel model, IFormCollection collection)
         {
-            int itemsPerPage = 3;
+            int itemsPerPage = 4;
             int currentPage = model.PageNumber;
 
             string next = collection["next"];
@@ -116,7 +98,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public ThemesViewModel UpdatePage()
         {
-            int itemsPerPage = 3;
+            int itemsPerPage = 4;
             int currentPage = 1;
 
             List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
@@ -221,7 +203,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
 
             JasperSiteCore.Models.Configuration.Initialize();
-            return RedirectToAction("Themes");
+            return RedirectToAction("Index");
 
         }
 
@@ -276,7 +258,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
 
 
-            return RedirectToAction("Themes");
+            return RedirectToAction("Index");
 
         }
 
@@ -284,7 +266,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult ReconstructAllThemesCorrespondingDatabaseTables()
         {
             dbHelper.Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
-            return RedirectToAction("Themes");
+            return RedirectToAction("Index");
         }
 
     }   
