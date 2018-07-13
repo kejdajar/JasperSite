@@ -18,9 +18,12 @@ using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
+    
     [Area("Admin")]
     public class InstallController : Controller
     {
@@ -31,7 +34,52 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         //    this.dbContext = context;
         //}
 
-        
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (!Configuration.InstallationCompleted())
+            {
+                base.OnActionExecuting(filterContext);
+            }
+            else
+            { 
+                if (User.IsInRole("Admin"))
+                {
+                    base.OnActionExecuting(filterContext);
+                }
+                else
+                {
+                    filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary {
+                { "Controller", "Login" },
+                { "Action", "Index" },
+                        {"Area","Admin" }
+                    });
+                    base.OnActionExecuting(filterContext);
+                }
+            }
+
+
+
+        }
+
+        //// Firstly, the installation must have already been completed before accesing administration panel
+        //public override void OnActionExecuting(ActionExecutingContext filterContext)
+        //{
+        //    if (!Configuration.InstallationCompleted())
+        //    {
+        //        filterContext.Result = new RedirectToRouteResult(
+        //            new RouteValueDictionary {
+        //        { "Controller", "Install" },
+        //        { "Action", "Index" },
+        //                {"Area","Admin" }
+        //            });
+        //    }
+
+        //    base.OnActionExecuting(filterContext);
+        //}
+
+
+
         [HttpGet]
         public IActionResult Index()
         {
