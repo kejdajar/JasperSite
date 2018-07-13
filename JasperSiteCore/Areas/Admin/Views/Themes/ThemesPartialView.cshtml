@@ -57,7 +57,14 @@
                     e.preventDefault();
                     var currentLink = $(this);
                     var themeName = currentLink.data("activateName");
-                    $.ajax({
+
+                    appendWindow("Skutečně aktivovat vzhled?", `Vzhled <b> ${themeName}</b> bude aktivován. Stávající textové bloky budou přiřazeny do stejně pojmenovaných kontejnerů nového vzhledu. Pokud vzhled obsahuje jinak pojmenované kontejnery, bude nutné nakonfigurovat textové bloky znovu ručně.`, function () { return ajaxCallActivateTheme(themeName); }, "#modalTargetDiv");
+                    
+            });
+
+            function ajaxCallActivateTheme(themeName) {
+                toggleWindow();
+                $.ajax({
                         type: 'get',
                         url: '@Url.Action("ActivateTheme","Themes")',
                         data: { themeName: themeName },
@@ -71,7 +78,8 @@
                             savedInfo("<strong>Chyba.</strong> Akce nemohla být dokončena.", "alert-danger");
                         }
                     });
-                });
+            }
+
         });
 </script>
 
