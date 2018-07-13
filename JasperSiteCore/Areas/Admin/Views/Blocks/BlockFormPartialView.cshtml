@@ -15,9 +15,15 @@
                 var singleLink = $(this);
 
                 var blockToBeRemovedId = singleLink.data('removeBlockId');
-                
+                var blockName = singleLink.data('blockName');
 
-                $.ajax({
+                appendWindow("Skutečně odstranit textový blok?", `Textový blok <b> ${blockName}</b> a jeho obsah  bude nenávratně odstraněn.`, function () { return ajaxCallDeleteBlock(blockToBeRemovedId); }, "#modalTargetDiv");
+               
+        });
+
+        function ajaxCallDeleteBlock(blockToBeRemovedId) {
+            toggleWindow();
+             $.ajax({
                     type: 'get',
                     url: '@Url.Action("DeleteBlock","Blocks")',
                     data: { id: blockToBeRemovedId },
@@ -29,7 +35,8 @@
                         savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                     }
                 });
-            });
+        }
+
         });
 </script>
 
@@ -89,7 +96,7 @@
 
         @foreach (BlocksViewModelData data in @Model.Blocks)
         {
-            <h3>  <a  asp-area="Admin" asp-controller="Blocks" asp-action="DeleteBlock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px" data-remove-block-id="@data.TextBlock.Id">x</a>  @data.TextBlock.Name   </h3>
+            <h3>  <a  asp-area="Admin" asp-controller="Blocks" asp-action="DeleteBlock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px" data-remove-block-id="@data.TextBlock.Id" data-block-name="@data.TextBlock.Name">x</a>  @data.TextBlock.Name   </h3>
             <div class="j-left-border-block">
 
 
