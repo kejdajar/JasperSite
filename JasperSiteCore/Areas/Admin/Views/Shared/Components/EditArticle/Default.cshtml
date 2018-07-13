@@ -7,7 +7,7 @@
         $("#btnDeleteArticle").click(function (e) {
             e.preventDefault();
             
-            appendWindow("Skutečně odstranit článek?", `Tento článek bude nenávratně odstraněn.`, function () { window.location = "@Url.Action("Delete", "Articles", new { Area = "Admin",id=Model.Id })";  }, "#modalTargetDiv");
+            appendWindow("Skutečně odstranit článek?", `Tento článek bude nenávratně odstraněn.`, function () { window.location = "@Url.Action("Delete", "Articles", new { Area = "Admin",id=Model.Id })"; }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
         });
     });
 </script>

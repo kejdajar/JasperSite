@@ -18,7 +18,7 @@
         var Id = singleLink.data('removeId');
         var userName = singleLink.data('userName');
 
-        appendWindow("Skutečně odstranit uživatele?", `Uživatel (uživatelské jméno: <b> ${userName}</b>) bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv");
+        appendWindow("Skutečně odstranit uživatele?", `Uživatel (uživatelské jméno: <b> ${userName}</b>) bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
 
         
            

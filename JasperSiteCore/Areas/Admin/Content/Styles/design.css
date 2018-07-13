@@ -278,7 +278,7 @@ fieldset[disabled] .btn-jasper.active {
     .btn-jasper-delete:focus,
     .btn-jasper-delete:active,
     .btn-jasper-delete.active,
-    .open .dropdown-toggle.btn-jasper {
+    .open .dropdown-toggle.btn-jasper-delete {
         color: #ffffff;
         background-color: #EC407A;
         border-color: #ffffff;
@@ -286,6 +286,15 @@ fieldset[disabled] .btn-jasper.active {
         box-shadow: 0 0 0 2px rgba(228, 47, 83, 0.15);
     }
 /*-----------END Custom button----------------------*/
+
+
+
+/*Custom activate button*/
+.btn-jasper-activate {
+    background-color: #90ee02;
+}    
+/*-----------END Custom button----------------------*/
+
 
 
 

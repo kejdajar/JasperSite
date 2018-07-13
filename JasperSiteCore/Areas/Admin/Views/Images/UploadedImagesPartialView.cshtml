@@ -15,7 +15,7 @@
                 var id = singleLink.data('removeId');
                 var imageName = singleLink.data('imageName');
 
-                appendWindow("Skutečně odstranit obrázek?", `Obrázek <b> ${imageName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(id); }, "#modalTargetDiv");
+                appendWindow("Skutečně odstranit obrázek?", `Obrázek <b> ${imageName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
 
          });
 

@@ -5,7 +5,9 @@
  */
 
     // Creates modal pop-up with custom content
-    function getHtmlWindow(header,body) {
+   //mainButtonLCass: btn-jasper-delete
+// mainButtonIconStyle: fa fa-trash fa-1x
+    function getHtmlWindow(header,body,mainButtonClass,mainButtonIconStyle,mainButtonText) {
      var window = $(`
 <div id="alertWindow" class="modal fade" role="dialog" style="z-index:99999!important">
     <div class="modal-dialog">
@@ -20,7 +22,7 @@
               ${body} 
             </div>
             <div class="modal-footer">
-                  <a id="deleteModalButton" title="Odstranit" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i> Trvale odstranit  </a>
+                  <a id="deleteModalButton" title="${mainButtonText}" class="btn btn-jasper ${mainButtonClass}"> <i class="${mainButtonIconStyle}" aria-hidden="true"></i> ${mainButtonText}  </a>
                 <button type="button" class="btn btn-jasper" data-dismiss="modal" title="Zrušit">Zavřít</button>
             </div>
         </div>
@@ -34,8 +36,8 @@
     }
 
     // inserts modal into targetDiv and shows pop-up 
-    function appendWindow(header,body,action,targetDiv) {
-        var window = getHtmlWindow(header, body);
+function appendWindow(header, body, action, targetDiv, mainButtonClass, mainButtonIconStyle, mainButtonText) {
+    var window = getHtmlWindow(header, body, mainButtonClass, mainButtonIconStyle, mainButtonText);
         window.css({
             "display": "block",
         });

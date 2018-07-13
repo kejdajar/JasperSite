@@ -24,7 +24,7 @@
 
                
 
-                appendWindow("Skutečně odstranit vzhled?", `Vzhled  <b> ${themeName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(themeName); }, "#modalTargetDiv");
+                appendWindow("Skutečně odstranit vzhled?", `Vzhled  <b> ${themeName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(themeName); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
 
             });
 
@@ -58,7 +58,7 @@
                     var currentLink = $(this);
                     var themeName = currentLink.data("activateName");
 
-                    appendWindow("Skutečně aktivovat vzhled?", `Vzhled <b> ${themeName}</b> bude aktivován. Stávající textové bloky budou přiřazeny do stejně pojmenovaných kontejnerů nového vzhledu. Pokud vzhled obsahuje jinak pojmenované kontejnery, bude nutné nakonfigurovat textové bloky znovu ručně.`, function () { return ajaxCallActivateTheme(themeName); }, "#modalTargetDiv");
+                    appendWindow("Skutečně aktivovat vzhled?", `Vzhled <b> ${themeName}</b> bude aktivován. Stávající textové bloky budou přiřazeny do stejně pojmenovaných kontejnerů nového vzhledu. Pokud vzhled obsahuje jinak pojmenované kontejnery, bude nutné nakonfigurovat textové bloky znovu ručně.`, function () { return ajaxCallActivateTheme(themeName); }, "#modalTargetDiv", "btn-jasper-activate","fa fa-check-circle fa-1x","Aktivovat");
                     
             });
 

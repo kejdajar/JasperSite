@@ -17,7 +17,7 @@
                 var blockToBeRemovedId = singleLink.data('removeBlockId');
                 var blockName = singleLink.data('blockName');
 
-                appendWindow("Skutečně odstranit textový blok?", `Textový blok <b> ${blockName}</b> a jeho obsah  bude nenávratně odstraněn.`, function () { return ajaxCallDeleteBlock(blockToBeRemovedId); }, "#modalTargetDiv");
+                appendWindow("Skutečně odstranit textový blok?", `Textový blok <b> ${blockName}</b> a jeho obsah  bude nenávratně odstraněn.`, function () { return ajaxCallDeleteBlock(blockToBeRemovedId); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
                
         });
 

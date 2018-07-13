@@ -21,7 +21,7 @@
             var articleName = singleLink.data('articleName');
 
           
-            appendWindow("Skutečně odstranit článek?", `Článek <b> ${articleName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv");
+            appendWindow("Skutečně odstranit článek?", `Článek <b> ${articleName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
 
 
 

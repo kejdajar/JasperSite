@@ -13,7 +13,7 @@
                 var categoryToBeRemovedId = singleLink.data('deleteId');
                 var categoryName = singleLink.data('categoryName');
 
-                appendWindow("Skutečně odstranit rubriku?", `Rubrika  <b> ${categoryName}</b> bude nenávratně odstraněna.`, function () { return ajaxCall(categoryToBeRemovedId); }, "#modalTargetDiv");
+                appendWindow("Skutečně odstranit rubriku?", `Rubrika  <b> ${categoryName}</b> bude nenávratně odstraněna.`, function () { return ajaxCall(categoryToBeRemovedId); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
         });
 
 
