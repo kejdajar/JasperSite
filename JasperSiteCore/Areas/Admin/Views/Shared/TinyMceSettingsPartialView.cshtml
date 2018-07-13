@@ -7,10 +7,12 @@
         tinymce.init({
 
             selector: '#myTextArea',
+            
+            branding: false, // no "powered by tinymce" logo
            // entity_encoding: "raw",
 
 
-            plugins: "image lists link table imagetools advlist autolink charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media contextmenu paste wordcount visualchars toc textpattern textcolor template hr help emoticons colorpicker codesample",
+            plugins: "image lists link table imagetools advlist autolink charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media contextmenu paste visualchars toc textpattern textcolor template hr help emoticons colorpicker codesample",
             toolbar: ["undo redo | paste | fontselect | styleselect forecolor backcolor | bold italic hr | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | template insertdatetime anchor link media image emoticons toc table | visualblocks visualchars |searchreplace code codesample charmap print | help  fullscreen"],
 
             contextmenu: "link image inserttable | cell row column deletetable",
@@ -69,8 +71,7 @@
         insertdatetime ... allows to choose from various date-time formats and insert current time/date
         media ... allows to add for instance youtube video
         contextmenu ... enables right-click menu
-        paste ... allows to paste text from word - does not work in chrome :/
-        wordcount ... adds number of words in the bottom right hand corner
+        paste ... allows to paste text from word - does not work in chrome :/        
         visualchars ... shows invisible characters
         toc ... adds table of contents
         textpattern ... something like markdown syntax, ie. "##header" creates bigger text
@@ -80,6 +81,10 @@
         help ... shows keyboard shortcuts and lists of installed plugins
         emoticons ... allows user to add emoticons
         colorpicker ... adds custom color dialog to forecolor and backcolor buttons
+
+         Not added:
+         wordcount ... adds number of words in the bottom right hand corner
+
         */
 
     /*

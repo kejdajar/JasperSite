@@ -7,6 +7,8 @@
     {
 
 <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+<script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+
 <script>
         /* IMAGE UPLOAD DISABLE SUBMIT WHEN EMPTY */
         $(document).ready(
@@ -57,3 +59,4 @@
         @Html.PartialAsync("UploadedImagesPartialView").Result
     </div>
 </section>
+<div id="modalTargetDiv"></div>

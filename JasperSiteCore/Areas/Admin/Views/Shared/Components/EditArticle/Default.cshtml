@@ -1,8 +1,16 @@
 ﻿@model JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel
 
 @{ Html.RenderPartial("TinyMceSettingsPartialView");}
-
-
+<script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#btnDeleteArticle").click(function (e) {
+            e.preventDefault();
+            
+            appendWindow("Skutečně odstranit článek?", `Tento článek bude nenávratně odstraněn.`, function () { window.location = "@Url.Action("Delete", "Articles", new { Area = "Admin",id=Model.Id })";  }, "#modalTargetDiv");
+        });
+    });
+</script>
 
 @*<form asp-action="Index" asp-controller="Article" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete='savedInfo("<strong>Uloženo.</strong> Veškeré změny byly uloženy.", "alert-success")'>*@
 <form asp-action="PostArticle" asp-controller="Articles" asp-area="Admin" method="post">
@@ -49,7 +57,7 @@
             <button id="btnSaveTinymce" type="submit" asp-area="Admin" asp-controller="Article" asp-action="Index" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> Uložit</button>
             <a asp-controller="Articles" asp-action="Index" asp-area="admin" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na přehled</a>
 
-            <a asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
+            <a id="btnDeleteArticle" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
 
 
         </div>
