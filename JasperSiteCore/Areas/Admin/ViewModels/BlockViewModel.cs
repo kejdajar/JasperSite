@@ -17,6 +17,9 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         // Add new block section
         public NewTextBlock NewTextBlock { get; set; } = new NewTextBlock();
         public List<BlockHolder> AllBlockHolders { get; set; }
+
+        // Themes section
+        public List<Theme> AllThemes { get; set; }
     }
 
    

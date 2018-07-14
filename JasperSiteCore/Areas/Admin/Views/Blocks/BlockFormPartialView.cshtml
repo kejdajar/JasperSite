@@ -134,10 +134,10 @@ else
     <div class="table-responsive">
 
 
-        @foreach (Theme theme in J.Db(databaseContext).GetAllThemes())
+        @foreach (Theme theme in Model.AllThemes)
     {
         <h2>@theme.Name</h2>
-    var blockHolders = J.Db(databaseContext).GetAllBlockHolders().Where(b => b.ThemeId == theme.Id);
+    var blockHolders = Model.AllBlockHolders.Where(b => b.ThemeId == theme.Id);
     <div style="border-left:3px solid #BA68C8;padding-left:4px">
         <table class="table table-bordered j-table j-table-headers-left ">
             <tr><th>Název kontejneru</th></tr>

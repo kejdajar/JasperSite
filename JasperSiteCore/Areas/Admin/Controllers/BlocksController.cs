@@ -52,6 +52,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
 
             model.AllBlockHolders = _dbHelper.GetAllBlockHolders();
+            model.AllThemes = _dbHelper.GetAllThemes();
             return model;
         }
 
