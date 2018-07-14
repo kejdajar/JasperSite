@@ -13,13 +13,13 @@ namespace JasperSiteCore.Helpers
     public  class Components
     {
 
-        public Components(DatabaseContext dbContext, DbHelper dbHelper)
+        public Components(IDatabaseContext dbContext, DbHelper dbHelper)
         {
             this._dbContext = dbContext;
             this._dbHelper = dbHelper;
         }
 
-        private readonly DatabaseContext _dbContext;
+        private readonly IDatabaseContext _dbContext;
         private readonly DbHelper _dbHelper;
 
         /// <summary>

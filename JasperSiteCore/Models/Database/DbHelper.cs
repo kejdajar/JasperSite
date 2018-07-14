@@ -22,13 +22,13 @@ namespace JasperSiteCore.Models.Database
         /// </summary>
         /// <param name="database"></param>
         /// <exception cref="DatabaseContextNullException"></exception>
-        public DbHelper(DatabaseContext database)
+        public DbHelper(IDatabaseContext database)
         {
             this.Database = database ?? throw new DatabaseContextNullException();
             this.Components = new Components(Database,this);
         }
 
-        public DatabaseContext Database { get; set; }
+        public IDatabaseContext Database { get; set; }
         public Components Components { get; set; }
         
 
@@ -490,7 +490,7 @@ namespace JasperSiteCore.Models.Database
 
     public interface IJasperDataService
     {
-        DatabaseContext Database { get; set; }
+        IDatabaseContext Database { get; set; }
         Components Components { get; set; }
 
         List<Article> GetAllArticles();
