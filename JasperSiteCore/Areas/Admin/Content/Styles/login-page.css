@@ -3,20 +3,35 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
-   
+   }
+
+body,html {
+    height:100%;
 }
 
-.flexbox-container {
+/*.flexbox-container {
     position: fixed;
     top: 50%;
     left: 50%;
-    /* bring your own prefixes */
+    /
     transform: translate(-50%, -50%);
 }
 
 .login-form {
   width:500px;
   
+}*/
+
+.row {
+    
+    
+}
+
+
+
+.login-form {
+
+    
 }
 
     .login-form form {

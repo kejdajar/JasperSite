@@ -2,6 +2,7 @@
 Layout = null;
 }
 @model JasperSiteCore.Areas.Admin.ViewModels.LoginViewModel
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,13 +53,14 @@ Layout = null;
 </head>
 <body>
 
-    <div class="flexbox-container">
-       
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
 
+          
             @if (!User.Identity.IsAuthenticated)
             {
 
-                <div class="login-form">
+                <div class="login-form col-lg-6 col-md-8 col-sm-10 col-12">
                     <form asp-area="Admin" asp-controller="Login" asp-action="Index" method="post">
                         <h2 class="text-center">J<span style="color:#BA68C8">asp</span>er Site <span style="color:#BA68C8">Core </span></h2>
 
@@ -71,7 +73,7 @@ Layout = null;
                         <div class="form-group">
                             <button type="submit" class="btn btn-jasper" style="width:100%">Přihlásit se</button>
                         </div>
-                      
+
                         <div class="clearfix">
                             <label class="pull-left checkbox-inline"><input asp-for="Remember" type="checkbox"> Zapamatovat si</label> <br />
                             <a asp-area="" asp-controller="Home" asp-action="Index">Zpátky na web</a>
@@ -100,7 +102,7 @@ Layout = null;
                         <div class="form-group">
                             <a style="width:100%" asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-jasper">Administrace</a>
                             <a asp-area="Admin" asp-controller="Login" asp-action="SignOut" class="btn btn-jasper btn-leave">Odhlásit se</a>
-                            
+
                         </div>
                         <div>
                             <a asp-area="" asp-controller="Home" asp-action="Index">Zpátky na web</a>
@@ -108,8 +110,8 @@ Layout = null;
                     </form>
                 </div>
             }
-        
-    </div>
 
+        </div>
+    </div>
 </body>
 </html>
