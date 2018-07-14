@@ -31,11 +31,22 @@ namespace JasperSiteCore.Models.Database
         public IDatabaseContext Database { get; set; }
         public Components Components { get; set; }
         
-
+        /// <summary>
+        /// Returns list of all articles with categories included.
+        /// </summary>
+        /// <returns>Returns list of all articles.</returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public List<Article> GetAllArticles()
         {
-           
-                return Database.Articles.Include(a=>a.Category).ToList();
+            try
+            {
+                List<Article> articles = Database.Articles.Include(a => a.Category).ToList();
+                return articles;
+            }
+           catch(Exception ex)
+            {
+                throw new DatabaseHelperException(ex);
+            }      
             
         }
 
@@ -51,18 +62,25 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
+        /// <summary>
+        /// Returns article by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns single article.</returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public Article GetArticleById(int id)
-        {
-            IDatabaseContext database = Database;
-
-            if (database.Articles.Any())
+        {          
+            try
             {
-                return database.Articles.Where(a => a.Id == id).Single();
+                return Database.Articles.Where(a => a.Id == id).Single();
             }
-            else
+            catch(Exception ex)
             {
-                return null;
+                throw new DatabaseHelperException(ex);
             }
+          
+             
+           
         }
 
        
