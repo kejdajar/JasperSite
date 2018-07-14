@@ -154,8 +154,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
 
             // Find assigned blocks for the prior theme
-            Theme priorTheme = dbHelper._db.Themes.Where(t => t.Name == themeNameBeforeChanged).Single();
-            Theme newTheme = dbHelper._db.Themes.Where(t => t.Name == themeName).Single();
+            Theme priorTheme = dbHelper.Database.Themes.Where(t => t.Name == themeNameBeforeChanged).Single();
+            Theme newTheme = dbHelper.Database.Themes.Where(t => t.Name == themeName).Single();
 
             var oldRelationships = (from old_holder in dbHelper.GetAllBlockHolders()
                                     from old_joinTable in dbHelper.GetAllHolder_Blocks()
@@ -177,7 +177,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                                     select allBlockHolders).Single();
 
                         editedHolder.BlockHolderId = join.Id;
-                        dbHelper._db.SaveChanges();
+                        dbHelper.Database.SaveChanges();
                     }
                 }
             }

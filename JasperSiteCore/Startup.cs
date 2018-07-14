@@ -52,6 +52,10 @@ namespace JasperSiteCore
             // DB Context service has to be added in ConfigureServices() method
             services.AddDbContext<DatabaseContext>();
 
+            //services.AddScoped<IJasperDataService, _J>();
+            // First param is interface, second is actual class
+            services.AddScoped<IJasperDataService, DbHelper>();
+
             // Stores services for accessing DatabaseContext from installation page, where
             // dependecy injection does not work, because the context was not build at that time yet
             // DbContext fetched from this static property is not uniqe per request, thus not suitable

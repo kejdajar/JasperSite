@@ -8,37 +8,42 @@ using JasperSiteCore.Models.Database;
 using JasperSiteCore.Models.Providers;
 using JasperSiteCore.Models;
 using Microsoft.EntityFrameworkCore;
+using JasperSiteCore.Areas.Admin.ViewModels;
+using Microsoft.AspNetCore.Html;
+using System.Text;
+using JasperSiteCore.Helpers;
 
 namespace JasperSiteCore.Models.Database
 {
-    public class DbHelper
+    public class DbHelper: IJasperDataService
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="database"></param>
         /// <exception cref="DatabaseContextNullException"></exception>
-        public DbHelper(IDatabaseContext database)
+        public DbHelper(DatabaseContext database)
         {
-            this._db = database ?? throw new DatabaseContextNullException();
-          
+            this.Database = database ?? throw new DatabaseContextNullException();
+            this.Components = new Components(Database,this);
         }
 
-        public IDatabaseContext _db;
+        public DatabaseContext Database { get; set; }
+        public Components Components { get; set; }
         
 
         public List<Article> GetAllArticles()
         {
            
-                return _db.Articles.Include(a=>a.Category).ToList();
+                return Database.Articles.Include(a=>a.Category).ToList();
             
         }
 
         public List<Article> GetAllArticles(int categoryId)
         {
-            if (_db.Articles.Any())
+            if (Database.Articles.Any())
             {
-                return _db.Articles.Where(a => a.CategoryId == categoryId).ToList();
+                return Database.Articles.Where(a => a.CategoryId == categoryId).ToList();
             }
             else
             {
@@ -48,7 +53,7 @@ namespace JasperSiteCore.Models.Database
 
         public Article GetArticleById(int id)
         {
-            IDatabaseContext database = _db;
+            IDatabaseContext database = Database;
 
             if (database.Articles.Any())
             {
@@ -64,7 +69,7 @@ namespace JasperSiteCore.Models.Database
 
         public int AddArticle()
         {
-            IDatabaseContext database = _db;
+            IDatabaseContext database = Database;
             JasperSiteCore.Models.Database.Article articleEntity = new Article()
             {
                 HtmlContent = "Váš článek začíná zde...",
@@ -81,9 +86,9 @@ namespace JasperSiteCore.Models.Database
 
         }
 
-        public void EditArticle(JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel articleViewModel)
+        public void EditArticle(EditArticleViewModel articleViewModel)
         {
-            IDatabaseContext database = _db;
+            IDatabaseContext database = Database;
             Article oldArticleToChange = database.Articles.Where(a => a.Id == articleViewModel.Id).Single();
 
 
@@ -99,7 +104,7 @@ namespace JasperSiteCore.Models.Database
 
         public void DeleteArticle(int articleId)
         {
-            IDatabaseContext database = _db;
+            IDatabaseContext database = Database;
             Article articleToDelete = database.Articles.Where(a => a.Id == articleId).Single();
             database.Articles.Remove(articleToDelete);
             database.SaveChanges();
@@ -109,7 +114,7 @@ namespace JasperSiteCore.Models.Database
 
         public List<Category> GetAllCategories()
         {
-            IDatabaseContext database = _db;
+            IDatabaseContext database = Database;
             if (database.Categories.Any())
             {
                 return database.Categories.Include(c=>c.Articles).ToList();
@@ -122,12 +127,12 @@ namespace JasperSiteCore.Models.Database
 
         public string GetCategoryNameById(int id)
         {
-            return _db.Categories.Where(c => c.Id == id).Single().Name;
+            return Database.Categories.Where(c => c.Id == id).Single().Name;
         }
 
         public void AddNewCategory(string categoryName)
         {
-            IDatabaseContext database = _db;
+            IDatabaseContext database = Database;
             database.Categories.Add(new Category() { Name = categoryName });
             database.SaveChanges();
         }
@@ -139,7 +144,7 @@ namespace JasperSiteCore.Models.Database
         /// <exception cref="DatabaseHelperException"></exception>
         public void DeleteCategory(int categoryId)
         {
-              IDatabaseContext database = _db;
+              IDatabaseContext database = Database;
               Category categoryToBeRemoved = GetAllCategories().Where(c => c.Id == categoryId).Single();
               Category  categoryForUnassignedArticles = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single();
 
@@ -174,22 +179,22 @@ namespace JasperSiteCore.Models.Database
         // **************** USERS **************** //
         public User GetUserWithUsername(string username)
         {
-            return _db.Users.Include(u=>u.Role).Where(u => u.Username.Trim() == username.Trim()).Single();
+            return Database.Users.Include(u=>u.Role).Where(u => u.Username.Trim() == username.Trim()).Single();
         }
 
         public User GetUserById(int userId)
         {
-            return _db.Users.Include(u => u.Role).Where(u => u.Id == userId).Single();
+            return Database.Users.Include(u => u.Role).Where(u => u.Id == userId).Single();
         }
 
         public List<User> GetAllUsers()
         {
-            return _db.Users.Include(u => u.Role).ToList();
+            return Database.Users.Include(u => u.Role).ToList();
         }
 
         public List<Role> GetAllRoles()
         {
-            return _db.Roles.ToList();
+            return Database.Roles.ToList();
         }
 
         public void ChangePassword(int userId, string newHashedPassword, string newSalt)
@@ -197,95 +202,97 @@ namespace JasperSiteCore.Models.Database
             User u = GetUserById(userId);
             u.Password = newHashedPassword;
             u.Salt = newSalt;
-            _db.SaveChanges();
+            Database.SaveChanges();
         }
 
         public void SaveChanges()
         {
-            _db.SaveChanges();
+            Database.SaveChanges();
         }
 
         // Settings
         public string GetWebsiteName()
         {
-            return _db.Settings.Where(s => s.Key == "WebsiteName").Select(s => s.Value).Single();
+            return Database.Settings.Where(s => s.Key == "WebsiteName").Select(s => s.Value).Single();
         }
         public void SetWebsiteName(string newWebsiteName)
         {
             // search for setting
-            Setting websiteNameSetting = _db.Settings.Where(s => s.Key.Trim() == "WebsiteName").Single();
+            Setting websiteNameSetting = Database.Settings.Where(s => s.Key.Trim() == "WebsiteName").Single();
             websiteNameSetting.Value = newWebsiteName;
-            _db.SaveChanges();
+            Database.SaveChanges();
         }
 
         // Holders
         public List<BlockHolder> GetAllBlockHolders()
         {
-            return _db.BlockHolders.Include(b=>b.Theme).ToList();
+            return Database.BlockHolders.Include(b=>b.Theme).ToList();
         }
 
         public List<Theme> GetAllThemes()
         {
-            return _db.Themes.ToList();
+            return Database.Themes.ToList();
         }
 
         public List<TextBlock> GetAllTextBlocks()
         {
-            return _db.TextBlocks.ToList();
+            return Database.TextBlocks.ToList();
         }
 
         public List<Holder_Block> GetAllHolder_Blocks()
         {
-            return _db.Holder_Block.ToList();
+            return Database.Holder_Block.ToList();
         }
 
 
         public TextBlock AddNewBlock(TextBlock block)
         {
-            _db.TextBlocks.Add(block);
-            _db.SaveChanges();
-            return _db.TextBlocks.Where(b => b.Name == block.Name).Single();
+            Database.TextBlocks.Add(block);
+            Database.SaveChanges();
+            return Database.TextBlocks.Where(b => b.Name == block.Name).Single();
         }
 
         public void AddNewHolder_Block(Holder_Block hb)
         {
-            _db.Holder_Block.Add(hb);
-            _db.SaveChanges();
+            Database.Holder_Block.Add(hb);
+            Database.SaveChanges();
         }
 
         public void DeleteTextBlockById(int id)
         {
-           TextBlock goner= _db.TextBlocks.Where(t => t.Id == id).Single();
-            _db.TextBlocks.Remove(goner);
-            _db.SaveChanges();
+           TextBlock goner= Database.TextBlocks.Where(t => t.Id == id).Single();
+            Database.TextBlocks.Remove(goner);
+            Database.SaveChanges();
         }
 
         public void AddHolderToBlock(int holderId, int blockId)
         {
             Holder_Block h_b = new Holder_Block() { BlockHolderId = holderId, TextBlockId = blockId };
-            _db.Holder_Block.Add(h_b);
-            _db.SaveChanges();
+            Database.Holder_Block.Add(h_b);
+            Database.SaveChanges();
         }
 
         public void RemoveHolderFromBlock(int holderId, int blockId)
         {
-            Holder_Block goner_h_b = _db.Holder_Block.Where(h_b => h_b.BlockHolderId == holderId && h_b.TextBlockId == blockId).Single();
-            _db.Holder_Block.Remove(goner_h_b);
-            _db.SaveChanges();
+            Holder_Block goner_h_b = Database.Holder_Block.Where(h_b => h_b.BlockHolderId == holderId && h_b.TextBlockId == blockId).Single();
+            Database.Holder_Block.Remove(goner_h_b);
+            Database.SaveChanges();
         }
 
         public void DeleteBlockHolderById(int id)
         {
-            BlockHolder goner = _db.BlockHolders.Where(bh => bh.Id == id).Single();
-            _db.BlockHolders.Remove(goner);
-            _db.SaveChanges();
+            BlockHolder goner = Database.BlockHolders.Where(bh => bh.Id == id).Single();
+            Database.BlockHolders.Remove(goner);
+            Database.SaveChanges();
         }
 
+      
         public void DeleteThemeByName(string name)
         {
-            Theme goner = _db.Themes.Where(t => t.Name == name).Single();
-            _db.Themes.Remove(goner);
-            _db.SaveChanges();
+            Theme goner = Database.Themes.Where(t => t.Name == name).Single();
+            Database.Themes.Remove(goner);
+            Database.SaveChanges();          
+
         }
 
         
@@ -319,8 +326,8 @@ namespace JasperSiteCore.Models.Database
             foreach (ThemeInfo ti in subset)
             {
                 Theme theme = new Theme() { Name = ti.ThemeName };
-                _db.Themes.Add(theme);
-                _db.SaveChanges();
+                Database.Themes.Add(theme);
+                Database.SaveChanges();
 
                 // Emulation of website configuration for every theme
                 GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
@@ -336,10 +343,10 @@ namespace JasperSiteCore.Models.Database
                 foreach (string holderName in holders)
                 {
                     BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
-                    _db.BlockHolders.Add(blockHolder);
+                    Database.BlockHolders.Add(blockHolder);
 
                 }
-                _db.SaveChanges();
+                Database.SaveChanges();
 
             }
         }
@@ -347,8 +354,8 @@ namespace JasperSiteCore.Models.Database
         public void Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase()
         {
             // Delete all corrupted themes records
-            _db.Themes.RemoveRange(_db.Themes);
-            _db.SaveChanges();
+            Database.Themes.RemoveRange(Database.Themes);
+            Database.SaveChanges();
 
             // Old text blocks will not be deleted
 
@@ -356,8 +363,8 @@ namespace JasperSiteCore.Models.Database
             foreach (ThemeInfo ti in themesInfo)
             {
                 Theme theme = new Theme() { Name = ti.ThemeName };
-                _db.Themes.Add(theme);
-                _db.SaveChanges();
+                Database.Themes.Add(theme);
+                Database.SaveChanges();
 
                 // Emulation of website configuration for every theme
                 GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
@@ -373,56 +380,56 @@ namespace JasperSiteCore.Models.Database
                 foreach (string holderName in holders)
                 {
                     BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
-                    _db.BlockHolders.Add(blockHolder);                    
+                    Database.BlockHolders.Add(blockHolder);                    
 
                 }
-                _db.SaveChanges();
+                Database.SaveChanges();
 
             }
         }
 
        public List<Image> GetAllImages()
         {
-            return _db.Images.Include(i=>i.ImageData).ToList();
+            return Database.Images.Include(i=>i.ImageData).ToList();
         }
 
         public TextBlock GetTextBlockById(int id)
         {
-            return _db.TextBlocks.Where(tb => tb.Id == id).Single();
+            return Database.TextBlocks.Where(tb => tb.Id == id).Single();
         }
 
         public Holder_Block GetTextBlockOrderNumberInHolder(int textBlockId,int holderId)
         {
-            Holder_Block holder = _db.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
+            Holder_Block holder = Database.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
             return holder;
         }
 
         public void SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order)
         {
-            Holder_Block holder = _db.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
+            Holder_Block holder = Database.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
             holder.Order = order;
-            _db.SaveChanges();
+            Database.SaveChanges();
            
         }
 
         public void DeleteImageById(int imgId)
         {
-            ImageData imgToBeRemoved = _db.ImageData.Where(i => i.Id == imgId).Single();
-            _db.ImageData.Remove(imgToBeRemoved);
-            _db.SaveChanges();
+            ImageData imgToBeRemoved = Database.ImageData.Where(i => i.Id == imgId).Single();
+            Database.ImageData.Remove(imgToBeRemoved);
+            Database.SaveChanges();
         }
 
         public void AddNewUser(User u)
         {
-            _db.Users.Add(u);
-            _db.SaveChanges();
+            Database.Users.Add(u);
+            Database.SaveChanges();
         }
 
         public void DeleteUserById(int id)
         {
-            User goner = _db.Users.Where(u => u.Id == id).Single();
-            _db.Users.Remove(goner);
-            _db.SaveChanges();
+            User goner = Database.Users.Where(u => u.Id == id).Single();
+            Database.Users.Remove(goner);
+            Database.SaveChanges();
         }
 
 
@@ -477,5 +484,58 @@ namespace JasperSiteCore.Models.Database
             return themeNamesOnlyInDatabaseAndNotInFolder;
         }
 
+        
+
     }
+
+    public interface IJasperDataService
+    {
+        DatabaseContext Database { get; set; }
+        Components Components { get; set; }
+
+        List<Article> GetAllArticles();
+        List<Article> GetAllArticles(int categoryId);
+        Article GetArticleById(int id);
+        int AddArticle();
+        void EditArticle(EditArticleViewModel articleViewModel);
+        void DeleteArticle(int articleId);
+        List<Category> GetAllCategories();
+        string GetCategoryNameById(int id);
+        void AddNewCategory(string categoryName);
+        void DeleteCategory(int categoryId);
+        User GetUserWithUsername(string username);
+        User GetUserById(int userId);
+        List<User> GetAllUsers();
+        List<Role> GetAllRoles();
+        void ChangePassword(int userId, string newHashedPassword, string newSalt);
+        void SaveChanges();
+        string GetWebsiteName();
+        void SetWebsiteName(string newWebsiteName);
+        List<BlockHolder> GetAllBlockHolders();
+        List<Theme> GetAllThemes();
+        List<TextBlock> GetAllTextBlocks();
+        List<Holder_Block> GetAllHolder_Blocks();
+        TextBlock AddNewBlock(TextBlock block);
+        void AddNewHolder_Block(Holder_Block hb);
+        void DeleteTextBlockById(int id);
+        void AddHolderToBlock(int holderId, int blockId);
+        void RemoveHolderFromBlock(int holderId, int blockId);
+        void DeleteBlockHolderById(int id);
+        void DeleteThemeByName(string name);
+        void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded);
+        void Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
+        List<Image> GetAllImages();
+        TextBlock GetTextBlockById(int id);
+        Holder_Block GetTextBlockOrderNumberInHolder(int textBlockId, int holderId);
+        void SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order);
+        void DeleteImageById(int imgId);
+        void AddNewUser(User u);
+        void DeleteUserById(int id);
+        List<string> CheckThemeFolderAndDatabaseIntegrity();
+        List<string> FindManuallyDeletedThemes();
+
+    }
+
+
+
 }

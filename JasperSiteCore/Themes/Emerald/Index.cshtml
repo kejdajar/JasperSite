@@ -16,18 +16,18 @@
     </div>
 
     <div>
-        @J.Holder("MainPageHolder", databaseContext)
+        @J.Components.Holder("MainPageHolder")
     </div>
 
 
 
-    @foreach (Category c in J.Db(databaseContext).GetAllCategories())
+    @foreach (Category c in J.GetAllCategories())
     {
 
         <h2 style="margin:10px"><i class="fa fa-leaf" aria-hidden="true"></i> @c.Name</h2>
-        @if (J.Db(databaseContext).GetAllArticles(c.Id).Count > 0)
+        @if (J.GetAllArticles(c.Id).Count > 0)
         {
-            @foreach (Article article in J.Db(databaseContext).GetAllArticles(c.Id))
+            @foreach (Article article in J.GetAllArticles(c.Id))
             {
 
                 <div class="list-group">

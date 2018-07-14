@@ -3,7 +3,7 @@
 @{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
 @{
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
-    ViewData["Title"] = J.Db(databaseContext).GetAllArticles().Where(a => a.Id==query).Single().Name;
+    ViewData["Title"] = J.GetAllArticles().Where(a => a.Id==query).Single().Name;
 }
 
 <div class="container-fluid article-text">

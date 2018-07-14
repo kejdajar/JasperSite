@@ -1,9 +1,8 @@
 ﻿@using JasperSiteCore.Models.Database
-@inject DatabaseContext databaseContext
 @{
     ViewBag.Title = "Index";
 }
-
+@model JasperSiteCore.Areas.Admin.ViewModels.HomeViewModel
 
 <script src="~/lib/chart.js/dist/Chart.min.js"></script>
 <script>
@@ -40,7 +39,7 @@
            
             labels: [
 
-                @foreach(var category in J.Db(databaseContext).GetAllCategories())
+                @foreach(var category in Model.Articles)
                 {
 
                   @:"@Html.Raw(category.Name)",
@@ -51,7 +50,7 @@
                 {
                     label: "Počet článků v rubrice",
                     backgroundColor: [
-                        @foreach(var category in J.Db(databaseContext).GetAllCategories())
+                        @foreach(var category in Model.Categories)
                         {
                             var random = new Random();
                             var color = String.Format("#{0:X6}", random.Next(0x1000000));
@@ -59,10 +58,10 @@
                         }
                     ],
                     data: [
-                        @foreach (var category in J.Db(databaseContext).GetAllCategories())
+                        @foreach (var category in Model.Categories)
                         {
 
-                            var articles = from a in J.Db(databaseContext).GetAllArticles()
+                            var articles = from a in Model.Articles
                                            where a.CategoryId == category.Id
                                            select a;
 
@@ -107,7 +106,7 @@
 
     <h2><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>Přehled rubrik a jejich článků</h2>
 
-    @if (J.Db(databaseContext).GetAllArticles().Count() > 0)
+    @if (Model.Articles.Count() > 0)
     {
         <div style="max-width:800px">
             <canvas id="chartCanvas"></canvas>

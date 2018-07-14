@@ -3,7 +3,7 @@
 @inject DatabaseContext databaseContext
 @{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
 @{
-    string categoryName = @J.Db(databaseContext).GetCategoryNameById(query);
+    string categoryName = @J.GetCategoryNameById(query);
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
     ViewData["Title"] = categoryName;
 }
@@ -18,9 +18,9 @@
 
 
 
-    @if (J.Db(databaseContext).GetAllArticles(query).Count() > 0)
+    @if (J.GetAllArticles(query).Count() > 0)
     {
-        @foreach (Article article in J.Db(databaseContext).GetAllArticles(query))
+        @foreach (Article article in J.GetAllArticles(query))
         {
 
             <div class="list-group">

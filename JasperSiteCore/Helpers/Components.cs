@@ -10,8 +10,18 @@ using Microsoft.AspNetCore.Html;
 
 namespace JasperSiteCore.Helpers
 {
-    public static class J
+    public  class Components
     {
+
+        public Components(DatabaseContext dbContext, DbHelper dbHelper)
+        {
+            this._dbContext = dbContext;
+            this._dbHelper = dbHelper;
+        }
+
+        private readonly DatabaseContext _dbContext;
+        private readonly DbHelper _dbHelper;
+
         /// <summary>
         /// Holder is container for any number of assigned bloks. Holder name is assigned to the active theme through CMS.
         /// Single page can contain more holders of the same name. Holder name must be beforehand registered in jasper.json theme file.
@@ -19,14 +29,13 @@ namespace JasperSiteCore.Helpers
         /// <param name="holderName">Non-uniqe name of the registered holder.</param>
         /// <param name="dbContext">Database context from the dependecy injeciton.</param>
         /// <returns></returns>
-        public static HtmlString Holder(string holderName, DatabaseContext dbContext)
+        public HtmlString Holder(string holderName)
         {
-            DbHelper dbHelper = new DbHelper(dbContext);
-
-            var holders = dbHelper.GetAllBlockHolders();
-            var holder_block = dbHelper.GetAllHolder_Blocks();
-            var blocks = dbHelper.GetAllTextBlocks();
-            var themes = dbHelper.GetAllThemes();
+            
+            var holders = _dbHelper.GetAllBlockHolders();
+            var holder_block = _dbHelper.GetAllHolder_Blocks();
+            var blocks = _dbHelper.GetAllTextBlocks();
+            var themes = _dbHelper.GetAllThemes();
 
             string currentThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
             int currentThemeId = (from t in themes
@@ -48,11 +57,7 @@ namespace JasperSiteCore.Helpers
             return new HtmlString(sb.ToString());
         }
 
-        public static DbHelper Db (DatabaseContext dbContext)
-        {
-            DbHelper dbHelper = new DbHelper(dbContext);
-            return dbHelper;
-        }
-    }   
+       
+    }
 
 }

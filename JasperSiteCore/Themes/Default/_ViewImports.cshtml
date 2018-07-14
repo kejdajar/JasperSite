@@ -9,5 +9,5 @@
 @* Contains custom TAG helpers *@
 @addTagHelper *, JasperSiteCore
 
-@*Injects database context into every theme view*@
-@inject DatabaseContext databaseContext
+@*Injects DatabaseContext and DbHelper, all encapsulated in IJasperDataService*@
+@inject IJasperDataService J;

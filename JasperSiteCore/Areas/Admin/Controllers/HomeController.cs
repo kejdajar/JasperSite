@@ -48,9 +48,17 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         // GET: Admin/Home
         public ActionResult Index()
-        {          
-            return View();
+        {
+            return View(UpdatePage());
         }  
+
+        public HomeViewModel UpdatePage()
+        {
+            HomeViewModel model = new HomeViewModel();
+            model.Articles = dbHelper.GetAllArticles();
+            model.Categories = dbHelper.GetAllCategories();
+            return model;
+        }
 
         public IActionResult Error()
         {
