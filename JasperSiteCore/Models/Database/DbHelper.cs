@@ -15,7 +15,11 @@ using JasperSiteCore.Helpers;
 
 namespace JasperSiteCore.Models.Database
 {
-    public class DbHelper: IJasperDataService
+    /// <summary>
+    /// DbHelper is class is used in theme views and administration controllers. It implements the IJasperDataService interface, which
+    /// is used for dependency injection.
+    /// </summary>
+    public class DbHelper : IJasperDataService
     {
         /// <summary>
         /// 
@@ -25,16 +29,17 @@ namespace JasperSiteCore.Models.Database
         public DbHelper(IDatabaseContext database)
         {
             this.Database = database ?? throw new DatabaseContextNullException();
-            this.Components = new Components(Database,this);
+            this.Components = new Components(Database, this);
         }
 
         public IDatabaseContext Database { get; set; }
         public Components Components { get; set; }
-        
+
+        #region Articles
         /// <summary>
         /// Returns list of all articles with categories included.
         /// </summary>
-        /// <returns>Returns list of all articles.</returns>
+        /// <returns>Returns list of articles.</returns>
         /// <exception cref="DatabaseHelperException"></exception>
         public List<Article> GetAllArticles()
         {
@@ -43,23 +48,30 @@ namespace JasperSiteCore.Models.Database
                 List<Article> articles = Database.Articles.Include(a => a.Category).ToList();
                 return articles;
             }
-           catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new DatabaseHelperException(ex);
-            }      
-            
+            }
+
         }
 
+        /// <summary>
+        /// Gets all articles in the specified category.
+        /// </summary>
+        /// <param name="categoryId">Required category Id.</param>
+        /// <returns>Returns list of articles.</returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public List<Article> GetAllArticles(int categoryId)
         {
-            if (Database.Articles.Any())
+            try
             {
                 return Database.Articles.Where(a => a.CategoryId == categoryId).ToList();
             }
-            else
+            catch (Exception ex)
             {
-                return null;
+                throw new DatabaseHelperException(ex);
             }
+
         }
 
         /// <summary>
@@ -67,92 +79,155 @@ namespace JasperSiteCore.Models.Database
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Returns single article.</returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+        /// <exception cref="DatabaseHelperException">Returns single article.</exception>
         public Article GetArticleById(int id)
-        {          
+        {
             try
             {
                 return Database.Articles.Where(a => a.Id == id).Single();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new DatabaseHelperException(ex);
             }
-          
-             
-           
+
         }
 
-       
 
+        /// <summary>
+        /// Adds new default article.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public int AddArticle()
         {
-            IDatabaseContext database = Database;
-            JasperSiteCore.Models.Database.Article articleEntity = new Article()
+            try
             {
-                HtmlContent = "Váš článek začíná zde...",
-                Name = "Nový článek",
-                PublishDate = DateTime.Now,
+                Article articleEntity = new Article()
+                {
+                    HtmlContent = "Váš článek začíná zde...",
+                    Name = "Nový článek",
+                    PublishDate = DateTime.Now,
 
-                // New article will be automatically assigned to uncategorized category
-                CategoryId = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single().Id
-               
-            };
-            database.Articles.Add(articleEntity);
-            database.SaveChanges();
-            return articleEntity.Id;
+                    // New article will be automatically assigned to uncategorized category
+                    CategoryId = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single().Id
+
+                };
+                Database.Articles.Add(articleEntity);
+                Database.SaveChanges();
+                return articleEntity.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException(ex);
+            }
+
 
         }
 
+        /// <summary>
+        /// Updates article with new values.
+        /// </summary>
+        /// <param name="articleViewModel"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
         public void EditArticle(EditArticleViewModel articleViewModel)
         {
-            IDatabaseContext database = Database;
-            Article oldArticleToChange = database.Articles.Where(a => a.Id == articleViewModel.Id).Single();
+            try
+            {
+                Article oldArticleToChange = Database.Articles.Where(a => a.Id == articleViewModel.Id).Single();
 
+                oldArticleToChange.HtmlContent = articleViewModel.HtmlContent;
+                oldArticleToChange.Name = articleViewModel.Name;
+                oldArticleToChange.PublishDate = articleViewModel.PublishDate;
+                oldArticleToChange.CategoryId = articleViewModel.SelectedCategoryId;
 
-            oldArticleToChange.HtmlContent = articleViewModel.HtmlContent;
-            oldArticleToChange.Name = articleViewModel.Name;
-            oldArticleToChange.PublishDate = articleViewModel.PublishDate;
-            oldArticleToChange.CategoryId = articleViewModel.SelectedCategoryId;
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException(ex);
+            }
 
-            // database.Articles.Add(oldArticleToChange);
-            database.SaveChanges();
         }
 
-
+        /// <summary>
+        /// Deletes article from database.
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
         public void DeleteArticle(int articleId)
         {
-            IDatabaseContext database = Database;
-            Article articleToDelete = database.Articles.Where(a => a.Id == articleId).Single();
-            database.Articles.Remove(articleToDelete);
-            database.SaveChanges();
+            try
+            {
+                IDatabaseContext database = Database;
+                Article articleToDelete = database.Articles.Where(a => a.Id == articleId).Single();
+                database.Articles.Remove(articleToDelete);
+                database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException(ex);
+            }
+
         }
+        #endregion
 
-
-
+        #region Categories
+        /// <summary>
+        /// Returns list of all categories.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public List<Category> GetAllCategories()
         {
-            IDatabaseContext database = Database;
-            if (database.Categories.Any())
+            try
             {
-                return database.Categories.Include(c=>c.Articles).ToList();
+                return Database.Categories.Include(c => c.Articles).ToList();
             }
-            else
+            catch (Exception ex)
             {
-                return null;
+                throw new DatabaseHelperException(ex);
             }
+
+
         }
 
+        /// <summary>
+        /// Returns category name by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public string GetCategoryNameById(int id)
         {
-            return Database.Categories.Where(c => c.Id == id).Single().Name;
+            try
+            {
+                return Database.Categories.Where(c => c.Id == id).Single().Name;
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException(ex);
+            }
+
         }
 
+        /// <summary>
+        /// Adds new category.
+        /// </summary>
+        /// <param name="categoryName">Category name.</param>
+        /// <exception cref="DatabaseHelperException"></exception>
         public void AddNewCategory(string categoryName)
         {
-            IDatabaseContext database = Database;
-            database.Categories.Add(new Category() { Name = categoryName });
-            database.SaveChanges();
+            try
+            {
+                Database.Categories.Add(new Category() { Name = categoryName });
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException(ex);
+            }
+
         }
 
         /// <summary>
@@ -162,18 +237,20 @@ namespace JasperSiteCore.Models.Database
         /// <exception cref="DatabaseHelperException"></exception>
         public void DeleteCategory(int categoryId)
         {
-              IDatabaseContext database = Database;
-              Category categoryToBeRemoved = GetAllCategories().Where(c => c.Id == categoryId).Single();
-              Category  categoryForUnassignedArticles = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single();
 
-            if (categoryToBeRemoved.Name=="Nezařazeno")
+            try
             {
-                throw new DatabaseHelperException("Výchozí rubriku \"nezařazeno\" není možné odstranit.");
-            }
+                Category categoryToBeRemoved = GetAllCategories().Where(c => c.Id == categoryId).Single();
+                Category categoryForUnassignedArticles = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single();
 
-            // EF Core - default on delete cascade - assigned articles would be removed by default
-            // This will prevent assigned articles to be deleted
-            List<Article> assignedArticles = (from a in GetAllArticles()
+                if (categoryToBeRemoved.Name == "Nezařazeno")
+                {
+                    throw new DatabaseHelperException("Výchozí rubriku \"nezařazeno\" není možné odstranit.");
+                }
+
+                // EF Core - default on delete cascade - assigned articles would be removed by default
+                // This will prevent assigned articles to be deleted
+                List<Article> assignedArticles = (from a in GetAllArticles()
                                                   where a.CategoryId == categoryId
                                                   select a).ToList();
 
@@ -182,22 +259,27 @@ namespace JasperSiteCore.Models.Database
                 {
                     returningArticle.CategoryId = categoryToBeRemoved.Id;
                 }
-                database.SaveChanges();
+                Database.SaveChanges();
 
-               
-                database.Categories.Remove(categoryToBeRemoved);
-                database.SaveChanges();
-           
-            
+
+                Database.Categories.Remove(categoryToBeRemoved);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+
         }
 
+        #endregion
 
-       
+        #region Users
 
-        // **************** USERS **************** //
         public User GetUserWithUsername(string username)
         {
-            return Database.Users.Include(u=>u.Role).Where(u => u.Username.Trim() == username.Trim()).Single();
+            return Database.Users.Include(u => u.Role).Where(u => u.Username.Trim() == username.Trim()).Single();
         }
 
         public User GetUserById(int userId)
@@ -210,230 +292,11 @@ namespace JasperSiteCore.Models.Database
             return Database.Users.Include(u => u.Role).ToList();
         }
 
-        public List<Role> GetAllRoles()
-        {
-            return Database.Roles.ToList();
-        }
-
         public void ChangePassword(int userId, string newHashedPassword, string newSalt)
         {
             User u = GetUserById(userId);
             u.Password = newHashedPassword;
             u.Salt = newSalt;
-            Database.SaveChanges();
-        }
-
-        public void SaveChanges()
-        {
-            Database.SaveChanges();
-        }
-
-        // Settings
-        public string GetWebsiteName()
-        {
-            return Database.Settings.Where(s => s.Key == "WebsiteName").Select(s => s.Value).Single();
-        }
-        public void SetWebsiteName(string newWebsiteName)
-        {
-            // search for setting
-            Setting websiteNameSetting = Database.Settings.Where(s => s.Key.Trim() == "WebsiteName").Single();
-            websiteNameSetting.Value = newWebsiteName;
-            Database.SaveChanges();
-        }
-
-        // Holders
-        public List<BlockHolder> GetAllBlockHolders()
-        {
-            return Database.BlockHolders.Include(b=>b.Theme).ToList();
-        }
-
-        public List<Theme> GetAllThemes()
-        {
-            return Database.Themes.ToList();
-        }
-
-        public List<TextBlock> GetAllTextBlocks()
-        {
-            return Database.TextBlocks.ToList();
-        }
-
-        public List<Holder_Block> GetAllHolder_Blocks()
-        {
-            return Database.Holder_Block.ToList();
-        }
-
-
-        public TextBlock AddNewBlock(TextBlock block)
-        {
-            Database.TextBlocks.Add(block);
-            Database.SaveChanges();
-            return Database.TextBlocks.Where(b => b.Name == block.Name).Single();
-        }
-
-        public void AddNewHolder_Block(Holder_Block hb)
-        {
-            Database.Holder_Block.Add(hb);
-            Database.SaveChanges();
-        }
-
-        public void DeleteTextBlockById(int id)
-        {
-           TextBlock goner= Database.TextBlocks.Where(t => t.Id == id).Single();
-            Database.TextBlocks.Remove(goner);
-            Database.SaveChanges();
-        }
-
-        public void AddHolderToBlock(int holderId, int blockId)
-        {
-            Holder_Block h_b = new Holder_Block() { BlockHolderId = holderId, TextBlockId = blockId };
-            Database.Holder_Block.Add(h_b);
-            Database.SaveChanges();
-        }
-
-        public void RemoveHolderFromBlock(int holderId, int blockId)
-        {
-            Holder_Block goner_h_b = Database.Holder_Block.Where(h_b => h_b.BlockHolderId == holderId && h_b.TextBlockId == blockId).Single();
-            Database.Holder_Block.Remove(goner_h_b);
-            Database.SaveChanges();
-        }
-
-        public void DeleteBlockHolderById(int id)
-        {
-            BlockHolder goner = Database.BlockHolders.Where(bh => bh.Id == id).Single();
-            Database.BlockHolders.Remove(goner);
-            Database.SaveChanges();
-        }
-
-      
-        public void DeleteThemeByName(string name)
-        {
-            Theme goner = Database.Themes.Where(t => t.Name == name).Single();
-            Database.Themes.Remove(goner);
-            Database.SaveChanges();          
-
-        }
-
-        
-
-
-        /// <summary>
-        /// Creates database theme objects with corresponding relationships.
-        /// </summary>
-        /// <param name="themeNamesToBeAdded"></param>        
-        public void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded)
-        {
-            // All themes info, even those that were already registered
-            List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
-
-            // Subset of new themes that will be stored in DB
-            List<ThemeInfo> subset = new List<ThemeInfo>();
-
-            foreach(ThemeInfo themeInfoObject in themesInfo)
-            {
-                foreach(string nameToBeAdded in themeNamesToBeAdded)
-                {
-                    if(themeInfoObject.ThemeName.Trim()==nameToBeAdded.Trim())
-                    {
-                        subset.Add(themeInfoObject);
-                    }
-                }
-            }
-
-
-
-            foreach (ThemeInfo ti in subset)
-            {
-                Theme theme = new Theme() { Name = ti.ThemeName };
-                Database.Themes.Add(theme);
-                Database.SaveChanges();
-
-                // Emulation of website configuration for every theme
-                GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
-                GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalJsonProvider);
-                globalConfig.SetTemporaryThemeName(ti.ThemeName); // This will not write enytihing to the underlying .json file 
-                ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
-                WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
-
-
-
-                List<string> holders = websiteConfig.BlockHolders;
-
-                foreach (string holderName in holders)
-                {
-                    BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
-                    Database.BlockHolders.Add(blockHolder);
-
-                }
-                Database.SaveChanges();
-
-            }
-        }
-
-        public void Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase()
-        {
-            // Delete all corrupted themes records
-            Database.Themes.RemoveRange(Database.Themes);
-            Database.SaveChanges();
-
-            // Old text blocks will not be deleted
-
-            List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
-            foreach (ThemeInfo ti in themesInfo)
-            {
-                Theme theme = new Theme() { Name = ti.ThemeName };
-                Database.Themes.Add(theme);
-                Database.SaveChanges();
-
-                // Emulation of website configuration for every theme
-                GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
-                GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalJsonProvider);
-                globalConfig.SetTemporaryThemeName(ti.ThemeName); // This will not write enytihing to the underlying .json file 
-                ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
-                WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
-                              
-
-
-                List<string> holders = websiteConfig.BlockHolders;
-
-                foreach (string holderName in holders)
-                {
-                    BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
-                    Database.BlockHolders.Add(blockHolder);                    
-
-                }
-                Database.SaveChanges();
-
-            }
-        }
-
-       public List<Image> GetAllImages()
-        {
-            return Database.Images.Include(i=>i.ImageData).ToList();
-        }
-
-        public TextBlock GetTextBlockById(int id)
-        {
-            return Database.TextBlocks.Where(tb => tb.Id == id).Single();
-        }
-
-        public Holder_Block GetTextBlockOrderNumberInHolder(int textBlockId,int holderId)
-        {
-            Holder_Block holder = Database.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
-            return holder;
-        }
-
-        public void SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order)
-        {
-            Holder_Block holder = Database.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
-            holder.Order = order;
-            Database.SaveChanges();
-           
-        }
-
-        public void DeleteImageById(int imgId)
-        {
-            ImageData imgToBeRemoved = Database.ImageData.Where(i => i.Id == imgId).Single();
-            Database.ImageData.Remove(imgToBeRemoved);
             Database.SaveChanges();
         }
 
@@ -450,67 +313,585 @@ namespace JasperSiteCore.Models.Database
             Database.SaveChanges();
         }
 
+        #endregion
 
-        /*FORMERLY IN THEME HELPER CLASS*/
-        
+        #region Roles
+        /// <summary>
+        /// Returns list of all user roles.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public List<Role> GetAllRoles()
+        {
+            try
+            {
+                return Database.Roles.ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException(ex);
+            }
+        }
+        #endregion
+
+        public void SaveChanges()
+        {
+            Database.SaveChanges();
+        }
+
+        #region Themes
+
+        /// <summary>
+        /// Returns list of all themes.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public List<Theme> GetAllThemes()
+        {
+            try
+            {
+                return Database.Themes.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes theme by name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void DeleteThemeByName(string name)
+        {
+            try
+            {
+                Theme goner = Database.Themes.Where(t => t.Name == name).Single();
+                Database.Themes.Remove(goner);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates database theme objects with corresponding relationships.
+        /// </summary>
+        /// <param name="themeNamesToBeAdded"></param>        
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded)
+        {
+            try
+            {
+                // All themes info, even those that were already registered
+                List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+
+                // Subset of new themes that will be stored in DB
+                List<ThemeInfo> subset = new List<ThemeInfo>();
+
+                foreach (ThemeInfo themeInfoObject in themesInfo)
+                {
+                    foreach (string nameToBeAdded in themeNamesToBeAdded)
+                    {
+                        if (themeInfoObject.ThemeName.Trim() == nameToBeAdded.Trim())
+                        {
+                            subset.Add(themeInfoObject);
+                        }
+                    }
+                }
+
+                foreach (ThemeInfo ti in subset)
+                {
+                    Theme theme = new Theme() { Name = ti.ThemeName };
+                    Database.Themes.Add(theme);
+                    Database.SaveChanges();
+
+                    // Emulation of website configuration for every theme
+                    GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
+                    GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalJsonProvider);
+                    globalConfig.SetTemporaryThemeName(ti.ThemeName); // This will not write enytihing to the underlying .json file 
+                    ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
+                    WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
+
+                    List<string> holders = websiteConfig.BlockHolders;
+
+                    foreach (string holderName in holders)
+                    {
+                        BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
+                        Database.BlockHolders.Add(blockHolder);
+
+                    }
+                    Database.SaveChanges();
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// 1) Removes all themes from database.
+        /// 2) All text block and their content will be untouched.
+        /// 3) Themes records & block holders in Db will be recreated based on physical files in Theme folder.
+        /// 4) All text blocks will be marked as unassigned.
+        /// </summary>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase()
+        {
+            try
+            {
+                // Delete all corrupted themes records
+                Database.Themes.RemoveRange(Database.Themes);
+                Database.SaveChanges();
+
+                // Old text blocks will not be deleted
+
+                List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+                foreach (ThemeInfo ti in themesInfo)
+                {
+                    Theme theme = new Theme() { Name = ti.ThemeName };
+                    Database.Themes.Add(theme);
+                    Database.SaveChanges();
+
+                    // Emulation of website configuration for every theme
+                    GlobalConfigDataProviderJson globalJsonProvider = new GlobalConfigDataProviderJson("jasper.json");
+                    GlobalWebsiteConfig globalConfig = new GlobalWebsiteConfig(globalJsonProvider);
+                    globalConfig.SetTemporaryThemeName(ti.ThemeName); // This will not write enytihing to the underlying .json file 
+                    ConfigurationObjectProviderJson configurationObjectJsonProvider = new ConfigurationObjectProviderJson(globalConfig, "jasper.json");
+                    WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
+
+                    List<string> holders = websiteConfig.BlockHolders;
+
+                    foreach (string holderName in holders)
+                    {
+                        BlockHolder blockHolder = new BlockHolder() { Name = holderName, ThemeId = theme.Id };
+                        Database.BlockHolders.Add(blockHolder);
+
+                    }
+                    Database.SaveChanges();
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
 
         /// <summary>
         /// Sometimes user can manually add a theme, without registering that change in the database.
         /// Therefore it is necessary to check whether folder strucure is in accord with database.
         /// </summary>
+        /// <exception cref="DatabaseHelperException"></exception>
         public List<string> CheckThemeFolderAndDatabaseIntegrity()
         {
-            List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo();
-            List<Theme> themesStoredInDb = GetAllThemes();
-
-            // All names that are to be found in DB will be removed from this list
-            // Eventually this list will contain all names that has not yet been stored in DB
-            List<string> allNamesInFolder = themeInfosFromFolder.Select(t => t.ThemeName.Trim()).ToList();
-
-            foreach (ThemeInfo folder in themeInfosFromFolder)
+            try
             {
-                foreach (Theme db in themesStoredInDb)
+                List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo();
+                List<Theme> themesStoredInDb = GetAllThemes();
+
+                // All names that are to be found in DB will be removed from this list
+                // Eventually this list will contain all names that has not yet been stored in DB
+                List<string> allNamesInFolder = themeInfosFromFolder.Select(t => t.ThemeName.Trim()).ToList();
+
+                foreach (ThemeInfo folder in themeInfosFromFolder)
                 {
-                    if (folder.ThemeName.Trim() == db.Name.Trim())
+                    foreach (Theme db in themesStoredInDb)
                     {
-                        allNamesInFolder.Remove(folder.ThemeName.Trim());
+                        if (folder.ThemeName.Trim() == db.Name.Trim())
+                        {
+                            allNamesInFolder.Remove(folder.ThemeName.Trim());
+                        }
                     }
                 }
-            }
 
-            return allNamesInFolder;
+                return allNamesInFolder;
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
         }
 
+        /// <summary>
+        /// Finds theme names that are registered in Db but not physically present in theme folder.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public List<string> FindManuallyDeletedThemes()
         {
-            List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo();
-            List<Theme> themesStoredInDb = GetAllThemes();
-
-
-            List<string> themeNamesOnlyInDatabaseAndNotInFolder = themesStoredInDb.Select(n => n.Name).ToList();
-
-            foreach (Theme dbName in themesStoredInDb)
+            try
             {
-                foreach (ThemeInfo folderName in themeInfosFromFolder)
+                List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo();
+                List<Theme> themesStoredInDb = GetAllThemes();
+
+                List<string> themeNamesOnlyInDatabaseAndNotInFolder = themesStoredInDb.Select(n => n.Name).ToList();
+
+                foreach (Theme dbName in themesStoredInDb)
                 {
-                    if (dbName.Name == folderName.ThemeName)
+                    foreach (ThemeInfo folderName in themeInfosFromFolder)
                     {
-                        themeNamesOnlyInDatabaseAndNotInFolder.Remove(dbName.Name);
+                        if (dbName.Name == folderName.ThemeName)
+                        {
+                            themeNamesOnlyInDatabaseAndNotInFolder.Remove(dbName.Name);
+                        }
                     }
                 }
+                return themeNamesOnlyInDatabaseAndNotInFolder;
             }
-            return themeNamesOnlyInDatabaseAndNotInFolder;
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
         }
 
-        
+        #endregion
 
+        #region Settings
+        /// <summary>
+        /// Returns the name of the website based on key: "WebsiteName"
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public string GetWebsiteName()
+        {
+            try
+            {
+                return Database.Settings.Where(s => s.Key == "WebsiteName").Select(s => s.Value).Single();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets the website name based od key: "WebsiteName"
+        /// </summary>
+        /// <param name="newWebsiteName"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void SetWebsiteName(string newWebsiteName)
+        {
+            try
+            {
+                // search for setting
+                Setting websiteNameSetting = Database.Settings.Where(s => s.Key.Trim() == "WebsiteName").Single();
+                websiteNameSetting.Value = newWebsiteName;
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException(ex);
+            }
+        }
+        #endregion
+
+        #region Blocks and Holders
+
+        /// <summary>
+        /// Returns list of all BlockHolders
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public List<BlockHolder> GetAllBlockHolders()
+        {
+            try
+            {
+                return Database.BlockHolders.Include(b => b.Theme).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Returns list of all TextBlocks
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public List<TextBlock> GetAllTextBlocks()
+        {
+            try
+            {
+                return Database.TextBlocks.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Returns all Holder_Blocks (= join table for Holder and TextBlocks)
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public List<Holder_Block> GetAllHolder_Blocks()
+        {
+            try
+            {
+                return Database.Holder_Block.ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Adds new block and returns it.
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public TextBlock AddNewBlock(TextBlock block)
+        {
+            try
+            {
+                Database.TextBlocks.Add(block);
+                Database.SaveChanges();
+                return Database.TextBlocks.Where(b => b.Name == block.Name).Single();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Adds new holder_block (= join table)
+        /// </summary>
+        /// <param name="hb"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void AddNewHolder_Block(Holder_Block hb)
+        {
+            try
+            {
+                Database.Holder_Block.Add(hb);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            };
+        }
+
+        /// <summary>
+        /// Deletes a text block by ID. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void DeleteTextBlockById(int id)
+        {
+            try
+            {
+                TextBlock goner = Database.TextBlocks.Where(t => t.Id == id).Single();
+                Database.TextBlocks.Remove(goner);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Adds holder to block.
+        /// </summary>
+        /// <param name="holderId"></param>
+        /// <param name="blockId"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void AddHolderToBlock(int holderId, int blockId)
+        {
+            try
+            {
+                Holder_Block h_b = new Holder_Block() { BlockHolderId = holderId, TextBlockId = blockId };
+                Database.Holder_Block.Add(h_b);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Removes holder from block.
+        /// </summary>
+        /// <param name="holderId"></param>
+        /// <param name="blockId"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void RemoveHolderFromBlock(int holderId, int blockId)
+        {
+            try
+            {
+                Holder_Block goner_h_b = Database.Holder_Block.Where(h_b => h_b.BlockHolderId == holderId && h_b.TextBlockId == blockId).Single();
+                Database.Holder_Block.Remove(goner_h_b);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes block holder by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void DeleteBlockHolderById(int id)
+        {
+            try
+            {
+                BlockHolder goner = Database.BlockHolders.Where(bh => bh.Id == id).Single();
+                Database.BlockHolders.Remove(goner);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Returns text block by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public TextBlock GetTextBlockById(int id)
+        {
+            try
+            {
+                return Database.TextBlocks.Where(tb => tb.Id == id).Single();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Returns Holder_Block join table
+        /// </summary>
+        /// <param name="textBlockId"></param>
+        /// <param name="holderId"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public Holder_Block GetHolder_Block_JoinTable(int textBlockId, int holderId)
+        {
+            try
+            {
+                Holder_Block holder = Database.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
+                return holder;
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Text blocks are stored in holders in custom order. This methods specifies in which order text blocks
+        /// are displayed on page.
+        /// </summary>
+        /// <param name="textBlockId"></param>
+        /// <param name="holderId"></param>
+        /// <param name="order"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order)
+        {
+            try
+            {
+                Holder_Block holder = Database.Holder_Block.Where(h => h.TextBlockId == textBlockId && h.BlockHolderId == holderId).Single();
+                holder.Order = order;
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+
+        }
+        #endregion
+        
+        #region Images
+
+        /// <summary>
+        /// Returns list of all images.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public List<Image> GetAllImages()
+        {
+            try
+            {
+                return Database.Images.Include(i => i.ImageData).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Deletes image by Id.
+        /// </summary>
+        /// <param name="imgId"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void DeleteImageById(int imgId)
+        {
+            try
+            {
+                ImageData imgToBeRemoved = Database.ImageData.Where(i => i.Id == imgId).Single();
+                Database.ImageData.Remove(imgToBeRemoved);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
+        }
+        #endregion
+        
     }
 
     public interface IJasperDataService
     {
+        // Properties
         IDatabaseContext Database { get; set; }
         Components Components { get; set; }
 
+        // Methods
         List<Article> GetAllArticles();
         List<Article> GetAllArticles(int categoryId);
         Article GetArticleById(int id);
@@ -544,16 +925,12 @@ namespace JasperSiteCore.Models.Database
         void Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
         List<Image> GetAllImages();
         TextBlock GetTextBlockById(int id);
-        Holder_Block GetTextBlockOrderNumberInHolder(int textBlockId, int holderId);
+        Holder_Block GetHolder_Block_JoinTable(int textBlockId, int holderId);
         void SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order);
         void DeleteImageById(int imgId);
         void AddNewUser(User u);
         void DeleteUserById(int id);
         List<string> CheckThemeFolderAndDatabaseIntegrity();
         List<string> FindManuallyDeletedThemes();
-
     }
-
-
-
 }
