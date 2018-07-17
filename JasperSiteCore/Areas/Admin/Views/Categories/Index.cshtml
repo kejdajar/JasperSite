@@ -13,23 +13,31 @@
 
     $('#btnSubmit').click(function (e) {
 
-    e.preventDefault();
+        e.preventDefault();
+        var frmValidation = $('#formNewCategory').valid(); // Unobtrusive validation has to be called manually
 
-    var categoryName = $("#tbCategoryName").val();
+        if (frmValidation) {
+            var categoryName = $("#tbCategoryName").val();
 
-    $.ajax({
-    type: 'post',
-    url: '@Url.Action("CreateNewCategory", "Categories")',
-    data: { btnCategoryName: categoryName },
-    dataType: 'HTML',
-    success: function (data) {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("CreateNewCategory", "Categories")',
+                data: { ajaxData: categoryName  },
+                dataType: 'HTML',
+                success: function (data) {
 
-        $("#categoryPartialForm").html(data);
+                    $("#categoryPartialForm").html(data);
 
-    savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
-    }
-    });
-    });
+                    savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                }
+            });
+
+        }
+        else return false;
+
+        });
+
+
     });
     </script>
 }
@@ -45,7 +53,7 @@
 
 
 <div id="categoryPartialForm">
-    @Html.Partial("AddNewCategoryPartialView", Model)
+    @Html.Partial("AddNewCategoryPartialView")
 </div>
 
 <div class="alert alert-info alert-dismissible">

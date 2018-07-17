@@ -1,5 +1,8 @@
-﻿@model JasperSiteCore.Areas.Admin.ViewModels.CategoriesViewModel
-@using JasperSiteCore.Models.Database;
+﻿@model List<JasperSiteCore.Models.Database.Category>
+@using JasperSiteCore.Models.Database
+
+@Html.Partial("_ErrorModalPartialView")
+
 <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
 <script>
 /* AJAX REMOVE CATEGORY */
@@ -27,7 +30,7 @@
                     dataType: 'HTML',
                     success: function (data) {
 
-                        $("#categoryPartialForm").html(data);
+                        $("#categoryListPartialForm").html(data);
 
                         savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
 
@@ -36,26 +39,11 @@
         }
 
 
-        $("#tbCategoryName").focus();
+     
     });
-    
+
 </script>
 
-@Html.Partial("_ErrorModalPartialView")
-
-<section class="j-admin-section">
-    <form asp-action="CreateNewCategory" asp-controller="Categories" method="post" id="formNewCategory">
-        <div class="input-group">
-            <input id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="Název rubriky" class="form-control" style="z-index:0"  />
-            
-
-            <div class="input-group-btn">
-                <input type="submit" class="btn btn-jasper" style="width:200px" value="Vytvořit" id="btnSubmit" />
-            </div>
-        </div>
-        <span asp-validation-for="NewCategory.NewCategoryName" class="text-danger"></span>
-    </form>
-</section>
 
 <section class="j-admin-section">
     <h2><i class="fa fa-table  j-icon" aria-hidden="true"></i> Přehled rubrik</h2>
@@ -63,7 +51,7 @@
     <p>
         <table class="table table-bordered j-table">
             <tr><th>Akce</th><th class="col-sm" style="text-align:left">Název</th><th>Počet článků</th> </tr>
-            @foreach (Category c in Model.Categories)
+            @foreach (Category c in Model)
             {
                 <tr>
                     <td>

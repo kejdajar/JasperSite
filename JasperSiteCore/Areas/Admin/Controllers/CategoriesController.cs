@@ -33,11 +33,30 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateNewCategory(string btnCategoryName)
+        // If JS is enabled - data will be passed in ajaxData, otherwise in the model
+        public IActionResult CreateNewCategory(CategoriesViewModel model,string ajaxData)
         {
-            _dbHelper.AddNewCategory(btnCategoryName);
+            
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
+            if (ModelState.IsValid) // Server check in case JS is disabled
+            {
+                if (isAjaxCall)
+                {
+                    _dbHelper.AddNewCategory(ajaxData);
+                }
+                else
+                {
+                    _dbHelper.AddNewCategory(model.NewCategory.NewCategoryName);
+                }
+            }
+            else {
+                // Categories are not passed back from view, so they need to be filled into model again
+                model.Categories = _dbHelper.GetAllCategories();
+                return View("Index", model);
+            }
+
             if (isAjaxCall)
             {
 
