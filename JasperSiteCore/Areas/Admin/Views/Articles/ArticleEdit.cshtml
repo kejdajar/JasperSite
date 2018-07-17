@@ -1,4 +1,4 @@
-﻿@model int
+﻿@model JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel
 @using JasperSiteCore.Models.Database
 @using JasperSiteCore.Models
 @{
@@ -21,27 +21,38 @@
             $('#btnSaveTinymce').click(function (e) {
                 
                 e.preventDefault();
-                
 
-                var textarea = tinyMCE.activeEditor.getContent();
-                var model = {
-                    Id: $("#hiddenId").val(),
-                    Name: $("#tbName").val(),
-                    HtmlContent: textarea,
-                    PublishDate: $("#publishDate").val(),
-                    SelectedCategoryId: $("#selectCategory").val()
+                var frmValidation = $('#editForm').valid();
+                if (frmValidation) {
 
-                };
+                    var textarea = tinyMCE.activeEditor.getContent();
+                    var model = {
+                        Id: $("#hiddenId").val(),
+                        Name: $("#tbName").val(),
+                        HtmlContent: textarea,
+                        PublishDate: $("#publishDate").val(),
+                        SelectedCategoryId: $("#selectCategory").val()
 
-                $.ajax({
-                    type: 'post',
-                    url: '@Url.Action("PostArticle","Articles")',
-                    data: model,
-                    dataType: 'HTML',
-                    success: function (data) {
-                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
-                    }
-                });
+                    };
+
+                    $.ajax({
+
+                        type: 'post',
+                        url: '@Url.Action("PostArticle","Articles")',
+                        data: model,
+                        dataType: 'HTML',
+                        success: function (data) {
+                            savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        }
+                    });
+
+                }
+                else {
+                    return (false);
+
+                }
+
+               
             });
 
         });
@@ -64,7 +75,8 @@
 <section class="j-admin-section" >
 <div id="mainForm">
     @* Invokes View Component that renders edit fields *@
-    @await Component.InvokeAsync("EditArticle", new { articleId = Model })
+    @*@await Component.InvokeAsync("EditArticle", new { articleId = Model })*@
+    @Html.Partial("EditArticlePartialView",Model)
 </div>
 </section>
 <div id="modalTargetDiv"></div>

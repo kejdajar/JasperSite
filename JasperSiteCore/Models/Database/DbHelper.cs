@@ -132,15 +132,15 @@ namespace JasperSiteCore.Models.Database
         /// <exception cref="DatabaseHelperException"></exception>
         public void EditArticle(EditArticleViewModel articleViewModel)
         {
+           
             try
             {
+               
                 Article oldArticleToChange = Database.Articles.Where(a => a.Id == articleViewModel.Id).Single();
-
                 oldArticleToChange.HtmlContent = articleViewModel.HtmlContent;
                 oldArticleToChange.Name = articleViewModel.Name;
-                oldArticleToChange.PublishDate = articleViewModel.PublishDate;
+                oldArticleToChange.PublishDate = (DateTime)articleViewModel.PublishDate;
                 oldArticleToChange.CategoryId = articleViewModel.SelectedCategoryId;
-
                 Database.SaveChanges();
             }
             catch (Exception ex)

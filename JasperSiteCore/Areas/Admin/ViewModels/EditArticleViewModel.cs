@@ -22,7 +22,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         [Required(ErrorMessage ="Vyplňte prosím datum publikace")]
         [Display(Name = "Datum publikace")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime PublishDate { get; set; }
+        public DateTime? PublishDate { get; set; }
 
        
         [Display(Name ="Kategorie")]

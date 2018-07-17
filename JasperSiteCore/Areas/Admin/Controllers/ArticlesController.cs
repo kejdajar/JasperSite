@@ -46,26 +46,57 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult GetArticle(int id)
         {
             
-            return View("ArticleEdit",id);   
+
+            return View("ArticleEdit",GetEditArticleModel(id));   
+        }
+
+        public EditArticleViewModel GetEditArticleModel(int id)
+        {
+            Article articleToEdit = dbHelper.GetArticleById(id);
+            EditArticleViewModel model = new EditArticleViewModel
+            {
+                Id = articleToEdit.Id,
+                HtmlContent = articleToEdit.HtmlContent,
+                Name = articleToEdit.Name,
+                PublishDate = articleToEdit.PublishDate,
+                Categories = dbHelper.GetAllCategories(),
+                SelectedCategoryId = articleToEdit.CategoryId
+            };
+            return model;
         }
 
         [HttpPost]
         public IActionResult PostArticle(EditArticleViewModel model)
-        {           
+        {          
             
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
-            dbHelper.EditArticle(model);
 
-            if(isAjax)
+            if(ModelState.IsValid)
             {
-                return ViewComponent("EditArticle",new { articleId=model.Id});
+                try
+                {
+                    dbHelper.EditArticle(model);
+                }
+                catch {
+                    // TODO: error message
+                }                
             }
             else
             {
-                return Redirect("/Admin/Article/Index?id=" + model.Id);
+                // list of all categories is not passed back so it needs to be loaded again
+                model.Categories = dbHelper.GetAllCategories();
+                return View("ArticleEdit",model);
             }
 
-            
+            if(isAjax)
+            {
+                return PartialView("EditArticlePartialView",GetEditArticleModel(model.Id));
+            }
+            else
+            {
+                
+                return RedirectToAction("GetArticle",new { id=model.Id});
+            }            
 
         }
 
