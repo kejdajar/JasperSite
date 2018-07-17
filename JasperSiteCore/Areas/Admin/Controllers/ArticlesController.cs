@@ -51,9 +51,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         [HttpPost]
         public IActionResult PostArticle(EditArticleViewModel model)
-        {
+        {           
             
-
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
             dbHelper.EditArticle(model);
 

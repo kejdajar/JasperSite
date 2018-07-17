@@ -4,6 +4,9 @@
 <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
 <script>
     $(document).ready(function () {
+
+        $.validator.unobtrusive.parse(document);
+
         $("#btnDeleteArticle").click(function (e) {
             e.preventDefault();
             
@@ -13,10 +16,11 @@
 </script>
 
 @*<form asp-action="Index" asp-controller="Article" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete='savedInfo("<strong>Uloženo.</strong> Veškeré změny byly uloženy.", "alert-success")'>*@
-<form asp-action="PostArticle" asp-controller="Articles" asp-area="Admin" method="post">
+<form asp-action="PostArticle" asp-controller="Articles" asp-area="Admin" method="post" id="editForm">
     <div class="form-horizontal">
 
-        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+        <div asp-validation-summary="All" class="text-danger"></div>
+
         <input id="hiddenId" type="hidden" asp-for="Id" />
         <div class="form-group">
             <label asp-for="Name"></label>

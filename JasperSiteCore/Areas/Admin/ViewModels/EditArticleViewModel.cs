@@ -12,14 +12,14 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
        
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Vyplňte prosím název článku")]
         [Display(Name="Název článku")]
         public string Name { get; set; }
 
         [Display(Name = "Text článku")]
         public string HtmlContent { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Vyplňte prosím datum publikace")]
         [Display(Name = "Datum publikace")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime PublishDate { get; set; }
