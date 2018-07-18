@@ -16,8 +16,6 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Area("Admin")]
     public class ArticlesController : Controller
     {
-
-
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
 
@@ -30,9 +28,34 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public ArticlesViewModel UpdatePage()
         {
             ArticlesViewModel model = new ArticlesViewModel();
-            model.Articles = dbHelper.GetAllArticles();
-            model.NumberOfCategories = dbHelper.GetAllCategories().Count();
-            model.NumberOfArticles = model.Articles.Count();
+
+            try
+            {
+                model.Articles = dbHelper.GetAllArticles();
+            }
+            catch
+            {
+                model.Articles = null;
+            }
+            
+            try
+            {
+                model.NumberOfCategories = dbHelper.GetAllCategories().Count();
+            }
+            catch
+            {
+                model.NumberOfCategories = 0;
+            }
+            
+            try
+            {
+                model.NumberOfArticles = model.Articles.Count();
+            }
+            catch
+            {
+                model.NumberOfArticles = 0;
+            }
+        
             return model;
         }
 
@@ -45,76 +68,126 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetArticle(int id)
         {
-            
+
+            EditArticleViewModel model = GetEditArticleModel(id);
+            if (model == null || id <=0)
+            {
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = "Daný èlánek nebyl nalezen.";
+                return View("Index", UpdatePage());
+            }
 
             return View("ArticleEdit",GetEditArticleModel(id));   
         }
 
         public EditArticleViewModel GetEditArticleModel(int id)
         {
-            Article articleToEdit = dbHelper.GetArticleById(id);
-            EditArticleViewModel model = new EditArticleViewModel
+            try
             {
-                Id = articleToEdit.Id,
-                HtmlContent = articleToEdit.HtmlContent,
-                Name = articleToEdit.Name,
-                PublishDate = articleToEdit.PublishDate,
-                Categories = dbHelper.GetAllCategories(),
-                SelectedCategoryId = articleToEdit.CategoryId
-            };
-            return model;
+                Article articleToEdit = dbHelper.GetArticleById(id);
+                EditArticleViewModel model = new EditArticleViewModel
+                {
+                    Id = articleToEdit.Id,
+                    HtmlContent = articleToEdit.HtmlContent,
+                    Name = articleToEdit.Name,
+                    PublishDate = articleToEdit.PublishDate,
+                    Categories = dbHelper.GetAllCategories(),
+                    SelectedCategoryId = articleToEdit.CategoryId
+                };
+                return model;
+            }
+            catch
+            {
+                return null;
+            }
+            
         }
 
         [HttpPost]
         public IActionResult PostArticle(EditArticleViewModel model)
-        {          
-            
+        {
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
-
-            if(ModelState.IsValid)
+            
+            if (ModelState.IsValid)
             {
                 try
                 {
                     dbHelper.EditArticle(model);
                 }
-                catch {
+                catch
+                {
                     // TODO: error message
-                }                
+                }
             }
             else
             {
                 // list of all categories is not passed back so it needs to be loaded again
                 model.Categories = dbHelper.GetAllCategories();
-                return View("ArticleEdit",model);
+                return View("ArticleEdit", model);
             }
 
-            if(isAjax)
+            if (isAjax)
             {
-                return PartialView("EditArticlePartialView",GetEditArticleModel(model.Id));
+                return PartialView("EditArticlePartialView", GetEditArticleModel(model.Id));
             }
             else
             {
-                
-                return RedirectToAction("GetArticle",new { id=model.Id});
-            }            
+
+                return RedirectToAction("GetArticle", new { id = model.Id });
+            }
 
         }
 
         [HttpGet]
         public IActionResult Add()
         {
-          
-            int articleId =  dbHelper.AddArticle();
-            return Redirect("/Admin/Articles/GetArticle?id=" + articleId);
+            try
+            {                
+                int articleId = dbHelper.AddArticle();
+                return RedirectToAction("GetArticle", new { id = articleId });
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = "Nový èlánek nebylo možné vytvoøit.";
+                if (ex.InnerException != null && !string.IsNullOrEmpty(ex.InnerException.Message))
+                { ViewBag.ErrorMessage += "Popis chyby:"+ ex.InnerException.Message; }
+                return View("Index", UpdatePage());
+                
+            }        
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            
-            dbHelper.DeleteArticle(id);
+bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
 
-            bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+            try
+            {
+             
+                dbHelper.DeleteArticle(id);
+               
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = "Èlánek nebylo možné odstranit";
+                if (ex.InnerException != null && !string.IsNullOrEmpty(ex.InnerException.Message))
+                { ViewBag.ErrorMessage += "Popis chyby:" + ex.InnerException.Message; }
+
+
+                if (isAjax)
+                {
+                    return PartialView("ArticlesListPartialView", dbHelper.GetAllArticles());
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
+
+            }
+
+            
             if (isAjax)
             {
                 return PartialView("ArticlesListPartialView", dbHelper.GetAllArticles());

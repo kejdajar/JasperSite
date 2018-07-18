@@ -13,12 +13,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     {
         [HttpGet]
         public IActionResult Index()
-        {
-            return View(UpdateCategoryPage());
+        {              
+          return View(UpdateCategoryPage());                       
         }
 
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+
         public CategoriesController(DatabaseContext dbContext)
         {
             this._databaseContext = dbContext;
@@ -28,15 +29,22 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public CategoriesViewModel UpdateCategoryPage()
         {
             CategoriesViewModel model = new CategoriesViewModel();
-            model.Categories = _dbHelper.GetAllCategories();
-            return model;
+            try
+            {
+                model.Categories = _dbHelper.GetAllCategories();
+                return model;
+            }
+            catch
+            {
+                return null;
+            }
+
         }
 
         [HttpPost]
         // If JS is enabled - data will be passed in ajaxData, otherwise in the model
         public IActionResult CreateNewCategory(CategoriesViewModel model,string ajaxData)
-        {
-            
+        {            
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
 
@@ -70,11 +78,20 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteCategory(int id)
+        public IActionResult DeleteCategory(int? id)
         {
-            try
+            
+            if(id == null || id < 0)
             {
-                _dbHelper.DeleteCategory(id);
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = "Daná rubrika pro smazání nebyla nalezena.";
+                return View("Index", UpdateCategoryPage());
+            }
+
+            try
+            {                             
+                _dbHelper.DeleteCategory((int)id);
+                
             }
             catch (Exception ex)
             {

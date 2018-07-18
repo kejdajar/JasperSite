@@ -72,7 +72,7 @@ body {
     width: 100%;
     position: fixed;
     top: 0px;
-    z-index: 1;
+    z-index: 1; 
     flex-wrap: wrap;
 }
 

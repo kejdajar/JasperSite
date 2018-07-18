@@ -1,6 +1,5 @@
 ﻿@using JasperSiteCore.Models.Database
 @model List<Article>
-
 @* Script with custom bootstrap pop-up window *@
 
 
@@ -20,7 +19,7 @@
             var Id = singleLink.data('removeId');
             var articleName = singleLink.data('articleName');
 
-          
+
             appendWindow("Skutečně odstranit článek?", `Článek <b> ${articleName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
 
 
@@ -60,11 +59,12 @@
     });
 </script>
 
+@Html.Partial("_ErrorModalPartialView")
 
 
 <div class="table-responsive">
 
-    @if (Model.Count > 0)
+    @if (Model != null)
     {<table class="table table-bordered j-table j-table-text-center" id="articleTable">
             <tr><th>Jméno článku</th><th>Rubrika</th><th>Publikováno</th><th>Akce</th></tr>
             @foreach (Article a in Model)

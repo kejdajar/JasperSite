@@ -50,7 +50,7 @@
             
 
             <div class="input-group-btn">
-                <input type="submit" class="btn btn-jasper" style="width:200px" value="Vytvořit" id="btnSubmit" />
+                <input type="submit" class="btn btn-jasper" style="width:200px;z-index:0" value="Vytvořit" id="btnSubmit" />
             </div>
         </div>
         <span asp-validation-for="NewCategory.NewCategoryName" class="text-danger"></span>
@@ -61,26 +61,35 @@
     <h2><i class="fa fa-table  j-icon" aria-hidden="true"></i> Přehled rubrik</h2>
 
     <p>
-        <table class="table table-bordered j-table">
-            <tr><th>Akce</th><th class="col-sm" style="text-align:left">Název</th><th>Počet článků</th> </tr>
-            @foreach (Category c in Model.Categories)
-            {
-                <tr>
-                    <td>
-                        @if (c.Name != "Nezařazeno")
-                        {
-                            <a data-delete-id="@c.Id" data-category-name="@c.Name" asp-controller="Categories" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
-                        }
-                        else
-                        {
-                            <i class="fa fa-trash fa-1x disabled btn btn-jasper btn-jasper-delete" aria-hidden="true" title="Tuto výchozí rubriku není možné odstranit."></i>
-                        }
-                    </td>
-                    <td>@c.Name</td>
-                    <td>@c.Articles.Count()</td>
-                </tr>
-            }
-        </table>
+        @if (Model != null)
+        {
+            <table class="table table-bordered j-table">
+                <tr><th>Akce</th><th class="col-sm" style="text-align:left">Název</th><th>Počet článků</th> </tr>
+                @foreach (Category c in Model.Categories)
+                {
+                    <tr>
+                        <td>
+                            @if (c.Name != "Nezařazeno")
+                            {
+                                <a data-delete-id="@c.Id" data-category-name="@c.Name" asp-controller="Categories" asp-action="DeleteCategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
+                            }
+                            else
+                            {
+                                <i class="fa fa-trash fa-1x disabled btn btn-jasper btn-jasper-delete" aria-hidden="true" title="Tuto výchozí rubriku není možné odstranit."></i>
+                            }
+                        </td>
+                        <td>@c.Name</td>
+                        <td>@c.Articles.Count()</td>
+                    </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                Žádné rubriky nejsou k dispozici.
+            </div>
 
+        }
     </p>
 </section>
