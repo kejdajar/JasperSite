@@ -57,12 +57,14 @@
             <span asp-validation-for="NewTextBlock.Content" class="text-danger"></span>
         </div>
 
+        @if (Model.AllBlockHolders != null )
+        {
         <div class="form-group">
             <label>Přiřadit ke kontejneru</label>
-            <select class="form-control" asp-for="NewTextBlock.BlockHolderId" asp-items="@(new SelectList(Model.AllBlockHolders,"Id","Name"))"></select>
+            <select class="form-control" asp-for="NewTextBlock.BlockHolderId" asp-items="@(new SelectList(Model.AllBlockHolders, "Id", "Name"))"></select>
             <span asp-validation-for="NewTextBlock.BlockHolderId" class="text-danger"></span>
         </div>
-
+        }
         <div class="form-group">
 
 
@@ -93,39 +95,47 @@
 
     <div class="table-responsive">
 
-
-        @foreach (BlocksViewModelData data in @Model.Blocks)
+        @if (Model.Blocks != null )
         {
-            <h3>  <a  asp-area="Admin" asp-controller="Blocks" asp-action="DeleteBlock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px" data-remove-block-id="@data.TextBlock.Id" data-block-name="@data.TextBlock.Name">x</a>  @data.TextBlock.Name   </h3>
-            <div class="j-left-border-block">
+            foreach (BlocksViewModelData data in @Model.Blocks)
+            {
+                <h3>  <a asp-area="Admin" asp-controller="Blocks" asp-action="DeleteBlock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px" data-remove-block-id="@data.TextBlock.Id" data-block-name="@data.TextBlock.Name">x</a>  @data.TextBlock.Name   </h3>
+                <div class="j-left-border-block">
 
 
 
 
 
 
-                @if (data.BlocHolderWithTheme.Count() > 0)
-    {
-            <table class="table table-bordered j-table j-table-headers-left">
-                <tr><th>Název kontejneru na stránce</th><th>Název odpovídajícího vzhledu</th><th>Pořadí bloku v kontejneru</th></tr>
-                @foreach (var item in data.BlocHolderWithTheme)
-    {
-            <tr><td>@item.BlockHolderName</td><td>@item.ThemeName</td><td>@item.Order</td></tr>
-}
-            </table>
+                    @if (data.BlocHolderWithTheme.Count() > 0)
+                    {
+                        <table class="table table-bordered j-table j-table-headers-left">
+                            <tr><th>Název kontejneru na stránce</th><th>Název odpovídajícího vzhledu</th><th>Pořadí bloku v kontejneru</th></tr>
+                            @foreach (var item in data.BlocHolderWithTheme)
+                            {
+                                <tr><td>@item.BlockHolderName</td><td>@item.ThemeName</td><td>@item.Order</td></tr>
+                            }
+                        </table>
 
-}
-else
-{
-            <div class="alert alert-warning" role="alert">
-                <strong>Upozornění!</strong> Tento textový blok nemá přiřazen žádný kontejner a nebude proto zobrazen na stránce.
-            </div>
-}
-                <a asp-area="Admin" asp-controller="Blocks" asp-action="EditBlock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper">Upravit</a>
-            </div>
-            <hr />
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            <strong>Upozornění!</strong> Tento textový blok nemá přiřazen žádný kontejner a nebude proto zobrazen na stránce.
+                        </div>
+                    }
+                    <a asp-area="Admin" asp-controller="Blocks" asp-action="EditBlock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper">Upravit</a>
+                </div>
+                <hr />
+            }
         }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+               Žádné bloky nejsou k dispozici.
+            </div>
 
+        }
     </div>
 
 
@@ -133,23 +143,32 @@ else
     <hr />
     <div class="table-responsive">
 
-
-        @foreach (Theme theme in Model.AllThemes)
-    {
-        <h2>@theme.Name</h2>
-    var blockHolders = Model.AllBlockHolders.Where(b => b.ThemeId == theme.Id);
-    <div style="border-left:3px solid #BA68C8;padding-left:4px">
-        <table class="table table-bordered j-table j-table-headers-left ">
-            <tr><th>Název kontejneru</th></tr>
-            @foreach (BlockHolder holder in blockHolders)
+        @if (Model.AllThemes != null )
         {
+            foreach (Theme theme in Model.AllThemes)
+            {
+                <h2>@theme.Name</h2>
+                var blockHolders = Model.AllBlockHolders.Where(b => b.ThemeId == theme.Id);
+                <div style="border-left:3px solid #BA68C8;padding-left:4px">
+                    <table class="table table-bordered j-table j-table-headers-left ">
+                        <tr><th>Název kontejneru</th></tr>
+                        @foreach (BlockHolder holder in blockHolders)
+                        {
 
-            <tr><td>@holder.Name</td></tr>
+                            <tr><td>@holder.Name</td></tr>
 
-    }
-        </table>
-        </div>
-        <hr/>
+                        }
+                    </table>
+                </div>
+                <hr />
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                Žádné položky nebyly nalezeny.
+            </div>
+
         }
 
     </div>

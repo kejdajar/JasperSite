@@ -7,7 +7,7 @@
 @using JasperSiteCore.ViewModels
 @model JasperSiteCore.Areas.Admin.ViewModels.ThemesViewModel
 
-
+@Html.Partial("_ErrorModalPartialView")
 
 <script>
         $(document).ready(function () {
@@ -22,7 +22,7 @@
                 e.preventDefault();
                 var themeName = $(this).data("deleteName");
 
-               
+
 
                 appendWindow("Skutečně odstranit vzhled?", `Vzhled  <b> ${themeName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(themeName); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
 
@@ -38,7 +38,7 @@
                         success: function (data) {
 
                             $("#mainForm1").html(data);
-                            
+
                             savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                         },
                         error: function () {
@@ -59,7 +59,7 @@
                     var themeName = currentLink.data("activateName");
 
                     appendWindow("Skutečně aktivovat vzhled?", `Vzhled <b> ${themeName}</b> bude aktivován. Stávající textové bloky budou přiřazeny do stejně pojmenovaných kontejnerů nového vzhledu. Pokud vzhled obsahuje jinak pojmenované kontejnery, bude nutné nakonfigurovat textové bloky znovu ručně.`, function () { return ajaxCallActivateTheme(themeName); }, "#modalTargetDiv", "btn-jasper-activate","fa fa-check-circle fa-1x","Aktivovat");
-                    
+
             });
 
             function ajaxCallActivateTheme(themeName) {
@@ -106,7 +106,7 @@
                         @{
                             if (info.ThemeName != Model.SelectedThemeName)
                             {
-                                
+
                                 <a data-toggle="tooltip" title="Aktivovat" asp-area="Admin" asp-controller="Themes" asp-action="ActivateTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper" data-activate-name="@info.ThemeName"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a>
                                 <span data-toggle="modal" data-target="#myModal">
                                     <a data-toggle="tooltip" title="Odstranit" asp-area="Admin" asp-controller="Themes" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" data-delete-name="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
@@ -115,7 +115,7 @@
                             else
                             { <i class="fa fa-check fa-1x" aria-hidden="true"></i>
                                 <br /> @(info.ThemeName == Model.SelectedThemeName ? "Aktuální" : "")
-                                
+
                             }
                         }
 
@@ -127,7 +127,7 @@
     </div>
     <input type="hidden" asp-for="PageNumber" />
     @Html.Partial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.PageNumber, TotalNumberOfPages = Model.TotalNumberOfPages })
-    
+
 </form>
-    
+
 

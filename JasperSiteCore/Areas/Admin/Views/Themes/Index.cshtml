@@ -26,6 +26,8 @@
             });
     </script>
 }
+
+
 <div id="vzhledy"></div>
 
 <div class="jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Vzhledy</h1></div>
@@ -35,70 +37,76 @@
 <h2> <i class="fa fa-paint-brush j-icon" aria-hidden="true"></i> Nainstalované vzhledy </h2>
 
 <!--NOT REGISTERED THEMES IN FOLDER-->
-@if (Model.NotRegisteredThemeNames.Count > 0)
+@if (Model.NotRegisteredThemeNames != null)
 {
-    <section class="j-admin-section">
-        <div class="alert alert-warning fade show" role="alert">
+    if (Model.NotRegisteredThemeNames.Count > 0)
+    {
+        <section class="j-admin-section">
+            <div class="alert alert-warning fade show" role="alert">
 
-            <strong>Složka se vzhledy byla upravena - neregistrované vzhledy</strong> <br />
-            Ve složce: <i> @Configuration.GlobalWebsiteConfig.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, které je nutné
-            uložit. Neregistrované vzhledy:
-            <ul style="list-style-type:disc">
-                @foreach (string name in Model.NotRegisteredThemeNames)
-                {
-                    <li>@name</li>
-                }
-            </ul>
-            <a class="btn btn-jasper" asp-controller="Themes" asp-action="AddNewAddedThemesToDb" asp-area="Admin">Registrovat nové vzhledy do databáze.</a>
+                <strong>Složka se vzhledy byla upravena - neregistrované vzhledy</strong> <br />
+                Ve složce: <i> @Configuration.GlobalWebsiteConfig.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, které je nutné
+                uložit. Neregistrované vzhledy:
+                <ul style="list-style-type:disc">
+                    @foreach (string name in Model.NotRegisteredThemeNames)
+                    {
+                        <li>@name</li>
+                    }
+                </ul>
+                <a class="btn btn-jasper" asp-controller="Themes" asp-action="AddNewAddedThemesToDb" asp-area="Admin">Registrovat nové vzhledy do databáze.</a>
 
-        </div>
-    </section>
+            </div>
+        </section>
+    }
 }
 
 <!--MANUALLY DELETED THEMES STILL REGISTERED IN DATABASE-->
-@if (Model.ManuallyDeletedThemeNames.Count > 0)
+@if (Model.ManuallyDeletedThemeNames != null)
 {
-    <section class="j-admin-section">
-        <div class="alert alert-warning fade show" role="alert">
+    if (Model.ManuallyDeletedThemeNames.Count > 0)
+    {
+        <section class="j-admin-section">
+            <div class="alert alert-warning fade show" role="alert">
 
-            <strong>Složka se vzhledy byla upravena - manuálně smazány vzhledy</strong> <br />
-            Ve složce: <i> @Configuration.GlobalWebsiteConfig.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, které je nutné
-            uložit. Manuálně odstraněné vzhledy:
-            <ul style="list-style-type:disc">
-                @foreach (string name in Model.ManuallyDeletedThemeNames)
-                {
-                    <li>@name</li>
-                }
-            </ul>
-            <a class="btn btn-jasper" asp-controller="Themes" asp-action="RemoveManuallyDeletedThemesFromDb" asp-area="Admin">Odstranit nedostupné vzhledy z datbáze.</a>
-        </div>
-    </section>
+                <strong>Složka se vzhledy byla upravena - manuálně smazány vzhledy</strong> <br />
+                Ve složce: <i> @Configuration.GlobalWebsiteConfig.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, které je nutné
+                uložit. Manuálně odstraněné vzhledy:
+                <ul style="list-style-type:disc">
+                    @foreach (string name in Model.ManuallyDeletedThemeNames)
+                    {
+                        <li>@name</li>
+                    }
+                </ul>
+                <a class="btn btn-jasper" asp-controller="Themes" asp-action="RemoveManuallyDeletedThemesFromDb" asp-area="Admin">Odstranit nedostupné vzhledy z datbáze.</a>
+            </div>
+        </section>
+    }
 }
 
-
-
-@if (Model.ManuallyDeletedThemeNames.Count == 0 && Model.NotRegisteredThemeNames.Count == 0)
+@if (Model.ManuallyDeletedThemeNames != null && Model.NotRegisteredThemeNames != null)
 {
-    <section class="j-admin-section">
-        <div id="mainForm1">
-            @Html.Partial("ThemesPartialView", Model)
-        </div>
-    </section>
-}
-else
-{
-    <section class="j-admin-section">
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            <strong>Seznam vzhledů</strong> <br />
-            Oblast pro operace se vzhledy není momentálně dostupná. Vyřešte prosím nejprve výše uvedené problémy.
-        </div>
-    </section>
+    if (Model.ManuallyDeletedThemeNames.Count == 0 && Model.NotRegisteredThemeNames.Count == 0)
+    {
+        <section class="j-admin-section">
+            <div id="mainForm1">
+                @Html.Partial("ThemesPartialView", Model)
+            </div>
+        </section>
+    }
+    else
+    {
+        <section class="j-admin-section">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Seznam vzhledů</strong> <br />
+                Oblast pro operace se vzhledy není momentálně dostupná. Vyřešte prosím nejprve výše uvedené problémy.
+            </div>
+        </section>
 
+    }
 }
-
 
 <section class="j-admin-section">
     <div class="alert alert-info alert-dismissible fade show" role="alert">
@@ -106,7 +114,7 @@ else
             <span aria-hidden="true">&times;</span>
         </button>
         <strong>Informace o nastavení systému</strong> <br />
-        Složka se vzhledy:<b> @Model.ThemeFolder</b>, právě aktivní vzhled:<b> @Model.SelectedThemeName </b>
+        Složka se vzhledy:<b> @((Model.ThemeFolder) ?? "?")</b>, právě aktivní vzhled:<b> @(Model.SelectedThemeName ?? "?") </b>
     </div>
 
     <div class="alert alert-info alert-dismissible fade show" role="alert">
