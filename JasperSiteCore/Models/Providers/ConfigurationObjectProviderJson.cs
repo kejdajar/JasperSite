@@ -59,6 +59,7 @@ namespace JasperSiteCore.Models
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ThemeConfigurationFileNotFoundException"></exception>
+        /// <exception cref="ConfigurationObjectProviderJsonException"></exception>
         public string GetThemeJasperJsonLocation()
         {
             try
@@ -70,7 +71,7 @@ namespace JasperSiteCore.Models
                     string themeDirectoryUrl = directories[0]; // např. ~/Themes/JasperTheme
                     return Path.Combine(themeDirectoryUrl, _jsonPath);
                 }
-                else return null;
+                else throw new ConfigurationObjectProviderJsonException("Theme folder contains more themes with the same name.");
             }
             catch(Exception ex)
             {

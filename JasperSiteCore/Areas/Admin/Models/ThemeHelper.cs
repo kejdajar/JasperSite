@@ -15,8 +15,7 @@ namespace JasperSiteCore.Areas.Admin.Models
         /// Returns content of desc.txt file in root of the folder with theme.
         /// </summary>
         /// <param name="pathToTheme"></param>
-        /// <returns></returns>
-        /// <exception cref="ThemeHelperException"></exception>
+        /// <returns></returns>        
         private string GetThemeDescription(string pathToTheme)
         {
             try
@@ -24,10 +23,9 @@ namespace JasperSiteCore.Areas.Admin.Models
                 string desc = File.ReadAllText(Path.Combine(pathToTheme, "desc.txt"));
                 return desc;
             }
-            catch (Exception ex)
+            catch 
             {
-
-                throw new ThemeHelperException(ex);
+                return string.Empty;       
             }
         }
       
@@ -43,12 +41,19 @@ namespace JasperSiteCore.Areas.Admin.Models
             try
             {
                 string themeFolder = Configuration.CustomRouting.GlobalWebsiteConfig.ThemeFolder;
-                return Path.Combine("~/", themeFolder, themeName, "thumbnail.jpg").Replace('\\', '/');
+                string path = Path.Combine("~/", themeFolder, themeName, "thumbnail.jpg").Replace('\\', '/');
+                string pathExistsCheck = Path.Combine(Env.Hosting.ContentRootPath, themeFolder, themeName, "thumbnail.jpg");
+                //bool fileExists = File.Exists(@"C:/Users/kejda/Desktop/Projekty/JasperSiteCore/JasperSiteCore/Themes/Default/thumbnail.jpg");
+                bool fileExists = File.Exists(pathExistsCheck);
+                if (fileExists)
+                    return path;
+                else return string.Empty;
+
             }
-            catch (Exception ex)
+            catch 
             {
 
-                throw new ThemeHelperException(ex);
+                return string.Empty;
             }
         }
 
@@ -119,8 +124,7 @@ namespace JasperSiteCore.Areas.Admin.Models
             }
             catch (Exception ex)
             {
-
-                throw new ThemeHelperException(ex);
+                 throw new ThemeHelperException(ex);
             }
         }
 

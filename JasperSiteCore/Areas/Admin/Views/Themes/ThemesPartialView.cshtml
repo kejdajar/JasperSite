@@ -97,11 +97,32 @@
                 <tr data-theme="@info.ThemeName" id="test">
                     <td style="text-align:center;vertical-align:middle">
 
+                        @{string img = Url.Content(info.ThemeThumbnailUrl);}
+                        @if(!string.IsNullOrEmpty(img))
+                        {
+                        <img src="@img" class="img-fluid" style="max-width:130px;max-height:130px" />
+                            
+                        }
+                        else
+                        {
+                            
+                            <i class="fa fa-question fa-2x"></i>
+                        }
 
-                        <img src="@Url.Content(info.ThemeThumbnailUrl)" class="img-fluid" style="max-width:130px;max-height:130px" />
                     </td>
                     <td>@info.ThemeName </td>
-                    <td style="text-align:left">@Html.Raw(info.ThemeDescription)</td>
+                    <td style="text-align:left">
+                    @if(!string.IsNullOrEmpty(info.ThemeDescription))
+                    {
+                        @Html.Raw(info.ThemeDescription)
+
+                    }
+                    else
+                    {
+                       <i>Popis není k dispozici</i>
+
+                    }
+                    </td>
                     <td style="text-align:center;vertical-align:middle">
                         @{
                             if (info.ThemeName != Model.SelectedThemeName)

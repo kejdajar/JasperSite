@@ -31,9 +31,14 @@ namespace JasperSiteCore.Helpers
             {
                 path = "~" + path;
             }
-            return path;
+            
+            // If the theme name (== folder with theme) contains space, it will be by default rendered as %20 which will
+            // eventually break the: return View() method. Therefore the %20 has to be replaced by regular space.
+            string returnPath = path.Replace("%20", " ");
+            return returnPath;
         }
     }
+
 
     /*--------------------Tag helpers---------------------------*/
 

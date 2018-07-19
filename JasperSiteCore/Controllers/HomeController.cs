@@ -29,11 +29,16 @@ namespace JasperSiteCore.Controllers
             string file;
             if (Configuration.CustomRouting.IsHomePage(rawUrl)) // For the main (index) page only
             {
-                return View(Configuration.CustomRouting.GetHomePageFile());
+                string viewToReturn = Configuration.CustomRouting.GetHomePageFile();
+
+                // url cant contain "%20" - normal space is required
+                viewToReturn= viewToReturn.Replace("%20"," ");
+
+                return View(viewToReturn);
             }
             else if (!string.IsNullOrEmpty(file = Configuration.CustomRouting.MapUrlToFile(rawUrl))) // Other pages are mapped as well
             {
-                return View(file);
+                return View(file.Replace("%20"," "));
             }
             else // page was not found
             {
