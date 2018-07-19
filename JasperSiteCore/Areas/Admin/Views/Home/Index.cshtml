@@ -106,7 +106,7 @@
 
     <h2><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>Přehled rubrik a jejich článků</h2>
 
-    @if (Model.Articles.Count() > 0)
+    @if (Model.Articles.Count() > 0 && Model.Categories.Count>0)
     {
         <div style="max-width:800px">
             <canvas id="chartCanvas"></canvas>
@@ -115,7 +115,7 @@
     else
     {
         <div class="alert alert-warning">
-            <strong>Nic zde není!</strong> Momentálně nemáte žádné uložené články.
+            <strong>Nic zde není!</strong> Pro zobrazení přehledu je vyžadována alespoň jedna rubrika a článek.
         </div>
 
     }
@@ -163,8 +163,6 @@
 
             <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name - odhlásit</a>
         </div>
-
-
 
     }
 

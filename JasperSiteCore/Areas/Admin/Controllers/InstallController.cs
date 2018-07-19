@@ -62,24 +62,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         }
 
-        //// Firstly, the installation must have already been completed before accesing administration panel
-        //public override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-        //    if (!Configuration.InstallationCompleted())
-        //    {
-        //        filterContext.Result = new RedirectToRouteResult(
-        //            new RouteValueDictionary {
-        //        { "Controller", "Install" },
-        //        { "Action", "Index" },
-        //                {"Area","Admin" }
-        //            });
-        //    }
-
-        //    base.OnActionExecuting(filterContext);
-        //}
-
-
-
+       
         [HttpGet]
         public IActionResult Index()
         {
@@ -88,79 +71,94 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public InstallViewModel UpdateModel()
         {
-            // Every request will be granted the most up-to-date data
-            Configuration.GlobalWebsiteConfig.RefreshData();
 
-            // View model
-            InstallViewModel model = new InstallViewModel();
-            // HTML Select 
-            model.AllDatabases = new List<DatabaseListItem>() { new DatabaseListItem() { Id = 1, Name = "MSSQL" }, new DatabaseListItem() { Id = 2, Name = "MySQL" } };
+            List<DatabaseListItem> allDatabases = new List<DatabaseListItem>() { new DatabaseListItem() { Id = 1, Name = "MSSQL" }, new DatabaseListItem() { Id = 2, Name = "MySQL" } };
 
-            // If the installation was completed, the user is shown actual connection string and database in use
-            if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
+            try
             {
-                int idOfDb = 1;
-                switch (Configuration.GlobalWebsiteConfig.TypeOfDatabase)
+                // Every request will be granted the most up-to-date data
+                Configuration.GlobalWebsiteConfig.RefreshData();
+
+                // View model
+                InstallViewModel model = new InstallViewModel();
+                // HTML Select 
+                model.AllDatabases = allDatabases;
+
+                // If the installation was completed, the user is shown actual connection string and database in use
+                if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
                 {
-                    case "mssql": idOfDb = 1; break;
-                    case "mysql": idOfDb = 2; break;
+                    int idOfDb = 1;
+                    switch (Configuration.GlobalWebsiteConfig.TypeOfDatabase)
+                    {
+                        case "mssql": idOfDb = 1; break;
+                        case "mysql": idOfDb = 2; break;
+                    }
+                    model.SelectedDatabase = idOfDb;
+                    model.ConnectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
                 }
-                model.SelectedDatabase = idOfDb;
-                model.ConnectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
+                return model;
             }
-            return model;
+            catch 
+            {
+
+                InstallViewModel model = new InstallViewModel();
+                model.AllDatabases = allDatabases;
+                model.ConnectionString = string.Empty;
+                model.SelectedDatabase = default(int);
+                return model;
+            }
         }
 
         [HttpPost]
         public IActionResult Index(InstallViewModel model)
         {
-           string selectedDb = string.Empty;
-           int selectedDbId = model.SelectedDatabase;
-           switch(selectedDbId)
-            {
-                case 1: selectedDb = "mssql";break;
-                case 2: selectedDb = "mysql";break;
-            }
-
-            string connectionString = model.ConnectionString;           
-
-       
-           
-            // DATABASE INSTALLATION
-            if(ModelState.IsValid)
-            {
-                string oldConnString = Configuration.GlobalWebsiteConfig.ConnectionString;
-                bool oldInstallationCompleted = Configuration.GlobalWebsiteConfig.InstallationCompleted;
-                try
-                {
-                    Configuration.GlobalWebsiteConfig.TypeOfDatabase = selectedDb;
-                    Configuration.GlobalWebsiteConfig.ConnectionString = connectionString;
-                    Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
-
-                    // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
-                    DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>();
-                    JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext, true);
-                    return RedirectToAction("Index", "Home", new { area = "admin" });
-
-            }
-                catch(Exception ex)
-            {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = ex.Message+", "+ex.InnerException;
-                
-                // Reset settings 
-                Configuration.GlobalWebsiteConfig.ConnectionString = oldConnString;
-                Configuration.GlobalWebsiteConfig.InstallationCompleted = oldInstallationCompleted;
-
-                return View(UpdateModel());
-            }
-
-        }
-            else
-            {
-               return View(model);
-            }
             
+                string selectedDb = string.Empty;
+                int selectedDbId = model.SelectedDatabase;
+                switch (selectedDbId)
+                {
+                    case 1: selectedDb = "mssql"; break;
+                    case 2: selectedDb = "mysql"; break;
+                }
+
+                string connectionString = model.ConnectionString;
+
+
+                // DATABASE INSTALLATION
+                if (ModelState.IsValid)
+                {
+                    string oldConnString = Configuration.GlobalWebsiteConfig.ConnectionString;
+                    bool oldInstallationCompleted = Configuration.GlobalWebsiteConfig.InstallationCompleted;
+                    try
+                    {
+
+                        Configuration.GlobalWebsiteConfig.TypeOfDatabase = selectedDb;
+                        Configuration.GlobalWebsiteConfig.ConnectionString = connectionString;
+                        Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
+
+                        // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
+                        DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>();
+                        JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext, true);
+                        return RedirectToAction("Index", "Home", new { area = "admin" });
+
+                    }
+                    catch (Exception ex)
+                    {
+                        ViewBag.Error = "1"; // Automatically shows error modal
+                        ViewBag.ErrorMessage = ex.Message + ", " + ex.InnerException;
+
+                        // Reset settings 
+                        Configuration.GlobalWebsiteConfig.ConnectionString = oldConnString;
+                        Configuration.GlobalWebsiteConfig.InstallationCompleted = oldInstallationCompleted;
+
+                        return View(UpdateModel());
+                    }
+
+                }
+                else
+                {
+                    return View(model);
+                }           
 
         }
 

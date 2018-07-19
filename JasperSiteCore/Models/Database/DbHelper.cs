@@ -277,40 +277,121 @@ namespace JasperSiteCore.Models.Database
 
         #region Users
 
+        /// <summary>
+        /// Returns user with the passed name.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public User GetUserWithUsername(string username)
         {
-            return Database.Users.Include(u => u.Role).Where(u => u.Username.Trim() == username.Trim()).Single();
+            try
+            {
+                return Database.Users.Include(u => u.Role).Where(u => u.Username.Trim() == username.Trim()).Single();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException(ex);               
+            }
         }
 
+        /// <summary>
+        /// Returns user with passed Id.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public User GetUserById(int userId)
         {
-            return Database.Users.Include(u => u.Role).Where(u => u.Id == userId).Single();
+            try
+            {
+                return Database.Users.Include(u => u.Role).Where(u => u.Id == userId).Single();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
         }
 
+        /// <summary>
+        /// Returns list of all users.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
         public List<User> GetAllUsers()
         {
-            return Database.Users.Include(u => u.Role).ToList();
+            try
+            {
+                return Database.Users.Include(u => u.Role).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
         }
 
+        /// <summary>
+        /// Hashes, adds salt and saves new password for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="newHashedPassword"></param>
+        /// <param name="newSalt"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
         public void ChangePassword(int userId, string newHashedPassword, string newSalt)
         {
-            User u = GetUserById(userId);
-            u.Password = newHashedPassword;
-            u.Salt = newSalt;
-            Database.SaveChanges();
+            try
+            {
+                User u = GetUserById(userId);
+                u.Password = newHashedPassword;
+                u.Salt = newSalt;
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
         }
 
+        /// <summary>
+        /// Adds a new user.
+        /// </summary>
+        /// <param name="u"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
         public void AddNewUser(User u)
         {
-            Database.Users.Add(u);
-            Database.SaveChanges();
+            try
+            {
+                Database.Users.Add(u);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex);
+            }
         }
 
+        /// <summary>
+        /// Deletes user by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
         public void DeleteUserById(int id)
         {
-            User goner = Database.Users.Where(u => u.Id == id).Single();
-            Database.Users.Remove(goner);
-            Database.SaveChanges();
+            try
+            {
+                User goner = Database.Users.Where(u => u.Id == id).Single();
+                Database.Users.Remove(goner);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                throw new DatabaseHelperException(ex) ;
+            }
         }
 
         #endregion

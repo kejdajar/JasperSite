@@ -17,6 +17,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+
         public ImagesController(DatabaseContext dbContext)
         {
             this._databaseContext = dbContext;
@@ -27,38 +28,55 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-
             return View(UpdatePage());
         }
 
         public ImagesViewModel UpdatePage()
         {
-            ImagesViewModel model = new ImagesViewModel();
-            model.ImagesFromDatabase = _dbHelper.GetAllImages();
-            return model;
+            try
+            {
+                ImagesViewModel model = new ImagesViewModel();
+                model.ImagesFromDatabase = _dbHelper.GetAllImages();
+                return model;
+            }
+            catch 
+            {
+                ImagesViewModel model = new ImagesViewModel();
+                model.ImagesFromDatabase = null;
+                return model;
+            }
         }
 
         [HttpPost]
         public IActionResult PostImage(ICollection<IFormFile> files)
         {
-            foreach(IFormFile file in files)
+            try
             {
-                if(file.Length >0)
+                foreach (IFormFile file in files)
                 {
-                    MemoryStream ms = new MemoryStream();
-                    file.CopyTo(ms);
-                    byte[] imageInBytes = ms.ToArray();
+                    if (file.Length > 0)
+                    {
+                        MemoryStream ms = new MemoryStream();
+                        file.CopyTo(ms);
+                        byte[] imageInBytes = ms.ToArray();
 
-                    Image dbImageEntity = new Image();
-                    dbImageEntity.Name = file.FileName;
-                    dbImageEntity.ImageData = new ImageData() { Data = imageInBytes };
-                    _databaseContext.Images.Add(dbImageEntity);
-                    _databaseContext.SaveChanges();
+                        Image dbImageEntity = new Image();
+                        dbImageEntity.Name = file.FileName;
+                        dbImageEntity.ImageData = new ImageData() { Data = imageInBytes };
+                        _databaseContext.Images.Add(dbImageEntity);
+                        _databaseContext.SaveChanges();
+                    }
                 }
+
+                ImagesViewModel model = new ImagesViewModel();
+                model.ImagesFromDatabase = _dbHelper.GetAllImages();
+            }
+            catch 
+            {
+
+            // TODO: error
             }
 
-            ImagesViewModel model = new ImagesViewModel();
-            model.ImagesFromDatabase = _dbHelper.GetAllImages();
             return RedirectToAction("Index");
         }
 
@@ -78,10 +96,17 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             catch
             {
-                string missingImagePlaceholderRelativePath = Configuration.WebsiteConfig.MissingImagePath;
-                string absolutePath = Configuration.CustomRouting.RelativeThemePathToRootRelativePath(missingImagePlaceholderRelativePath);
-                byte[] bytes = System.IO.File.ReadAllBytes(absolutePath);                
-                return File(bytes, "image/jpg");
+                try {
+                    string missingImagePlaceholderRelativePath = Configuration.WebsiteConfig.MissingImagePath;
+                    string absolutePath = Configuration.CustomRouting.RelativeThemePathToRootRelativePath(missingImagePlaceholderRelativePath);
+                    byte[] bytes = System.IO.File.ReadAllBytes(absolutePath);
+                    return File(bytes, "image/jpg");
+                }
+                catch
+                {
+                    return null;
+                }
+               
             }
            
         }
@@ -89,7 +114,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DeleteImage(int imgId)
         {
-            _dbHelper.DeleteImageById(imgId);
+            try
+            {
+                _dbHelper.DeleteImageById(imgId);
+            }
+            catch 
+            {
+
+               //TODO: error
+            }
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)

@@ -15,13 +15,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     {
         [HttpGet]
         public IActionResult Index()
-        {
-            ModelState.Clear();
+        {           
             return View(UpdatePage());
         }
 
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+
         public BlocksController(DatabaseContext dbContext)
         {
             this._databaseContext = dbContext;
@@ -92,6 +92,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 // TODO: error
             }
+
             return PartialView("BlockFormPartialView",UpdatePage());
         }
 
@@ -111,7 +112,6 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
             {
-
                 return PartialView("BlockFormPartialView",UpdatePage());
             }
             else
@@ -240,11 +240,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 tbFromDb.Content = changedData.Content;
                 _dbHelper.SaveChanges();
             }
-            catch 
+            catch
             {
                 // TODO: error                
             }
-            
+
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
 
             if (isAjaxCall)

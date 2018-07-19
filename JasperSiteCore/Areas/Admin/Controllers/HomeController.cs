@@ -5,10 +5,7 @@ using System.Linq;
 using JasperSiteCore.Models.Database;
 using JasperSiteCore.Areas.Admin.ViewModels;
 using JasperSiteCore.Models;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Routing;
 using JasperSiteCore.Areas.Admin.Models;
-using Microsoft.AspNetCore.Http;
 using JasperSiteCore.Helpers;
 using System.IO;
 using System.Net.Http.Headers;
@@ -21,22 +18,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Area("Admin")]
     public class HomeController : Controller
     {  
-        //// Firstly, the installation must have already been completed before accesing administration panel
-        //public override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{          
-        //    if (!Configuration.InstallationCompleted())
-        //    {
-        //        filterContext.Result = new RedirectToRouteResult(
-        //            new RouteValueDictionary {
-        //        { "Controller", "Install" },
-        //        { "Action", "Index" },
-        //                {"Area","Admin" }
-        //            });
-        //    }
-
-        //    base.OnActionExecuting(filterContext);
-        //}
-
+     
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
 
@@ -54,21 +36,26 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public HomeViewModel UpdatePage()
         {
-            HomeViewModel model = new HomeViewModel();
-            model.Articles = dbHelper.GetAllArticles();
-            model.Categories = dbHelper.GetAllCategories();
-            return model;
+            try
+            {
+                HomeViewModel model = new HomeViewModel();
+                model.Articles = dbHelper.GetAllArticles();
+                model.Categories = dbHelper.GetAllCategories();
+                return model;
+            }
+            catch 
+            {
+                HomeViewModel model = new HomeViewModel();
+                model.Articles = null;
+                model.Categories = null;
+                return model;                
+            }
         }
 
         public IActionResult Error()
         {
             return View("_Error");
-        }
-
-
-        
-
-       
+        }      
 
     }
 }

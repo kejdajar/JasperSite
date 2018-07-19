@@ -18,22 +18,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Area("Admin")]
     public class LoginController : Controller
     {
-        //// Firstly, the installation must have already been completed before accesing administration panel
-        //public override void OnActionExecuting(ActionExecutingContext filterContext)
-        //{
-        //    if(!Configuration.InstallationCompleted())
-        //    {
-        //        filterContext.Result = new RedirectToRouteResult(
-        //            new RouteValueDictionary {
-        //        { "Controller", "Install" },
-        //        { "Action", "Index" },
-        //                {"Area","Admin" }
-        //            });
-        //    }
-
-        //    base.OnActionExecuting(filterContext);
-        //}
-
+        
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
 
@@ -47,8 +32,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            LoginViewModel model = new LoginViewModel();
-            model.Username = "admin";
+            LoginViewModel model = new LoginViewModel();           
             return View(model);
         }
 
@@ -58,39 +42,51 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             // Input data cleansing: username IS CASE-INSENSITIVE, with no leading and trailing whitespaces
             model.Username = model.Username.ToLower().Trim();
 
-            User user =_dbHelper.GetUserWithUsername(model.Username);
-            
-            string filledInPassword = model.Password;
-            bool isPswdCorrect = user.ComparePassword(filledInPassword);
-
-            if (ModelState.IsValid && isPswdCorrect)
+            try
             {
+                User user = _dbHelper.GetUserWithUsername(model.Username);
+                string filledInPassword = model.Password;
+                bool isPswdCorrect = user.ComparePassword(filledInPassword);
 
 
-                List<Claim> claims = new List<Claim>
+                if (ModelState.IsValid && isPswdCorrect)
+                {
+
+
+                    List<Claim> claims = new List<Claim>
                     {
                        new Claim(ClaimTypes.Name,model.Username),
                        new Claim (ClaimTypes.Role,user.Role.Name)
                     };
-                ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
-                ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
-                HttpContext.SignInAsync(principal, new AuthenticationProperties { IsPersistent = model.Remember });
+                    ClaimsIdentity userIdentity = new ClaimsIdentity(claims, "login");
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    HttpContext.SignInAsync(principal, new AuthenticationProperties { IsPersistent = model.Remember });
 
-               if(string.IsNullOrEmpty(returnUrl))
-                {
-                    return RedirectToAction("Index", "Home");
+                    if (string.IsNullOrEmpty(returnUrl))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return Redirect(returnUrl);
+                    }
+
                 }
-               else
+                else
                 {
-                    return Redirect(returnUrl);
+                    ViewBag.Error = "1";
+                    ViewBag.ErrorMessage = "Bylo zadáno špatné uživatelské jméno nebo heslo";
+                    return View("Index");
                 }
-               
 
             }
-            else
-                return Content("error");
-           
-                 
+            catch
+            {
+                ViewBag.Error = "1";
+                //ViewBag.ErrorMessage = $"Při přihlašování došlo k neočekávané chybě.{((ex.InnerException!=null)? ("Popis chyby:"+ex.InnerException.Message):" ")}";
+                ViewBag.ErrorMessage = "Bylo zadáno špatné uživatelské jméno nebo heslo";
+                return View("Index");
+            }                 
         }
 
         [HttpGet]
