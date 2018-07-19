@@ -105,6 +105,30 @@ namespace JasperSiteCore.Models
 
     }
 
+    public class ThemeHelperException : Exception
+    {
+        private static string _message = "An error in ThemeHelper class occured.";
+        public ThemeHelperException() : base(_message)
+        {
+
+        }
+        public ThemeHelperException(string message)
+            : base(message)
+        {
+        }
+
+        public ThemeHelperException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public ThemeHelperException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
     public class DatabaseContextNullException : Exception
     {
         private static string _message = "Database context can't be null.";

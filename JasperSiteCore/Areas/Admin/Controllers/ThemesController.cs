@@ -160,7 +160,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             try
             {
-                bool success = Configuration.ThemeHelper.DeleteThemeByNameFromDbAndFolder(themeName, databaseContext);
+             Configuration.ThemeHelper.DeleteThemeByNameFromDbAndFolder(themeName, databaseContext);
             }
             catch
             {

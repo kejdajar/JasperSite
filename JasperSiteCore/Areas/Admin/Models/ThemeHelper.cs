@@ -10,77 +10,127 @@ namespace JasperSiteCore.Areas.Admin.Models
 {
     public class ThemeHelper
     {
-        public ThemeHelper()
-        {
-
-        }
-
-        //public string GetAbsoluteThemeFolderPath()
-        //{
-        //    string themeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
-        //    return Configuration.CustomRouting.RelativeThemePathToRootRelativePath(themeFolder);
-        //}
-
+          
+        /// <summary>
+        /// Returns content of desc.txt file in root of the folder with theme.
+        /// </summary>
+        /// <param name="pathToTheme"></param>
+        /// <returns></returns>
+        /// <exception cref="ThemeHelperException"></exception>
         private string GetThemeDescription(string pathToTheme)
         {
-            string desc = File.ReadAllText(Path.Combine(pathToTheme, "desc.txt"));
-            return desc;
+            try
+            {
+                string desc = File.ReadAllText(Path.Combine(pathToTheme, "desc.txt"));
+                return desc;
+            }
+            catch (Exception ex)
+            {
+
+                throw new ThemeHelperException(ex);
+            }
         }
+      
 
-        // public string GetThemeThumbnailUrl(string themeFolder, string themeName)
-        // {   
-        //     return "~/" + themeFolder + "/" + themeName + "/thumbnail.jpg"; 
-        //    // return Configuration.CustomRouting.RelativeThemePathToRootRelativePath("thumbnail.jpg");
-        // }
-
+        /// <summary>
+        /// Returns url (~/...) to the thumbnail.jpg file.
+        /// </summary>
+        /// <param name="themeName"></param>
+        /// <returns></returns>
+        /// <exception cref="ThemeHelperException"></exception>
         public string GetThemeThumbnailUrl(string themeName)
-        {   // vyřešit lépe
-            string themeFolder = Configuration.CustomRouting.GlobalWebsiteConfig.ThemeFolder;
-            return Path.Combine("~/", themeFolder, themeName, "thumbnail.jpg").Replace('\\', '/');
+        {
+            try
+            {
+                string themeFolder = Configuration.CustomRouting.GlobalWebsiteConfig.ThemeFolder;
+                return Path.Combine("~/", themeFolder, themeName, "thumbnail.jpg").Replace('\\', '/');
+            }
+            catch (Exception ex)
+            {
+
+                throw new ThemeHelperException(ex);
+            }
         }
 
-
+        /// <summary>
+        /// Returns list of installed themes in folder specified by Configuration.GlobalWebsiteConfig.ThemeFolder.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ThemeHelperException"></exception>
         public List<ThemeInfo> GetInstalledThemesInfo()
         {
+
             return GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder);
+
         }
+
+        /// <summary>
+        /// Returns list with info about al installed themes. Data are obtained from FILESYSTEM, not DB!
+        /// </summary>
+        /// <param name="themeFolderPath">Path to the folder with themes.</param>
+        /// <returns></returns>
+        /// <exception cref="ThemeHelperException"></exception>
         public List<ThemeInfo> GetInstalledThemesInfo(string themeFolderPath)
         {
 
-            List<string> themeSubfolders = Directory.GetDirectories(themeFolderPath).ToList();
-
-            List<ThemeInfo> themeInfos = new List<ThemeInfo>();
-            foreach (string themeSubdirPath in themeSubfolders)
+            try
             {
-                string _themeName = Path.GetFileName(themeSubdirPath);
-                ThemeInfo ti = new ThemeInfo()
+                List<string> themeSubfolders = Directory.GetDirectories(themeFolderPath).ToList();
+
+                List<ThemeInfo> themeInfos = new List<ThemeInfo>();
+                foreach (string themeSubdirPath in themeSubfolders)
                 {
+                    string _themeName = Path.GetFileName(themeSubdirPath);
+                    ThemeInfo ti = new ThemeInfo()
+                    {
 
-                    ThemeName = _themeName,
-                    ThemeFolder = themeFolderPath,
-                    ThemeDescription = GetThemeDescription(themeSubdirPath),
-                    ThemeThumbnailUrl = GetThemeThumbnailUrl(_themeName)
-                };
-                themeInfos.Add(ti);
+                        ThemeName = _themeName,
+                        ThemeFolder = themeFolderPath,
+                        ThemeDescription = GetThemeDescription(themeSubdirPath),
+                        ThemeThumbnailUrl = GetThemeThumbnailUrl(_themeName)
+                    };
+                    themeInfos.Add(ti);
 
+                }
+                return themeInfos;
             }
-            return themeInfos;
+            catch (Exception ex)
+            {
+
+                throw new ThemeHelperException(ex);
+            }
         }
 
         /// <summary>
         /// Searches through Theme folder, indexing themes and returns collection sorted by name, with current theme first.
         /// </summary>
         /// <returns></returns>
+        /// <exception cref="ThemeHelperException"></exception>
         public List<ThemeInfo> GetInstalledThemesInfoByNameAndActive()
         {
-            List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
-            themeInfoList.OrderBy(o => o.ThemeName);
-            ThemeInfo currentTheme = themeInfoList.Where(i => i.ThemeName == Configuration.GlobalWebsiteConfig.ThemeName).First();
-            themeInfoList.Remove(currentTheme);
-            themeInfoList.Insert(0, currentTheme);
-            return themeInfoList;
+            try
+            {
+                List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
+                themeInfoList.OrderBy(o => o.ThemeName);
+                ThemeInfo currentTheme = themeInfoList.Where(i => i.ThemeName == Configuration.GlobalWebsiteConfig.ThemeName).First();
+                themeInfoList.Remove(currentTheme);
+                themeInfoList.Insert(0, currentTheme);
+                return themeInfoList;
+            }
+            catch (Exception ex)
+            {
+
+                throw new ThemeHelperException(ex);
+            }
         }
 
+        /// <summary>
+        /// Deletes theme from Database and Filesystem
+        /// </summary>
+        /// <param name="themeName"></param>
+        /// <param name="dbContext"></param>
+        /// <returns></returns>
+        /// <exception cref="ThemeHelperException"></exception>
         public bool DeleteThemeByNameFromDbAndFolder(string themeName, DatabaseContext dbContext)
         {
             try
@@ -93,26 +143,19 @@ namespace JasperSiteCore.Areas.Admin.Models
                 System.IO.Directory.Delete(themeFolderPath, true);
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
-                return false;
+                throw new ThemeHelperException(ex);
             }
-        }
-
-       
+        }      
 
 }
 
-
-
-
 public class ThemeInfo
-    {
-        
+    {        
         public string ThemeName { get; set; }
         public string ThemeFolder { get; set; }
-        public string ThemeDescription { get; set; }
-       // thumbnail img - TODO
-       public string ThemeThumbnailUrl {get;set;}
+        public string ThemeDescription { get; set; }     
+        public string ThemeThumbnailUrl {get;set;}
     }
 }
