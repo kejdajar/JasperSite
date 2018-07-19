@@ -17,6 +17,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+
         public UsersController(DatabaseContext dbContext)
         {
             _databaseContext = dbContext;
@@ -31,17 +32,26 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public UsersViewModel UpdatePage()
         {
-            List<User> users = _dbHelper.GetAllUsers();
-            UsersViewModel model = new UsersViewModel();
-            model.Users = users;
+            try
+            {
+                List<User> users = _dbHelper.GetAllUsers();
+                UsersViewModel model = new UsersViewModel();
+                model.Users = users;
 
-            // Active user will be in the first row
-            string activeUserName = User.Identity.Name;
-            JasperSiteCore.Models.Database.User currentUser = users.Where(u => u.Username.Trim().ToLower() == activeUserName.Trim().ToLower()).Single();
-            users.Remove(currentUser);
-            users.Insert(0, currentUser);
+                // Active user will be in the first row
+                string activeUserName = User.Identity.Name;
+                JasperSiteCore.Models.Database.User currentUser = users.Where(u => u.Username.Trim().ToLower() == activeUserName.Trim().ToLower()).Single();
+                users.Remove(currentUser);
+                users.Insert(0, currentUser);
 
-            return model;
+                return model;
+            }
+            catch 
+            {
+                UsersViewModel model = new UsersViewModel();
+                model.Users = null;
+                return model;
+            }
         }
 
         [HttpGet]
@@ -52,23 +62,34 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         public EditUserViewModel UpdateEditUserPage(int id)
         {
-            User userToEdit =_dbHelper.GetUserById(id);
-            EditUserViewModel model = new EditUserViewModel();
+            try
+            {
+                User userToEdit = _dbHelper.GetUserById(id);
+                EditUserViewModel model = new EditUserViewModel();
 
-            model.AllRoles = _dbHelper.GetAllRoles();
-            model.Nickname = userToEdit.Nickname;
-            model.Id = userToEdit.Id;
-            model.Username = userToEdit.Username;
-            model.RoleId = userToEdit.RoleId;
-            model.NewPasswordPlainText = string.Empty;
-            model.NewPasswordPlainTextAgain = string.Empty;
-            return model;
+                model.AllRoles = _dbHelper.GetAllRoles();
+                model.Nickname = userToEdit.Nickname;
+                model.Id = userToEdit.Id;
+                model.Username = userToEdit.Username;
+                model.RoleId = userToEdit.RoleId;
+                model.NewPasswordPlainText = string.Empty;
+                model.NewPasswordPlainTextAgain = string.Empty;
+                return model;
+            }
+            catch 
+            {
+                return null;
+            }
         }
 
         [HttpPost]        
         public IActionResult EditUser(EditUserViewModel model)
         {
-           
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
+            try
+            {
+                
                 // Get current user
                 User user = _dbHelper.GetUserById(model.Id);
                 user.Nickname = model.Nickname;
@@ -76,27 +97,43 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 user.RoleId = model.RoleId;
 
 
-                 // Password will be changed only if both fields are filled in
+                // Password will be changed only if both fields are filled in
                 if (!string.IsNullOrWhiteSpace(model.NewPasswordPlainText) && !string.IsNullOrWhiteSpace(model.NewPasswordPlainTextAgain))
-                {                   
-                        string salt;
-                        string hashedNewPaswd;
-                        Authentication.HashPassword(model.NewPasswordPlainTextAgain, out salt, out hashedNewPaswd);
-                        //Configuration.DbHelper.ChangePassword(user.Id, hashedNewPaswd, salt);
+                {
+                    string salt;
+                    string hashedNewPaswd;
+                    Authentication.HashPassword(model.NewPasswordPlainTextAgain, out salt, out hashedNewPaswd);
+                    //Configuration.DbHelper.ChangePassword(user.Id, hashedNewPaswd, salt);
 
-                        user.Password = hashedNewPaswd;
-                        user.Salt = salt;
-                    
+                    user.Password = hashedNewPaswd;
+                    user.Salt = salt;
+
                 }
 
-              if (ModelState.IsValid)
+                if (ModelState.IsValid)
+                {
+                    _dbHelper.SaveChanges();
+                }
+            }
+            catch 
             {
-                _dbHelper.SaveChanges();
+                ViewBag.Error = "1";
+                ViewBag.ErrorMessage = "Změny nebylo možné uložit";
+                if (isAjaxCall)
+                {
+                    EditUserViewModel cleanModel = UpdateEditUserPage(model.Id);
+                    return PartialView("EditUserPartialView", cleanModel);
+                }
+                else
+                {
+                    return View("EditUser", UpdateEditUserPage(model.Id));
+                }
+
             }
 
             
 
-            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+        
             if (isAjaxCall)
             {
                 EditUserViewModel cleanModel = UpdateEditUserPage(model.Id);   

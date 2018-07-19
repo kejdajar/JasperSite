@@ -1,66 +1,77 @@
 ﻿@using JasperSiteCore.Models.Database;
 @model JasperSiteCore.Areas.Admin.ViewModels.EditUserViewModel
 
+@Html.Partial("_ErrorModalPartialView")
 
 
-<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Uživatel: @Model.Username</h1></div>
-<form id="formId" asp-action="EditUser" asp-controller="Users" asp-area="Admin" data-ajax="true" data-ajax-update="#mainForm" method="post" data-ajax-complete="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success');">
+@if (Model != null)
+{
+    <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Uživatel: @Model.Username</h1></div>
+    <form id="formId" asp-action="EditUser" asp-controller="Users" asp-area="Admin" data-ajax="true" data-ajax-update="#mainForm" method="post" data-ajax-complete="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success');">
 
-    <div class="form-horizontal">
+        <div class="form-horizontal">
 
-        @*<div asp-validation-summary="All" class="text-danger"></div>*@
-        <input type="hidden" asp-for="Id" />
-        <div class="form-group">
-            <label asp-for="Nickname"></label>
+            @*<div asp-validation-summary="All" class="text-danger"></div>*@
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Nickname"></label>
 
-            <input asp-for="Nickname" class="form-control" />
-            <span asp-validation-for="Nickname" class="text-danger"></span>
+                <input asp-for="Nickname" class="form-control" />
+                <span asp-validation-for="Nickname" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Username"></label>
+
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AllRoles"></label>
+
+                <select class="form-control" asp-for="RoleId" asp-items="@(new SelectList(Model.AllRoles, "Id", "Name"))"></select>
+
+                <span asp-validation-for="RoleId" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NewPasswordPlainText"></label>
+
+                <input asp-for="NewPasswordPlainText" class="form-control j-input-password" placeholder="Ponechte prázdné, pokud chcete zachovat stávající heslo." />
+                <span asp-validation-for="NewPasswordPlainText" class="text-danger"></span>
+
+            </div>
+
+            <div class="form-group">
+                <label asp-for="NewPasswordPlainTextAgain"></label>
+
+                <input asp-for="NewPasswordPlainTextAgain" class="form-control j-input-password" placeholder="Ponechte prázdné, pokud chcete zachovat stávající heslo." />
+                <span asp-validation-for="NewPasswordPlainTextAgain" class="text-danger"></span>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <a href="/Admin/Users/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam uživatelů</a>
+                <button id="mainSubmitButton" type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+
+
+
+            </div>
 
         </div>
 
-        <div class="form-group">
-            <label asp-for="Username"></label>
-
-            <input asp-for="Username" class="form-control" />
-            <span asp-validation-for="Username" class="text-danger"></span>
-
-        </div>
-
-        <div class="form-group">
-            <label asp-for="AllRoles"></label>
-
-            <select class="form-control" asp-for="RoleId" asp-items="@(new SelectList(Model.AllRoles,"Id","Name"))"></select>
-
-            <span asp-validation-for="RoleId" class="text-danger"></span>
-
-        </div>
-
-        <div class="form-group">
-            <label asp-for="NewPasswordPlainText"></label>
-
-            <input asp-for="NewPasswordPlainText" class="form-control j-input-password" placeholder="Ponechte prázdné, pokud chcete zachovat stávající heslo." />
-            <span asp-validation-for="NewPasswordPlainText" class="text-danger"></span>
-
-        </div>
-
-        <div class="form-group">
-            <label asp-for="NewPasswordPlainTextAgain"></label>
-
-            <input asp-for="NewPasswordPlainTextAgain" class="form-control j-input-password" placeholder="Ponechte prázdné, pokud chcete zachovat stávající heslo." />
-            <span asp-validation-for="NewPasswordPlainTextAgain" class="text-danger"></span>
-
-        </div>
-
-
-        <div class="form-group">
-
-            <a href="/Admin/Users/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam uživatelů</a>
-            <button id="mainSubmitButton" type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
-
-
-
-        </div>
-
+    </form>
+}
+else
+{
+    <div class="alert alert-warning">
+        Hledaný uživatel nebyl nalezen, nebo došlo k neočekávané chybě.
     </div>
-  
-</form>
+
+}

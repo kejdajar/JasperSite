@@ -17,6 +17,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+
         public SettingsController(DatabaseContext dbContext)
         {
             this._databaseContext = dbContext;
@@ -27,19 +28,36 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult Index()
         {
             SettingsViewModel model = new SettingsViewModel();
-            model.WebsiteName = _dbHelper.GetWebsiteName();
-            return View(model);
+
+            try
+            {
+                model.WebsiteName = _dbHelper.GetWebsiteName();
+                return View(model);
+            }
+            catch 
+            {
+                model.WebsiteName = string.Empty;
+                return View(model);
+            }
         }
 
         [HttpPost]
         public IActionResult SaveSettings(SettingsViewModel model)
         {
-            if(ModelState.IsValid)
+            try
             {
-                _dbHelper.SetWebsiteName(model.WebsiteName);
+                if (ModelState.IsValid)
+                {
+                    _dbHelper.SetWebsiteName(model.WebsiteName);
+                }
+
+                return View(model);
             }
-           
-            return View(model);
+            catch
+            {
+                // TODO: error
+                return View(model);
+            }
         }
 
        
