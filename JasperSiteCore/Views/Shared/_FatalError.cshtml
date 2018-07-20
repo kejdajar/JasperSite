@@ -1,0 +1,248 @@
+﻿@{
+    ViewData["Title"] = "Závažná chyba";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="~/Areas/Admin/Content/Images/favicon.ico" type="image/x-icon">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instalace</title>
+
+
+    @*********************************************************************** Styles ****************************************************************************@
+    <environment include="Development">
+
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="~/lib/tether/dist/css/tether.css" rel="stylesheet" />
+
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+
+
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+    </environment>
+
+    <environment exclude="Development">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" rel="stylesheet"
+              asp-fallback-href="~/lib/tether/dist/css/tether.css" />
+
+        <!--Nalinkovat minifikaci-->
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
+        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+
+
+        <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    </environment>
+
+    @*********************************************************************** Scripts ****************************************************************************@
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/tether/dist/js/tether.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" asp-fallback-href="~/lib/tether/dist/js/tether.min.js"></script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn">
+        </script>
+
+        <!-- Without CDN -->
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+    </environment>
+
+    @{Html.RenderPartial("_ValidationScriptsPartial");}
+
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <style>
+        .j-jumbotron {
+            background-color: #BA68C8;
+        }
+
+            .j-jumbotron h1 {
+                color: white;
+            }
+
+            .j-jumbotron h2 {
+                color: #e7e7e7;
+                font-size: 1.3em;
+            }
+
+        body {
+            margin-top: 20px;
+        }
+
+        .j-jumbotron-span {
+            color: black;
+        }
+    </style>
+
+   
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="jumbotron j-jumbotron">
+            <h1>
+                J<span class="j-jumbotron-span">asp</span>er Site <span class="j-jumbotron-span">Core</span>
+            </h1>
+            <h2>Detekovány závažné chyby </h2>
+        </div>
+        
+
+        <div class="row">
+            
+
+            <section class="j-admin-section col-lg-12">
+                <p>
+                    Na této stránce se nachází seznam všech chyb, které je potřeba opravit, než
+                    bude možné redakční systém spolehlivě používat.
+                </p>
+
+                <p>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                    <div class="alert alert-info">
+                        
+                    <p>
+                    <b>Administrátorská sekce:</b> <br />
+                    Vítejte uživateli @User.Identity.Name. Tuto modře označenou sekci vidíte, protože máte roli <b>Admin</b>. <br />
+                    <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-undo fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
+                    <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Home" asp-area="admin" asp-action="Index"><i class="fa fa-diamond fa-1x"> </i> Přejít do administrace</a>
+              </p>
+             
+                    <p>
+                        <br /><b>Řešení problémů:</b> <br />
+
+                       
+                           <a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateConfigurationWithThemeReset" asp-area="Admin"> 
+                        Aplikovat data z konfiguračních souborů</a><br /> Všechna konfigurační data, která byla dočasně uložena do paměti budou znovu načtena z konfiguračníchj souborů.
+                         
+                        <br/>
+                        <a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze vzhledů</a> <br/>
+                        V případě poškození databáze vzhledů tato možnost zresetuje databázi vzhledů a odstraní přiřazené textové bloky k jednotlivým kontejnerům příslušných vzhledů.
+                       
+                    </p>
+                    </div>
+                    }
+
+                    @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+                    {
+                        <div class="alert alert-info">
+                            <b>Sekce uživatele systému:</b> <br />
+                            Vítejte uživateli @User.Identity.Name. Tuto modře označenou sekci vidíte, protože jste přihlášen, ale nemáte administrátorská práva. Pro více možností se přihlašte jako administrátor. <br />
+                            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-undo fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
+                            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Home" asp-area="admin" asp-action="Index"><i class="fa fa-diamond fa-1x"> </i> Přejít do administrace</a>
+                        </div>
+
+                    }
+
+
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <div class="alert alert-warning">
+                            <b>Nepřihlášený uživatel:</b> <br />
+                            Pro zobrazení více možností, jak opravit uvedené problémy je potřeba se nejdříve přihlásit
+                            jako administrátor. <br />
+                            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="Index"><i class="fa fa-user-circle fa-1x"> </i> Přihlásit se </a>
+                           
+
+                        </div>
+                    }
+                </p>
+
+
+                @{
+
+                    List<string> errorMessages = new List<string>();
+
+                    void Recursion(Exception ex)
+                    {
+                        if (ex != null)
+                        {
+                            errorMessages.Add(ex.Message);
+                            if (ex.InnerException != null)
+                            {
+                                Recursion(ex.InnerException);
+
+                            }
+                            else return;
+                        }
+                        else return;
+                    }
+
+                    Recursion((Exception)(TempData["ExceptionMessage"]));
+
+                    try
+                    {
+                        (errorMessages[0]) = "<b>Hlavní chyba:</b> " + errorMessages[0];
+                        if(errorMessages.Count>1)
+                        {
+                            for(int i =0;i<=errorMessages.Count();i++)
+                            {
+                                if (i != 0)
+                                {
+
+                                    errorMessages[i] = "<i>Inner Exception:</i> " + errorMessages[i];
+                                }
+
+
+                            }
+
+                        }
+                    } catch { }
+                }
+
+
+                @if (errorMessages.Count > 0)
+                {
+                    @foreach (string message in errorMessages)
+                    {
+
+                        <div class="alert alert-danger">
+                            @Html.Raw(message)
+                        </div>
+                    }
+
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                       Žádné podrobnosti k chybám nejsou k dispozici.
+                    </div>
+
+                }
+
+            </section>
+
+        </div>
+    </div>
+</body>
+</html>

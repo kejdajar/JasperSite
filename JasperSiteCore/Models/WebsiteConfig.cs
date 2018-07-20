@@ -19,17 +19,35 @@ namespace JasperSiteCore.Models
         public WebsiteConfig(IWebsiteConfigProvider dataProvider)
         {
             this._dataProvider = dataProvider ?? throw new ConfigurationObjectException();
-            this._configurationObject = _dataProvider.GetFreshData() ?? throw new ConfigurationObjectException();
+
+            if (dataProvider == null) throw new ConfigurationObjectException("Data provider parameter can't be null.");
+
+            try
+            {
+                ConfigurationObject settingsFromThemeJasperJson = _dataProvider.GetFreshData();
+                this._configurationObject = settingsFromThemeJasperJson;
+            }
+            catch
+            {
+             this._configurationObject = null;
+            }
+          
+        }
+
+        private void ThrowError(Exception innerException)
+        {
+            string errorMsg = "JSON theme configuration data file could not be found or contains invalid data.";
+
+            if (Configuration.GlobalWebsiteConfig != null)
+                errorMsg += (Configuration.GlobalWebsiteConfig.ThemeName != null) ? "Folder with missing jasper.json: " + Configuration.GlobalWebsiteConfig.ThemeName.ToString() + ". " : string.Empty;
+
+            throw new ConfigurationObjectProviderJsonException(errorMsg, innerException);
         }
 
         private IWebsiteConfigProvider _dataProvider;
         private ConfigurationObject _configurationObject;      
               
-
-        //public ConfigurationObject GetConfigData()
-        //{
-        //    return this._configurationObject;          
-        //}
+              
 
         public void RefreshData()
         {
@@ -51,46 +69,136 @@ namespace JasperSiteCore.Models
 
         public ConfigurationObject.Routing RoutingList
         {
-            get { return _configurationObject.RoutingList; }
+            get
+            {
+                try
+                {
+                    return _configurationObject.RoutingList;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                    return null;
+                }
+            }
             set
             {
-                _configurationObject.RoutingList = value;
+                try {
+                    _configurationObject.RoutingList = value;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);                    
+                }
             }
         }
 
         public List<ConfigurationObject.KeyValue> AppSettings
         {
-            get { return _configurationObject.AppSettings; }
+            get
+            {
+                try
+                {
+                    return _configurationObject.AppSettings;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                    return null;
+                }
+            }
             set
             {
-                _configurationObject.AppSettings = value;
+                try
+                {
+                    _configurationObject.AppSettings = value;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                }
             }
         }
 
         public List<ConfigurationObject.RouteMapping> CustomPageMapping
         {
-            get { return _configurationObject.CustomPageMapping; }
+            get
+            {
+                try
+                {
+                    return _configurationObject.CustomPageMapping;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                    return null;
+                }
+            }
             set
             {
-                _configurationObject.CustomPageMapping = value;
+                try
+                {
+                    _configurationObject.CustomPageMapping = value;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                }
             }
         }
 
         public List<string> BlockHolders
         {
-            get { return _configurationObject.BlockHolders; }
+            get
+            {
+                try
+                {
+                    return _configurationObject.BlockHolders;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                    return null;
+                }
+            }
             set
             {
-                _configurationObject.BlockHolders = value;
+                try
+                {
+                    _configurationObject.BlockHolders = value;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+
+                }
             }
         }
 
         public string MissingImagePath
         {
-            get { return _configurationObject.MissingImagePath; }
+            get
+            {
+                try
+                {
+                    return _configurationObject.MissingImagePath;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                    return null;
+                }
+            }
             set
             {
-                _configurationObject.MissingImagePath = value;
+                try
+                {
+                    _configurationObject.MissingImagePath = value;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                }
             }
         }
 

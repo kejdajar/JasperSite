@@ -19,52 +19,69 @@ namespace JasperSiteCore.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            // Test, whether the installation was already completed and database was seeded
-            if (!Configuration.InstallationCompleted())
-            {
-                return RedirectToAction("Index", "Install", new { area = "admin" });
-            }
-               
-            string rawUrl = Request.Path; // Gets ie.: /MyController/MyActionName
-            string file;
-            if (Configuration.CustomRouting.IsHomePage(rawUrl)) // For the main (index) page only
-            {
-                string viewToReturn = Configuration.CustomRouting.GetHomePageFile();
 
-                // url cant contain "%20" - normal space is required
-                viewToReturn= viewToReturn.Replace("%20"," ");
+            try
+            {
 
-                return View(viewToReturn);
-            }
-            else if (!string.IsNullOrEmpty(file = Configuration.CustomRouting.MapUrlToFile(rawUrl))) // Other pages are mapped as well
-            {
-                return View(file.Replace("%20"," "));
-            }
-            else // page was not found
-            {
-                bool isRequestFromAdminArea = (rawUrl.ToLower()).StartsWith("/admin") ? true : false;
-                if(isRequestFromAdminArea)
+                // Test, whether the installation was already completed and database was seeded
+                if (!Configuration.InstallationCompleted())
                 {
-                    // Admin error page
-                    if (!Env.Hosting.IsDevelopment())
-                         return RedirectToAction("Error", "Home", new { area = "admin" }); // URL will be changed
-                      //  return View("~/Areas/Admin/Views/Shared/_Error.cshtml"); // URL will remain the same
-                    else return View();
+                    return RedirectToAction("Index", "Install", new { area = "admin" });
                 }
-                else
+
+                string rawUrl = Request.Path; // Gets ie.: /MyController/MyActionName
+                string file;
+                if (Configuration.CustomRouting.IsHomePage(rawUrl)) // For the main (index) page only
                 {
-                    // Website error page
-                    if (!Env.Hosting.IsDevelopment())
-                        return View(Configuration.CustomRouting.GetErrorPageFile()); // URL will remain unchanged
-                    else return View();
+                    string viewToReturn = Configuration.CustomRouting.GetHomePageFile();
+
+                    // url cant contain "%20" - normal space is required
+                    viewToReturn = viewToReturn.Replace("%20", " ");
+
+                    return View(viewToReturn);
                 }
-                
+                else if (!string.IsNullOrEmpty(file = Configuration.CustomRouting.MapUrlToFile(rawUrl))) // Other pages are mapped as well
+                {
+                    return View(file.Replace("%20", " "));
+                }
+                else // page was not found
+                {
+                    bool isRequestFromAdminArea = (rawUrl.ToLower()).StartsWith("/admin") ? true : false;
+                    if (isRequestFromAdminArea)
+                    {
+                        // Admin error page
+                        if (!Env.Hosting.IsDevelopment())
+                            return RedirectToAction("Error", "Home", new { area = "admin" }); // URL will be changed
+                                                                                              //  return View("~/Areas/Admin/Views/Shared/_Error.cshtml"); // URL will remain the same
+                        else return View();
+                    }
+                    else
+                    {
+                        // Website error page
+                        if (!Env.Hosting.IsDevelopment())
+                            return View(Configuration.CustomRouting.GetErrorPageFile()); // URL will remain unchanged
+                        else return View();
+                    }
+
+                }
+            }
+            catch(Exception ex)
+            {
+                //TempData["ExceptionMessage"] =ex.Message;
+                //if(ex.InnerException != null)
+                //{
+                //    TempData["ExceptionMessage"] += "InnerException:" + ex.InnerException.Message;
+                //}
+
+                TempData["ExceptionMessage"] = ex;
+
+                return View("_FatalError");
             }
 
         }
 
       
-
+      
        
 
     }

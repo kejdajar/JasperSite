@@ -95,7 +95,7 @@ namespace JasperSiteCore.Models
 
             string result = rootRelativeUrl.ToString();
 
-            return result;
+            return result.Replace("%20"," "); // url cant contain %20 as space
             
         }
 

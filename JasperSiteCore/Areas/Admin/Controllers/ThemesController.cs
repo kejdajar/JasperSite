@@ -150,7 +150,16 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             catch
             {
-                return null;
+                ThemesViewModel model = new ThemesViewModel();
+                model.ItemsPerPage = 3;
+                model.ManuallyDeletedThemeNames = null;
+                model.NotRegisteredThemeNames = null;
+                model.PageNumber = 1;
+                model.SelectedThemeName = null;
+                model.ThemeFolder = null;
+                model.ThemeInfoList = null;
+                model.TotalNumberOfPages = default(int);
+                return model;
             }
 
         }
@@ -248,6 +257,26 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         }
 
+
+        [HttpGet]
+        public ActionResult UpdateConfigurationWithThemeReset()
+        {
+            try
+            {
+                JasperSiteCore.Models.Configuration.Initialize();
+                Configuration.GlobalWebsiteConfig.ThemeName = "Default";
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "1";
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Index", UpdatePage());
+            }
+
+            return RedirectToAction("Index");
+
+        }
+
         [HttpGet]
         public ActionResult UpdateConfiguration()
         {
@@ -255,9 +284,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 JasperSiteCore.Models.Configuration.Initialize();
             }
-            catch
+            catch(Exception ex)
             {
-                // TODO: Error
+                ViewBag.Error = "1";
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Index", UpdatePage());
             }
 
             return RedirectToAction("Index");
