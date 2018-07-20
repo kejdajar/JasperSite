@@ -14,6 +14,15 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function () { 
+        $("#tbAddImg").click(function () { 
+            var sr = "http://static2.wikia.nocookie.net/__cb20090624134711/runescape/images/8/85/Smiley.svg";
+            tinymce.activeEditor.insertContent('<img alt="Smiley face" height="42" width="42" src="' + sr + '"/>');
+
+        });
+    });
+</script>
 
 
 @*<form asp-action="Index" asp-controller="Article" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete='savedInfo("<strong>Uloženo.</strong> Veškeré změny byly uloženy.", "alert-success")'>*@
@@ -65,6 +74,7 @@
 
             <a id="btnDeleteArticle" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
 
+            <input id="tbAddImg" type="button" value="Vložit obrázek" />
 
         </div>
     </div>
