@@ -67,12 +67,7 @@ namespace JasperSiteCore.Controllers
             }
             catch(Exception ex)
             {
-                //TempData["ExceptionMessage"] =ex.Message;
-                //if(ex.InnerException != null)
-                //{
-                //    TempData["ExceptionMessage"] += "InnerException:" + ex.InnerException.Message;
-                //}
-
+              
                 TempData["ExceptionMessage"] = ex;
 
                 return View("_FatalError");
