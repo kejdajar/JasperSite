@@ -4,16 +4,18 @@
 
 <script src="~/lib/tinymce/tinymce.js"></script>
 <script>
+    $(document).ready(function () {
+
         tinymce.init({
 
             selector: '#myTextArea',
-            
+
             branding: false, // no "powered by tinymce" logo
-           // entity_encoding: "raw",
+            // entity_encoding: "raw",
 
 
             plugins: "image lists link table imagetools advlist autolink charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media contextmenu paste visualchars toc textpattern textcolor template hr help emoticons colorpicker codesample",
-            toolbar: ["undo redo | paste | fontselect | styleselect forecolor backcolor | bold italic hr | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | template insertdatetime anchor link media image emoticons toc table | visualblocks visualchars |searchreplace code codesample charmap print | help  fullscreen"],
+            toolbar: ["undo redo | paste | fontselect | styleselect forecolor backcolor | bold italic hr | alignleft aligncenter alignright alignjustify | bullist numlist | outdent indent | template insertdatetime anchor link media image emoticons toc table | visualblocks visualchars |searchreplace code codesample charmap print | help  fullscreen | j-insert-image"],
 
             contextmenu: "link image inserttable | cell row column deletetable",
             templates: [
@@ -41,7 +43,7 @@
             image_dimensions: true,
             image_class_list: [
                 { title: 'Responsive', value: 'img-fluid' }
-            ]   ,
+            ],
 
             convert_urls: false, // url will remain unchanged, default conversion is ../Images/GetImage?id=1
             image_list: [
@@ -50,8 +52,22 @@
                 {
                     @: { title: '@Html.Raw(img.Name)', value: '@Url.Action("GetImage","Images",new { id=img.Id})' },
                 }
-            ]
-        })
+            ],
+
+
+            setup: function (ed) {
+                ed.addButton('j-insert-image', {
+                    title: 'Insert image from JSC',
+                    image: '@Url.Content(@"~/Areas/Admin/Content/Images/tinymceimgupload.png")',
+                      
+                    onclick: function () {
+                        ShowImageDialog();
+                    }
+                })
+            }
+
+
+        });
         /*
         image ... allows to add image
         lists ... bulleted list
@@ -71,7 +87,7 @@
         insertdatetime ... allows to choose from various date-time formats and insert current time/date
         media ... allows to add for instance youtube video
         contextmenu ... enables right-click menu
-        paste ... allows to paste text from word - does not work in chrome :/        
+        paste ... allows to paste text from word - does not work in chrome :/
         visualchars ... shows invisible characters
         toc ... adds table of contents
         textpattern ... something like markdown syntax, ie. "##header" creates bigger text
@@ -89,7 +105,7 @@
 
     /*
     PRISM.JS PLUGINS:
-   
+
  Line Highlight: using manually added: data-line="1" can be row highlighted
  LineNumbers ...inside <pre> add manually : class “line-numbers“
  ShowLanguage ... shows language in the right hand side of the row
@@ -98,4 +114,91 @@
  Theme css: COY – single theme .css file, does not contain other themes
 
     */
+
+
+
+
+
+
+        
+
+
+        function ShowImageDialog() {
+            $("#imgTable").find("tr:gt(0)").remove(); // clears all images that were shown previously
+            $("#dialog").dialog();
+            GetImagesId();
+        }
+
+
+        function GetImagesId() {
+
+             $.ajax({
+                    type: 'get',
+                    url: '@Url.Action("GetImagesId", "Images")',
+                    dataType: 'json',
+                    success: function (data) {
+
+                        ShowImages(data);
+
+
+                    }
+                });
+
+        }
+
+        function FetchDataAjax(id) {
+
+              $.ajax({
+                    type: 'get',
+                  url: '@Url.Action("GetImageForImageList", "Images")',
+                  data: {id:id},
+                    dataType: 'json',
+                    success: function (data) {
+
+                        AppendImage(data);
+
+
+                    }
+                });
+
+        }
+
+        function AppendImage(data) {
+           
+            $("#imgTable tr:last").after(`<tr data-image-id="${data.id}"><td>${data.name}</td>  <td><img class="img-fluid" src="data:image/png;base64,${data.data}"  title="${data.name}" /></td><td><a href="#" class="btn btn-jasper">vložit</a></td></tr>`);
+            $(`#imgTable tr[data-image-id='${data.id}']`).click(function () {
+                tinymce.activeEditor.insertContent(`<img alt="${data.name}"  src="@Url.Action("GetImage","Images")?id=${data.id}"/>`)
+            });
+
+        }
+
+        function ShowImages(data) {
+
+            //console.log(data);
+
+
+            var i;
+            for (i = 0; i <data.length; i++) {
+                var id = data[i];
+                FetchDataAjax(id);
+            }
+
+
+
+        }
+
+
+
+    });
 </script>
+
+<div id="dialog" title="Vložení obrázku" style="overflow-y:auto;display:none">
+    <h1>Seznam obrázků</h1>
+
+    <table id="imgTable" class="table table-bordered j-table j-table-text-center">
+        <tr><th>Název</th><th>Náhled</th><th>Vložit</th></tr>
+
+    </table>
+
+</div>
+

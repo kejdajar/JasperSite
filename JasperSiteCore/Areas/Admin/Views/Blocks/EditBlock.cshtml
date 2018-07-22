@@ -5,12 +5,12 @@
 @section Scripts {
 
     <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
-
+    <script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
     @{ Html.RenderPartial("TinyMceSettingsPartialView");}
 
     @*@{ Html.RenderPartial("TinyMceSettingsPartialView");}*@
 
-   
+
 
     <script>
         /* AJAX TINYMCE SUBMIT WITH NO JS FALLBACK */
@@ -45,7 +45,7 @@
         });
     </script>
 
-    
+
 }
 
 @section Styles {
@@ -56,15 +56,15 @@
 
 
 
-    <div class="container-fluid">
+<div class="container-fluid">
 
 
-        <div id="mainForm">
-            @Html.Partial("EditTextBlockPartialView",Model.TextBlock)
-        </div>
-
-        <div id="mainForm2">
-            @Html.Partial("AddedAndLooseHoldersPartialView",Model.HolderManagement)
-        </div>
-
+    <div id="mainForm">
+        @Html.Partial("EditTextBlockPartialView", Model.TextBlock)
     </div>
+
+    <div id="mainForm2">
+        @Html.Partial("AddedAndLooseHoldersPartialView", Model.HolderManagement)
+    </div>
+
+</div>

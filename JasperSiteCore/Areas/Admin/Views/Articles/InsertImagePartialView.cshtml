@@ -2,16 +2,19 @@
     $(document).ready(function () {
 
         $("#tbAddImg").click(function () {
-            var sr = "http://static2.wikia.nocookie.net/__cb20090624134711/runescape/images/8/85/Smiley.svg";
+            //var sr = "http://static2.wikia.nocookie.net/__cb20090624134711/runescape/images/8/85/Smiley.svg";
             //tinymce.activeEditor.insertContent('<img alt="Smiley face" height="42" width="42" src="' + sr + '"/>');
 
 
-            $("#dialog").dialog();
-            GetImagesId();           
+            ShowImageDialog(); 
 
         });
 
+        function ShowImageDialog() {
 
+            $("#dialog").dialog();
+            GetImagesId();   
+        }
       
 
         function GetImagesId() {
@@ -51,8 +54,9 @@
             
             $("#imgTable tr:last").after(`<tr data-image-id="${data.id}"><td>${data.name}</td>  <td><img class="img-fluid" src="data:image/png;base64,${data.data}"  title="${data.name}" /></td><td><a href="#" class="btn btn-jasper">vložit</a></td></tr>`);
             $(`#imgTable tr[data-image-id='${data.id}']`).click(function () {
-                tinymce.activeEditor.insertContent(`<img alt="Smiley face" height="42" width="42" src="@Url.Action("GetImage","Images")?id=${data.id}"/>`)
+                tinymce.activeEditor.insertContent(`<img alt="${data.name}"  src="@Url.Action("GetImage","Images")?id=${data.id}"/>`)
             });
+            
         }
 
         function ShowImages(data) {
