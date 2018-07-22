@@ -55,6 +55,7 @@
             ],
 
 
+            /* Custom button for image-insert */
             setup: function (ed) {
                 ed.addButton('j-insert-image', {
                     title: 'Insert image from JSC',
@@ -66,6 +67,7 @@
                 })
             }
 
+   
 
         });
         /*
@@ -167,7 +169,7 @@
            
             $("#imgTable tr:last").after(`<tr data-image-id="${data.id}"><td>${data.name}</td>  <td><img class="img-fluid" src="data:image/png;base64,${data.data}"  title="${data.name}" /></td><td><a href="#" class="btn btn-jasper">vložit</a></td></tr>`);
             $(`#imgTable tr[data-image-id='${data.id}']`).click(function () {
-                tinymce.activeEditor.insertContent(`<img alt="${data.name}"  src="@Url.Action("GetImage","Images")?id=${data.id}"/>`)
+                tinymce.activeEditor.insertContent(`<img alt="${data.name}" class="img-fluid" src="@Url.Action("GetImage","Images")?id=${data.id}"/>`)
             });
 
         }
