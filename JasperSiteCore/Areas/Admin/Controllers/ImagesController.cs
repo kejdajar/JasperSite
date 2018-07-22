@@ -112,6 +112,38 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public JsonResult GetImageForImageList(int id)
+        {
+            // Query using navigation property + include in DbHelper class
+            // Query must be Async in order to display all images one after another as they are being loaded
+            try
+            {
+                Task<Image> image = _databaseContext.Images.Include(i => i.ImageData).Where(i => i.Id == id).SingleAsync();
+                string imageName = image.Result.Name;
+                byte[] imageData = image.Result.ImageData.Data;
+                return Json(new { Name = imageName, Data = imageData, Id=id });
+            }
+            catch
+            {
+                return Json(null);       
+
+            }
+
+        }
+
+        [HttpGet]
+        public JsonResult GetImagesId()
+        {
+            List<int> imagesId = (from image in _dbHelper.Database.Images
+                                  select image.Id).ToList();
+
+            return Json( imagesId);
+        }
+
+
+
+
+        [HttpGet]
         public IActionResult DeleteImage(int imgId)
         {
             try

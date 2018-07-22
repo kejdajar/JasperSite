@@ -28,6 +28,7 @@
   <ItemGroup>
     <Content Remove="Areas\Admin\Views\Articles\ArticlesListPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Articles\EditArticlePartialView.cshtml" />
+    <Content Remove="Areas\Admin\Views\Articles\InsertImagePartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Blocks\AddedAndLooseHoldersPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Blocks\BlockFormPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\TinyMceSettingsPartialView.cshtml" />
