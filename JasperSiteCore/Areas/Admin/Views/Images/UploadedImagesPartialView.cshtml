@@ -11,7 +11,7 @@
 
                 e.preventDefault();
                 var singleLink = $(this);
-            
+
                 var id = singleLink.data('removeId');
                 var imageName = singleLink.data('imageName');
 
@@ -40,7 +40,7 @@
         });
 </script>
 
-@if (Model.ImagesFromDatabase.Count > 0)
+@*@if (Model.ImagesFromDatabase.Count > 0)
 {
     <table class="table table-bordered j-table">
         <tr><th>Odstranit</th><th class="col-sm-1" style="text-align:left">Název</th><th>Náhled</th></tr>
@@ -56,6 +56,38 @@
         }
 
     </table>
+}
+else
+{
+    <div class="alert alert-warning" role="alert">
+        <strong>Upozornění:</strong> Žádné obrázky nebyly ještě nahrány.
+    </div>
+
+}*@
+
+
+@if (Model.ImagesFromDatabase.Count > 0)
+{
+    <div class="galleryContainer">
+
+
+
+        @foreach (Image img in Model.ImagesFromDatabase)
+        {
+            <div class="galleryItem">
+                <div>
+                    <img alt="@img.Name" src="@Url.Action("GetImage", "Images", new { id = img.Id })" class="img-fluid" />
+                </div>
+                <div>
+                    @img.Name
+                </div>
+                <div>
+                    <a style="width:100%;padding:2px" data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Images" asp-action="DeleteImage" asp-route-imgId="@img.Id" data-remove-id="@img.Id" data-image-name="@img.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                </div>
+            </div>
+        }
+
+    </div>
 }
 else
 {
