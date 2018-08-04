@@ -273,6 +273,43 @@ namespace JasperSiteCore.Models.Database
 
         }
 
+        /// <summary>
+        /// If uncategorized category exists, then returns true.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public bool UncategorizedCategoryExists()
+        {
+            try
+            {
+                Category uncategorized = Database.Categories.Where(c => c.Name == "Nezařazeno").Single();
+                if (uncategorized != null) return true; else return false;
+            }
+            catch
+            {
+                return false;
+            }      
+        }
+
+        /// <summary>
+        /// Adds uncategorized category 
+        /// </summary>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public void CreateUncategorizedCategory()
+        {          
+            try
+            {
+                if (UncategorizedCategoryExists()) throw new DatabaseHelperException("Uncategorized category already exists."); 
+                Category uncategorized = new Category() { Name = "Nezařazeno" };
+                Database.Categories.Add(uncategorized);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException("Uncategorized category could not be created.",ex);
+            }
+        }
+
         #endregion
 
         #region Users

@@ -32,11 +32,21 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 model.Categories = _dbHelper.GetAllCategories();
-                return model;
+                if(model.Categories.Count <= 0)
+                {
+                    model.Categories = null;
+                    return model;
+                }
+                else
+                {
+                    return model;
+                }
+              
             }
             catch
             {
-                return null;
+                model.Categories = null;
+                return model;
             }
 
         }

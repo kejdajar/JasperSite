@@ -11,7 +11,9 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
     public class ArticlesViewModel
     {
         public List<Article> Articles { get; set; }
-        public int NumberOfArticles { get; set; }        
+        public int NumberOfArticles { get; set; }
+
         public int NumberOfCategories { get; set; }
+        public bool UncategorizedCategoryExists { get; set; }
     }
 }

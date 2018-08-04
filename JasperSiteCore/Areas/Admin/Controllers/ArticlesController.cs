@@ -31,7 +31,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             try
             {
-                model.Articles = dbHelper.GetAllArticles();
+                List<Article> articles = dbHelper.GetAllArticles();
+                if (articles.Count > 0)
+                    model.Articles = articles;
+                else model.Articles = null;
             }
             catch
             {
@@ -54,6 +57,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             catch
             {
                 model.NumberOfArticles = 0;
+            }
+
+            try
+            {
+               model.UncategorizedCategoryExists= dbHelper.UncategorizedCategoryExists();
+            }
+            catch
+            {
+                model.UncategorizedCategoryExists = default(bool);
             }
         
             return model;
@@ -196,6 +208,25 @@ bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest
             {
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpGet]
+        public IActionResult CreateUncategorizedCategory()
+        {
+            try
+            {
+                dbHelper.CreateUncategorizedCategory();
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = "Rubriku \"Nezaøezeno\" se nepodaøilo vytvoøit.";
+                if (ex.InnerException != null && !string.IsNullOrEmpty(ex.InnerException.Message))
+                { ViewBag.ErrorMessage += "Popis chyby:" + ex.InnerException.Message; }
+                return View("Index", UpdatePage());
+            }
+            
+            return RedirectToAction("Index");
         }
 
     }
