@@ -32,6 +32,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+           
+
             LoginViewModel model = new LoginViewModel();           
             return View(model);
         }

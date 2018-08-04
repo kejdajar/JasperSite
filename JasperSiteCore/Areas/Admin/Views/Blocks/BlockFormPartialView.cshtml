@@ -57,11 +57,11 @@
             <span asp-validation-for="NewTextBlock.Content" class="text-danger"></span>
         </div>
 
-        @if (Model.AllBlockHolders != null )
+        @if (Model.AllBlockHolders != null && Model.CurrentThemeId>0 )
         {
         <div class="form-group">
             <label>Přiřadit ke kontejneru</label>
-            <select class="form-control" asp-for="NewTextBlock.BlockHolderId" asp-items="@(new SelectList(Model.AllBlockHolders, "Id", "Name"))"></select>
+            <select class="form-control" asp-for="NewTextBlock.BlockHolderId" asp-items="@(new SelectList(Model.AllBlockHolders.Where(b => b.ThemeId == Model.CurrentThemeId), "Id", "Name"))"></select>
             <span asp-validation-for="NewTextBlock.BlockHolderId" class="text-danger"></span>
         </div>
         }
@@ -95,7 +95,7 @@
 
     <div class="table-responsive">
 
-        @if (Model.Blocks != null )
+        @if (Model.Blocks != null && Model.Blocks.Count>0 )
         {
             foreach (BlocksViewModelData data in @Model.Blocks)
             {

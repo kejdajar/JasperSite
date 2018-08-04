@@ -45,8 +45,7 @@
             <div class="alert alert-warning fade show" role="alert">
 
                 <strong>Složka se vzhledy byla upravena - neregistrované vzhledy</strong> <br />
-                Ve složce: <i> @Configuration.GlobalWebsiteConfig.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, které je nutné
-                uložit. Neregistrované vzhledy:
+                Ve složce: <i> @Configuration.GlobalWebsiteConfig.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, nebo jsou v databázi neočekávané údaje. Neregistrované vzhledy:
                 <ul style="list-style-type:disc">
                     @foreach (string name in Model.NotRegisteredThemeNames)
                     {

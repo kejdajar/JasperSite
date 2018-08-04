@@ -55,6 +55,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                 model.AllBlockHolders = _dbHelper.GetAllBlockHolders();
                 model.AllThemes = _dbHelper.GetAllThemes();
+                model.CurrentThemeId = _dbHelper.GetCurrentThemeIdFromDb();
                 return model;
             }
             catch
@@ -64,6 +65,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 emptyModel.AllThemes = null;
                 emptyModel.Blocks = null;
                 emptyModel.NewTextBlock = null;
+                emptyModel.CurrentThemeId = -1; // theme id not found
                 return emptyModel;
         }
 

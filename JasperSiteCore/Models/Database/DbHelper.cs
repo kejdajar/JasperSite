@@ -674,6 +674,25 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
+        /// <summary>
+        /// Returns current theme Id.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public int GetCurrentThemeIdFromDb()
+        {
+            try
+            {
+                string themeName = Configuration.GlobalWebsiteConfig.ThemeName;
+                int id = Database.Themes.Where(t => t.Name == themeName).Single().Id;
+                return id;
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException("Current theme Id could not be found", ex);           
+            }
+        }
+
         #endregion
 
         #region Settings

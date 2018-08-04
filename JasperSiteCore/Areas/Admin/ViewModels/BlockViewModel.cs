@@ -20,6 +20,8 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 
         // Themes section
         public List<Theme> AllThemes { get; set; }
+
+        public int CurrentThemeId { get; set; }
     }
 
    
