@@ -3,7 +3,7 @@
 @inject DatabaseContext databaseContext
 @{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
 @{
-    string categoryName = @J.GetCategoryNameById(query);
+    string categoryName = @J.GetCategoryNameById(query,false);
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
     ViewData["Title"] = categoryName;
 }
@@ -12,15 +12,15 @@
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <h1> @categoryName</h1>
+        <h1> @(string.IsNullOrEmpty(categoryName)? "Kategorie nebyla nalezena": categoryName)</h1>
     </div>
 
 
 
 
-    @if (J.GetAllArticles(query).Count() > 0)
+    @if (J.GetAllArticles(query,false).Count() > 0)
     {
-        @foreach (Article article in J.GetAllArticles(query))
+        @foreach (Article article in J.GetAllArticles(query,false))
         {
 
             <div class="list-group">

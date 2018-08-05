@@ -44,7 +44,7 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <a class="navbar-brand" href="/"><span class="website-name-title">@J.GetWebsiteName()</span></a>
+            <a class="navbar-brand" href="/"><span class="website-name-title">@try{@J.GetWebsiteName();}catch{ <text>Domů</text>}</span></a>
             <div class="collapse navbar-collapse" id="containerNavbar">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
@@ -59,7 +59,7 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
                         <a class="nav-link" href="/Home/About/">O Autorovi</a>
                     </li>
 
-                    @foreach (Category c in J.GetAllCategories())
+                    @foreach (Category c in J.GetAllCategories(false))
                     {
                         <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
                             <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>

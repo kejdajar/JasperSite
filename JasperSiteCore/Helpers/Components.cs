@@ -31,30 +31,37 @@ namespace JasperSiteCore.Helpers
         /// <returns></returns>
         public HtmlString Holder(string holderName)
         {
-            
-            var holders = _dbHelper.GetAllBlockHolders();
-            var holder_block = _dbHelper.GetAllHolder_Blocks();
-            var blocks = _dbHelper.GetAllTextBlocks();
-            var themes = _dbHelper.GetAllThemes();
-
-            string currentThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
-            int currentThemeId = (from t in themes
-                                  where t.Name == currentThemeName
-                                  select t.Id).Single();
-
-            var blocksToDisplay = (from h in holders
-                                   from b in blocks
-                                   from hb in holder_block
-                                   where h.Name == holderName && hb.BlockHolderId == h.Id && b.Id == hb.TextBlockId && currentThemeId == h.ThemeId
-                                   select new { BlockToDisplay = b, Order = hb.Order });
-
-            StringBuilder sb = new StringBuilder();
-            blocksToDisplay = blocksToDisplay.OrderBy(o => o.Order);
-            foreach (var tb in blocksToDisplay)
+            try
             {
-                sb.Append(tb.BlockToDisplay.Content + "<hr/>");
+
+                var holders = _dbHelper.GetAllBlockHolders();
+                var holder_block = _dbHelper.GetAllHolder_Blocks();
+                var blocks = _dbHelper.GetAllTextBlocks();
+                var themes = _dbHelper.GetAllThemes();
+
+                string currentThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
+                int currentThemeId = (from t in themes
+                                      where t.Name == currentThemeName
+                                      select t.Id).Single();
+
+                var blocksToDisplay = (from h in holders
+                                       from b in blocks
+                                       from hb in holder_block
+                                       where h.Name == holderName && hb.BlockHolderId == h.Id && b.Id == hb.TextBlockId && currentThemeId == h.ThemeId
+                                       select new { BlockToDisplay = b, Order = hb.Order });
+
+                StringBuilder sb = new StringBuilder();
+                blocksToDisplay = blocksToDisplay.OrderBy(o => o.Order);
+                foreach (var tb in blocksToDisplay)
+                {
+                    sb.Append(tb.BlockToDisplay.Content + "<hr/>");
+                }
+                return new HtmlString(sb.ToString());
             }
-            return new HtmlString(sb.ToString());
+            catch
+            {
+                return new HtmlString(string.Empty);
+            }
         }
 
        

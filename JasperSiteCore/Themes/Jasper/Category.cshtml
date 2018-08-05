@@ -11,13 +11,13 @@
         <h1>Rubriky</h1>
     </div>
 
-    @foreach (Category c in J.GetAllCategories())
+    @foreach (Category c in J.GetAllCategories(false))
     {
 
          <h2 style="margin:10px"><i class="fa fa-star-o" aria-hidden="true"></i> @c.Name</h2>
-        @if (J.GetAllArticles(c.Id).Count > 0)
+        @if (J.GetAllArticles(c.Id,false).Count > 0)
         {
-            @foreach (Article article in J.GetAllArticles(c.Id))
+            @foreach (Article article in J.GetAllArticles(c.Id,false))
             {
 
                 <div class="list-group">

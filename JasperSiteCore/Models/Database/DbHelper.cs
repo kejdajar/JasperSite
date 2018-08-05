@@ -41,7 +41,7 @@ namespace JasperSiteCore.Models.Database
         /// </summary>
         /// <returns>Returns list of articles.</returns>
         /// <exception cref="DatabaseHelperException"></exception>
-        public List<Article> GetAllArticles()
+        public List<Article> GetAllArticles(bool throwException = true)
         {
             try
             {
@@ -50,7 +50,12 @@ namespace JasperSiteCore.Models.Database
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException(ex);
+                if (throwException)
+                {
+                    throw new DatabaseHelperException(ex);
+                }
+                else return new List<Article>();
+                
             }
 
         }
@@ -61,7 +66,7 @@ namespace JasperSiteCore.Models.Database
         /// <param name="categoryId">Required category Id.</param>
         /// <returns>Returns list of articles.</returns>
         /// <exception cref="DatabaseHelperException"></exception>
-        public List<Article> GetAllArticles(int categoryId)
+        public List<Article> GetAllArticles(int categoryId, bool throwException = true)
         {
             try
             {
@@ -69,7 +74,14 @@ namespace JasperSiteCore.Models.Database
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException(ex);
+                if (throwException)
+                {
+                    throw new DatabaseHelperException(ex);
+                }
+                else
+                {
+                    return new List<Article>();
+                }                
             }
 
         }
@@ -178,7 +190,7 @@ namespace JasperSiteCore.Models.Database
         /// </summary>
         /// <returns></returns>
         /// <exception cref="DatabaseHelperException"></exception>
-        public List<Category> GetAllCategories()
+        public List<Category> GetAllCategories(bool throwException = true)
         {
             try
             {
@@ -186,7 +198,14 @@ namespace JasperSiteCore.Models.Database
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException(ex);
+                if(throwException)
+                {
+                    throw new DatabaseHelperException(ex);
+                }
+                else
+                {
+                    return new List<Category>();
+                }                
             }
 
 
@@ -198,7 +217,7 @@ namespace JasperSiteCore.Models.Database
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="DatabaseHelperException"></exception>
-        public string GetCategoryNameById(int id)
+        public string GetCategoryNameById(int id, bool throwException = true)
         {
             try
             {
@@ -206,7 +225,15 @@ namespace JasperSiteCore.Models.Database
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException(ex);
+                if(throwException)
+                {
+                    throw new DatabaseHelperException(ex);
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            
             }
 
         }
@@ -701,7 +728,7 @@ namespace JasperSiteCore.Models.Database
         /// </summary>
         /// <returns></returns>
         /// <exception cref="DatabaseHelperException"></exception>
-        public string GetWebsiteName()
+        public string GetWebsiteName(bool throwException = true)
         {
             try
             {
@@ -709,8 +736,12 @@ namespace JasperSiteCore.Models.Database
             }
             catch (Exception ex)
             {
-
-                throw new DatabaseHelperException(ex);
+                if (throwException)
+                {
+                    throw new DatabaseHelperException(ex);
+                }
+                else return string.Empty;
+               
             }
         }
 
@@ -1029,14 +1060,14 @@ namespace JasperSiteCore.Models.Database
         Components Components { get; set; }
 
         // Methods
-        List<Article> GetAllArticles();
-        List<Article> GetAllArticles(int categoryId);
+        List<Article> GetAllArticles(bool throwException = true);
+        List<Article> GetAllArticles(int categoryId, bool throwException = true);
         Article GetArticleById(int id);
         int AddArticle();
         void EditArticle(EditArticleViewModel articleViewModel);
         void DeleteArticle(int articleId);
-        List<Category> GetAllCategories();
-        string GetCategoryNameById(int id);
+        List<Category> GetAllCategories(bool throwException = true);
+        string GetCategoryNameById(int id, bool throwException = true);
         void AddNewCategory(string categoryName);
         void DeleteCategory(int categoryId);
         User GetUserWithUsername(string username);
@@ -1045,7 +1076,7 @@ namespace JasperSiteCore.Models.Database
         List<Role> GetAllRoles();
         void ChangePassword(int userId, string newHashedPassword, string newSalt);
         void SaveChanges();
-        string GetWebsiteName();
+        string GetWebsiteName(bool throwException = true);
         void SetWebsiteName(string newWebsiteName);
         List<BlockHolder> GetAllBlockHolders();
         List<Theme> GetAllThemes();
