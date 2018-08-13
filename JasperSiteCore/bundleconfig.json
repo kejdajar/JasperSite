@@ -19,7 +19,9 @@
     "inputFiles": [
       "Areas/Admin/Content/Styles/design.css"
     ]
-  },
+  },  
+
+  // **** SHARED STYLES MINIFICATION *****
   {
     "outputFileName": "wwwroot/customLib/prism.min.css",
     "inputFiles": [
@@ -32,7 +34,7 @@
       "wwwroot/customLib/prism.js"
     ]
   },
-  // BUILT-IN THEMES MINIFICATION
+  // **** BUILT-IN THEMES MINIFICATION ****
   {
     "outputFileName": "Themes/Default/Styles/style.min.css",
     "inputFiles": [

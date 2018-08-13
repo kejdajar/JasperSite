@@ -14,8 +14,8 @@ Layout = null;
     @* ===============================STYLES================================ *@
    
     <environment include="Development">
-        <link href="~/lib/tether/dist/css/tether.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="~/node_modules/tether/dist/css/tether.css" rel="stylesheet" />
+        <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/login-page.css" />
     </environment>
@@ -31,14 +31,14 @@ Layout = null;
 
     @* ===============================SCRIPTS================================ *@
     <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/tether/dist/js/tether.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/node_modules/jquery/dist/jquery.js"></script>
+        <script src="~/node_modules/tether/dist/js/tether.js"></script>
+        <script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
     </environment>
 
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-src="~/node_modules/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery"
                 crossorigin="anonymous"
                 integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
