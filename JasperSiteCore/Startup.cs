@@ -94,11 +94,11 @@ namespace JasperSiteCore
               
             }
             else
-            {    //TODO: Exception Handling
-                //app.UseExceptionHandler("/Home/Error/");
-
-            // Redirects http status code errors to error controller with actual theme look
-            app.UseStatusCodePagesWithReExecute(JasperSiteCore.Models.Configuration.CustomRouting.GetErrorPageFile());
+            {  
+                // This exception handler will be risen when there is jasper.json
+                // mapping record & existing file in the theme directory, BUT ERRROR
+                // WILL OCCURE WITHIN THAT FILE (ie. syntax error)
+                app.UseExceptionHandler("/Views/Shared/_FatalError.cshtml");           
             }
           
             

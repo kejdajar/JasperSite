@@ -201,5 +201,29 @@ namespace JasperSiteCore.Models
 
     }
 
+    public class CustomRoutingException : Exception
+    {
+        private static string _message = "Required view file was not found.";
+        public CustomRoutingException() : base(_message)
+        {
+
+        }
+        public CustomRoutingException(string message)
+            : base(message)
+        {
+        }
+
+        public CustomRoutingException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public CustomRoutingException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
 
 }

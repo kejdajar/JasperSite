@@ -41,17 +41,50 @@ namespace JasperSiteCore.Models
             }
         }
 
+        /// <summary>
+        /// Returns root-relative path to homePage file.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
         public string GetHomePageFile()
         {
             string physicalFileUrl = WebsiteConfig.RoutingList.HomePageFile;
-            return RelativeThemePathToRootRelativePath(physicalFileUrl);
+            string path = RelativeThemePathToRootRelativePath(physicalFileUrl);
+            if(System.IO.File.Exists(path))
+            {
+                return path;
+            }
+            else
+            {
+                throw new CustomRoutingException("Following view could not be found: " + path);
+            }
+            
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
         public string GetErrorPageFile()
         {string physicalFileUrl = WebsiteConfig.RoutingList.ErrorPageFile;
-            return RelativeThemePathToRootRelativePath(physicalFileUrl);
+            string path = RelativeThemePathToRootRelativePath(physicalFileUrl);
+            if(System.IO.File.Exists(path))
+            {
+                return path;
+            }
+            else
+            {
+                throw new CustomRoutingException("Error page specified in theme's jasper.json file was not found:"+path);
+            }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rawUrl"></param>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
         public string MapUrlToFile(string rawUrl)
         {
             List<ConfigurationObject.RouteMapping> collection = WebsiteConfig.CustomPageMapping;
@@ -60,8 +93,17 @@ namespace JasperSiteCore.Models
                  if(routeObject.Routes.Contains(rawUrl))
                 {
                     string physicalFileUrl = routeObject.File;
-                    return RelativeThemePathToRootRelativePath(physicalFileUrl);
+                    string path = RelativeThemePathToRootRelativePath(physicalFileUrl);
+                    if (System.IO.File.Exists(path))
+                    {
+                        return path;
+                    }
+                    else
+                    {
+                        throw new CustomRoutingException("Required view is specified in jasper.json file, but could not be found physically: " + path);
+                    }
                 }
+                 
             }
             return null;
         }
