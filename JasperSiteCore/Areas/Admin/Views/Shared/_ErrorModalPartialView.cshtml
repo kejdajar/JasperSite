@@ -9,18 +9,18 @@ $(document).ready(function () {
     <div class="modal-dialog">
 
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content" style="max-height:500px">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title" style="margin-left:20px">Chyba</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="overflow-y: auto;">
                 Váš požadavek nebylo možno provést. <br/>
         @if(ViewBag.ErrorMessage != null)
         {
-            @:Chyba: @ViewBag.ErrorMessage
+             <text> Chyba: @ViewBag.ErrorMessage </text>
         }
-       
+
 
 </div>
             <div class="modal-footer">
@@ -42,7 +42,7 @@ $(document).ready(function () {
     {
        <text>var error = @ViewBag.Error;</text>
     }
-   
+
         if (error == 1) {
 
 

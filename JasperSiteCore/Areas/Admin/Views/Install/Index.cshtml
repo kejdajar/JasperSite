@@ -81,82 +81,101 @@
     @{Html.RenderPartial("_ValidationScriptsPartial");}
 
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
-    <style>
-        .j-jumbotron {
-            background-color: #BA68C8;
-        }
+    @if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
+    {
+        <script  src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+        <script>
+        $(document).ready(function(){
+        $("#submitButton").click(function(e){
+        e.preventDefault();
+         appendWindow("Skutečně reinstalovat redakční systém?", "Tato akce je nevratná, veškerý obsah bude smazán.", function () { $("#installForm").submit();  }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Smazat data a reinstalovat systém");
+        });
+        });
+        </script>
+    }
 
-            .j-jumbotron h1 {
-                color: white;
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+        <style>
+            .j-jumbotron {
+                background-color: #BA68C8;
             }
 
-            .j-jumbotron h2 {
-                color: #e7e7e7;
-                font-size: 1.3em;
+                .j-jumbotron h1 {
+                    color: white;
+                }
+
+                .j-jumbotron h2 {
+                    color: #e7e7e7;
+                    font-size: 1.3em;
+                }
+
+            body {
+                margin-top: 20px;
             }
 
-        body {
-            margin-top: 20px;
-        }
+            .j-jumbotron-span {
+                color: black;
+            }
+        </style>
 
-        .j-jumbotron-span {
-            color: black;
-        }
-    </style>
+        @Html.Partial("_ErrorModalPartialView")
 
-  @Html.Partial("_ErrorModalPartialView")
-
-</head>
+    </head>
 
 <body>
-    
-    <div class="container">
-        <div class="jumbotron j-jumbotron">
-            <h1>
-                J<span class="j-jumbotron-span">asp</span>er Site <span class="j-jumbotron-span">Core</span>
-            </h1>
-            <h2>Instalace redakčního systému </h2>
-        </div>
+
+
+    @if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
+    { 
+        <div id="modalTargetDiv"></div>
+    }
+
+        <div class="container">
+            <div class="jumbotron j-jumbotron">
+                <h1>
+                    J<span class="j-jumbotron-span">asp</span>er Site <span class="j-jumbotron-span">Core</span>
+                </h1>
+                <h2>Instalace redakčního systému </h2>
+            </div>
 
 
 
 
-        <div class="row">
+            <div class="row">
 
 
 
 
-            <section class="j-admin-section col-lg-6">
-                <h2>Průvodce instalací</h2>
+                <section class="j-admin-section col-lg-6">
+                    <h2>Průvodce instalací</h2>
 
-                <form method="post" asp-area="Admin" asp-controller="Install" asp-action="Index">
+                    <form id="installForm" method="post" asp-area="Admin" asp-controller="Install" asp-action="Index">
 
-                    <div class="form-group">
-                        <label>Zvolte databázi</label>
-                        <select class="form-control" asp-for="SelectedDatabase" asp-items="@(new SelectList(Model.AllDatabases,"Id","Name"))">                        
-                        </select>
-                        <span asp-validation-for="SelectedDatabase" class="text-danger"></span>
-                    </div>
+                        <div class="form-group">
+                            <label>Zvolte databázi</label>
+                            <select class="form-control" asp-for="SelectedDatabase" asp-items="@(new SelectList(Model.AllDatabases,"Id","Name"))"></select>
+                            <span asp-validation-for="SelectedDatabase" class="text-danger"></span>
+                        </div>
 
-                    <div class="form-group">
-                        <label>Zadejte připojovací řetězec</label>
-                        @*Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True"*@
-                        <input class="form-control" type="text" asp-for="ConnectionString" />
-                        <span asp-validation-for="ConnectionString" class="text-danger"></span><br />
-
-
-                        
-                       
+                        <div class="form-group">
+                            <label>Zadejte připojovací řetězec</label>
+                            @*Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True"*@
+                            <input class="form-control" type="text" asp-for="ConnectionString" />
+                            <span asp-validation-for="ConnectionString" class="text-danger"></span><br />
 
 
 
 
-                  
+
+
+
+
+
                             <div class="list-group">
-                                                              
+
                                 <div class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1"><b>Příklady připojovacích řetězců</b></h5>
@@ -165,82 +184,82 @@
                                     <p class="mb-1">
                                         <ul style="margin-left:20px;margin-top:5px">
                                             <li>
-                                                <i>MSSQL:</i><br/> Data Source=název_serveru; Initial Catalog=název_databáze; Integrated Security=True
+                                                <i>MSSQL:</i><br /> Data Source=název_serveru; Initial Catalog=název_databáze; Integrated Security=True
                                             </li>
                                             <li>
-                                                <i>MySQL:</i> <br/>Server=název_serveru; Database=název_databáze; Uid=root;Pwd=root;
+                                                <i>MySQL:</i> <br />Server=název_serveru; Database=název_databáze; Uid=root;Pwd=root;
                                             </li>
                                         </ul>
                                         @*<small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>*@
                                     </p>
 
-                               </div>
-                          </div>
-                         
-
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <input type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
-                            </div>
-</form>
 
-            </section>
-
-            <section class="j-admin-section col-lg-6">
-
-                @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
-            {
-                <div class="alert alert-warning" role="alert">
-                    Redakční systém JasperSiteCore ještě nebyl nainstalován. Postupujte pomocí pokynů instalace.
-                </div>
-        }
-        else
-        {
-                <div class="alert alert-danger" role="alert">
-                    <p>
-                        Redakční systém JasperSiteCore byl již jednou nainstalován. Opětovná instalace přemaže některá uložená data: Články, rubriky,
-                        uživatelské účty, obrázky, konfigurační nastavení a další uživatelský obsah bude smazán. Složka se vzhledy bude ponechána.
-                    </p>
-                    @*<p>
-                        Konfigurační nastavení budou také ponechány. Pokud chcete obnovit výchozí konfigurační nastavení pro web, zvolte následující možnost.
-                   <br />  <a class="btn btn-warning" asp-area="admin" asp-controller="install" asp-action="ResetGlobalConfigJson">Resetovat konfigurační nastavení</a>
-                    </p>*@
-                    <p>
-                        Pro zobrazení konfiguračního nastevení zvolte možnost: pokročilé ladící informace.
-                    </p>
-                </div>
-
-}
-
-                <div class="accordion" id="accordionExample">
-
-                    <div class="card">
-                        <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                   Pokročilé ladící informace
-                                </button>
-                            </h5>
                         </div>
-                        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div class="alert alert-warning" role="alert" style="margin-bottom:0px">
-                                    <b>Aktuální nastavení</b><br />
-                                    Dokončení instalace:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.InstallationCompleted <br />
-                                    Připojovací řetězec:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ConnectionString <br />
-                                    Typ databáze:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.TypeOfDatabase<br />
-                                    Název aktivního vzhledu:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeName<br />
-                                    Složka se vzhledy: @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeFolder <br />
+
+                        <div class="form-group">
+                            <input id="submitButton" type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
+                        </div>
+                    </form>
+
+                </section>
+
+                <section class="j-admin-section col-lg-6">
+
+                    @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            Redakční systém JasperSiteCore ještě nebyl nainstalován. Postupujte pomocí pokynů instalace.
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <p>
+                                Redakční systém JasperSiteCore byl již jednou nainstalován. Opětovná instalace přemaže některá uložená data: Články, rubriky,
+                                uživatelské účty, obrázky, konfigurační nastavení a další uživatelský obsah bude smazán. Složka se vzhledy bude ponechána.
+                            </p>
+                            @*<p>
+                                     Konfigurační nastavení budou také ponechány. Pokud chcete obnovit výchozí konfigurační nastavení pro web, zvolte následující možnost.
+                                <br />  <a class="btn btn-warning" asp-area="admin" asp-controller="install" asp-action="ResetGlobalConfigJson">Resetovat konfigurační nastavení</a>
+                                 </p>*@
+                            <p>
+                                Pro zobrazení konfiguračního nastevení zvolte možnost: pokročilé ladící informace.
+                            </p>
+                        </div>
+
+                    }
+
+                    <div class="accordion" id="accordionExample">
+
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        Pokročilé ladící informace
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <div class="alert alert-warning" role="alert" style="margin-bottom:0px">
+                                        <b>Aktuální nastavení</b><br />
+                                        Dokončení instalace:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.InstallationCompleted <br />
+                                        Připojovací řetězec:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ConnectionString <br />
+                                        Typ databáze:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.TypeOfDatabase<br />
+                                        Název aktivního vzhledu:  @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeName<br />
+                                        Složka se vzhledy: @JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeFolder <br />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
+                    </div>
                 </section>
 
             </div>
-    </div>
-</body>
+        </div>
+    </body>
 </html>

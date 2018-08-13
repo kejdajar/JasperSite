@@ -53,8 +53,11 @@
                         @foreach(var category in Model.Categories)
                         {
                             var random = new Random();
-                            var color = String.Format("#{0:X6}", random.Next(0x1000000));
-                            @:"@color",
+                            //var color = String.Format("#{0:X6}", random.Next(0x1000000));                            
+                            //@:"@color",
+
+                             
+                            @:"rgba(186, @random.Next(0,140), @random.Next(126, 256), 1)",
                         }
                     ],
                     data: [

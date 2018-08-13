@@ -85,8 +85,12 @@ namespace JasperSiteCore.Models.Database
            // Images
             modelBuilder.Entity<Image>().ToTable("Images");
             modelBuilder.Entity<ImageData>().ToTable("ImageData");
+
+
         }
 
-       // public DbSet<JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel> EditArticleViewModel { get; set; }
+       
+
+        // public DbSet<JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel> EditArticleViewModel { get; set; }
     }
 }

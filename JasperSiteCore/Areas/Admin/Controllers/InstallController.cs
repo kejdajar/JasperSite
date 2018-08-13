@@ -27,12 +27,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Area("Admin")]
     public class InstallController : Controller
     {
-        //DEPENDECY INJECTION - NOT WORKING HERE, BECAUSE CONTEXT WAS NOT BUILT YET
-        //private readonly DatabaseContext dbContext;
-        //public InstallController(DatabaseContext context)
-        //{
-        //    this.dbContext = context;
-        //}
+        
+        private readonly DatabaseContext dbContext;
+        public InstallController(DatabaseContext context)
+        {
+            this.dbContext = context;
+        }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -137,7 +137,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                         Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
 
                         // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
-                        DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>();
+
+                        //DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>(); // OLD WAY - problems with detached and atached objects
+                    
+
                         JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext, true);
                         return RedirectToAction("Index", "Home", new { area = "admin" });
 
@@ -146,9 +149,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     {
                         ViewBag.Error = "1"; // Automatically shows error modal
                         ViewBag.ErrorMessage = ex.Message + ", " + ex.InnerException;
+                    ViewBag.ErrorMessage = ((string)ViewBag.ErrorMessage).Replace('`', ' ');
 
                         // Reset settings 
-                        Configuration.GlobalWebsiteConfig.ConnectionString = oldConnString;
+                    Configuration.GlobalWebsiteConfig.ConnectionString = oldConnString;
                         Configuration.GlobalWebsiteConfig.InstallationCompleted = oldInstallationCompleted;
 
                         return View(UpdateModel());
