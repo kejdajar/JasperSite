@@ -37,10 +37,14 @@ namespace JasperSiteCore.Models.Providers
            
         }
 
+        public string GetGlobalJsonFilePath()
+        {
+            return System.IO.Path.Combine(Env.Hosting.ContentRootPath, _jsonPath);
+        }
 
         public void SaveData(GlobalConfigData dataToSave)
         {
-            string jsonGlobalSettingsPath = System.IO.Path.Combine(Env.Hosting.ContentRootPath, _jsonPath);
+            string jsonGlobalSettingsPath = GetGlobalJsonFilePath();
             string convertedDataToSave = JsonConvert.SerializeObject(dataToSave,Formatting.Indented);
             try
             {

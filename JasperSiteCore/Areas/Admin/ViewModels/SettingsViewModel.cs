@@ -13,5 +13,8 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         [Display(Name ="Název vašeho webu")]
         [Required(ErrorMessage ="Zvolte název vašeho webu")]
         public string WebsiteName { get; set; }
+
+        public string JasperJson { get; set; }
+
     }
 }

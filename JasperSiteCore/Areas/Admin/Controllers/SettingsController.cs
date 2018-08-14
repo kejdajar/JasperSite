@@ -32,6 +32,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 model.WebsiteName = _dbHelper.GetWebsiteName();
+                model.JasperJson = Configuration.GlobalWebsiteConfig.GetGlobalJsonFileAsString();
                 return View(model);
             }
             catch 
@@ -40,6 +41,25 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 return View(model);
             }
         }
+
+        [HttpPost]
+        public IActionResult SaveJasperJson(SettingsViewModel model)
+        {
+            try
+            {
+             
+                    Configuration.GlobalWebsiteConfig.SaveGlobalJsonFileAsString(model.JasperJson);
+                    JasperSiteCore.Models.Configuration.Initialize();
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                // TODO: error
+                return View(model);
+            }
+        }
+
 
         [HttpPost]
         public IActionResult SaveSettings(SettingsViewModel model)

@@ -57,3 +57,15 @@
     
 
 </section>
+
+
+<section class="j-admin-section">
+    <h2><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Globální konfigurační soubor jasper.json</h2>
+
+    <form method="post" asp-controller="Settings" asp-action="SaveJasperJson" asp-area="admin">
+        <textarea asp-for="JasperJson" rows="15" class="form-control" >test</textarea>
+        <button type="submit"  class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit soubor jasper.json </button>
+    </form>  
+
+
+</section>

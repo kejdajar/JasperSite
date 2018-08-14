@@ -225,5 +225,30 @@ namespace JasperSiteCore.Models
 
     }
 
+    public class ThemeNotExistsException : Exception
+    {
+        private static string _message = "Jasper.json: activeTheme does not exist";
+        public string MissingThemeName = string.Empty;
+        public ThemeNotExistsException() : base(_message)
+        {
+
+        }
+        public ThemeNotExistsException(string message)
+            : base(message)
+        {
+        }
+
+        public ThemeNotExistsException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public ThemeNotExistsException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
 
 }

@@ -148,6 +148,19 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                 return model;
             }
+            catch(ThemeNotExistsException ex) // specified theme of jasper.json property "themeName" does not exist
+            {
+                ThemesViewModel model = new ThemesViewModel();
+                model.ItemsPerPage = 3;
+                model.ManuallyDeletedThemeNames = null;
+                model.NotRegisteredThemeNames = null;
+                model.PageNumber = 1;
+                model.SelectedThemeName = "Globální soubor jasper.json uvádí jako vzhled: " + ex.MissingThemeName + " který ale ve složce "+ Configuration.GlobalWebsiteConfig.ThemeFolder+" neexistuje";
+                model.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
+                model.ThemeInfoList = null;
+                model.TotalNumberOfPages = default(int);
+                return model;
+            }
             catch
             {
                 ThemesViewModel model = new ThemesViewModel();
@@ -264,7 +277,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 JasperSiteCore.Models.Configuration.Initialize();
-                Configuration.GlobalWebsiteConfig.ThemeName = "Default";
+              //  Configuration.GlobalWebsiteConfig.ThemeName = "Default";
             }
             catch (Exception ex)
             {

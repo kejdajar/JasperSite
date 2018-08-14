@@ -109,23 +109,35 @@ namespace JasperSiteCore.Areas.Admin.Models
         /// <summary>
         /// Searches through Theme folder, indexing themes and returns collection sorted by name, with current theme first.
         /// </summary>
-        /// <returns></returns>
+        /// <returns></returns>       
         /// <exception cref="ThemeHelperException"></exception>
+        /// <exception cref="ThemeNotExistsException">Jasper.json file property themeName points to theme that does not exist.</exception>
         public List<ThemeInfo> GetInstalledThemesInfoByNameAndActive()
         {
-            try
+                       
+
+                try
+                {
+                    List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
+                    themeInfoList.OrderBy(o => o.ThemeName);
+                    ThemeInfo currentTheme = themeInfoList.Where(i => i.ThemeName == Configuration.GlobalWebsiteConfig.ThemeName).First();
+                    themeInfoList.Remove(currentTheme);
+                    themeInfoList.Insert(0, currentTheme);
+                    return themeInfoList;
+                }
+            catch (ThemeHelperException ex)
             {
-                List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
-                themeInfoList.OrderBy(o => o.ThemeName);
-                ThemeInfo currentTheme = themeInfoList.Where(i => i.ThemeName == Configuration.GlobalWebsiteConfig.ThemeName).First();
-                themeInfoList.Remove(currentTheme);
-                themeInfoList.Insert(0, currentTheme);
-                return themeInfoList;
+                throw new ThemeHelperException(ex);
             }
             catch (Exception ex)
-            {
-                 throw new ThemeHelperException(ex);
-            }
+                {
+                    ThemeNotExistsException exceptionToBeThrown = new ThemeNotExistsException("Jasper.json property themeName is set to:" + Configuration.GlobalWebsiteConfig.ThemeName + " which does not exist.", ex);
+                    exceptionToBeThrown.MissingThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
+                    throw exceptionToBeThrown;
+                }
+                
+                
+           
         }
 
         /// <summary>

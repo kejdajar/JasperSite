@@ -105,12 +105,25 @@ namespace JasperSiteCore.Models
             Configuration.GlobalWebsiteConfig.TypeOfDatabase = "mssql";
         }
 
+        public string GetGlobalJsonFileAsString()
+        {
+            string path = GlobalConfigDataProvider.GetGlobalJsonFilePath();
+            return System.IO.File.ReadAllText(path);
+        }
+
+        public void SaveGlobalJsonFileAsString(string jsonContent)
+        {
+            string path = GlobalConfigDataProvider.GetGlobalJsonFilePath();
+            System.IO.File.WriteAllText(path,jsonContent);
+        }
+
     }
 
     public interface IGlobalWebsiteConfigProvider
     {
        GlobalConfigData GetFreshData();
        void SaveData(GlobalConfigData dataToSave);
+        string GetGlobalJsonFilePath();
     }
 
     public class GlobalConfigData
