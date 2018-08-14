@@ -18,7 +18,36 @@ namespace JasperSiteCore.Areas.Admin.Controllers
     [Area("Admin")]
     public class LoginController : Controller
     {
-        
+
+        // Login page is not accessible in case the installation has not been completed yet
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (Configuration.InstallationCompleted())
+            {
+                base.OnActionExecuting(filterContext);
+            }
+            else
+            {
+                               
+                    filterContext.Result = new RedirectToRouteResult(
+                    new RouteValueDictionary {
+                { "Controller", "Install" },
+                { "Action", "Index" },
+                        {"Area","Admin" }
+                    });
+                    base.OnActionExecuting(filterContext);
+                
+            }
+        }
+
+
+
+
+
+
+
+
+
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
 

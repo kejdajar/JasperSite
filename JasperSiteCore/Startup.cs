@@ -130,9 +130,17 @@ namespace JasperSiteCore
             //    RequestPath = new PathString("/Themes") // Url
             //});
 
-            //"Theme" folder must serve static files
-            app.UseStaticFiles(new StaticFileOptions()
+          
+            // if jasper.json contains empty property "themeFolder", name "Themes" will be used as default
+            if (string.IsNullOrEmpty(Models.Configuration.GlobalWebsiteConfig.ThemeFolder))
             {
+                Models.Configuration.GlobalWebsiteConfig.ThemeFolder = "Themes";
+            }  
+            
+            //"Theme" folder must serve static files
+                app.UseStaticFiles(new StaticFileOptions()
+            {
+                
                 FileProvider = new PhysicalFileProvider(
                Path.Combine(Directory.GetCurrentDirectory(), JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeFolder)), // Physical folder location
                 RequestPath = new PathString("/" + JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeFolder) // Url

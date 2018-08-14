@@ -142,7 +142,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     
 
                         JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext, true);
-                        return RedirectToAction("Index", "Home", new { area = "admin" });
+
+                    // All changes in jasper.json will be saved in memory
+                    // Without this statement, in-memory jasper.json data will not be up-to-date
+                    Configuration.Initialize(); 
+
+                    return RedirectToAction("Index", "Home", new { area = "admin" });
 
                     }
                     catch (Exception ex)

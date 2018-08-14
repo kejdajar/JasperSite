@@ -7,9 +7,10 @@ using JasperSiteCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using JasperSiteCore.Models.Database;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
-{
+{  [Authorize]
     [Area("Admin")]
     public class BlocksController : Controller
     {

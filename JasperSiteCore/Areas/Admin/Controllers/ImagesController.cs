@@ -9,6 +9,7 @@ using JasperSiteCore.Models;
 using JasperSiteCore.Models.Database;
 using JasperSiteCore.Areas.Admin.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
@@ -24,7 +25,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             this._dbHelper = new DbHelper(dbContext);
         }
 
-
+        [Authorize]
         [HttpGet]
         public IActionResult Index()
         {
@@ -47,6 +48,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult PostImage(ICollection<IFormFile> files)
         {
@@ -84,7 +86,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         /// If the image has been already deleted, deleted image placeholder will be returned instead.
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns></returns>       
         public FileResult GetImage(int id)
         {                       
            // Query using navigation property + include in DbHelper class
@@ -142,7 +144,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
 
 
-
+        [Authorize]
         [HttpGet]
         public IActionResult DeleteImage(int imgId)
         {

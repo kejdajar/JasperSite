@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using JasperSiteCore.Areas.Admin.ViewModels;
 using JasperSiteCore.Models.Database;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
-{
+{   [Authorize]
     [Area("Admin")]
     public class CategoriesController : Controller
     {
