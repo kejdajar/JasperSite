@@ -40,6 +40,8 @@
         });
 </script>
 
+@Html.Partial("_ErrorModalPartialView")
+
 <form asp-action="AddNewBlock" asp-controller="Blocks" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1" data-ajax-complete='savedInfo("<strong>Uloženo.</strong> Veškeré změny byly uloženy.", "alert-success")'>
     <div class="form-horizontal">
 

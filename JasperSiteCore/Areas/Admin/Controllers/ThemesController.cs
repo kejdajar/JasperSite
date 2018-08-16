@@ -184,9 +184,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
              Configuration.ThemeHelper.DeleteThemeByNameFromDbAndFolder(themeName, databaseContext);
             }
-            catch
+            catch(Exception ex)
             {
-                // TODO: ERROR
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = ex.Message;
             }
 
 
@@ -197,7 +198,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Index");
+                return View("Index",UpdatePage());
             }
 
 

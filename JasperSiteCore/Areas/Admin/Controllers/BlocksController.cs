@@ -106,9 +106,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 _dbHelper.DeleteTextBlockById(id);
             }
-            catch
+            catch(Exception ex)
             {
-                // TODO: error
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = ex.Message;
             }
           
 
@@ -119,7 +120,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Index");
+                return View("Index",UpdatePage());
             }
 
                 

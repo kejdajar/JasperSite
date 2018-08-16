@@ -200,7 +200,21 @@
                         </div>
 
                         <div class="form-group">
-                            <input id="submitButton" type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
+
+                            @if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
+                            {
+                                <a asp-controller="Home" asp-area="Admin" asp-action="Index" class="btn btn-secondary"> Zpět do redakčního systému </a>
+                            }
+
+                            @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
+                            {
+                                <input id="submitButton" type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
+                            }
+                            else
+                            {
+
+                                <input id="submitButton" type="submit" value="Reinstalovat systém" class="btn btn-warning" />
+                            }
                         </div>
                     </form>
 

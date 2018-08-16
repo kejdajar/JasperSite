@@ -40,6 +40,9 @@
         });
 </script>
 
+@Html.Partial("_ErrorModalPartialView")
+
+@*========================OLD IMAGE TABLE=====================*@
 @*@if (Model.ImagesFromDatabase.Count > 0)
 {
     <table class="table table-bordered j-table">
@@ -78,7 +81,7 @@ else
                 <div>
                     <img alt="@img.Name" src="@Url.Action("GetImage", "Images", new { id = img.Id })" class="img-fluid" />
                 </div>
-                <div>
+                <div class="itemName">
                     @img.Name
                 </div>
                 <div>

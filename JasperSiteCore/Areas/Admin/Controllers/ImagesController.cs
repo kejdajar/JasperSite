@@ -85,21 +85,33 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                         file.CopyTo(ms);
                         byte[] imageInBytes = ms.ToArray();
 
+                        string type = file.ContentType;
+                        if(type != "image/bmp" || type != "image/png" || type != "image/jpeg" || type != "image/gif" )
+                        {
+                            throw new Exception("Formát daného souboru není podporován");
+                        }
+
                         Image dbImageEntity = new Image();
                         dbImageEntity.Name = file.FileName;
                         dbImageEntity.ImageData = new ImageData() { Data = imageInBytes };
                         _databaseContext.Images.Add(dbImageEntity);
                         _databaseContext.SaveChanges();
                     }
+                    else
+                    {
+                        throw new Exception("Vložený soubor není obrázek nebo neobsahuje žádná data.");
+                    }
                 }
 
                 ImagesViewModel model = new ImagesViewModel();
                 model.ImagesFromDatabase = _dbHelper.GetAllImages();
             }
-            catch 
+            catch (Exception ex)
             {
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = ex.Message;
+                return View("Index", UpdatePage());
 
-            // TODO: error
             }
 
             return RedirectToAction("Index");
@@ -178,10 +190,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 _dbHelper.DeleteImageById(imgId);
             }
-            catch 
+            catch (Exception ex)
             {
-
-               //TODO: error
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = ex.Message;
             }
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
@@ -191,7 +203,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Index");
+                return View("Index", UpdatePage());
             }
               
          

@@ -177,7 +177,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult DeleteUser(int id)
         {
-           _dbHelper.DeleteUserById(id);
+            try
+            {
+                _dbHelper.DeleteUserById(id);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = ex.Message;
+            }
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
@@ -186,7 +194,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("Index");
+                return View("Index", UpdatePage());
             }
 
                 

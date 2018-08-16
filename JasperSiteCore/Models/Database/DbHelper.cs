@@ -178,7 +178,7 @@ namespace JasperSiteCore.Models.Database
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException(ex);
+                throw new DatabaseHelperException("Specified article could not be found.",ex);
             }
 
         }
@@ -454,7 +454,7 @@ namespace JasperSiteCore.Models.Database
             catch (Exception ex)
             {
 
-                throw new DatabaseHelperException(ex) ;
+                throw new DatabaseHelperException("Specified user could not be found",ex) ;
             }
         }
 

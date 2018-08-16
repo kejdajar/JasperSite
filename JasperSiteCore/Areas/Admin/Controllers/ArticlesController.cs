@@ -183,18 +183,15 @@ bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest
             catch (Exception ex)
             {
                 ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = "Èlánek nebylo možné odstranit";
-                if (ex.InnerException != null && !string.IsNullOrEmpty(ex.InnerException.Message))
-                { ViewBag.ErrorMessage += "Popis chyby:" + ex.InnerException.Message; }
-
-
+                ViewBag.ErrorMessage = ex.Message;
+               
                 if (isAjax)
                 {
                     return PartialView("ArticlesListPartialView", dbHelper.GetAllArticles());
                 }
                 else
                 {
-                    return RedirectToAction("Index");
+                    return View("Index", UpdatePage());
                 }
 
             }
