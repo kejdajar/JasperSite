@@ -31,6 +31,6 @@ private static Mock&lt;DbSet&lt;T&gt;&gt; CreateDbSetMock&lt;T&gt;(List&lt;T&gt;
             dbSetMock.Setup(d =&gt; d.Remove(It.IsAny&lt;T&gt;())).Callback&lt;T&gt;(s =&gt; elements.Remove(s));
             return dbSetMock;
         }</code></pre>
-<p>Můžete přid&aacute;vat i videa,&nbsp;<a title="web ČZU" href="https://www.czu.cz/cs/" target="_blank" rel="noopener">odkazy</a>, nebo emotikony&nbsp;<img src="http://localhost:44372/lib/tinymce/plugins/emoticons/img/smiley-smile.gif" alt="smile" /> :</p>
+<p>Můžete přid&aacute;vat i videa,&nbsp;<a title="web ČZU" href="https://www.czu.cz/cs/" target="_blank" rel="noopener">odkazy</a>, nebo emotikony&nbsp;<img src="http://localhost:44372/node_modules/tinymce/plugins/emoticons/img/smiley-smile.gif" alt="smile" /> :</p>
 <p><iframe src="//www.youtube.com/embed/gyZ-nNYCZ2c" width="100%" height="314" allowfullscreen="allowfullscreen"></iframe></p>
 <p>&nbsp;</p>

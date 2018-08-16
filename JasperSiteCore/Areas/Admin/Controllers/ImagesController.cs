@@ -10,12 +10,35 @@ using JasperSiteCore.Models.Database;
 using JasperSiteCore.Areas.Admin.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
     [Area("admin")]
     public class ImagesController : Controller
     {
+        // Images can be served after the instalation was completed, otherwise everything is redirected to the install page
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (Configuration.InstallationCompleted())
+            {
+                base.OnActionExecuting(filterContext);
+            }
+            else
+            {
+                filterContext.Result = new RedirectToRouteResult(
+                new RouteValueDictionary {
+                { "Controller", "Install" },
+                { "Action", "Index" },
+                        {"Area","Admin" }
+                });
+                base.OnActionExecuting(filterContext);
+            }
+        }
+
+
+
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
 
@@ -87,30 +110,33 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>       
+        [HttpGet]
         public FileResult GetImage(int id)
-        {                       
-           // Query using navigation property + include in DbHelper class
-           // Query must be Async in order to display all images one after another as they are being loaded
-           try
+        {
+            // Query using navigation property + include in DbHelper class
+            // Query must be Async in order to display all images one after another as they are being loaded
+            try
             {
                 Task<Image> image = _databaseContext.Images.Include(i => i.ImageData).Where(i => i.Id == id).SingleAsync();
                 return File(image.Result.ImageData.Data, "image/jpg");
             }
             catch
             {
-                try {
+                try // Image placeholder will be shown in case required image does not exist
+                {
                     string missingImagePlaceholderRelativePath = Configuration.WebsiteConfig.MissingImagePath;
                     string absolutePath = Configuration.CustomRouting.RelativeThemePathToRootRelativePath(missingImagePlaceholderRelativePath);
                     byte[] bytes = System.IO.File.ReadAllBytes(absolutePath);
                     return File(bytes, "image/jpg");
+
                 }
                 catch
                 {
-                    return null;
+                    return File(new byte[0], "image/jpg"); // Returns empty byte array (= blank page with no image)
                 }
-               
+
             }
-           
+
         }
 
         [HttpGet]
