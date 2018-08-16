@@ -458,6 +458,24 @@ namespace JasperSiteCore.Models.Database
             }
         }
 
+        /// <summary>
+        /// Returns the list of users with "admin" role
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public List<User> GetAllAdministrators()
+        {
+            try
+            {
+                int adminRoleId = Database.Roles.Where(r => r.Name == "admin").Single().Id;
+                return Database.Users.Where(u=>u.RoleId == adminRoleId).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException("List of all admin users could not be fetched.", ex);
+            }
+        }
+
         #endregion
 
         #region Roles

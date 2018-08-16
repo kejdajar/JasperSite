@@ -97,6 +97,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 user.RoleId = model.RoleId;
 
 
+                // Check whether current user is not the last admin and his role being changed to non-admin role
+                string currentRole = user.Role.Name;
+                string newRole = _dbHelper.GetAllRoles().Where(r=>r.Id == model.RoleId).Single().Name;
+                int numberOfAdministrators = _dbHelper.GetAllAdministrators().Count();
+                if(numberOfAdministrators == 1 && currentRole=="Admin" && newRole != "Admin") // this can't be allowed
+                {
+                    throw new NoRemainingAdminException("There must be at least one administrator among users.");
+                }
+
                 // Password will be changed only if both fields are filled in
                 if (!string.IsNullOrWhiteSpace(model.NewPasswordPlainText) && !string.IsNullOrWhiteSpace(model.NewPasswordPlainTextAgain))
                 {
@@ -115,23 +124,17 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     _dbHelper.SaveChanges();
                 }
             }
-            catch 
+            catch (NoRemainingAdminException)
             {
                 ViewBag.Error = "1";
-                ViewBag.ErrorMessage = "Změny nebylo možné uložit";
-                if (isAjaxCall)
-                {
-                    EditUserViewModel cleanModel = UpdateEditUserPage(model.Id);
-                    return PartialView("EditUserPartialView", cleanModel);
-                }
-                else
-                {
-                    return View("EditUser", UpdateEditUserPage(model.Id));
-                }
-
+                ViewBag.ErrorMessage = "V systému musí být alespoň jeden administrátor.";
             }
+            catch(Exception) 
+            {
+                ViewBag.Error = "1";
+                ViewBag.ErrorMessage = "Změny nebylo možné uložit";                
 
-            
+            }            
 
         
             if (isAjaxCall)
@@ -141,7 +144,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("EditUser",new { id=model.Id});
+                return RedirectToAction("EditUser", UpdateEditUserPage(model.Id));
             }
             
         }
@@ -179,7 +182,22 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             try
             {
+                User userToBeDeleted = _dbHelper.GetUserById(id);
+                // Check whether current user is not the last admin and his role being changed to non-admin role
+                string currentRole = userToBeDeleted.Role.Name;                
+                int numberOfAdministrators = _dbHelper.GetAllAdministrators().Count();
+
+                if (numberOfAdministrators == 1 && currentRole == "Admin") // this  is the last admin and thus can't be deleted
+                {
+                    throw new NoRemainingAdminException("There must be at least one administrator among users.");
+                }
+
                 _dbHelper.DeleteUserById(id);
+            }
+            catch (NoRemainingAdminException)
+            {
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = "V systému musí být alespoň jeden administrátor.";
             }
             catch (Exception ex)
             {

@@ -27,36 +27,53 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            SettingsViewModel model = new SettingsViewModel();
+            return View(UpdatePage());
 
+        }
+
+        public SettingsViewModel UpdatePage()
+        {
+            SettingsViewModel model = new SettingsViewModel();
             try
             {
+               
                 model.WebsiteName = _dbHelper.GetWebsiteName();
                 model.JasperJson = Configuration.GlobalWebsiteConfig.GetGlobalJsonFileAsString();
-                return View(model);
+                return model;
             }
-            catch 
+            catch (Exception) 
             {
                 model.WebsiteName = string.Empty;
-                return View(model);
+                model.JasperJson = string.Empty;
             }
+
+            return model;
         }
 
         [HttpPost]
         public IActionResult SaveJasperJson(SettingsViewModel model)
         {
+
+            string oldSettingsBackup = Configuration.GlobalWebsiteConfig.GetGlobalJsonFileAsString();
+
             try
             {
              
                     Configuration.GlobalWebsiteConfig.SaveGlobalJsonFileAsString(model.JasperJson);
                     JasperSiteCore.Models.Configuration.Initialize();
 
-                return RedirectToAction("Index");
+                return View("Index",UpdatePage());
             }
             catch
             {
-                // TODO: error
-                return View(model);
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = "Při ukládání konfiguračního nastavení došlo k chybě. Změny nebyly provedeny.";
+
+                // restore old settings
+                Configuration.GlobalWebsiteConfig.SaveGlobalJsonFileAsString(oldSettingsBackup);
+
+                ModelState.Clear();// !!! without this statement model binding won't work...
+                return View("Index",UpdatePage());
             }
         }
 

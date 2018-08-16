@@ -86,7 +86,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                         byte[] imageInBytes = ms.ToArray();
 
                         string type = file.ContentType;
-                        if(type != "image/bmp" || type != "image/png" || type != "image/jpeg" || type != "image/gif" )
+                        if(type != "image/bmp" && type != "image/png" && type != "image/jpeg" && type != "image/gif" )
                         {
                             throw new Exception("Formát daného souboru není podporován");
                         }

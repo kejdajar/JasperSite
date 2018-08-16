@@ -1,14 +1,26 @@
 ﻿@using JasperSiteCore.Models.Database;
 @model JasperSiteCore.Areas.Admin.ViewModels.UsersViewModel
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = "Uživatelé";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 @section Scripts {
     <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
     <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+  
+
 }
+
+@section Styles {
+
+    <link href="~/node_modules/jquery-ui-dist/jquery-ui.theme.min.css" rel="stylesheet" />
+}
+
+
+
+
+
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Uživatelé</h1></div>
 
 <section class="j-admin-section">

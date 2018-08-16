@@ -250,5 +250,30 @@ namespace JasperSiteCore.Models
 
     }
 
+    public class NoRemainingAdminException : Exception
+    {
+        private static string _message = "Jasper.json: activeTheme does not exist";
+        public string MissingThemeName = string.Empty;
+        public NoRemainingAdminException() : base(_message)
+        {
+
+        }
+        public NoRemainingAdminException(string message)
+            : base(message)
+        {
+        }
+
+        public NoRemainingAdminException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public NoRemainingAdminException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
 
 }

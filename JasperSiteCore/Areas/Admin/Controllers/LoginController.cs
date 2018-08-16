@@ -93,6 +93,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                     HttpContext.SignInAsync(principal, new AuthenticationProperties { IsPersistent = model.Remember });
 
+                    // After succesful login - global configuration data are reloaded as well as theme jasper.json files
+                    Configuration.Initialize();
+
+
                     if (string.IsNullOrEmpty(returnUrl))
                     {
                         return RedirectToAction("Index", "Home");

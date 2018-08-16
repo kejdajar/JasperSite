@@ -3,7 +3,9 @@
 @inject DatabaseContext databaseContext
 @model JasperSiteCore.Areas.Admin.ViewModels.ArticlesViewModel
 
-
+@{
+ ViewData["Title"] = "Články";
+}
 
 @section Scripts {
 
@@ -34,14 +36,14 @@
 <h2><i class="fa fa-pencil  j-icon" aria-hidden="true"></i>  Nový článek</h2>
 @if (Model.UncategorizedCategoryExists)
 {
-<a asp-area="Admin" asp-controller="Articles" asp-action="Add" class="btn btn-jasper" style="width:200px">Vytvořit</a>
+    <a asp-area="Admin" asp-controller="Articles" asp-action="Add" class="btn btn-jasper" style="width:200px">Vytvořit</a>
 }
 else
 {
-<div class=" alert alert-warning">
-    <p>Pro přidání nové rubriky je zapotřebí, aby existovala rubrika "Nezařazeno".</p>
-    <a asp-area="Admin" asp-controller="Articles" asp-action="CreateUncategorizedCategory" class="btn btn-jasper" >Vytvořit rubriku "Nezařazeno"</a>
-</div>
+    <div class=" alert alert-warning">
+        <p>Pro přidání nové rubriky je zapotřebí, aby existovala rubrika "Nezařazeno".</p>
+        <a asp-area="Admin" asp-controller="Articles" asp-action="CreateUncategorizedCategory" class="btn btn-jasper">Vytvořit rubriku "Nezařazeno"</a>
+    </div>
 }
 <hr />
 
