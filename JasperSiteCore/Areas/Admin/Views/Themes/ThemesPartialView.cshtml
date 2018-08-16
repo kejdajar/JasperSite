@@ -83,7 +83,7 @@
         });
 </script>
 
-
+@Html.Partial("_ErrorModalPartialView")
 
 
 <form asp-action="Index" asp-controller="Themes" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1">
@@ -98,30 +98,30 @@
                     <td style="text-align:center;vertical-align:middle">
 
                         @{string img = Url.Content(info.ThemeThumbnailUrl);}
-                        @if(!string.IsNullOrEmpty(img))
+                        @if (!string.IsNullOrEmpty(img))
                         {
-                        <img src="@img" class="img-fluid" style="max-width:130px;max-height:130px" />
-                            
+                            <img src="@img" class="img-fluid" style="max-width:130px;max-height:130px" />
+
                         }
                         else
                         {
-                            
+
                             <i class="fa fa-question fa-2x"></i>
                         }
 
                     </td>
                     <td>@info.ThemeName </td>
                     <td style="text-align:left">
-                    @if(!string.IsNullOrEmpty(info.ThemeDescription))
-                    {
-                        @Html.Raw(info.ThemeDescription)
+                        @if (!string.IsNullOrEmpty(info.ThemeDescription))
+                        {
+                            @Html.Raw(info.ThemeDescription)
 
-                    }
-                    else
-                    {
-                       <i>Popis není k dispozici</i>
+                        }
+                        else
+                        {
+                            <i>Popis není k dispozici</i>
 
-                    }
+                        }
                     </td>
                     <td style="text-align:center;vertical-align:middle">
                         @{

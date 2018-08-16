@@ -37,20 +37,24 @@ $(document).ready(function () {
 
 
 
-    var error = 0;
+
     @if(!string.IsNullOrEmpty(ViewBag.Error))
     {
        <text>var error = @ViewBag.Error;</text>
     }
+    else
+    {
+        <text> var error = 0;</text>
+    }
 
-        if (error == 1) {
+    if (error == 1) {
 
 
         errorPanel.css({
-        "display": "block",
+            "display": "block",
             });
             $("body").append(errorPanel);
         $("#myModal").modal("toggle");
-        }
+    }
     });
 </script>

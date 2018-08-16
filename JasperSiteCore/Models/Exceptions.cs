@@ -253,7 +253,7 @@ namespace JasperSiteCore.Models
     public class NoRemainingAdminException : Exception
     {
         private static string _message = "Jasper.json: activeTheme does not exist";
-        public string MissingThemeName = string.Empty;
+       
         public NoRemainingAdminException() : base(_message)
         {
 
@@ -269,6 +269,31 @@ namespace JasperSiteCore.Models
         }
 
         public NoRemainingAdminException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
+    public class ThemeAlreadyExistsException : Exception
+    {
+        private static string _message = "Theme with the same name already exists.";
+        public string DuplicateTheme = string.Empty;
+        public ThemeAlreadyExistsException() : base(_message)
+        {
+
+        }
+        public ThemeAlreadyExistsException(string message)
+            : base(message)
+        {
+        }
+
+        public ThemeAlreadyExistsException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public ThemeAlreadyExistsException(string message, Exception inner)
             : base(message, inner)
         {
         }

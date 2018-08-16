@@ -316,9 +316,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 string themeFolderPath = System.IO.Path.Combine("./", Configuration.GlobalWebsiteConfig.ThemeFolder).Replace('\\', '/');
 
+
                 foreach (IFormFile file in files)
                 {
-
+               
 
 
                     // ZipArchive sometimes throws errors even if the process was successfull ...
@@ -331,29 +332,56 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                             using (ZipArchive archive = new ZipArchive(memoryStream))
                             {
 
+                                string rootFolderName = archive.Entries[0].FullName.Replace("/", string.Empty);
+                                
+                                    List<string> allThemesNames = dbHelper.GetAllThemes().Select(t => t.Name).ToList();
+                                    foreach (string themeName in allThemesNames)
+                                    {
+                                        if (themeName.ToLower().Trim() == rootFolderName.ToLower().Trim())
+                                        {
+                                            ThemeAlreadyExistsException exception = new ThemeAlreadyExistsException() { DuplicateTheme = rootFolderName };
+                                            throw exception;
+                                        }
+                                    }
+                                  
+                                
+
                                 foreach (ZipArchiveEntry entry in archive.Entries)
                                 {
+
+                                   
+
                                     if (!string.IsNullOrEmpty(Path.GetExtension(entry.FullName))) //make sure it's not a folder
                                     {
                                         entry.ExtractToFile(Path.Combine(themeFolderPath, entry.FullName));
                                     }
                                     else
                                     {
+                                     
+
+
                                         Directory.CreateDirectory(Path.Combine(themeFolderPath, entry.FullName));
                                     }
                                 }
                             }
                         }
                     }
-                    catch { }
+                    catch(ThemeAlreadyExistsException)
+                    {
+                        // rethrow
+                        throw new ThemeAlreadyExistsException();
+                    }
                 }
             }
-            catch
+            catch(ThemeAlreadyExistsException ex)
             {
                 //Todo: error
+
+                ViewBag.Error = "1"; // Automatically shows error modal
+                ViewBag.ErrorMessage = $"Při pokusu nahrát vzhled došlo k chybě. Vzhled {ex.DuplicateTheme} již existuje. Při nahrávání více vzhledů nebyly další vzhledy přidány." ;
             }
-            
-            return RedirectToAction("Index");
+
+            return View("Index", UpdatePage());
 
         }
 
