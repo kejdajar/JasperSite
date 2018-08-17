@@ -17,7 +17,8 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 
     public class NewCategoryViewModel
     {
- [Required( ErrorMessage ="Vyplňte jméno rubriky")]
+        [RegularExpression(@"[^\s]+", ErrorMessage = "Název nemůže obsahovat pouze prázdné znaky.")]
+        [Required( ErrorMessage ="Vyplňte jméno rubriky")]
        public string NewCategoryName { get; set; }
     }
 }

@@ -14,14 +14,18 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
     {
        public int Id { get; set; }
 
+        [RegularExpression(@"[^\s]+", ErrorMessage = "Přezdívka nemůže obsahovat pouze prázdné znaky.")]
         [Display(Name = "Přezdívka")]
         [Required(ErrorMessage ="Vyplňte přezdívku")]
         public string Nickname { get; set; }
 
+        [RegularExpression(@"[^\s]+", ErrorMessage = "Uživatelské jméno nemůže obsahovat pouze prázdné znaky.")]
         [Display(Name = "Uživatelské jméno")]
         [Required(ErrorMessage = "Vyplňte uživatelské jméno")]
         public string Username { get; set; }
 
+        [StringLength(int.MaxValue,MinimumLength = 1, ErrorMessage = "Minimální délka hesla je jeden znak. ")]
+        [RegularExpression(@"[^\s]+", ErrorMessage = "Heslo nemůže obsahovat pouze prázdné znaky.")]
         [Display(Name = "Zadejte vaše nové heslo")]        
         public string NewPasswordPlainText { get; set; }
 

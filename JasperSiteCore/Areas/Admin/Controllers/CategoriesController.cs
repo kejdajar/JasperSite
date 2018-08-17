@@ -59,21 +59,31 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
 
-            if (ModelState.IsValid) // Server check in case JS is disabled
+            try
             {
-                if (isAjaxCall)
+                if (ModelState.IsValid) // Server check in case JS is disabled
                 {
-                    _dbHelper.AddNewCategory(ajaxData);
+                    if (isAjaxCall)
+                    {
+                        _dbHelper.AddNewCategory(ajaxData);
+                    }
+                    else
+                    {
+                        _dbHelper.AddNewCategory(model.NewCategory.NewCategoryName);
+                    }
                 }
                 else
                 {
-                    _dbHelper.AddNewCategory(model.NewCategory.NewCategoryName);
+                    // Categories are not passed back from view, so they need to be filled into model again
+                    model.Categories = _dbHelper.GetAllCategories();
+                    return View("Index", model);
                 }
             }
-            else {
-                // Categories are not passed back from view, so they need to be filled into model again
-                model.Categories = _dbHelper.GetAllCategories();
-                return View("Index", model);
+            catch (Exception)
+            {
+                TempData["Error"] = "1";
+                TempData["ErrorMessage"] = "Akce nemohla být dokončena.";
+               
             }
 
             if (isAjaxCall)
@@ -94,9 +104,9 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             
             if(id == null || id < 0)
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = "Daná rubrika pro smazání nebyla nalezena.";
-                return View("Index", UpdateCategoryPage());
+                TempData["Error"] = "1"; // Automatically shows error modal
+                TempData["ErrorMessage"] = "Daná rubrika pro smazání nebyla nalezena.";
+                return RedirectToAction("Index");
             }
 
             try
@@ -106,8 +116,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = ex.Message;              
+                TempData["Error"] = "1"; // Automatically shows error modal
+                TempData["ErrorMessage"] = ex.Message;              
             }           
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";

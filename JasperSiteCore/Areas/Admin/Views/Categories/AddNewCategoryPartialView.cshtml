@@ -38,16 +38,16 @@
 
         $("#tbCategoryName").focus();
     });
-    
+
 </script>
 
-@Html.Partial("_ErrorModalPartialView")
+@Html.Partial("_ErrorModalPartialViewTemp")
 
 <section class="j-admin-section">
     <form asp-action="CreateNewCategory" asp-controller="Categories" method="post" id="formNewCategory">
         <div class="input-group">
-            <input id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="Název rubriky" class="form-control" style="z-index:0"  />
-            
+            <input id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="Název rubriky" class="form-control" style="z-index:0" />
+
 
             <div class="input-group-btn">
                 <input type="submit" class="btn btn-jasper" style="width:200px;z-index:0" value="Vytvořit" id="btnSubmit" />
