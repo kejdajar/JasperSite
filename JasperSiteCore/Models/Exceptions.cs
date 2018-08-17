@@ -278,7 +278,7 @@ namespace JasperSiteCore.Models
     public class ThemeAlreadyExistsException : Exception
     {
         private static string _message = "Theme with the same name already exists.";
-        public string DuplicateTheme = string.Empty;
+       
         public ThemeAlreadyExistsException() : base(_message)
         {
 

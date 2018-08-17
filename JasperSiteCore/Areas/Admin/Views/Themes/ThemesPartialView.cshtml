@@ -7,14 +7,15 @@
 @using JasperSiteCore.ViewModels
 @model JasperSiteCore.Areas.Admin.ViewModels.ThemesViewModel
 
-@Html.Partial("_ErrorModalPartialView")
+@*@Html.Partial("_ErrorModalPartialView")*@
 
 <script>
         $(document).ready(function () {
 
             /* TOOLTIP & HIGHLIGHT */
             $("tr[data-theme='@Model.SelectedThemeName']").css("border-left", "10px solid #BA68C8");
-             $('[data-toggle="tooltip"]').tooltip();
+           
+    $('[data-toggle="tooltip"]').tooltip();
 
             /* DELETE THEME AJAX*/
 
@@ -83,7 +84,7 @@
         });
 </script>
 
-@Html.Partial("_ErrorModalPartialView")
+
 
 
 <form asp-action="Index" asp-controller="Themes" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1">

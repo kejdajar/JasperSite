@@ -33,7 +33,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         [HttpGet]
         public ActionResult Index()
-        {
+        {            
             return View(UpdatePage());
         }
 
@@ -315,7 +315,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 string themeFolderPath = System.IO.Path.Combine("./", Configuration.GlobalWebsiteConfig.ThemeFolder).Replace('\\', '/');
-
+                bool atLeastOneThemeAlreadyExists = false;
 
                 foreach (IFormFile file in files)
                 {
@@ -323,15 +323,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
 
                     // ZipArchive sometimes throws errors even if the process was successfull ...
-                    try
-                    {
+                    
                         using (var memoryStream = new MemoryStream())
                         {
                             file.OpenReadStream().CopyTo(memoryStream);
 
                             using (ZipArchive archive = new ZipArchive(memoryStream))
                             {
-
+                                // Begin check for existing theme
                                 string rootFolderName = archive.Entries[0].FullName.Replace("/", string.Empty);
                                 
                                     List<string> allThemesNames = dbHelper.GetAllThemes().Select(t => t.Name).ToList();
@@ -339,49 +338,44 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                                     {
                                         if (themeName.ToLower().Trim() == rootFolderName.ToLower().Trim())
                                         {
-                                            ThemeAlreadyExistsException exception = new ThemeAlreadyExistsException() { DuplicateTheme = rootFolderName };
-                                            throw exception;
+                                        atLeastOneThemeAlreadyExists = true;
+                                       
                                         }
                                     }
-                                  
+
+                            if (atLeastOneThemeAlreadyExists) continue;
+
+                                  // End check for existing theme
                                 
-
-                                foreach (ZipArchiveEntry entry in archive.Entries)
-                                {
-
-                                   
-
-                                    if (!string.IsNullOrEmpty(Path.GetExtension(entry.FullName))) //make sure it's not a folder
-                                    {
-                                        entry.ExtractToFile(Path.Combine(themeFolderPath, entry.FullName));
-                                    }
-                                    else
-                                    {
-                                     
-
-
-                                        Directory.CreateDirectory(Path.Combine(themeFolderPath, entry.FullName));
-                                    }
-                                }
+                                archive.ExtractToDirectory(themeFolderPath);                                
                             }
-                        }
-                    }
-                    catch(ThemeAlreadyExistsException)
-                    {
-                        // rethrow
-                        throw new ThemeAlreadyExistsException();
-                    }
+                        }                    
                 }
-            }
-            catch(ThemeAlreadyExistsException ex)
+
+                if (atLeastOneThemeAlreadyExists)
+                {
+                    ThemeAlreadyExistsException exception = new ThemeAlreadyExistsException() { };
+                    throw exception;
+                }
+            }         
+            catch(ThemeAlreadyExistsException)
             {
-                //Todo: error
 
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = $"Při pokusu nahrát vzhled došlo k chybě. Vzhled {ex.DuplicateTheme} již existuje. Při nahrávání více vzhledů nebyly další vzhledy přidány." ;
+                TempData["Error"] = "1"; // Automatically shows error modal
+                TempData["ErrorMessage"] = $"Při pokusu nahrát vzhled(y) došlo k chybě. Alespoň jeden přidávaný vzhled již existuje a byl proto přeskočen." ;
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "1"; // Automatically shows error modal
+                TempData["ErrorMessage"] = "Při nahrávání došlo k neočekávané chybě.";
+            }
+            finally
+            {
+                dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity()); // commit physicall changes in Theme folder to DB
             }
 
-            return View("Index", UpdatePage());
+            //return View("Index", UpdatePage());
+            return RedirectToAction("Index");
 
         }
 
