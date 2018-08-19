@@ -1,0 +1,21 @@
+﻿@model JasperSiteCore.Areas.Admin.ViewModels.JasperJsonViewModel
+
+@Html.Partial("_SuccessModalPartialViewTemp")
+@Html.Partial("_ErrorModalPartialViewTemp")
+
+<script src="~/Areas/Admin/Content/Scripts/PartialViewUnobtrusiveFix.js"></script>
+<script>
+    $(document).ready(function(){
+
+        // By default, unobtrusive validation in partial view does not work after first submit
+        UnobtrusiveValidationFix("#settingsForm");
+
+    });
+</script>
+<form id="settingsForm" asp-action="SaveJasperJson" asp-controller="Settings"
+      asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm2">
+
+    <textarea asp-for="JasperJson" rows="15" class="form-control">test</textarea>
+    <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit soubor jasper.json </button>
+
+</form>

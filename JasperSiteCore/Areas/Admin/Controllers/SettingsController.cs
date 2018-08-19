@@ -34,24 +34,24 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public SettingsViewModel UpdatePage()
         {
             SettingsViewModel model = new SettingsViewModel();
+            
             try
             {
-               
-                model.WebsiteName = _dbHelper.GetWebsiteName();
-                model.JasperJson = Configuration.GlobalWebsiteConfig.GetGlobalJsonFileAsString();
+                model.model1 = UpdateSettingsNameViewModel();
+                model.model2 = UpdateJasperJsonViewModel();              
                 return model;
             }
             catch (Exception) 
             {
-                model.WebsiteName = string.Empty;
-                model.JasperJson = string.Empty;
+                model.model1.WebsiteName = string.Empty;
+                model.model2.JasperJson = string.Empty;
             }
-
+           
             return model;
         }
 
         [HttpPost]
-        public IActionResult SaveJasperJson(SettingsViewModel model)
+        public IActionResult SaveJasperJson(JasperJsonViewModel model)
         {
             // In case of error old settings will be restored
             string oldSettingsBackup = Configuration.GlobalWebsiteConfig.GetGlobalJsonFileAsString();
@@ -62,25 +62,63 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {             
                Configuration.GlobalWebsiteConfig.SaveGlobalJsonFileAsString(model.JasperJson);
                Configuration.Initialize();
-
-                return View("Index",UpdatePage());
+               TempData["Success"] = true;
             }
             catch
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = "Při ukládání konfiguračního nastavení došlo k chybě. Změny nebyly provedeny.";
+                TempData["ErrorMessage"] = "Změny nemohly být provedeny";
 
-                // restore old settings
-                Configuration.GlobalWebsiteConfig.SaveGlobalJsonFileAsString(oldSettingsBackup);
-
-                ModelState.Clear();// !!! without this statement model binding won't work...
-                return View("Index",UpdatePage());
+                // Restore old settings
+                Configuration.GlobalWebsiteConfig.SaveGlobalJsonFileAsString(oldSettingsBackup);             
+               
             }
+
+            if(isAjaxRequest)
+            {
+                ModelState.Clear(); // Updating model in POST
+
+                // Fresh data (without previously entered errors) will be served
+                return PartialView("JasperJsonPartialView", UpdateJasperJsonViewModel());
+            }
+            else
+            {
+              return  RedirectToAction("Index", UpdatePage());
+            }
+        }
+
+        public JasperJsonViewModel UpdateJasperJsonViewModel()
+        {
+            JasperJsonViewModel model = new JasperJsonViewModel();
+            try
+            {
+                model.JasperJson = Configuration.GlobalWebsiteConfig.GetGlobalJsonFileAsString();
+                return model;
+            }
+            catch 
+            {
+                model.JasperJson = string.Empty;
+                return model;
+            }
+        }
+
+        public SettingsNameViewModel UpdateSettingsNameViewModel()
+        {
+            SettingsNameViewModel model = new SettingsNameViewModel();
+            try
+            {
+                model.WebsiteName = _dbHelper.GetWebsiteName();
+                return model;
+            }
+            catch
+            {
+                model.WebsiteName = string.Empty;
+                return model;
+            };
         }
 
 
         [HttpPost]
-        public IActionResult SaveSettings(SettingsViewModel model)
+        public IActionResult SaveSettings(SettingsNameViewModel model)
         {
             bool isAjaxRequest = (Request.Headers["X-Requested-With"] == "XMLHttpRequest") ? true : false;
             
@@ -89,7 +127,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     _dbHelper.SetWebsiteName(model.WebsiteName);
-                    TempData["success"] = true;
+                    TempData["Success"] = true;
                 }
                 else
                 {
@@ -107,9 +145,9 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 ModelState.Clear(); // Updating model in POST
 
                 // Fresh data (without previously entered errors) will be served
-                return PartialView("WebsiteNamePartialView",UpdatePage()); 
+                return PartialView("WebsiteNamePartialView",UpdateSettingsNameViewModel()); 
             }
-            else
+            else // JS disabled - no partial updates available
             {               
                 // Refreshing the page will not cause re-post
                 return RedirectToAction("Index", UpdatePage());

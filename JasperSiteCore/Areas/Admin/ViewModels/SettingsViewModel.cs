@@ -11,11 +11,22 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
     public class SettingsViewModel
     {
       
-        [Display(Name ="Název vašeho webu")]
-        [Required(ErrorMessage ="Zvolte název vašeho webu")]
-        public string WebsiteName { get; set; }
+       public SettingsNameViewModel model1 { get; set; }
+        public JasperJsonViewModel model2 { get; set; }
+       
 
-        public string JasperJson { get; set; }
+    }
 
+    public class SettingsNameViewModel
+    {
+        [Display(Name = "Název vašeho webu")]
+        [Required(ErrorMessage = "Zvolte název vašeho webu")]
+       public string WebsiteName { get; set; }
+    }
+
+    public class JasperJsonViewModel
+    {
+        
+ public string JasperJson { get; set; }
     }
 }

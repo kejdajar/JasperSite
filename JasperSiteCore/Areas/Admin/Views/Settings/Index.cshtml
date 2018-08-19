@@ -19,7 +19,7 @@
 <section class="j-admin-section">
     <h2><i class="fa fa-file-text  j-icon" aria-hidden="true"></i> Název webové stránky</h2>
     <div id="mainForm">
-       @Html.Partial("WebsiteNamePartialView")
+       @Html.Partial("WebsiteNamePartialView",Model.model1)
     </div>
 </section>
 
@@ -40,10 +40,8 @@
 <section class="j-admin-section">
     <h2><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Globální konfigurační soubor jasper.json</h2>
 
-    <form method="post" asp-controller="Settings" asp-action="SaveJasperJson" asp-area="admin">
-        <textarea asp-for="JasperJson" rows="15" class="form-control" >test</textarea>
-        <button type="submit"  class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit soubor jasper.json </button>
-    </form>  
-
+    <div id="mainForm2">
+        @Html.Partial("JasperJsonPartialView",Model.model2)
+    </div>
 
 </section>
