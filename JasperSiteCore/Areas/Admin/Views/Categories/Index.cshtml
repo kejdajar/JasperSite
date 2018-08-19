@@ -17,23 +17,33 @@
         var frmValidation = $('#formNewCategory').valid(); // Unobtrusive validation has to be called manually
 
         if (frmValidation) {
-            var categoryName = $("#tbCategoryName").val();
+           
+   
 
             $.ajax({
                 type: 'post',
                 url: '@Url.Action("CreateNewCategory", "Categories")',
-                data: { ajaxData: categoryName  },
-                dataType: 'HTML',
+                data:  $("#formNewCategory").serialize(),
+               
                 success: function (data) {
+             
+     
+        $("#categoryPartialForm").html(data);                  
+      
+         savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success"); 
+            
+                },
+        error: function(data){
+       //  $("#categoryPartialForm").html(data);                  
+      
+         savedInfo("<strong>Chyba.</strong> Změny nebyly uloženy.", "alert-warning"); 
+        }
 
-                    $("#categoryPartialForm").html(data);
 
-                    savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
-                }
             });
 
         }
-        else return false;
+   
 
         });
 

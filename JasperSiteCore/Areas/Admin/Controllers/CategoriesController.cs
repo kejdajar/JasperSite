@@ -32,6 +32,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             CategoriesViewModel model = new CategoriesViewModel();
             try
             {
+               
+
                 model.Categories = _dbHelper.GetAllCategories();
                 if(model.Categories.Count <= 0)
                 {
@@ -54,7 +56,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         [HttpPost]
         // If JS is enabled - data will be passed in ajaxData, otherwise in the model
-        public IActionResult CreateNewCategory(CategoriesViewModel model,string ajaxData)
+        public IActionResult CreateNewCategory(CategoriesViewModel model)
         {            
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
@@ -65,7 +67,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 {
                     if (isAjaxCall)
                     {
-                        _dbHelper.AddNewCategory(ajaxData);
+                        _dbHelper.AddNewCategory(model.NewCategory.NewCategoryName);
                     }
                     else
                     {
@@ -75,15 +77,20 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 else
                 {
                     // Categories are not passed back from view, so they need to be filled into model again
-                    model.Categories = _dbHelper.GetAllCategories();
-                    return View("Index", model);
+                    // model.Categories = _dbHelper.GetAllCategories();
+                    throw new Exception();
                 }
             }
             catch (Exception)
             {
-                
+
                 TempData["ErrorMessage"] = "Akce nemohla být dokončena.";
-               
+                if (isAjaxCall)
+                {
+                    Response.StatusCode = 500;
+                    return PartialView("AddNewCategoryPartialView", UpdateCategoryPage());
+                }
+
             }
 
             if (isAjaxCall)
@@ -103,7 +110,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             
             if(id == null || id < 0)
             {
-                TempData["Error"] = "1"; // Automatically shows error modal
+               
                 TempData["ErrorMessage"] = "Daná rubrika pro smazání nebyla nalezena.";
                 return RedirectToAction("Index");
             }
@@ -115,7 +122,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Error"] = "1"; // Automatically shows error modal
+               
                 TempData["ErrorMessage"] = ex.Message;              
             }           
 

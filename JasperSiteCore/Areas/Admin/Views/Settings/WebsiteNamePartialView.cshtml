@@ -1,0 +1,26 @@
+﻿@model  JasperSiteCore.Areas.Admin.ViewModels.SettingsViewModel
+<form asp-action="SaveSettings" asp-controller="Settings" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-success="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')" data-ajax-failure="savedInfo('<strong>Chyba.</strong> Změny nebyly provedeny.', 'alert-danger')">
+    <div class="form-horizontal">
+
+        @*<div asp-validation-summary="All" class="text-danger"></div>*@
+
+        <div class="form-group">
+            <label asp-for="WebsiteName"></label>
+
+            <input asp-for="WebsiteName" class="form-control" />
+            <span asp-validation-for="WebsiteName" class="text-danger"></span>
+
+        </div>
+
+
+        <div class="form-group">
+
+
+            <button type="submit" asp-area="Admin" asp-controller="Settings" asp-action="SaveSettings" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+
+
+
+        </div>
+    </div>
+
+</form>

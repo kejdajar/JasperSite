@@ -7,7 +7,7 @@ using JasperSiteCore.Areas.Admin.ViewModels;
 using JasperSiteCore.Models;
 using JasperSiteCore.Models.Database;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Net;
 
 namespace JasperSiteCore.Areas.Admin.Controllers
 {
@@ -81,19 +81,33 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult SaveSettings(SettingsViewModel model)
         {
+            bool isAjaxRequest = (Request.Headers["X-Requested-With"] == "XMLHttpRequest") ? true : false;
+            
             try
             {
                 if (ModelState.IsValid)
                 {
                     _dbHelper.SetWebsiteName(model.WebsiteName);
                 }
+                else
+                {
+                    throw new Exception();
+                }                          
+                            
 
-                return View(model);
             }
             catch
             {
-                // TODO: error
-                return View(model);
+                Response.StatusCode = 500;
+            }
+
+            if(isAjaxRequest)
+            {
+                return PartialView("WebsiteNamePartialView");
+            }
+            else
+            {
+                return View("Index", UpdatePage());
             }
         }
 

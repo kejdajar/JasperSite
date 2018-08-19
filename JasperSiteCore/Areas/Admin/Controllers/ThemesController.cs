@@ -361,12 +361,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             catch(ThemeAlreadyExistsException)
             {
 
-                TempData["Error"] = "1"; // Automatically shows error modal
+              
                 TempData["ErrorMessage"] = $"Při pokusu nahrát vzhled(y) došlo k chybě. Alespoň jeden přidávaný vzhled již existuje a byl proto přeskočen." ;
             }
             catch (Exception)
             {
-                TempData["Error"] = "1"; // Automatically shows error modal
+              
                 TempData["ErrorMessage"] = "Při nahrávání došlo k neočekávané chybě.";
             }
             finally

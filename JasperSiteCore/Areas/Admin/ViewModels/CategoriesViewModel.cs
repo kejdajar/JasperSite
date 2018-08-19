@@ -13,6 +13,8 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
        
        public NewCategoryViewModel NewCategory { get; set; }
 
+        
+
     }
 
     public class NewCategoryViewModel

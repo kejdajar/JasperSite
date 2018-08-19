@@ -18,32 +18,7 @@
 <section class="j-admin-section">
     <h2><i class="fa fa-file-text  j-icon" aria-hidden="true"></i> Název webové stránky</h2>
     <div id="mainForm">
-        <form asp-action="SaveSettings" asp-controller="Settings" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')">
-            <div class="form-horizontal">
-
-                @*<div asp-validation-summary="All" class="text-danger"></div>*@
-
-                <div class="form-group">
-                    <label asp-for="WebsiteName"></label>
-
-                    <input asp-for="WebsiteName" class="form-control" />
-                    <span asp-validation-for="WebsiteName" class="text-danger"></span>
-
-                </div>
-
-
-                <div class="form-group">
-
-
-                    <button type="submit" asp-area="Admin" asp-controller="Settings" asp-action="SaveSettings" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
-
-
-
-                </div>
-            </div>
-
-        </form>
-
+       @Html.Partial("WebsiteNamePartialView")
     </div>
 </section>
 
