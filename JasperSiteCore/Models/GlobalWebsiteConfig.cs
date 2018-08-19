@@ -111,10 +111,22 @@ namespace JasperSiteCore.Models
             return System.IO.File.ReadAllText(path);
         }
 
+        /// <summary>
+        /// Saves string to jasper.json global configuration file.
+        /// </summary>
+        /// <param name="jsonContent"></param>
+        /// <exception cref="GlobalConfigDataException"></exception>
         public void SaveGlobalJsonFileAsString(string jsonContent)
         {
-            string path = GlobalConfigDataProvider.GetGlobalJsonFilePath();
-            System.IO.File.WriteAllText(path,jsonContent);
+            try
+            {
+                string path = GlobalConfigDataProvider.GetGlobalJsonFilePath();
+                System.IO.File.WriteAllText(path, jsonContent);
+            }
+            catch (Exception)
+            {
+                throw new GlobalConfigDataException();
+            }
         }
 
     }

@@ -53,14 +53,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult SaveJasperJson(SettingsViewModel model)
         {
-
+            // In case of error old settings will be restored
             string oldSettingsBackup = Configuration.GlobalWebsiteConfig.GetGlobalJsonFileAsString();
 
+            bool isAjaxRequest = (Request.Headers["X-Requested-With"] == "XMLHttpRequest") ? true : false;
+
             try
-            {
-             
-                    Configuration.GlobalWebsiteConfig.SaveGlobalJsonFileAsString(model.JasperJson);
-                    JasperSiteCore.Models.Configuration.Initialize();
+            {             
+               Configuration.GlobalWebsiteConfig.SaveGlobalJsonFileAsString(model.JasperJson);
+               Configuration.Initialize();
 
                 return View("Index",UpdatePage());
             }
@@ -93,8 +94,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 else
                 {
                     throw new Exception();
-                }                         
-                            
+                }                               
 
             }
             catch
@@ -104,13 +104,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             if(isAjaxRequest)
             {
-                ModelState.Clear();
-                return PartialView("WebsiteNamePartialView",UpdatePage());
+                ModelState.Clear(); // Updating model in POST
+
+                // Fresh data (without previously entered errors) will be served
+                return PartialView("WebsiteNamePartialView",UpdatePage()); 
             }
             else
-            {
-               
-                return View("Index", UpdatePage());
+            {               
+                // Refreshing the page will not cause re-post
+                return RedirectToAction("Index", UpdatePage());
             }
         }       
     }

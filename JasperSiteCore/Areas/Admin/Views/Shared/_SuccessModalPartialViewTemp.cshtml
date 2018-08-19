@@ -1,11 +1,12 @@
-﻿
-@if(TempData["success"] != null)
-{
-<script>
-$(document).ready(function () {
+﻿@*
+    This partial view calls savedInfo function whenever the TempData["success"] flag is set.
+*@
 
-    savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')
-    @*@{TempData["success"]=null;}*@
-    });
-</script>
+@if (TempData["success"] != null)
+{
+    <script>
+        $(document).ready(function () {
+             savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')
+         });
+    </script>
 }

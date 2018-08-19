@@ -3,53 +3,28 @@
 @Html.Partial("_SuccessModalPartialViewTemp")
 @Html.Partial("_ErrorModalPartialViewTemp")
 
+<script src="~/Areas/Admin/Content/Scripts/PartialViewUnobtrusiveFix.js"></script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function(){   
 
-    $("form").submit(function(){
-    alert("submited");
-
-
-    //  var validator =  $("#settingsForm").validate();
-    //validator.form();
-
-
-    var form = $("#settingsForm")
-    .removeData("validator") /* added by the raw jquery.validate plugin */
-    .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
-
-$.validator.unobtrusive.parse(form);
-
-    
-    });
-
- 
+        // By default, unobtrusive validation in partial view does not work after first submit
+        UnobtrusiveValidationFix("#settingsForm");
 
     });
 </script>
 
-<form id="settingsForm" asp-action="SaveSettings" asp-controller="Settings" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm">
-    <!-- data-ajax-success="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')" data-ajax-failure="savedInfo('<strong>Chyba.</strong> Změny nebyly provedeny.', 'alert-danger')" -->
-    <div class="form-horizontal">
-
-        @*<div asp-validation-summary="All" class="text-danger"></div>*@
-
+<form id="settingsForm" asp-action="SaveSettings" asp-controller="Settings"
+ asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm">
+    
+    <div class="form-horizontal"> 
         <div class="form-group">
             <label asp-for="WebsiteName"></label>
-
             <input asp-for="WebsiteName" class="form-control" />
             <span asp-validation-for="WebsiteName" class="text-danger"></span>
-
         </div>
 
-
         <div class="form-group">
-
-
-            <button type="submit" asp-area="Admin" asp-controller="Settings" asp-action="SaveSettings" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
-
-
-
+            <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
         </div>
     </div>
 
