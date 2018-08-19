@@ -81,14 +81,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-                TempData["Error"] = "1";
+                
                 TempData["ErrorMessage"] = "Akce nemohla být dokončena.";
                
             }
 
             if (isAjaxCall)
             {
-
                 return PartialView("AddNewCategoryPartialView", UpdateCategoryPage());
             }
             else

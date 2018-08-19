@@ -354,8 +354,7 @@ return RedirectToAction("EditBlock", new { blockId = blockId });
     public class NewTextBlock
     {
         [Display(Name ="Název textového bloku")]
-        [Required(ErrorMessage ="Uveďte prosím název textového bloku.")]
-        [RegularExpression(@"[^\s]+", ErrorMessage = "Název nemůže obsahovat pouze prázdné znaky.")]
+        [Required(ErrorMessage ="Uveďte prosím název textového bloku.")]      
         public string Name { get; set; }
 
         [Display(Name="Rychlý obsah bloku")]
@@ -369,7 +368,7 @@ return RedirectToAction("EditBlock", new { blockId = blockId });
         
         public int Id{ get; set; }
 
-        [RegularExpression(@"[^\s]+", ErrorMessage = "Název nemůže obsahovat pouze prázdné znaky.")]
+    
         [Display(Name = "Název textového bloku")]
         [Required(ErrorMessage = "Uveďte prosím název textového bloku.")]
         public string Name { get; set; }

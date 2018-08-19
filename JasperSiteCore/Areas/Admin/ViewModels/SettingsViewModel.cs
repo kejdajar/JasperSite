@@ -10,7 +10,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 {
     public class SettingsViewModel
     {
-        [RegularExpression(@"[^\s]+", ErrorMessage = "Název nemůže obsahovat pouze prázdné znaky.")]
+      
         [Display(Name ="Název vašeho webu")]
         [Required(ErrorMessage ="Zvolte název vašeho webu")]
         public string WebsiteName { get; set; }

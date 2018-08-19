@@ -153,10 +153,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     catch (Exception ex)
                     {
                         ViewBag.Error = "1"; // Automatically shows error modal
-                        ViewBag.ErrorMessage = ex.Message + ", " + ex.InnerException;
-                    ViewBag.ErrorMessage = ((string)ViewBag.ErrorMessage).Replace('`', ' ');
+                        ViewBag.ErrorMessage = ex.Message;
+                    if (ex.InnerException != null)
+                    {
+                        ViewBag.ErrorMessage += "Podrobnosti: " + ex.InnerException.Message;
+                    }
 
-                        // Reset settings 
+                    // Reset settings 
                     Configuration.GlobalWebsiteConfig.ConnectionString = oldConnString;
                         Configuration.GlobalWebsiteConfig.InstallationCompleted = oldInstallationCompleted;
 

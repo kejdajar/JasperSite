@@ -12,7 +12,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
        
         public int Id { get; set; }
 
-        [RegularExpression(@"[^\s]+",ErrorMessage ="Název nemůže obsahovat pouze prázdné znaky.")]
+        
         [Required(ErrorMessage = "Vyplňte prosím název článku")]       
         [Display(Name="Název článku")]
         public string Name { get; set; }
