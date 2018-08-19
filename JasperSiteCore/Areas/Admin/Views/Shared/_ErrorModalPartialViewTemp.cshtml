@@ -44,6 +44,11 @@ $(document).ready(function () {
             });
             $("body").append(errorPanel);
         $("#myModal").modal("toggle");
+
+    // Modal has to be deleted after it was closed - multiple modals in one page are not supported by bootstrap
+    $('#myModal').on('hidden.bs.modal', function () {
+   $("#myModal").remove();
+})
     
     });
 </script>}

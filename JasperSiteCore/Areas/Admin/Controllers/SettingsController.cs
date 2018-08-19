@@ -88,29 +88,30 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     _dbHelper.SetWebsiteName(model.WebsiteName);
+                    TempData["success"] = true;
                 }
                 else
                 {
                     throw new Exception();
-                }                          
+                }                         
                             
 
             }
             catch
             {
-                Response.StatusCode = 500;
+                TempData["ErrorMessage"] = "Změny nemohly být provedeny";
             }
 
             if(isAjaxRequest)
             {
-                return PartialView("WebsiteNamePartialView");
+                ModelState.Clear();
+                return PartialView("WebsiteNamePartialView",UpdatePage());
             }
             else
             {
+               
                 return View("Index", UpdatePage());
             }
-        }
-
-       
+        }       
     }
 }

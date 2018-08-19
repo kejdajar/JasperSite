@@ -1,0 +1,11 @@
+﻿
+@if(TempData["success"] != null)
+{
+<script>
+$(document).ready(function () {
+
+    savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')
+    @*@{TempData["success"]=null;}*@
+    });
+</script>
+}

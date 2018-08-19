@@ -54,6 +54,7 @@
     <None Remove="Areas\Admin\ViewModels\SettingsViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\UsersViewModel.cs" />
     <None Remove="Areas\Admin\Views\Shared\_ErrorModalPartialViewTemp.cshtml" />
+    <None Remove="Areas\Admin\Views\Shared\_SuccessModalPartialViewTemp.cshtml" />
     <None Remove="Areas\Admin\Views\Users\AddUser.cshtml" />
     <None Remove="Themes\Emerald\Article.cshtml" />
     <None Remove="Themes\Emerald\Category.cshtml" />
@@ -93,6 +94,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Areas\Admin\Views\Shared\_SuccessModalPartialViewTemp.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Areas\Admin\Views\Shared\_ErrorModalPartialViewTemp.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

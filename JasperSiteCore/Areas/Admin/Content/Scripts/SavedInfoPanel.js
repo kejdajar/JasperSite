@@ -22,7 +22,9 @@
             });
 
             $("#headerPanel").append(panel);
-            panel.slideDown("slow").delay(2500).slideUp("slow");
+            panel.slideDown("slow").delay(2500).slideUp("slow", function () {
+                $("#headerPanel").remove(panel);
+            });
 
             $(":submit").blur();/* After submit the submit button had still focus efect*/
         }

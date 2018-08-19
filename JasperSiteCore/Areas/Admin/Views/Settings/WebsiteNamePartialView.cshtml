@@ -1,5 +1,35 @@
-﻿@model  JasperSiteCore.Areas.Admin.ViewModels.SettingsViewModel
-<form asp-action="SaveSettings" asp-controller="Settings" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-success="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')" data-ajax-failure="savedInfo('<strong>Chyba.</strong> Změny nebyly provedeny.', 'alert-danger')">
+﻿@model JasperSiteCore.Areas.Admin.ViewModels.SettingsViewModel
+
+@Html.Partial("_SuccessModalPartialViewTemp")
+@Html.Partial("_ErrorModalPartialViewTemp")
+
+<script>
+    $(document).ready(function(){
+
+    $("form").submit(function(){
+    alert("submited");
+
+
+    //  var validator =  $("#settingsForm").validate();
+    //validator.form();
+
+
+    var form = $("#settingsForm")
+    .removeData("validator") /* added by the raw jquery.validate plugin */
+    .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+
+$.validator.unobtrusive.parse(form);
+
+    
+    });
+
+ 
+
+    });
+</script>
+
+<form id="settingsForm" asp-action="SaveSettings" asp-controller="Settings" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm">
+    <!-- data-ajax-success="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success')" data-ajax-failure="savedInfo('<strong>Chyba.</strong> Změny nebyly provedeny.', 'alert-danger')" -->
     <div class="form-horizontal">
 
         @*<div asp-validation-summary="All" class="text-danger"></div>*@
