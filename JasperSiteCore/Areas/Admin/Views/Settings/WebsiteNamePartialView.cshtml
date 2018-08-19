@@ -4,10 +4,12 @@
 @Html.Partial("_ErrorModalPartialViewTemp")
 
 <script src="~/Areas/Admin/Content/Scripts/PartialViewUnobtrusiveFix.js"></script>
+
 <script>
     $(document).ready(function(){   
 
         // By default, unobtrusive validation in partial view does not work after first submit
+        // From PartialUnobtrusiveFix.js
         UnobtrusiveValidationFix("#settingsForm");
 
     });

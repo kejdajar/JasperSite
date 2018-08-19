@@ -1,47 +1,45 @@
-﻿@model JasperSiteCore.Areas.Admin.ViewModels.SettingsViewModel
-@using JasperSiteCore.Models.Database
-@using  JasperSiteCore.Models
+﻿@using  JasperSiteCore.Models
+
+@model JasperSiteCore.Areas.Admin.ViewModels.SettingsViewModel
+
 @{
     ViewData["Title"] = "Nastavení";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
 @section Scripts {
 
-
+    <!--Used by _SuccessModalPartialViewTemp.cshtml -->
     <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
 }
 
-
-
-
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Nastavení</h1></div>
 
+@*=====FIRST FORM======*@
 <section class="j-admin-section">
     <h2><i class="fa fa-file-text  j-icon" aria-hidden="true"></i> Název webové stránky</h2>
     <div id="mainForm">
-       @Html.Partial("WebsiteNamePartialView",Model.model1)
+        @Html.Partial("WebsiteNamePartialView", Model.model1)
     </div>
 </section>
-
+@*=====FIRST FORM END======*@
 
 <section class="j-admin-section">
     <h2><i class="fa fa-database j-icon" aria-hidden="true"></i> Instalace systému a správa databáze</h2>
 
- 
-        <table class="table j-table-no-hover table-bordered">
-            <tr><th>Akce</th><th>Popis</th></tr>
-            <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="Install" asp-action="Index" asp-area="Admin">Zobrazit instalační okno</a></td><td>Tato možnost zobrazí instalační okno, pomocí něhož je možné obnovit tovární nastavení redakčního systému.</td></tr>
-        </table>
-    
+    <table class="table j-table-no-hover table-bordered">
+        <tr><th>Akce</th><th>Popis</th></tr>
+        <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="Install" asp-action="Index" asp-area="Admin">Zobrazit instalační okno</a></td><td>Tato možnost zobrazí instalační okno, pomocí něhož je možné obnovit tovární nastavení redakčního systému.</td></tr>
+    </table>
 
 </section>
 
-
+@*=====SECOND FORM=====*@
 <section class="j-admin-section">
     <h2><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Globální konfigurační soubor jasper.json</h2>
 
     <div id="mainForm2">
-        @Html.Partial("JasperJsonPartialView",Model.model2)
+        @Html.Partial("JasperJsonPartialView", Model.model2)
     </div>
-
 </section>
+@*=====SECOND FORM END=====*@
