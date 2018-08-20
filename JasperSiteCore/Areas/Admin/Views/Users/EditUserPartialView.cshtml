@@ -1,13 +1,26 @@
 ﻿@using JasperSiteCore.Models.Database;
 @model JasperSiteCore.Areas.Admin.ViewModels.EditUserViewModel
 
-@Html.Partial("_ErrorModalPartialView")
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
+
+<script src="~/Areas/Admin/Content/Scripts/PartialViewUnobtrusiveFix.js"></script>
+<script>
+    $(document).ready(function(){
+
+        // By default, unobtrusive validation in partial view does not work after first submit
+        UnobtrusiveValidationFix("#formId");
+
+    });
+</script>
 
 
 @if (Model != null)
 {
     <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Uživatel: @Model.Username</h1></div>
-    <form id="formId" asp-action="EditUser" asp-controller="Users" asp-area="Admin" data-ajax="true" data-ajax-update="#mainForm" method="post" data-ajax-complete="savedInfo('<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.', 'alert-success');">
+
+    <form id="formId" asp-action="EditUser" asp-controller="Users"
+          asp-area="Admin" data-ajax="true" data-ajax-update="#mainForm" method="post">
 
         <div class="form-horizontal">
 
@@ -18,6 +31,7 @@
 
                 <input asp-for="Nickname" class="form-control" />
                 <span asp-validation-for="Nickname" class="text-danger"></span>
+             
 
             </div>
 

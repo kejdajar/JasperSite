@@ -89,9 +89,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             try
             {
-                
-                // Get current user
-                User user = _dbHelper.GetUserById(model.Id);
+                if (ModelState.IsValid)
+                {
+                    // Get current user
+                    User user = _dbHelper.GetUserById(model.Id);
                 user.Nickname = model.Nickname;
                 user.Username = model.Username;
                 user.RoleId = model.RoleId;
@@ -119,32 +120,34 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                 }
 
-                if (ModelState.IsValid)
-                {
                     _dbHelper.SaveChanges();
+                    TempData["Success"] = true;
+                }
+                else
+                {
+                    throw new Exception();
                 }
             }
             catch (NoRemainingAdminException)
-            {
-                ViewBag.Error = "1";
-                ViewBag.ErrorMessage = "V systému musí být alespoň jeden administrátor.";
+            {                
+                TempData["ErrorMessage"] = "V systému musí být alespoň jeden administrátor.";
+               
             }
             catch(Exception) 
             {
-                ViewBag.Error = "1";
-                ViewBag.ErrorMessage = "Změny nebylo možné uložit";                
-
-            }            
+                TempData["ErrorMessage"] = "Změny nebylo možné uložit";
+              
+            }           
 
         
             if (isAjaxCall)
             {
-                EditUserViewModel cleanModel = UpdateEditUserPage(model.Id);   
-                return PartialView("EditUserPartialView",cleanModel);
+                ModelState.Clear();
+                return PartialView("EditUserPartialView", UpdateEditUserPage(model.Id));
             }
             else
             {
-                return RedirectToAction("EditUser", UpdateEditUserPage(model.Id));
+                return RedirectToAction("EditUser", new { id=model.Id});
             }
             
         }
