@@ -16,8 +16,10 @@
         /* AJAX TINYMCE SUBMIT WITH NO JS FALLBACK */
         $(document).ready(function () {
 
-            var allDeleteLinks = $('#btnSaveTinymce').click(function (e) {
+            $('#btnSaveTinymce').click(function (e) {
 
+        if($("#tinymceForm").valid()) // form can't be "manually" submitted with errors
+        {
                 e.preventDefault();
 
                // var formData = $("#tinymceForm").serialize();
@@ -38,8 +40,14 @@
 
                         $("#modelNameHeader").text(data);
                         savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                    },
+                    error: function(data){
+        savedInfo("<strong>Chyba.</strong> Změny nemohly být uloženy.", "alert-danger");
+                      
+        
                     }
                 });
+        }
             });
 
         });
@@ -59,6 +67,7 @@
 <div class="container-fluid">
 
 
+    @* Model is never returning partial view - too slow and laggy with tinyMCE *@
     <div id="mainForm">
         @Html.Partial("EditTextBlockPartialView", Model.TextBlock)
     </div>

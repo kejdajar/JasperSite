@@ -40,9 +40,11 @@
         });
 </script>
 
-@Html.Partial("_ErrorModalPartialView")
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
 
-<form asp-action="AddNewBlock" asp-controller="Blocks" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1" data-ajax-complete='savedInfo("<strong>Uloženo.</strong> Veškeré změny byly uloženy.", "alert-success")'>
+<form asp-action="AddNewBlock" asp-controller="Blocks" asp-area="Admin" 
+      data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1">
     <div class="form-horizontal">
 
         @*<div asp-validation-summary="All" class="text-danger"></div>*@

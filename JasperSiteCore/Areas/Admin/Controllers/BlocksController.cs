@@ -75,28 +75,44 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddNewBlock(BlockViewModel model)
         {
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
             try
-            {
-                string newBlockName = model.NewTextBlock.Name;
-                int newBlock_BlockHolderId = model.NewTextBlock.BlockHolderId;
-                string newBlockContent = model.NewTextBlock.Content;
+            {               
+                if (ModelState.IsValid)
+                {
+                    string newBlockName = model.NewTextBlock.Name;
+                    int newBlock_BlockHolderId = model.NewTextBlock.BlockHolderId;
+                    string newBlockContent = model.NewTextBlock.Content;
 
-                TextBlock tb = new TextBlock() { Content = newBlockContent, Name = newBlockName };
-                TextBlock addedBlock = _dbHelper.AddNewBlock(tb);
+                    TextBlock tb = new TextBlock() { Content = newBlockContent, Name = newBlockName };
+                    TextBlock addedBlock = _dbHelper.AddNewBlock(tb);
 
-                Holder_Block hb = new Holder_Block();
-                hb.BlockHolderId = newBlock_BlockHolderId;
-                hb.TextBlockId = addedBlock.Id;
-                _dbHelper.AddNewHolder_Block(hb);
-
-                ModelState.Clear();
+                    Holder_Block hb = new Holder_Block();
+                    hb.BlockHolderId = newBlock_BlockHolderId;
+                    hb.TextBlockId = addedBlock.Id;
+                    _dbHelper.AddNewHolder_Block(hb);
+                    TempData["Success"] = true;
+                }
+                else
+                {
+                    throw new Exception();
+                }                
             }
             catch
             {
-                // TODO: error
+                TempData["ErrorMessage"] = "Při vytváření nového textového bloku došlo k chybě.";
             }
 
-            return PartialView("BlockFormPartialView",UpdatePage());
+            if(isAjaxCall)
+            {
+                ModelState.Clear();
+                return PartialView("BlockFormPartialView", UpdatePage());
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }           
         }
 
         [HttpGet]
@@ -174,14 +190,16 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 _dbHelper.SaveTextBlockOrderNumberInHolder(textBlockId, holderId, order);
+                TempData["Success"] = true;
             }
             catch
             {
-                // TODO: error
+                TempData["ErrorMessage"] = "Pořadí textového bloku nemohlo být uloženo";
             }
           
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
             if (isAjaxCall)
             {
                 return PartialView("AddedAndLooseHoldersPartialView", GetBlockManagementModel(textBlockId));
@@ -231,29 +249,43 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
         }
 
+        // No partial view result = too slow and laggy for tinyMCE
         [HttpPost]
         public IActionResult SaveBlock(TextBlock model)
         {
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
             try
             {
 
-                TextBlock changedData = new TextBlock() { Id = model.Id, Name = model.Name, Content = model.Content };
-                TextBlock tbFromDb = _dbHelper.GetAllTextBlocks().Where(tb => tb.Id == model.Id).Single();
+                if (ModelState.IsValid)
+                {
+                    TextBlock changedData = new TextBlock() { Id = model.Id, Name = model.Name, Content = model.Content };
+                    TextBlock tbFromDb = _dbHelper.GetAllTextBlocks().Where(tb => tb.Id == model.Id).Single();
 
-                tbFromDb.Name = changedData.Name;
-                tbFromDb.Content = changedData.Content;
-                _dbHelper.SaveChanges();
+                    tbFromDb.Name = changedData.Name;
+                    tbFromDb.Content = changedData.Content;
+                    _dbHelper.SaveChanges();                    
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
             catch
             {
-                // TODO: error                
+                Response.StatusCode = 500; // ajax failure function will be executed 
             }
-
-            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            
 
             if (isAjaxCall)
+            {
                 return Content(model.Name);
-            else return RedirectToAction("EditBlock", new { blockId = model.Id });
+            }
+            else
+            {
+                return RedirectToAction("EditBlock", new { blockId = model.Id });
+            }
         }
 
         [HttpGet]
@@ -262,14 +294,16 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 _dbHelper.AddHolderToBlock(holderId, blockId);
+                TempData["Success"] = true;
             }
             catch
             {
-                // TODO: Errors
+                TempData["ErrorMessage"] = "Nebylo možné přiřadit danému textovému bloku daný kontejner";
             }
           
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
             if (isAjaxCall)
             {                
                 return PartialView("AddedAndLooseHoldersPartialView", GetBlockManagementModel(blockId));
@@ -310,29 +344,30 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult RemoveHolderFromBlock(int holderId,int blockId)
         {
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
             try
             {
-                _dbHelper.RemoveHolderFromBlock(holderId, blockId);
+                _dbHelper.RemoveHolderFromBlock(holderId, blockId);                
+                TempData["Success"] = true;
             }
             catch
             {
-               //TODO: error
+                TempData["ErrorMessage"] = "Kontejner nebylo možné odebrat";
             }
 
-            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
             if (isAjaxCall)
             {
-                
-                 
-                 return PartialView("AddedAndLooseHoldersPartialView",GetBlockManagementModel(blockId));
+                return PartialView("AddedAndLooseHoldersPartialView", GetBlockManagementModel(blockId));
             }
 
-            else {
-return RedirectToAction("EditBlock", new { blockId = blockId });
+            else
+            {
+                return RedirectToAction("EditBlock", new { blockId = blockId });
             }
-            
+
         }
-
 
     }
 

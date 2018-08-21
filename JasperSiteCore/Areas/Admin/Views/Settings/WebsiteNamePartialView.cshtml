@@ -2,18 +2,8 @@
 
 @Html.Partial("_SuccessModalPartialViewTemp")
 @Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_UnobtrusiveValidationFixPartialView","#settingsForm")
 
-<script src="~/Areas/Admin/Content/Scripts/PartialViewUnobtrusiveFix.js"></script>
-
-<script>
-    $(document).ready(function(){   
-
-        // By default, unobtrusive validation in partial view does not work after first submit
-        // From PartialUnobtrusiveFix.js
-        UnobtrusiveValidationFix("#settingsForm");
-
-    });
-</script>
 
 <form id="settingsForm" asp-action="SaveSettings" asp-controller="Settings"
  asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm">

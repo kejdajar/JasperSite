@@ -56,7 +56,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             // In case of error old settings will be restored
             string oldSettingsBackup = Configuration.GlobalWebsiteConfig.GetGlobalJsonFileAsString();
 
-            bool isAjaxRequest = (Request.Headers["X-Requested-With"] == "XMLHttpRequest") ? true : false;
+            bool isAjaxRequest = Request.Headers["x-requested-with"] == "XMLHttpRequest";
 
             try
             {             
@@ -120,8 +120,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult SaveSettings(SettingsNameViewModel model)
         {
-            bool isAjaxRequest = (Request.Headers["X-Requested-With"] == "XMLHttpRequest") ? true : false;
-            
+            bool isAjaxRequest =  Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
             try
             {
                 if (ModelState.IsValid)

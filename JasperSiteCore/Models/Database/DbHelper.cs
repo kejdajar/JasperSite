@@ -875,7 +875,6 @@ namespace JasperSiteCore.Models.Database
             }
             catch (Exception ex)
             {
-
                 throw new DatabaseHelperException(ex);
             };
         }

@@ -4,6 +4,9 @@
 @inject IJasperDataService J
 @model JasperSiteCore.Areas.Admin.ViewModels.AddedAndLooseHoldersViewModel
 
+@Html.Partial("_SuccessModalPartialViewTemp")
+@Html.Partial("_ErrorModalPartialViewTemp")
+
 <script>
         /* AJAX REMOVE HOLDER */
         $(document).ready(function () {
@@ -26,7 +29,7 @@
 
                         $("#mainForm2").html(data);
 
-                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                      //  savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                     }
                 });
             });
@@ -54,7 +57,7 @@
 
                         $("#mainForm2").html(data);
 
-                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        //savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                     }
                 });
             });
@@ -83,7 +86,7 @@
 
                         $("#mainForm2").html(data);
 
-                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                       // savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                     }
                 });
             });
@@ -148,22 +151,36 @@
 <section class="j-admin-section">
 
     <h2> <i class="fa fa-plus-circle j-icon" aria-hidden="true"></i>Přiřadit kontejnery:</h2>
-    <table class="table table-bordered j-table j-table-left j-left-border-block">
-        <tr><th>Akce</th><th style="min-width:150px" >Název kontejneru</th><th  class="col-sm-1">Název vzhledu</th></tr>
-        @foreach (BlockHolder holder in Model.AllBlockHolders.Except(Model.CorrespondingBlockHolders))
-        {
-            <tr>
-                <td><a data-toggle="tooltip" title="Přiřadit" asp-area="Admin" asp-controller="Blocks" asp-action="AddHolderToBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper"  data-add-holder-id="@holder.Id" > <i class="fa fa-plus fa-1x" aria-hidden="true"></i>  </a></td>
-                <td>@holder.Name</td>
-                <td>@holder.Theme.Name</td>
-            </tr>
-        }
-    </table>
+    @if (Model.AllBlockHolders.Except(Model.CorrespondingBlockHolders).Count() > 0)
+    {
+
+
+        <table class="table table-bordered j-table j-table-left j-left-border-block">
+            <tr><th>Akce</th><th style="min-width:150px">Název kontejneru</th><th class="col-sm-1">Název vzhledu</th></tr>
+            @foreach (BlockHolder holder in Model.AllBlockHolders.Except(Model.CorrespondingBlockHolders))
+            {
+                <tr>
+                    <td><a data-toggle="tooltip" title="Přiřadit" asp-area="Admin" asp-controller="Blocks" asp-action="AddHolderToBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper" data-add-holder-id="@holder.Id"> <i class="fa fa-plus fa-1x" aria-hidden="true"></i>  </a></td>
+                    <td>@holder.Name</td>
+                    <td>@holder.Theme.Name</td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            <strong>Upozornění:</strong> Žádné další kontejnery nemá aktivní vzhled k dispozici.
+        </div>
+
+    }
+
+
 
     <div class="form-group">
 
         <a href="/Admin/Blocks/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam bloků</a>
-       
+
 
 
 
