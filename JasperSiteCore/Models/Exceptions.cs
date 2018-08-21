@@ -300,5 +300,30 @@ namespace JasperSiteCore.Models
 
     }
 
+    public class InvalidImageFormatException : Exception
+    {
+        private static string _message = "Specified file is not a supported image or has length of 0.";
+
+        public InvalidImageFormatException() : base(_message)
+        {
+
+        }
+        public InvalidImageFormatException(string message)
+            : base(message)
+        {
+        }
+
+        public InvalidImageFormatException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public InvalidImageFormatException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
 
 }

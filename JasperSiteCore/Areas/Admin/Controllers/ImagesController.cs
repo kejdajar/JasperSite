@@ -96,22 +96,22 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                         dbImageEntity.ImageData = new ImageData() { Data = imageInBytes };
                         _databaseContext.Images.Add(dbImageEntity);
                         _databaseContext.SaveChanges();
+                        TempData["Success"] = true;
                     }
                     else
                     {
-                        throw new Exception("Vložený soubor není obrázek nebo neobsahuje žádná data.");
+                        throw new InvalidImageFormatException("Vložený soubor není obrázek nebo neobsahuje žádná data.");
                     }
                 }
-
-                ImagesViewModel model = new ImagesViewModel();
-                model.ImagesFromDatabase = _dbHelper.GetAllImages();
+              
             }
-            catch (Exception ex)
+            catch (InvalidImageFormatException ex)
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = ex.Message;
-                return View("Index", UpdatePage());
-
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Při nahrávání došlo k chybě.";
             }
 
             return RedirectToAction("Index");

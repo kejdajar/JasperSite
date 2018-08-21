@@ -186,8 +186,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     u.Password = hashedNewPaswd;
                     u.Salt = salt;
 
-                    _dbHelper.AddNewUser(u);
-                    throw new Exception();
+                    _dbHelper.AddNewUser(u);                    
                     return RedirectToAction("Index");
                 }
                 else
@@ -219,18 +218,17 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 {
                     throw new NoRemainingAdminException("There must be at least one administrator among users.");
                 }
-
+              
                 _dbHelper.DeleteUserById(id);
+                TempData["Success"] = true;
             }
             catch (NoRemainingAdminException)
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = "V systému musí být alespoň jeden administrátor.";
+                TempData["ErrorMessage"] = "V systému musí být alespoň jeden administrátor.";
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = ex.Message;
+                TempData["ErrorMessage"] = "Daný uživatel nemohl být smazán.";
             }
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";

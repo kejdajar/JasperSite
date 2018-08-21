@@ -1,6 +1,11 @@
 ﻿@model JasperSiteCore.Areas.Admin.ViewModels.ImagesViewModel
 @using JasperSiteCore.Models.Database
 
+
+
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
+
 <h1><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Nahrané obrázky</h1>
 
 <script>
@@ -40,33 +45,32 @@
         });
 </script>
 
-@Html.Partial("_ErrorModalPartialView")
 
 @*========================OLD IMAGE TABLE=====================*@
 @*@if (Model.ImagesFromDatabase.Count > 0)
-{
-    <table class="table table-bordered j-table">
-        <tr><th>Odstranit</th><th class="col-sm-1" style="text-align:left">Název</th><th>Náhled</th></tr>
+    {
+        <table class="table table-bordered j-table">
+            <tr><th>Odstranit</th><th class="col-sm-1" style="text-align:left">Název</th><th>Náhled</th></tr>
 
-        @foreach (Image img in Model.ImagesFromDatabase)
-        {
-            <tr>
+            @foreach (Image img in Model.ImagesFromDatabase)
+            {
+                <tr>
 
-                <td>  <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Images" asp-action="DeleteImage" asp-route-imgId="@img.Id" data-remove-id="@img.Id" data-image-name="@img.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
-                <td>@img.Name</td>
-                <td><img alt="@img.Name" src="@Url.Action("GetImage","Images",new { id=img.Id})" style="max-width:100px" class="img-fluid" /></td>
-            </tr>
-        }
+                    <td>  <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Images" asp-action="DeleteImage" asp-route-imgId="@img.Id" data-remove-id="@img.Id" data-image-name="@img.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a></td>
+                    <td>@img.Name</td>
+                    <td><img alt="@img.Name" src="@Url.Action("GetImage","Images",new { id=img.Id})" style="max-width:100px" class="img-fluid" /></td>
+                </tr>
+            }
 
-    </table>
-}
-else
-{
-    <div class="alert alert-warning" role="alert">
-        <strong>Upozornění:</strong> Žádné obrázky nebyly ještě nahrány.
-    </div>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            <strong>Upozornění:</strong> Žádné obrázky nebyly ještě nahrány.
+        </div>
 
-}*@
+    }*@
 
 
 @if (Model.ImagesFromDatabase.Count > 0)
