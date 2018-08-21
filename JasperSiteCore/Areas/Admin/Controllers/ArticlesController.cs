@@ -80,16 +80,24 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetArticle(int id)
         {
-
-            EditArticleViewModel model = GetEditArticleModel(id);
-            if (model == null || id <=0)
+            try
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = "Daný èlánek nebyl nalezen.";
-                return View("Index", UpdatePage());
-            }
+                EditArticleViewModel model = GetEditArticleModel(id);
 
-            return View("ArticleEdit",GetEditArticleModel(id));   
+                if (model == null || id <= 0)
+                {
+                    throw new Exception();
+                }
+
+                return View("ArticleEdit", model);
+            }
+            catch
+            {
+                TempData["ErrorMessage"] = "Daný èlánek nebyl nalezen";
+                return View("Index", UpdatePage());
+            }           
+
+         
         }
 
         public EditArticleViewModel GetEditArticleModel(int id)
@@ -115,36 +123,36 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             
         }
 
+        // This action method does not return partial view - too slow and laggy for tinyMCE
         [HttpPost]
         public IActionResult PostArticle(EditArticleViewModel model)
         {
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
-            
-            if (ModelState.IsValid)
+
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
+
                     dbHelper.EditArticle(model);
+
                 }
-                catch
+                else
                 {
-                    // TODO: error message
+                    throw new Exception();
                 }
             }
-            else
+            catch (Exception)
             {
-                // list of all categories is not passed back so it needs to be loaded again
-                model.Categories = dbHelper.GetAllCategories();
-                return View("ArticleEdit", model);
+                Response.StatusCode = 500; // jquery (error: function(){...}) will show error slide-down window
             }
 
             if (isAjax)
             {
-                return PartialView("EditArticlePartialView", GetEditArticleModel(model.Id));
+                return Content(string.Empty);
             }
             else
             {
-
                 return RedirectToAction("GetArticle", new { id = model.Id });
             }
 
@@ -158,13 +166,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 int articleId = dbHelper.AddArticle();
                 return RedirectToAction("GetArticle", new { id = articleId });
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = "Nový èlánek nebylo možné vytvoøit.";
-                if (ex.InnerException != null && !string.IsNullOrEmpty(ex.InnerException.Message))
-                { ViewBag.ErrorMessage += "Popis chyby:"+ ex.InnerException.Message; }
-                return View("Index", UpdatePage());
+                TempData["ErrorMessage"] = "Daný èlánek nebylo možné vytvoøit";
+
+                return RedirectToAction("Index");
                 
             }        
         }
@@ -172,28 +178,16 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+            bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
 
             try
             {
-             
                 dbHelper.DeleteArticle(id);
-               
+                TempData["Success"] = true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = ex.Message;
-               
-                if (isAjax)
-                {
-                    return PartialView("ArticlesListPartialView", dbHelper.GetAllArticles());
-                }
-                else
-                {
-                    return View("Index", UpdatePage());
-                }
-
+                TempData["ErrorMessage"] = "Daný èlánek nebylo možné odstranit";
             }
 
             

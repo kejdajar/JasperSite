@@ -35,7 +35,7 @@
                     dataType: 'HTML',
                     success: function (data) {
                         $("#listOfArticles").html(data);
-                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        
                     }
                 });
             }
@@ -59,7 +59,8 @@
     });
 </script>
 
-@Html.Partial("_ErrorModalPartialView")
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
 
 
 <div class="table-responsive">

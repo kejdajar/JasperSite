@@ -43,15 +43,14 @@
                         dataType: 'HTML',
                         success: function (data) {
                             savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
-                        }
+                        },
+        error: function(){
+        savedInfo("<strong>Chyba.</strong> Provedené změny nebylo možné uložit.", "alert-danger");
+        }
                     });
 
                 }
-                else {
-                    return (false);
-
-                }
-
+                
                
             });
 
