@@ -26,7 +26,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         [HttpGet]
         public IActionResult Index()
-        {          
+        {
             return View(UpdatePage());
         }
 
@@ -46,7 +46,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                 return model;
             }
-            catch 
+            catch
             {
                 UsersViewModel model = new UsersViewModel();
                 model.Users = null;
@@ -56,7 +56,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         [HttpGet]
         public IActionResult EditUser(int id)
-        {           
+        {
             return View(UpdateEditUserPage(id));
         }
 
@@ -76,13 +76,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 model.NewPasswordPlainTextAgain = string.Empty;
                 return model;
             }
-            catch 
+            catch
             {
                 return null;
             }
         }
 
-        [HttpPost]        
+        [HttpPost]
         public IActionResult EditUser(EditUserViewModel model)
         {
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
@@ -93,32 +93,32 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 {
                     // Get current user
                     User user = _dbHelper.GetUserById(model.Id);
-                user.Nickname = model.Nickname;
-                user.Username = model.Username;
-                user.RoleId = model.RoleId;
+                    user.Nickname = model.Nickname;
+                    user.Username = model.Username;
+                    user.RoleId = model.RoleId;
 
 
-                // Check whether current user is not the last admin and his role being changed to non-admin role
-                string currentRole = user.Role.Name;
-                string newRole = _dbHelper.GetAllRoles().Where(r=>r.Id == model.RoleId).Single().Name;
-                int numberOfAdministrators = _dbHelper.GetAllAdministrators().Count();
-                if(numberOfAdministrators == 1 && currentRole=="Admin" && newRole != "Admin") // this can't be allowed
-                {
-                    throw new NoRemainingAdminException("There must be at least one administrator among users.");
-                }
+                    // Check whether current user is not the last admin and his role being changed to non-admin role
+                    string currentRole = user.Role.Name;
+                    string newRole = _dbHelper.GetAllRoles().Where(r => r.Id == model.RoleId).Single().Name;
+                    int numberOfAdministrators = _dbHelper.GetAllAdministrators().Count();
+                    if (numberOfAdministrators == 1 && currentRole == "Admin" && newRole != "Admin") // this can't be allowed
+                    {
+                        throw new NoRemainingAdminException("There must be at least one administrator among users.");
+                    }
 
-                // Password will be changed only if both fields are filled in
-                if (!string.IsNullOrWhiteSpace(model.NewPasswordPlainText) && !string.IsNullOrWhiteSpace(model.NewPasswordPlainTextAgain))
-                {
-                    string salt;
-                    string hashedNewPaswd;
-                    Authentication.HashPassword(model.NewPasswordPlainTextAgain, out salt, out hashedNewPaswd);
-                    //Configuration.DbHelper.ChangePassword(user.Id, hashedNewPaswd, salt);
+                    // Password will be changed only if both fields are filled in
+                    if (!string.IsNullOrWhiteSpace(model.NewPasswordPlainText) && !string.IsNullOrWhiteSpace(model.NewPasswordPlainTextAgain))
+                    {
+                        string salt;
+                        string hashedNewPaswd;
+                        Authentication.HashPassword(model.NewPasswordPlainTextAgain, out salt, out hashedNewPaswd);
+                        //Configuration.DbHelper.ChangePassword(user.Id, hashedNewPaswd, salt);
 
-                    user.Password = hashedNewPaswd;
-                    user.Salt = salt;
+                        user.Password = hashedNewPaswd;
+                        user.Salt = salt;
 
-                }
+                    }
 
                     _dbHelper.SaveChanges();
                     TempData["Success"] = true;
@@ -129,17 +129,17 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 }
             }
             catch (NoRemainingAdminException)
-            {                
+            {
                 TempData["ErrorMessage"] = "V systému musí být alespoň jeden administrátor.";
-               
+
             }
-            catch(Exception) 
+            catch (Exception)
             {
                 TempData["ErrorMessage"] = "Změny nebylo možné uložit";
-              
-            }           
 
-        
+            }
+
+
             if (isAjaxCall)
             {
                 ModelState.Clear();
@@ -147,36 +147,61 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             else
             {
-                return RedirectToAction("EditUser", new { id=model.Id});
+                return RedirectToAction("EditUser", new { id = model.Id });
             }
-            
+
         }
 
         [HttpGet]
         public IActionResult AddUser()
         {
-            AddUserViewModel model = new AddUserViewModel();
-            model.AllRoles = _dbHelper.GetAllRoles();
-            return View(model);
+            try
+            {
+                AddUserViewModel model = new AddUserViewModel();
+                model.AllRoles = _dbHelper.GetAllRoles();               
+                return View(model);
+            }
+            catch 
+            {
+                return View("_Error");
+            }
+           
         }
 
         [HttpPost]
         public IActionResult SaveNewUser(AddUserViewModel model)
         {
-            User u = new User();
-            u.Nickname = model.Nickname;            
-            u.RoleId = model.RoleId;
-            u.Username = model.Username;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    User u = new User();
+                    u.Nickname = model.Nickname;
+                    u.RoleId = model.RoleId;
+                    u.Username = model.Username;
 
-            string salt;
-            string hashedNewPaswd;
-            Authentication.HashPassword(model.NewPasswordPlainTextAgain, out salt, out hashedNewPaswd);
-            u.Password = hashedNewPaswd;
-            u.Salt = salt;
+                    string salt;
+                    string hashedNewPaswd;
+                    Authentication.HashPassword(model.NewPasswordPlainTextAgain, out salt, out hashedNewPaswd);
+                    u.Password = hashedNewPaswd;
+                    u.Salt = salt;
 
-           _dbHelper.AddNewUser(u);
-
-            return RedirectToAction("Index");
+                    _dbHelper.AddNewUser(u);
+                    throw new Exception();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    throw new Exception();
+                }
+            }
+            catch (Exception)
+            {
+                // Error message will be shown & previously entered data will remain the same
+                TempData["ErrorMessage"] = "Nebylo možné provést dané změny. Zkontrolujte prosím všechna pole.";
+                model.AllRoles = _dbHelper.GetAllRoles(); // list of roles is not posted back
+                return View("AddUser",model);
+            }            
 
         }
 
@@ -187,7 +212,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 User userToBeDeleted = _dbHelper.GetUserById(id);
                 // Check whether current user is not the last admin and his role being changed to non-admin role
-                string currentRole = userToBeDeleted.Role.Name;                
+                string currentRole = userToBeDeleted.Role.Name;
                 int numberOfAdministrators = _dbHelper.GetAllAdministrators().Count();
 
                 if (numberOfAdministrators == 1 && currentRole == "Admin") // this  is the last admin and thus can't be deleted
@@ -211,14 +236,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
             {
-                return PartialView("UserListPartialView",UpdatePage());
+                return PartialView("UserListPartialView", UpdatePage());
             }
             else
             {
                 return View("Index", UpdatePage());
             }
 
-                
+
         }
     }
 }
