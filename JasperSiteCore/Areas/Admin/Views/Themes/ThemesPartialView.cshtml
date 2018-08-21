@@ -7,7 +7,8 @@
 @using JasperSiteCore.ViewModels
 @model JasperSiteCore.Areas.Admin.ViewModels.ThemesViewModel
 
-@*@Html.Partial("_ErrorModalPartialView")*@
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
 
 <script>
         $(document).ready(function () {
@@ -40,11 +41,9 @@
 
                             $("#mainForm1").html(data);
 
-                            savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
-                        },
-                        error: function () {
-                            savedInfo("<strong>Chyba.</strong> Akce nemohla být dokončena.", "alert-danger");
+                            //savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                         }
+                        
 
                     });
             }
@@ -73,10 +72,7 @@
                         success: function (data) {
 
                             $("#mainForm1").html(data);
-                            savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
-                        },
-                        error: function () {
-                            savedInfo("<strong>Chyba.</strong> Akce nemohla být dokončena.", "alert-danger");
+                           // savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                         }
                     });
             }

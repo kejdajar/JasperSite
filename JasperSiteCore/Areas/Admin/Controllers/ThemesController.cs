@@ -40,9 +40,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Index(ThemesViewModel model, IFormCollection collection)
         {
+
+            ThemesViewModel model2 = new ThemesViewModel();
+
             try
             {
-
                 int itemsPerPage = 3;
                 int currentPage = model.PageNumber;
 
@@ -63,23 +65,30 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                 JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList, currentPage, itemsPerPage);
 
-                ThemesViewModel model2 = new ThemesViewModel();
+                
                 model2.SelectedThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
                 model2.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
                 model2.PageNumber = paging.CurrentPageNumber;
                 model2.ItemsPerPage = paging.ItemsPerPage;
                 model2.TotalNumberOfPages = paging.NumberOfPagesNeeded;
-
-                model2.ThemeInfoList = paging.GetCurrentPageItems();
-
-                ModelState.Clear();
-                return PartialView("ThemesPartialView", model2);
+                model2.ThemeInfoList = paging.GetCurrentPageItems();               
+               
             }
             catch
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = "Při daném požadavku nastala chyba.";
-                return PartialView("ThemesPartialView", UpdatePage());
+                TempData["ErrorMessage"] = "Při provádění pořadavku došlo k chybě";
+            }
+
+            bool isAjaxRequest = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
+            if (isAjaxRequest)
+            {
+                ModelState.Clear();
+                return PartialView("ThemesPartialView", model2);
+            }
+            else
+            {
+                return RedirectToAction("Index");
             }
 
         }
@@ -94,10 +103,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity());
+                TempData["Success"] = true;
             }
             catch
             {
-                // TODO: Error
+                TempData["ErrorMessage"] = "Nebylo možné přidat nové vzhledy do databáze";
             }
 
             return RedirectToAction("Index");
@@ -113,10 +123,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 {
                     dbHelper.DeleteThemeByName(name);
                 }
+                TempData["Success"] = true;
             }
             catch
             {
-                // TODO: ERROR
+                TempData["ErrorMessage"] = "Nebylo možné odstranit z databáze již fyzicky neexistující vzhledy";
             }
             return View("Index", UpdatePage());
         }
@@ -182,16 +193,17 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             try
             {
-             Configuration.ThemeHelper.DeleteThemeByNameFromDbAndFolder(themeName, databaseContext);
+                Configuration.ThemeHelper.DeleteThemeByNameFromDbAndFolder(themeName, databaseContext);              
+                TempData["Success"] = true;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = ex.Message;
+                TempData["ErrorMessage"] = "Vzhled nebylo možné odstranit";
             }
 
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
             if (isAjaxCall)
             {
                 return PartialView("ThemesPartialView", UpdatePage());
@@ -211,15 +223,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 string themeNameBeforeChanged = Configuration.GlobalWebsiteConfig.ThemeName;
 
-
                 // Property ThemeName writes data automatically to the .json file
-                JasperSiteCore.Models.Configuration.GlobalWebsiteConfig.ThemeName = themeName;
+                Configuration.GlobalWebsiteConfig.ThemeName = themeName;
 
                 UpdateConfiguration(); // All cached settings will be reset
-
-
-
-
+                
                 // Find assigned blocks for the prior theme
                 Theme priorTheme = dbHelper.Database.Themes.Where(t => t.Name == themeNameBeforeChanged).Single();
                 Theme newTheme = dbHelper.Database.Themes.Where(t => t.Name == themeName).Single();
@@ -248,14 +256,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                         }
                     }
                 }
-
+                TempData["Success"] = true;
             }
             catch
             {
-                // TODO : Error
+                TempData["ErrorMessage"] = "Vzhled nebylo možné aktivovat";
             }
 
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
             if (isAjaxCall)
             {
                 return PartialView("ThemesPartialView", UpdatePage());
@@ -265,44 +274,20 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-
-
-
-
         }
-
-
-        [HttpGet]
-        public ActionResult UpdateConfigurationWithThemeReset()
-        {
-            try
-            {
-                JasperSiteCore.Models.Configuration.Initialize();
-              //  Configuration.GlobalWebsiteConfig.ThemeName = "Default";
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Error = "1";
-                ViewBag.ErrorMessage = ex.Message;
-                return View("Index", UpdatePage());
-            }
-
-            return RedirectToAction("Index");
-
-        }
+                
 
         [HttpGet]
         public ActionResult UpdateConfiguration()
         {
             try
             {
-                JasperSiteCore.Models.Configuration.Initialize();
+                Configuration.Initialize();
+                TempData["Success"] = true;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                ViewBag.Error = "1";
-                ViewBag.ErrorMessage = ex.Message;
-                return View("Index", UpdatePage());
+                TempData["ErrorMessage"] = "Nebylo možné aktualizovat nastavení systému";                
             }
 
             return RedirectToAction("Index");
@@ -357,11 +342,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     ThemeAlreadyExistsException exception = new ThemeAlreadyExistsException() { };
                     throw exception;
                 }
+
+                TempData["Success"] = true;
             }         
             catch(ThemeAlreadyExistsException)
-            {
-
-              
+            {              
                 TempData["ErrorMessage"] = $"Při pokusu nahrát vzhled(y) došlo k chybě. Alespoň jeden přidávaný vzhled již existuje a byl proto přeskočen." ;
             }
             catch (Exception)
@@ -373,8 +358,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity()); // commit physicall changes in Theme folder to DB
             }
-
-            //return View("Index", UpdatePage());
+            
             return RedirectToAction("Index");
 
         }
@@ -385,10 +369,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 dbHelper.Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
+                TempData["Success"] = true;
             }
             catch
             {
-                // TODO: Error
+                TempData["ErrorMessage"] = "Nepodařilo se synchronizovat a rekonstruovat databázi vzhledů";
             }
 
             return RedirectToAction("Index");
