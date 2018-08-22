@@ -207,14 +207,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 dbHelper.CreateUncategorizedCategory();
+                TempData["Success"] = true;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
-                ViewBag.Error = "1"; // Automatically shows error modal
-                ViewBag.ErrorMessage = "Rubriku \"Nezaøezeno\" se nepodaøilo vytvoøit.";
-                if (ex.InnerException != null && !string.IsNullOrEmpty(ex.InnerException.Message))
-                { ViewBag.ErrorMessage += "Popis chyby:" + ex.InnerException.Message; }
-                return View("Index", UpdatePage());
+                TempData["ErrorMessage"] = "Kategorii \"nezaøazeno\" se nepodaøilo vytvoøit.";                
             }
             
             return RedirectToAction("Index");

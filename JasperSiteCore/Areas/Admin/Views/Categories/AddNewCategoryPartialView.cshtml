@@ -1,5 +1,10 @@
 ﻿@model JasperSiteCore.Areas.Admin.ViewModels.CategoriesViewModel
 @using JasperSiteCore.Models.Database;
+
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
+
+
 <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
 <script>
 /* AJAX REMOVE CATEGORY */
@@ -29,7 +34,7 @@
 
                         $("#categoryPartialForm").html(data);
 
-                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                       //savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
 
                     }
                 });
@@ -41,7 +46,7 @@
 
 </script>
 
-@Html.Partial("_ErrorModalPartialViewTemp")
+
 
 <section class="j-admin-section">
     <form asp-action="CreateNewCategory" asp-controller="Categories" method="post" id="formNewCategory">

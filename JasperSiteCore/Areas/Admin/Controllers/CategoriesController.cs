@@ -54,8 +54,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
         }
 
-        [HttpPost]
-        // If JS is enabled - data will be passed in ajaxData, otherwise in the model
+        [HttpPost]        
         public IActionResult CreateNewCategory(CategoriesViewModel model)
         {            
 
@@ -65,14 +64,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid) // Server check in case JS is disabled
                 {
-                    if (isAjaxCall)
-                    {
-                        _dbHelper.AddNewCategory(model.NewCategory.NewCategoryName);
-                    }
-                    else
-                    {
-                        _dbHelper.AddNewCategory(model.NewCategory.NewCategoryName);
-                    }
+                  _dbHelper.AddNewCategory(model.NewCategory.NewCategoryName);
+                    TempData["Success"] = true;
                 }
                 else
                 {
@@ -83,18 +76,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-
                 TempData["ErrorMessage"] = "Akce nemohla být dokončena.";
-                if (isAjaxCall)
-                {
-                    Response.StatusCode = 500;
-                    return PartialView("AddNewCategoryPartialView", UpdateCategoryPage());
-                }
-
             }
 
             if (isAjaxCall)
             {
+                ModelState.Clear();
                 return PartialView("AddNewCategoryPartialView", UpdateCategoryPage());
             }
             else
@@ -118,6 +105,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {                             
                 _dbHelper.DeleteCategory((int)id);
+                TempData["Success"] = true;
                 
             }
             catch (Exception ex)
@@ -129,11 +117,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
             {
+                ModelState.Clear();
                 return PartialView("AddNewCategoryPartialView", UpdateCategoryPage());
             }
             else
             {
-                return View("Index", UpdateCategoryPage());
+                return RedirectToAction("Index");
             }
 
         }

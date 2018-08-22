@@ -20,7 +20,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
     public class NewCategoryViewModel
     {
         
-        [Required( ErrorMessage ="Vyplňte jméno rubriky")]
+       [Required( ErrorMessage ="Vyplňte jméno rubriky")]
        public string NewCategoryName { get; set; }
     }
 }
