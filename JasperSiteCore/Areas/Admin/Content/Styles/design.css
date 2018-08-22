@@ -162,7 +162,7 @@ table.j-table-text-center tr td, th {
     text-align: center;
 }
 
-table.j-table-clickable tr:hover {
+table.j-table-clickable tr:not(:first-child):hover {
     cursor: pointer;
 }
 

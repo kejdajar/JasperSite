@@ -45,7 +45,7 @@
         /* Clickable row */
         $("#articleTable").addClass("j-table-clickable");/* If JS is enabled, table is clickable */
         /*Table row is clickable as a whole*/
-        $("#articleTable tr").click(function () {
+        $("#articleTable tr:gt(0)").click(function () {
             var id = $(this).data("href")
             window.location = "/Admin/Articles/GetArticle?id=" + id;
         });

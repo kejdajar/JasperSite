@@ -94,7 +94,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             catch
             {
                 TempData["ErrorMessage"] = "Daný èlánek nebyl nalezen";
-                return View("Index", UpdatePage());
+                return RedirectToAction("Index");
             }           
 
          

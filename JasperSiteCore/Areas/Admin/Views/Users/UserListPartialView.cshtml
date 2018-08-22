@@ -52,10 +52,9 @@
         $("#usersTable").addClass("j-table-clickable");/* If JS is enabled, table is clickable */
 
         /*Table row is clickable as a whole*/
-        $("#usersTable tr").click(function (e) {
+        $("#usersTable tr:gt(0)").click(function (e) {
             var id = $(this).data("href")
             window.location = "/Admin/Users/EditUser?id=" + id;
-
         });
 
 

@@ -45,7 +45,7 @@
                 { title: 'Responsive', value: 'img-fluid' }
             ],
 
-            convert_urls: false, // url will remain unchanged, default conversion is ../Images/GetImage?id=1
+            //convert_urls: false, // url will remain unchanged, default conversion is ../Images/GetImage?id=1
             image_list: [
 
                 @foreach(Image img in J.GetAllImages())
@@ -65,7 +65,13 @@
                         ShowImageDialog();
                     }
                 })
-            }
+            },
+
+// This URL settings will generate relative paths to emoticons (not with localhost:5000/../../ hardcoded)
+relative_urls : false,
+remove_script_host : true,
+document_base_url : "/",
+convert_urls : true,
 
    
 
@@ -205,7 +211,7 @@
     });
 </script>
 
-<div id="dialog" title="Vložení obrázku" style="overflow-y:auto;display:none">
+<div id="dialog" title="Vložení obrázku" style="overflow-y:auto;display:none;z-index:4">
     <h3>Seznam obrázků</h3>
 
     <table id="imgTable" class="table table-bordered j-table j-table-text-center">
