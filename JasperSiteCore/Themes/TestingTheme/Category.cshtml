@@ -1,0 +1,54 @@
+﻿@using JasperSiteCore.Models.Database
+@using JasperSiteCore.Models
+@inject DatabaseContext databaseContext
+
+@{
+    Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
+    ViewData["Title"] = "Rubriky";
+}
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1>Rubriky</h1>
+    </div>
+
+    @foreach (Category c in J.GetAllCategories(false))
+    {
+
+         <h2 style="margin:10px"><i class="fa fa-star-o" aria-hidden="true"></i> @c.Name</h2>
+        @if (J.GetAllArticles(c.Id).Count > 0)
+        {
+            @foreach (Article article in J.GetAllArticles(c.Id, false))
+            {
+
+                <div class="list-group">
+                    <a href="/Home/Article?id=@article.Id" class="list-group-item list-group-item-action flex-column align-items-start ">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">@article.Name</h5>
+                            <small>@article.PublishDate.ToLongDateString()</small>
+                        </div>
+                        <p class="mb-1"><i></i></p>
+                        <small>@article.Category.Name</small>
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="list-group">
+                <div class="list-group-item list-group-item-action flex-column align-items-start ">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Žádné články k dispozici</h5>
+
+                    </div>
+
+                </div>
+            </div>
+
+        }
+
+    }
+
+
+
+
+</div>

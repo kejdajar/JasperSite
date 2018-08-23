@@ -1,0 +1,99 @@
+﻿@*
+All usings are loaded from _ViewImports.cshtml together with databaseContext dependency 
+*@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="@Helper.JasperUrl("./favicon.ico")" type="image/x-icon">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+
+    @*
+        Loads all scripts and css files (some throught CDN, or locally, if development flag is set)
+        such as jQuery, Tether, Bootstrap 4, Prism.js
+    *@
+    @Html.Partial("_ThemeDependencies")
+
+    @* Renders script and sections from subordinate content files *@
+    @RenderSection("Scripts", required: false)
+    @RenderSection("Styles", required: false)
+
+    <!--TODO: Link minification-->
+    <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" />
+
+    <environment include="Development">
+        <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" />
+        <script src="@Helper.JasperUrl("./Scripts/script.js")"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.min.css")" />
+        <script src="@Helper.JasperUrl("./Scripts/script.min.js")"></script>
+    </environment>
+
+</head>
+<body>
+  
+
+    <div class="container jasper-container-outer">
+
+
+        <nav class="navbar navbar-inverse bg-inverse bg-faded navbar-toggleable-md">
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#containerNavbar" aria-controls="containerNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="navbar-brand" href="/"><span class="website-name-title">@try{@J.GetWebsiteName();}catch{ <text>Domů</text>}</span></a>
+            <div class="collapse navbar-collapse" id="containerNavbar">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Login">Přihlášení</a>
+                    </li>
+
+                    <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/Category") ? "active":"")">
+                        <a class="nav-link" href="/Home/Category/">Všechny rubriky</a>
+                    </li>
+
+                    <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/About") ? "active":"")">
+                        <a class="nav-link" href="/Home/About/">O Autorovi</a>
+                    </li>
+
+                    @foreach (Category c in J.GetAllCategories(false))
+                    {
+                        <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
+                            <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </nav>
+
+
+
+
+
+        <div class="container-fluid j-render-container" style="margin-top:20px">
+
+            @RenderBody()
+        </div>
+
+
+
+
+
+
+        
+        <div class="container-fluid j-footer">
+            <footer style="padding:10px">
+                <p class="text-muted">
+                    @J.Components.Holder("FooterHolder")
+                    <a href="/Admin/">Vstup do administrace</a>.
+                </p>
+            </footer>
+        </div>
+    </div>
+
+</body>
+</html>

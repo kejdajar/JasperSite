@@ -40,13 +40,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                 BlockViewModel model = new BlockViewModel();
 
+               int currentThemeId = _dbHelper.GetCurrentThemeIdFromDb();
 
                 foreach (TextBlock block in all_TextBlocks)
                 {
                     List<BlockHolderWithTheme> blockHolders = (from theme in all_Themes
                                                                from holder_block in all_Holder_Block
                                                                from blockHolder in all_BlockHolder
-                                                               where block.Id == holder_block.TextBlockId && holder_block.BlockHolderId == blockHolder.Id && theme.Id == blockHolder.ThemeId
+                                                               where block.Id == holder_block.TextBlockId && holder_block.BlockHolderId == blockHolder.Id && theme.Id == blockHolder.ThemeId && theme.Id == currentThemeId // last condition on this row limits the records only to currently activated theme
                                                                select new BlockHolderWithTheme { BlockHolderName = blockHolder.Name, ThemeName = theme.Name, Order = holder_block.Order }).ToList();
 
 

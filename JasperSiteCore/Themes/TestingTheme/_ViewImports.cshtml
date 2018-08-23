@@ -1,0 +1,13 @@
+﻿@using JasperSiteCore
+@using JasperSiteCore.Models
+@using JasperSiteCore.Models.Database
+@using JasperSiteCore.Helpers
+
+@using Microsoft.AspNetCore.Http.Extensions
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@* Contains custom TAG helpers *@
+@addTagHelper *, JasperSiteCore
+
+@*Injects DatabaseContext and DbHelper, all encapsulated in IJasperDataService*@
+@inject IJasperDataService J;

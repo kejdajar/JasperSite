@@ -217,6 +217,23 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        public IActionResult UpdateAllThemesData()
+        {
+            try
+            {
+                Configuration.ThemeHelper.UpdateAllThemeRelatedData(databaseContext);
+                TempData["Success"] = true;
+              
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Změny nebylo možné provést";
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
         public ActionResult ActivateTheme(string themeName)
         {
             try

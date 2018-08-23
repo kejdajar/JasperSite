@@ -40,9 +40,6 @@ namespace JasperSiteCore.Models
             WebsiteConfig = websiteConfig;
             CustomRouting = customRouting;
             ThemeHelper = themeHelper;
-
-            // Database manager
-         // CreateAndSeedDb();
                         
         }
 
