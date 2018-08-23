@@ -266,7 +266,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                     tbFromDb.Name = changedData.Name;
                     tbFromDb.Content = changedData.Content;
-                    _dbHelper.SaveChanges();                    
+                    _databaseContext.SaveChanges();                  
                 }
                 else
                 {

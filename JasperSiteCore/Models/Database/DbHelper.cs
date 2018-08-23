@@ -497,11 +497,7 @@ namespace JasperSiteCore.Models.Database
         }
         #endregion
 
-        public void SaveChanges()
-        {
-            Database.SaveChanges();
-        }
-
+       
         #region Themes
 
         /// <summary>
@@ -1091,8 +1087,7 @@ namespace JasperSiteCore.Models.Database
         User GetUserById(int userId);
         List<User> GetAllUsers();
         List<Role> GetAllRoles();
-        void ChangePassword(int userId, string newHashedPassword, string newSalt);
-        void SaveChanges();
+        void ChangePassword(int userId, string newHashedPassword, string newSalt);        
         string GetWebsiteName(bool throwException = true);
         void SetWebsiteName(string newWebsiteName);
         List<BlockHolder> GetAllBlockHolders();

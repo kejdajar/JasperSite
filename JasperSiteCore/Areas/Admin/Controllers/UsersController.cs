@@ -120,7 +120,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                     }
 
-                    _dbHelper.SaveChanges();
+                    _databaseContext.SaveChanges();
                     TempData["Success"] = true;
                 }
                 else
