@@ -37,8 +37,6 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
         }
 
-
-
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
 
@@ -166,18 +164,28 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             catch
             {
                 return Json(null);       
-
             }
 
         }
 
+        /// <summary>
+        /// Returns list of images id --> used in tinyMCE insert modal window
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public JsonResult GetImagesId()
         {
-            List<int> imagesId = (from image in _dbHelper.Database.Images
-                                  select image.Id).ToList();
+            try
+            {
+                List<int> imagesId = (from image in _dbHelper.Database.Images
+                                      select image.Id).ToList();
 
-            return Json( imagesId);
+                return Json(imagesId);
+            }
+            catch
+            {
+                return Json(null);       
+            }
         }
 
 

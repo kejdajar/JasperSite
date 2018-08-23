@@ -32,8 +32,6 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             CategoriesViewModel model = new CategoriesViewModel();
             try
             {
-               
-
                 model.Categories = _dbHelper.GetAllCategories();
                 if(model.Categories.Count <= 0)
                 {

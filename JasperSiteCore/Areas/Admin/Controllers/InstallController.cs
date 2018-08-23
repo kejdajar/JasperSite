@@ -7,7 +7,6 @@ using JasperSiteCore.Areas.Admin.ViewModels;
 using JasperSiteCore.Models;
 using JasperSiteCore.Models.Providers;
 using JasperSiteCore.Models.Database;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -112,65 +111,67 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Index(InstallViewModel model)
         {
-            
-                string selectedDb = string.Empty;
-                int selectedDbId = model.SelectedDatabase;
-                switch (selectedDbId)
+            string selectedDb = string.Empty;
+            int selectedDbId = model.SelectedDatabase;
+            switch (selectedDbId)
+            {
+                case 1: selectedDb = "mssql"; break;
+                case 2: selectedDb = "mysql"; break;
+            }
+
+            string connectionString = model.ConnectionString;
+
+
+            // DATABASE INSTALLATION
+            if (ModelState.IsValid)
+            {
+                string oldConnString = Configuration.GlobalWebsiteConfig.ConnectionString;
+                bool oldInstallationCompleted = Configuration.GlobalWebsiteConfig.InstallationCompleted;
+                try
                 {
-                    case 1: selectedDb = "mssql"; break;
-                    case 2: selectedDb = "mysql"; break;
-                }
 
-                string connectionString = model.ConnectionString;
+                    Configuration.GlobalWebsiteConfig.TypeOfDatabase = selectedDb;
+                    Configuration.GlobalWebsiteConfig.ConnectionString = connectionString;
+                    Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
 
+                    // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
 
-                // DATABASE INSTALLATION
-                if (ModelState.IsValid)
-                {
-                    string oldConnString = Configuration.GlobalWebsiteConfig.ConnectionString;
-                    bool oldInstallationCompleted = Configuration.GlobalWebsiteConfig.InstallationCompleted;
-                    try
-                    {
+                    //DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>(); // OLD WAY - problems with detached and atached objects
 
-                        Configuration.GlobalWebsiteConfig.TypeOfDatabase = selectedDb;
-                        Configuration.GlobalWebsiteConfig.ConnectionString = connectionString;
-                        Configuration.GlobalWebsiteConfig.InstallationCompleted = true;
-
-                        // Env.Services.AddDbContext<DatabaseContext>(); // does not work here, only in ConfigureServices
-
-                        //DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>(); // OLD WAY - problems with detached and atached objects
-                    
-
-                        JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext, true);
+                    JasperSiteCore.Models.Configuration.CreateAndSeedDb(dbContext, true);
 
                     // All changes in jasper.json will be saved in memory
                     // Without this statement, in-memory jasper.json data will not be up-to-date
-                    Configuration.Initialize(); 
+                    Configuration.Initialize();
 
                     return RedirectToAction("Index", "Home", new { area = "admin" });
 
-                    }
-                    catch (Exception ex)
-                    {
-                        ViewBag.Error = "1"; // Automatically shows error modal
-                        ViewBag.ErrorMessage = ex.Message;
+                }
+                catch (Exception ex)
+                {
+                    string errorMesage = ex.Message;
+
                     if (ex.InnerException != null)
                     {
-                        ViewBag.ErrorMessage += "Podrobnosti: " + ex.InnerException.Message;
+                        errorMesage += "Podrobnosti: " + ex.InnerException.Message;
                     }
+
+                    TempData["ErrorMessage"] = errorMesage;
 
                     // Reset settings 
                     Configuration.GlobalWebsiteConfig.ConnectionString = oldConnString;
-                        Configuration.GlobalWebsiteConfig.InstallationCompleted = oldInstallationCompleted;
+                    Configuration.GlobalWebsiteConfig.InstallationCompleted = oldInstallationCompleted;
 
-                        return View(UpdateModel());
-                    }
-
+                    ModelState.Clear();
+                    return View(UpdateModel());
                 }
-                else
-                {
-                    return View(model);
-                }           
+
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Některé zadané informace jsou neplatné. Žádné změny nebyly provedeny.";
+                return RedirectToAction("Index");
+            }
 
         }
 

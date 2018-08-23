@@ -5,9 +5,6 @@
     Layout = null;
 }
 
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,6 +76,7 @@
     </environment>
 
     @{Html.RenderPartial("_ValidationScriptsPartial");}
+    @Html.Partial("_ErrorModalPartialViewTemp")
 
 
     @if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
@@ -87,9 +85,13 @@
         <script>
         $(document).ready(function(){
         $("#submitButton").click(function(e){
+
+           if( $("#installForm").valid()) {
+
         e.preventDefault();
          appendWindow("Skutečně reinstalovat redakční systém?", "Tato akce je nevratná, veškerý obsah bude smazán.", function () { $("#installForm").submit();  }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Smazat data a reinstalovat systém");
-        });
+       }
+            });
         });
         </script>
     }
@@ -98,6 +100,7 @@
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+
         <style>
             .j-jumbotron {
                 background-color: #BA68C8;
@@ -119,9 +122,7 @@
             .j-jumbotron-span {
                 color: black;
             }
-        </style>
-
-        @Html.Partial("_ErrorModalPartialView")
+        </style>     
 
     </head>
 

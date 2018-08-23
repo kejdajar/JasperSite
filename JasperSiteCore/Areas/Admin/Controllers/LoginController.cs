@@ -40,14 +40,6 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
         }
 
-
-
-
-
-
-
-
-
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
 
@@ -61,8 +53,6 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-           
-
             LoginViewModel model = new LoginViewModel();           
             return View(model);
         }
@@ -70,7 +60,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Index(LoginViewModel model, string returnUrl)
         {
-            // Input data cleansing: username IS CASE-INSENSITIVE, with no leading and trailing whitespaces
+            // Input data cleansing: username IS NOT CASE-INSENSITIVE, with no leading and trailing whitespaces
             model.Username = model.Username.ToLower().Trim();
 
             try
@@ -79,11 +69,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 string filledInPassword = model.Password;
                 bool isPswdCorrect = user.ComparePassword(filledInPassword);
 
-
                 if (ModelState.IsValid && isPswdCorrect)
                 {
-
-
                     List<Claim> claims = new List<Claim>
                     {
                        new Claim(ClaimTypes.Name,model.Username),
@@ -93,9 +80,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                     HttpContext.SignInAsync(principal, new AuthenticationProperties { IsPersistent = model.Remember });
 
-                    // After succesful login - global configuration data are reloaded as well as theme jasper.json files
+                    // After succesful login - global configuration data are reloaded
                     Configuration.Initialize();
-
 
                     if (string.IsNullOrEmpty(returnUrl))
                     {
@@ -109,17 +95,13 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ViewBag.Error = "1";
-                    ViewBag.ErrorMessage = "Bylo zadáno špatné uživatelské jméno nebo heslo";
-                    return View("Index");
+                    throw new Exception();
                 }
 
             }
             catch
             {
-                ViewBag.Error = "1";
-                //ViewBag.ErrorMessage = $"Při přihlašování došlo k neočekávané chybě.{((ex.InnerException!=null)? ("Popis chyby:"+ex.InnerException.Message):" ")}";
-                ViewBag.ErrorMessage = "Bylo zadáno špatné uživatelské jméno nebo heslo";
+               TempData["ErrorMessage"]= "Bylo zadáno chybné uživatelské jméno nebo heslo.";
                 return View("Index");
             }                 
         }
