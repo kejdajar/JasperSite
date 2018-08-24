@@ -5,6 +5,8 @@
 @model JasperSiteCore.Areas.Admin.ViewModels.HomeViewModel
 
 <script src="~/node_modules/chart.js/dist/Chart.min.js"></script>
+<script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+
 <script>
 
     $(document).ready(function () {
@@ -97,7 +99,8 @@
 
 </script>
 
-
+@Html.Partial("_SuccessModalPartialViewTemp")
+@Html.Partial("_ErrorModalPartialViewTemp")
 
 <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Přehled  </h1>
                                   
@@ -148,7 +151,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        Vyhledávat můžete pomocí následujícího tlačítka: <button class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-search fa-1x" aria-hidden="true"></i></button>
+       Aktualizovat konfigurační nastavení je možné pomocí tlačíka: <a asp-controller="Home" asp-action="Refresh" asp-area="admin" class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-refresh fa-1x" aria-hidden="true"></i></a>
     </div>
 
 

@@ -55,7 +55,43 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public IActionResult Error()
         {
             return View("_Error");
-        }      
+        }    
+        
+        [HttpGet]
+        public IActionResult Refresh()
+        {
+            bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
+            try
+            {
+                Configuration.Initialize();
+                dbHelper.ReconstructAndClearThemeData();
+
+                if (isAjaxCall)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return Redirect(Request.Headers["Referer"].ToString()); // refreshes current page
+                }
+
+            }
+            catch (Exception)
+            {
+                if (isAjaxCall)
+                {
+                    return StatusCode(500);
+                }
+                else
+                {
+                    return Redirect(Request.Headers["Referer"].ToString()); // refreshes current page
+                }
+            }
+
+           
+            
+        }
 
     }
 }
