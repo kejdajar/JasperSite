@@ -1,5 +1,5 @@
 ﻿@using JasperSiteCore.Models.Database
-@inject IJasperDataService J;
+@inject IJasperDataServicePublic J;
 @{
     ViewData["Title"] = "Závažná chyba";
     Layout = null;
@@ -246,20 +246,7 @@
 
                     }
 
-
-                    @*@if (!User.Identity.IsAuthenticated)
-        {
-            <div class="alert alert-warning">
-                <b>Nepřihlášený uživatel:</b> <br />
-                Pro zobrazení více možností, jak opravit uvedené problémy je potřeba se nejdříve přihlásit
-                jako administrátor. <br />
-                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="Index"><i class="fa fa-user-circle fa-1x"> </i> Přihlásit se </a>
-
-
-            </div>
-        }*@
-
-
+                                    
 
 
 
@@ -271,17 +258,12 @@
             @* Page for normal visitor *@
 
             <div class="jumbotron">
-                <h1>@{ string websiteHeader = string.Empty;
-                    @try
-                    {
-                        websiteHeader= J.GetWebsiteName(true);
-                       
-                    }
-                    catch
-                    {
-                        websiteHeader = "Omlouváme se,";
-                    }
-                    }
+                <h1>@{ string websiteHeader = J.GetWebsiteName();
+                   @if (websiteHeader == null)
+                   {
+                       websiteHeader = "Omlouváme se, ";
+                   }    }             
+                   
                 @websiteHeader
                 </h1>
                 <h4>stránka je momentálně mimo provoz. </h4>
