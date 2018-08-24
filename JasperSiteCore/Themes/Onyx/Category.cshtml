@@ -11,44 +11,80 @@
         <h1>Rubriky</h1>
     </div>
 
-    @foreach (Category c in J.GetAllCategories(false))
+    @{ List<Category> allCategories = J.GetAllCategories(); }
+
+    @if (allCategories != null)
     {
 
-         <h2 style="margin:10px"><i class="fa fa-star-o" aria-hidden="true"></i> @c.Name</h2>
-        @if (J.GetAllArticles(c.Id).Count > 0)
+        @foreach (Category c in allCategories)
         {
-            @foreach (Article article in J.GetAllArticles(c.Id, false))
+
+
+            @if (allCategories.Count() > 0)
             {
+                <h2 style="margin:10px"><i class="fa fa-snowflake-o" aria-hidden="true"></i> @c.Name</h2>
 
-                <div class="list-group">
-                    <a href="/Home/Article?id=@article.Id" class="list-group-item list-group-item-action flex-column align-items-start ">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">@article.Name</h5>
-                            <small>@article.PublishDate.ToLongDateString()</small>
+                List<Article> allArticles = J.GetAllArticles(c.Id);
+
+
+
+                @if (allArticles == null)
+                {
+                    continue;
+                }
+
+                @if (allArticles.Count > 0)
+                {
+                    @foreach (Article article in allArticles)
+                    {
+
+                        <div class="list-group">
+                            <a href="/Home/Article?id=@article.Id" class="list-group-item list-group-item-action flex-column align-items-start ">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1">@article.Name</h5>
+                                    <small>@article.PublishDate.ToLongDateString()</small>
+                                </div>
+                                <p class="mb-1"><i></i></p>
+                                <small>@article.Category.Name</small>
+                            </a>
                         </div>
-                        <p class="mb-1"><i></i></p>
-                        <small>@article.Category.Name</small>
-                    </a>
-                </div>
-            }
-        }
-        else
-        {
-            <div class="list-group">
-                <div class="list-group-item list-group-item-action flex-column align-items-start ">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Žádné články k dispozici</h5>
+                    }
 
+                }
+                else
+                {
+                    <div class="list-group">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start ">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">Žádné články k dispozici</h5>
+
+                            </div>
+
+                        </div>
                     </div>
 
+                }
+
+
+
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    Źádné kategorie nebyly nalezeny.
                 </div>
-            </div>
+            }
 
         }
 
     }
+    else
+    {
+        <div class="alert alert-warning">
+            Sekce kategorií momentálně není k dispozici.
+        </div>
 
-
+    }
 
 
 </div>

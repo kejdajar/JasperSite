@@ -115,7 +115,7 @@
             {
                 <tr>
                     <td>   <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Blocks" asp-action="RemoveHolderFromBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper btn-jasper-delete" data-remove-holder-id="@holder.Id" > <i class="fa fa-minus fa-1x" aria-hidden="true"></i>  </a></td>
-                    @{var holder_block = J.GetHolder_Block_JoinTable(Model.CurrentTextBoxId, holder.Id);}
+                    @{var holder_block = J.GetHolder_Block(Model.CurrentTextBoxId, holder.Id);}
                     <td>@holder.Name</td>
                   <td>@holder.Theme.Name</td>
   

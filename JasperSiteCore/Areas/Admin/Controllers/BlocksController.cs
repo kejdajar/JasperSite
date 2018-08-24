@@ -92,7 +92,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     Holder_Block hb = new Holder_Block();
                     hb.BlockHolderId = newBlock_BlockHolderId;
                     hb.TextBlockId = addedBlock.Id;
-                    _dbHelper.AddNewHolder_Block(hb);
+                    _dbHelper.AddHolder_Block(hb);
                     TempData["Success"] = true;
                 }
                 else

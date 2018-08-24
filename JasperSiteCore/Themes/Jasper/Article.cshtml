@@ -4,9 +4,10 @@
 @{
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
 
-    try
+
+    Article article = J.GetArticleById(query);
+    @if (article != null)
     {
-        Article article = J.GetArticleById(query);
         ViewData["Title"] = article.Name;
 
 
@@ -21,12 +22,10 @@
                 <j-content />
             </j-article>
         </div>
-
-
-
     }
-    catch
+    else
     {
+
         <div class="jumbotron"> <h2>Článek se nepodařilo nalézt.</h2></div>
         <p>
             Zadaný článek neexistuje, nebo je již nedostupný. <br />

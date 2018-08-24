@@ -62,7 +62,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid) // Server check in case JS is disabled
                 {
-                  _dbHelper.AddNewCategory(model.NewCategory.NewCategoryName);
+                  _dbHelper.AddCategory(model.NewCategory.NewCategoryName);
                     TempData["Success"] = true;
                 }
                 else

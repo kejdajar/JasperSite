@@ -186,7 +186,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     u.Password = hashedNewPaswd;
                     u.Salt = salt;
 
-                    _dbHelper.AddNewUser(u);                    
+                    _dbHelper.AddUser(u);                    
                     return RedirectToAction("Index");
                 }
                 else

@@ -385,7 +385,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             try
             {
-                dbHelper.Reconstruct_Theme_TextBlock_BlockHolder_HolderBlockDatabase();
+                dbHelper.ReconstructAndClearThemeData();
                 TempData["Success"] = true;
             }
             catch

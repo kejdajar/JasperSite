@@ -133,8 +133,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    Article newArticleData = new Article();
+                    newArticleData.Id = model.Id;
+                    newArticleData.HtmlContent = model.HtmlContent;
+                    newArticleData.Name = model.Name;
+                    newArticleData.PublishDate = (DateTime)model.PublishDate;
+                    newArticleData.CategoryId = model.SelectedCategoryId;
 
-                    dbHelper.EditArticle(model);
+                    dbHelper.EditArticle(newArticleData);
 
                 }
                 else
@@ -163,7 +169,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             try
             {                
-                int articleId = dbHelper.AddArticle();
+                int articleId = dbHelper.AddArticle().Id;
                 return RedirectToAction("GetArticle", new { id = articleId });
             }
             catch(Exception)

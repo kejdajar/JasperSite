@@ -13,14 +13,14 @@ namespace JasperSiteCore.Helpers
     public  class Components
     {
 
-        public Components(IDatabaseContext dbContext, DbHelper dbHelper)
+        public Components(IDatabaseContext dbContext, IJasperDataService dbHelper)
         {
             this._dbContext = dbContext;
             this._dbHelper = dbHelper;
         }
 
         private readonly IDatabaseContext _dbContext;
-        private readonly DbHelper _dbHelper;
+        private readonly IJasperDataService _dbHelper;
 
         /// <summary>
         /// Holder is container for any number of assigned bloks. Holder name is assigned to the active theme through CMS.

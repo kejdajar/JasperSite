@@ -51,9 +51,12 @@ namespace JasperSiteCore
 
             // DB Context service has to be added in ConfigureServices() method
             services.AddDbContext<DatabaseContext>();
-                       
-            // First param is interface, second is actual class
-            services.AddScoped<IJasperDataService, DbHelper>();
+
+            // First param is interface, second is actual class          
+            services.AddScoped<IJasperDataServicePublic, DbHelperPublic>();
+
+           // services.AddScoped<IJasperDataService, DbHelper>(); ---> this will inject non-public version of DbHelper class,
+           // which relies heavily on exceptions 
 
             // DbHelper uses IDatabaseContext, otherwise error: "Unable to resolve service for type IDatabaseContext"
             // If the DbHelper class used only "DatabaseContext", this statement could be ommited. 

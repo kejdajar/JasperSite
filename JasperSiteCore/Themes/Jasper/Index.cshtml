@@ -18,17 +18,19 @@
         @J.Components.Holder("MainPageHolder")
     </div>
 
-
+    @{List<Category> allCategories = J.GetAllCategories();}
    
-
-
-    @foreach (Category c in J.GetAllCategories(false))
+    @if (allCategories != null)
     {
 
+    @foreach (Category c in allCategories)
+    {
+        List<Article> allArticlesFromCategory = J.GetAllArticles(c.Id);
+
         <h2 style="margin:10px"><i class="fa fa-angle-double-down" aria-hidden="true"></i> @c.Name</h2>
-        @if (J.GetAllArticles(c.Id).Count > 0)
+        @if (allArticlesFromCategory.Count > 0)
         {
-            @foreach (Article article in J.GetAllArticles(c.Id,false))
+            @foreach (Article article in allArticlesFromCategory)
             {
 
                 <div class="list-group">
@@ -58,6 +60,13 @@
         }
 
     }
-    
+    }
+    else
+    {
+        <div class="alert alert-warning">
+           Sekce kategorií momentálně není k dispozici.
+        </div>
+
+    }
 
 </div>

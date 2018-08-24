@@ -59,11 +59,16 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
                         <a class="nav-link" href="/Home/About/">O Autorovi</a>
                     </li>
 
-                    @foreach (Category c in J.GetAllCategories(false))
+                    @{ List<Category> allCategories = J.GetAllCategories();}
+                    @if (allCategories != null)
                     {
-                        <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id="+c.Id)? "active":"")">
-                            <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
-                        </li>
+                        @foreach (Category c in allCategories)
+                        {
+                            <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id=" + c.Id) ? "active" : "")">
+                                <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
+                            </li>
+                        }
+
                     }
 
                 </ul>
