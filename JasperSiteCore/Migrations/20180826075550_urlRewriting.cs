@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace JasperSiteCore.Migrations
 {
-    public partial class init : Migration
+    public partial class urlRewriting : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,11 +15,24 @@ namespace JasperSiteCore.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ImageData",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Data = table.Column<byte[]>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ImageData", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -28,7 +41,7 @@ namespace JasperSiteCore.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,12 +52,14 @@ namespace JasperSiteCore.Migrations
                 name: "Settings",
                 columns: table => new
                 {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Key = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Settings", x => x.Key);
+                    table.PrimaryKey("PK_Settings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,7 +69,7 @@ namespace JasperSiteCore.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Content = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,7 +82,7 @@ namespace JasperSiteCore.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,12 +112,55 @@ namespace JasperSiteCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Images",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ImageDataId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Images_ImageData_ImageDataId",
+                        column: x => x.ImageDataId,
+                        principalTable: "ImageData",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Nickname = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false),
+                    Salt = table.Column<string>(nullable: false),
+                    Username = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BlockHolders",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     ThemeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -117,31 +175,19 @@ namespace JasperSiteCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "UrlRewrite",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ArticleId = table.Column<int>(nullable: true),
-                    Nickname = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    RoleId = table.Column<int>(nullable: false),
-                    Salt = table.Column<string>(nullable: true),
-                    Username = table.Column<string>(nullable: true)
+                    Url = table.Column<string>(maxLength: 2083, nullable: false),
+                    ArticleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_UrlRewrite", x => new { x.Url, x.ArticleId });
                     table.ForeignKey(
-                        name: "FK_Users_Articles_ArticleId",
+                        name: "FK_UrlRewrite_Articles_ArticleId",
                         column: x => x.ArticleId,
                         principalTable: "Articles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_Roles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -194,8 +240,13 @@ namespace JasperSiteCore.Migrations
                 column: "TextBlockId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_ArticleId",
-                table: "Users",
+                name: "IX_Images_ImageDataId",
+                table: "Images",
+                column: "ImageDataId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UrlRewrite_ArticleId",
+                table: "UrlRewrite",
                 column: "ArticleId");
 
             migrationBuilder.CreateIndex(
@@ -210,7 +261,13 @@ namespace JasperSiteCore.Migrations
                 name: "HolderBlocks");
 
             migrationBuilder.DropTable(
+                name: "Images");
+
+            migrationBuilder.DropTable(
                 name: "Settings");
+
+            migrationBuilder.DropTable(
+                name: "UrlRewrite");
 
             migrationBuilder.DropTable(
                 name: "Users");
@@ -220,6 +277,9 @@ namespace JasperSiteCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "TextBlocks");
+
+            migrationBuilder.DropTable(
+                name: "ImageData");
 
             migrationBuilder.DropTable(
                 name: "Articles");

@@ -11,8 +11,8 @@ using System;
 namespace JasperSiteCore.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180528145715_images")]
-    partial class images
+    [Migration("20180826075550_urlRewriting")]
+    partial class urlRewriting
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,7 +47,8 @@ namespace JasperSiteCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<int>("ThemeId");
 
@@ -63,7 +64,8 @@ namespace JasperSiteCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -97,6 +99,9 @@ namespace JasperSiteCore.Migrations
 
                     b.Property<int>("ImageDataId");
 
+                    b.Property<string>("Name")
+                        .IsRequired();
+
                     b.HasKey("Id");
 
                     b.HasIndex("ImageDataId");
@@ -109,7 +114,8 @@ namespace JasperSiteCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<byte[]>("Data");
+                    b.Property<byte[]>("Data")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -121,7 +127,8 @@ namespace JasperSiteCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -130,12 +137,15 @@ namespace JasperSiteCore.Migrations
 
             modelBuilder.Entity("JasperSiteCore.Models.Database.Setting", b =>
                 {
-                    b.Property<string>("Key")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Key")
+                        .IsRequired();
 
                     b.Property<string>("Value");
 
-                    b.HasKey("Key");
+                    b.HasKey("Id");
 
                     b.ToTable("Settings");
                 });
@@ -147,7 +157,8 @@ namespace JasperSiteCore.Migrations
 
                     b.Property<string>("Content");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -159,11 +170,26 @@ namespace JasperSiteCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
                     b.ToTable("Themes");
+                });
+
+            modelBuilder.Entity("JasperSiteCore.Models.Database.UrlRewrite", b =>
+                {
+                    b.Property<string>("Url")
+                        .HasMaxLength(2083);
+
+                    b.Property<int>("ArticleId");
+
+                    b.HasKey("Url", "ArticleId");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("UrlRewrite");
                 });
 
             modelBuilder.Entity("JasperSiteCore.Models.Database.User", b =>
@@ -171,21 +197,21 @@ namespace JasperSiteCore.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ArticleId");
+                    b.Property<string>("Nickname")
+                        .IsRequired();
 
-                    b.Property<string>("Nickname");
-
-                    b.Property<string>("Password");
+                    b.Property<string>("Password")
+                        .IsRequired();
 
                     b.Property<int>("RoleId");
 
-                    b.Property<string>("Salt");
+                    b.Property<string>("Salt")
+                        .IsRequired();
 
-                    b.Property<string>("Username");
+                    b.Property<string>("Username")
+                        .IsRequired();
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ArticleId");
 
                     b.HasIndex("RoleId");
 
@@ -195,7 +221,7 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.Article", b =>
                 {
                     b.HasOne("JasperSiteCore.Models.Database.Category", "Category")
-                        .WithMany()
+                        .WithMany("Articles")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
@@ -229,12 +255,16 @@ namespace JasperSiteCore.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("JasperSiteCore.Models.Database.UrlRewrite", b =>
+                {
+                    b.HasOne("JasperSiteCore.Models.Database.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("JasperSiteCore.Models.Database.User", b =>
                 {
-                    b.HasOne("JasperSiteCore.Models.Database.Article")
-                        .WithMany("Users")
-                        .HasForeignKey("ArticleId");
-
                     b.HasOne("JasperSiteCore.Models.Database.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")

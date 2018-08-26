@@ -1,5 +1,7 @@
 {
-  "blockHolders": ["MainPageHolder","FooterHolder","AboutPageHolder"],
+  "articleFile": "Article.cshtml",
+  "articleRoute": "/Home/Article/",
+  "blockHolders": [ "MainPageHolder", "FooterHolder", "AboutPageHolder" ],
   "routingList": {
     "homePage": [
       "/Home/Index/",
@@ -22,7 +24,7 @@
       "value": "value01"
     }
   ],
-  "customPageMapping": [   
+  "customPageMapping": [
     {
       "routes": [
         "/Home/Article",

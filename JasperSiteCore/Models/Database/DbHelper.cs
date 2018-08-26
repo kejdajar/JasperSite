@@ -1038,7 +1038,100 @@ namespace JasperSiteCore.Models.Database
             }
         }
         #endregion
-        
+
+        #region UrlRewriting
+
+        /// <summary>
+        /// Returns all UrlRewrite records.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        public List<UrlRewrite> GetAllUrls()
+        {         
+            try
+            {
+                return Database.UrlRewrite.ToList();
+            }
+            catch(Exception ex)
+            {
+                throw new InvalidUrlRewriteException(ex);
+            }            
+        }
+
+        /// <summary>
+        /// Returns list of all URL for the specified article.
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        public List<string> GetUrls (int articleId)
+        {
+            try
+            {
+                return Database.UrlRewrite.Where(ur => ur.ArticleId == articleId).Select(s => s.Url).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidUrlRewriteException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Updates or creates a new URL rewrite rule.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="url"></param>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        public void SetUrl(Article article, string url)
+        {
+            UrlRewrite urlRewrite = new UrlRewrite()
+            {
+                Article = article,
+                Url = url
+            };
+
+            // Check for duplicity
+            List<UrlRewrite> allRewrites = GetAllUrls();
+            foreach(UrlRewrite ur in allRewrites)
+            {
+                if(ur.ArticleId == article.Id && ur.Url == url)
+                {
+                    throw new InvalidUrlRewriteException("The same url rewrite rule already exists.");
+                }
+            }
+
+            Database.UrlRewrite.Add(urlRewrite);
+            Database.SaveChanges();
+        }
+
+        /// <summary>
+        /// Returns the first URL found.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        public string Url(Article article)
+        {
+            try
+            {
+                UrlRewrite firstUrlRule = Database.UrlRewrite.Where(ur => ur.Article.Id == article.Id).First();
+
+                // ie.: /first_article
+                string lastPartOfUrl = firstUrlRule.Url;
+
+                // ie.: /Home/Articles
+                string articleRoute = Configuration.WebsiteConfig.ArticleRoute;
+
+                return articleRoute+lastPartOfUrl;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidUrlRewriteException(ex);
+            }
+        }
+
+        #endregion
+
     }
 
     public interface IJasperDataService
@@ -1087,6 +1180,11 @@ namespace JasperSiteCore.Models.Database
         void DeleteUserById(int id);
         List<string> CheckThemeFolderAndDatabaseIntegrity();
         List<string> FindManuallyDeletedThemes();
+
+        List<UrlRewrite> GetAllUrls();
+        List<string> GetUrls(int articleId);
+        void SetUrl(Article article, string url);
+        string Url(Article article);
     }
 
     public interface IJasperDataServicePublic
@@ -1135,6 +1233,11 @@ namespace JasperSiteCore.Models.Database
         bool DeleteUserById(int id);
         List<string> CheckThemeFolderAndDatabaseIntegrity();
         List<string> FindManuallyDeletedThemes();
+
+        string Url(Article article);
+        bool SetUrl(Article article, string url);
+        List<string> GetUrls(int articleId);
+        List<UrlRewrite> GetAllUrls();
     }
 
 
@@ -1830,6 +1933,76 @@ namespace JasperSiteCore.Models.Database
             catch
             {
                 return false;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns the first URL found. In case of failure returns string.empty.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>        
+        public string Url(Article article)
+        {
+            try
+            {
+              return  _dbHelper.Url(article);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Updates or creates a new URL rewrite rule and returns true. In case of error returns false.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="url"></param>       
+        public bool SetUrl(Article article, string url)
+        {
+            try
+            {
+                _dbHelper.SetUrl(article, url);
+                return true;
+            }
+            catch 
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns list of all URL for the specified article. In case of failure returns null.
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>        
+        public List<string> GetUrls(int articleId)
+        {
+            try
+            {
+                return _dbHelper.GetUrls(articleId);
+            }
+            catch 
+            {
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns all UrlRewrite records. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>        
+        public List<UrlRewrite> GetAllUrls()
+        {
+            try
+            {
+                return _dbHelper.GetAllUrls();
+            }
+            catch 
+            {
+                return null;
             }
         }
     }

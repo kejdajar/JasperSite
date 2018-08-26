@@ -1,7 +1,7 @@
 {
-  "themeName": "Jasper",
+  "themeName": "Emerald",
   "themeFolder": "Themes",
-  "connectionString": "Data Source=DESKTOP\\DEVELOPMENT;Initial Catalog=Debugging;Integrated Security=True",
+  "connectionString": "Data Source=DESKTOP\\DEVELOPMENT;Initial Catalog=Debugging2;Integrated Security=True",
   "typeOfDatabase": "mssql",
   "installationCompleted": "True"
 }

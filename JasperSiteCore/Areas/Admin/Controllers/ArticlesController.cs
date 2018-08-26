@@ -112,8 +112,14 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     Name = articleToEdit.Name,
                     PublishDate = articleToEdit.PublishDate,
                     Categories = dbHelper.GetAllCategories(),
-                    SelectedCategoryId = articleToEdit.CategoryId
+                    SelectedCategoryId = articleToEdit.CategoryId,
+                    
                 };
+
+                // URL rewriting
+                model.AllUrl = dbHelper.GetUrls(articleToEdit.Id);
+                model.ArticlesRoute = Configuration.WebsiteConfig.ArticleRoute;
+
                 return model;
             }
             catch
@@ -139,8 +145,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     newArticleData.Name = model.Name;
                     newArticleData.PublishDate = (DateTime)model.PublishDate;
                     newArticleData.CategoryId = model.SelectedCategoryId;
+                    Article articleReference = dbHelper.EditArticle(newArticleData);
 
-                    dbHelper.EditArticle(newArticleData);
+                    // URL rewriting
+                    dbHelper.SetUrl(articleReference, model.Url);
 
                 }
                 else

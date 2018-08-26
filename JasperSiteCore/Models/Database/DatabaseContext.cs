@@ -25,6 +25,9 @@ namespace JasperSiteCore.Models.Database
         DbSet<Image> Images { get; set; }
         DbSet<ImageData> ImageData { get; set; }
 
+        // Url rewrite
+        DbSet<UrlRewrite> UrlRewrite { get; set; }
+
         int SaveChanges();
         
     }
@@ -32,9 +35,7 @@ namespace JasperSiteCore.Models.Database
     public class DatabaseContext: DbContext,IDatabaseContext
     {
 
-        //public DatabaseContext(DbContextOptions<DatabaseContext> options):base(options)
-        //{
-        //}
+       
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -68,6 +69,9 @@ namespace JasperSiteCore.Models.Database
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<ImageData> ImageData { get; set; }
 
+        // URL rewrite
+        public virtual DbSet<UrlRewrite> UrlRewrite { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>().ToTable("Articles");
@@ -86,11 +90,18 @@ namespace JasperSiteCore.Models.Database
             modelBuilder.Entity<Image>().ToTable("Images");
             modelBuilder.Entity<ImageData>().ToTable("ImageData");
 
+            // Url rewrite
+            modelBuilder.Entity<UrlRewrite>().ToTable("UrlRewrite");
+            
+
+            // Composite primary key
+            modelBuilder.Entity<UrlRewrite>().HasKey(table => new {
+                table.Url,
+                table.ArticleId
+            });
 
         }
 
-       
-
-        // public DbSet<JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel> EditArticleViewModel { get; set; }
+        
     }
 }

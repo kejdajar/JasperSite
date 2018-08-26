@@ -1,18 +1,19 @@
-﻿@using JasperSiteCore.Models.Database
+﻿@model int
+@using JasperSiteCore.Models.Database
 @inject DatabaseContext databaseContext
-@{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
+@*@{ var query = Convert.ToInt32(Context.Request.Query["id"]);}*@
 @{
     Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
 
 
-    Article article = J.GetArticleById(query);
+    Article article = J.GetArticleById(Model);
     @if (article != null)
     {
         ViewData["Title"] = article.Name;
 
 
         <div class="container-fluid article-text">
-            <j-article id="@query">
+            <j-article id="@Model">
 
                 <div class="jumbotron">
                     <h1> <j-name /></h1>

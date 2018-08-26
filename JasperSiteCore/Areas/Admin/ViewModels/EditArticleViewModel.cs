@@ -11,8 +11,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
     {
        
         public int Id { get; set; }
-
-        
+                
         [Required(ErrorMessage = "Vyplňte prosím název článku")]       
         [Display(Name="Název článku")]
         public string Name { get; set; }
@@ -30,5 +29,15 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         public List<Category> Categories{ get; set; }
 
         public int SelectedCategoryId { get; set; }
+
+
+        // URL section
+        [Required(ErrorMessage = "Vyplňte prosím URL článku")]
+        [Display(Name = "URL článku")]
+        public string Url { get; set; }
+
+        public List<string> AllUrl { get; set; }
+
+        public string ArticlesRoute { get; set; }
     }
 }

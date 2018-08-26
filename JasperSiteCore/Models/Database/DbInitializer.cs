@@ -192,7 +192,22 @@ namespace JasperSiteCore.Models.Database
             }
 
 
+            // Add URL rewriting for articles
 
+            UrlRewrite rule1 = new UrlRewrite() { ArticleId = articles[0].Id, Url = "first_article" };
+            _databaseContext.UrlRewrite.Add(rule1);
+
+            UrlRewrite rule2 = new UrlRewrite() { ArticleId = articles[1].Id, Url = "second_article" };
+            _databaseContext.UrlRewrite.Add(rule2);
+
+            UrlRewrite rule3 = new UrlRewrite() { ArticleId = articles[2].Id, Url = "third_article" };
+            _databaseContext.UrlRewrite.Add(rule3);
+
+            UrlRewrite rule4 = new UrlRewrite() { ArticleId = articles[3].Id, Url = "fourth_article" };
+            _databaseContext.UrlRewrite.Add(rule4);
+
+            UrlRewrite rule5 = new UrlRewrite() { ArticleId = articles[4].Id, Url = "fifth_article" };
+            _databaseContext.UrlRewrite.Add(rule5);
 
 
             _databaseContext.SaveChanges();

@@ -177,6 +177,20 @@ namespace JasperSiteCore.Migrations
                     b.ToTable("Themes");
                 });
 
+            modelBuilder.Entity("JasperSiteCore.Models.Database.UrlRewrite", b =>
+                {
+                    b.Property<string>("Url")
+                        .HasMaxLength(2083);
+
+                    b.Property<int>("ArticleId");
+
+                    b.HasKey("Url", "ArticleId");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("UrlRewrite");
+                });
+
             modelBuilder.Entity("JasperSiteCore.Models.Database.User", b =>
                 {
                     b.Property<int>("Id")
@@ -237,6 +251,14 @@ namespace JasperSiteCore.Migrations
                     b.HasOne("JasperSiteCore.Models.Database.ImageData", "ImageData")
                         .WithMany()
                         .HasForeignKey("ImageDataId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("JasperSiteCore.Models.Database.UrlRewrite", b =>
+                {
+                    b.HasOne("JasperSiteCore.Models.Database.Article", "Article")
+                        .WithMany()
+                        .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

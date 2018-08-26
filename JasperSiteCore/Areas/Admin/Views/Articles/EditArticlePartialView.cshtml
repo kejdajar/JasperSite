@@ -27,10 +27,8 @@
 
         <div class="form-group">
             <label asp-for="Name"></label>
-
             <input id="tbName" asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger"></span>
-
         </div>
 
         <div class="form-group">
@@ -59,6 +57,19 @@
         </div>
 
         <div class="form-group">
+            <label asp-for="Url"></label>
+            <input id="tbUrl" asp-for="Url" class="form-control" />
+            <span asp-validation-for="Url" class="text-danger"></span>
+
+            @foreach (string url in Model.AllUrl)
+            {
+                @:<i>@Model.ArticlesRoute</i><b>@url</b>  <br />
+            }
+
+        </div>
+
+
+        <div class="form-group">
 
 
             <button id="btnSaveTinymce" type="submit" asp-area="Admin" asp-controller="Articles" asp-action="PostArticle" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> Uložit</button>
@@ -66,7 +77,7 @@
 
             <a id="btnDeleteArticle" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
 
-         
+
 
         </div>
     </div>

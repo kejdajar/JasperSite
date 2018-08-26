@@ -325,5 +325,30 @@ namespace JasperSiteCore.Models
 
     }
 
+    public class InvalidUrlRewriteException : Exception
+    {
+        private static string _message = "Invalid rewrite rule was added.";
+
+        public InvalidUrlRewriteException() : base(_message)
+        {
+
+        }
+        public InvalidUrlRewriteException(string message)
+            : base(message)
+        {
+        }
+
+        public InvalidUrlRewriteException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public InvalidUrlRewriteException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
 
 }

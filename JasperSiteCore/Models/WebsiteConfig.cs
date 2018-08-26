@@ -202,6 +202,60 @@ namespace JasperSiteCore.Models
             }
         }
 
+        public string ArticleRoute
+        {
+            get
+            {
+                try
+                {
+                    return _configurationObject.ArticleRoute;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                    return null;
+                }
+            }
+            set
+            {
+                try
+                {
+                    _configurationObject.ArticleRoute= value;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                }
+            }
+        }
+
+        public string ArticleFile
+        {
+            get
+            {
+                try
+                {
+                    return _configurationObject.ArticleFile;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                    return null;
+                }
+            }
+            set
+            {
+                try
+                {
+                    _configurationObject.ArticleFile= value;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                }
+            }
+        }
+
     }
 
     public interface IWebsiteConfigProvider
@@ -215,6 +269,13 @@ namespace JasperSiteCore.Models
     /// </summary>
     public class ConfigurationObject
     {
+
+        [JsonProperty("articleFile")]
+        public string ArticleFile { get; set; }
+
+        [JsonProperty("articleRoute")]
+        public string ArticleRoute { get; set; }
+
         [JsonProperty("missingImagePath")]
         public string MissingImagePath { get; set; }
 
