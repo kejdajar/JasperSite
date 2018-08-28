@@ -148,7 +148,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     Article articleReference = dbHelper.EditArticle(newArticleData);
 
                     // URL rewriting
-                    dbHelper.SetUrl(articleReference, model.Url);
+
+                    if (!string.IsNullOrEmpty(model.Url))
+                    {
+                      
+                            dbHelper.SetUrl(articleReference, model.Url);
+                        
+                    }
+
+                    TempData["Success"] = true;
 
                 }
                 else
@@ -156,14 +164,36 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     throw new Exception();
                 }
             }
+            catch(InvalidUrlRewriteException ex)
+            {
+                try
+                {
+                    string alreadyAssignedAricleName = dbHelper.GetArticleById(ex.AssignedArticleId).Name;
+                    TempData["ErrorMessage"] = "Zadaná URL adresa je již obsazená èlánkem: "+alreadyAssignedAricleName+ ".";
+                }
+                catch 
+                {
+                    
+                    TempData["ErrorMessage"] = "Zadaná URL adresa je již obsazená.";
+
+                }
+            }
             catch (Exception)
             {
-                Response.StatusCode = 500; // jquery (error: function(){...}) will show error slide-down window
+               
+                TempData["ErrorMessage"] = "Zmìny nebylo možné uložit.";
             }
 
             if (isAjax)
             {
-                return Content(string.Empty);
+                // return Content(string.Empty); 
+
+                // Return URL routes only for current article
+                UrlListViewModel partialModel = new UrlListViewModel();
+                partialModel.Urls = dbHelper.GetAllUrls().Where(url => url.ArticleId == model.Id).Select(u => u.Url).ToList();
+                partialModel.ArticleId = model.Id;
+
+              return PartialView("UrlListPartialView", partialModel);
             }
             else
             {
@@ -229,6 +259,39 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             
             return RedirectToAction("Index");
+        }
+
+       
+        [HttpGet]
+        public IActionResult DeleteRoute(string name, int currentArticleId)
+        {
+            bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
+
+            try
+            {
+                dbHelper.DeleteUrl(name);
+                TempData["Success"] = true;
+            }
+            catch 
+            {
+                TempData["ErrorMessage"] = "Položku se nepodaøilo odstranit";            
+            }
+
+            if(isAjax)
+            {
+                // Return URL routes only for current article
+                UrlListViewModel model = new UrlListViewModel();
+                model.Urls = dbHelper.GetAllUrls().Where(url => url.ArticleId == currentArticleId).Select(u => u.Url).ToList();
+                model.ArticleId = currentArticleId;
+
+                return PartialView("UrlListPartialView", model);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }            
+
+           
         }
 
     }

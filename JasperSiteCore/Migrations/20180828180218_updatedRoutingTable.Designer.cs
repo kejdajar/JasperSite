@@ -11,8 +11,8 @@ using System;
 namespace JasperSiteCore.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180826075550_urlRewriting")]
-    partial class urlRewriting
+    [Migration("20180828180218_updatedRoutingTable")]
+    partial class updatedRoutingTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,11 +181,12 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.UrlRewrite", b =>
                 {
                     b.Property<string>("Url")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(2083);
 
                     b.Property<int>("ArticleId");
 
-                    b.HasKey("Url", "ArticleId");
+                    b.HasKey("Url");
 
                     b.HasIndex("ArticleId");
 

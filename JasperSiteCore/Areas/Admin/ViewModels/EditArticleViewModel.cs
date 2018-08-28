@@ -31,9 +31,7 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         public int SelectedCategoryId { get; set; }
 
 
-        // URL section
-        [Required(ErrorMessage = "Vyplňte prosím URL článku")]
-        [Display(Name = "URL článku")]
+      
         public string Url { get; set; }
 
         public List<string> AllUrl { get; set; }

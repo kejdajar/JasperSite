@@ -1094,9 +1094,9 @@ namespace JasperSiteCore.Models.Database
             List<UrlRewrite> allRewrites = GetAllUrls();
             foreach(UrlRewrite ur in allRewrites)
             {
-                if(ur.ArticleId == article.Id && ur.Url == url)
+                if(ur.Url == url)
                 {
-                    throw new InvalidUrlRewriteException("The same url rewrite rule already exists.");
+                    throw new InvalidUrlRewriteException("Specified URL is already assigned.") {AssignedArticleId = ur.ArticleId};
                 }
             }
 
@@ -1129,6 +1129,26 @@ namespace JasperSiteCore.Models.Database
                 throw new InvalidUrlRewriteException(ex);
             }
         }
+
+        /// <summary>
+        /// Deletes all records with specified URL.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        public void DeleteUrl(string url)
+        {
+            try
+            {
+                var itemsToDelete = Database.UrlRewrite.Where(u => u.Url == url);
+                Database.UrlRewrite.RemoveRange(itemsToDelete);
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidUrlRewriteException(ex);
+            }
+        }
+
 
         #endregion
 
@@ -1185,6 +1205,7 @@ namespace JasperSiteCore.Models.Database
         List<string> GetUrls(int articleId);
         void SetUrl(Article article, string url);
         string Url(Article article);
+        void DeleteUrl(string url);
     }
 
     public interface IJasperDataServicePublic
@@ -1238,6 +1259,7 @@ namespace JasperSiteCore.Models.Database
         bool SetUrl(Article article, string url);
         List<string> GetUrls(int articleId);
         List<UrlRewrite> GetAllUrls();
+        bool DeleteUrl(string url);
     }
 
 
@@ -2003,6 +2025,26 @@ namespace JasperSiteCore.Models.Database
             catch 
             {
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Deletes all records with specified URL and returns true. In case of error returns false.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        public bool DeleteUrl(string url)
+        {
+            try
+            {
+                var itemsToDelete = Database.UrlRewrite.Where(u => u.Url == url);
+                Database.UrlRewrite.RemoveRange(itemsToDelete);
+                Database.SaveChanges();
+                return true;
+            }
+            catch 
+            {
+                return false;
             }
         }
     }

@@ -52,6 +52,7 @@
     <None Remove="Areas\Admin\ViewModels\InstallViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\LoginViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\SettingsViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\UrlListViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\UsersViewModel.cs" />
     <None Remove="Areas\Admin\Views\Shared\_ErrorModalPartialViewTemp.cshtml" />
     <None Remove="Areas\Admin\Views\Shared\_SuccessModalPartialViewTemp.cshtml" />

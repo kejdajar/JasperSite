@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace JasperSiteCore.Migrations
 {
-    public partial class urlRewriting : Migration
+    public partial class updatedRoutingTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -183,7 +183,7 @@ namespace JasperSiteCore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UrlRewrite", x => new { x.Url, x.ArticleId });
+                    table.PrimaryKey("PK_UrlRewrite", x => x.Url);
                     table.ForeignKey(
                         name: "FK_UrlRewrite_Articles_ArticleId",
                         column: x => x.ArticleId,

@@ -94,11 +94,11 @@ namespace JasperSiteCore.Models.Database
             modelBuilder.Entity<UrlRewrite>().ToTable("UrlRewrite");
             
 
-            // Composite primary key
-            modelBuilder.Entity<UrlRewrite>().HasKey(table => new {
-                table.Url,
-                table.ArticleId
-            });
+            //// Composite primary key
+            //modelBuilder.Entity<UrlRewrite>().HasKey(table => new {
+            //    table.Url,
+            //    table.ArticleId
+            //});
 
         }
 

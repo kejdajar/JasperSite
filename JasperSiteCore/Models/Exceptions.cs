@@ -328,6 +328,7 @@ namespace JasperSiteCore.Models
     public class InvalidUrlRewriteException : Exception
     {
         private static string _message = "Invalid rewrite rule was added.";
+        public int AssignedArticleId = -1;
 
         public InvalidUrlRewriteException() : base(_message)
         {

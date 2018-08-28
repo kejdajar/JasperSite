@@ -1,4 +1,5 @@
-﻿@model JasperSiteCore.Areas.Admin.ViewModels.EditArticleViewModel
+﻿@using JasperSiteCore.Areas.Admin.ViewModels
+@model EditArticleViewModel
 @*@Html.Partial("InsertImagePartialView")*@
 @{ Html.RenderPartial("TinyMceSettingsPartialView");}
 <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
@@ -39,6 +40,8 @@
 
         </div>
 
+        <h3>Hlavní informace</h3>
+
         <div class="form-group">
             <label asp-for="Categories"></label>
 
@@ -56,21 +59,33 @@
 
         </div>
 
+        <h3>Seznam URL adres článku</h3>
+
+        @*-------------------CUSTOM ROUTING------------------------*@
         <div class="form-group">
             <label asp-for="Url"></label>
-            <input id="tbUrl" asp-for="Url" class="form-control" />
+            <input id="tbUrl" asp-for="Url" class="form-control" placeholder="Pokud nechcete přidávat další URL adresu, ponechte pole prázdné." />
             <span asp-validation-for="Url" class="text-danger"></span>
 
-            @foreach (string url in Model.AllUrl)
-            {
-                @:<i>@Model.ArticlesRoute</i><b>@url</b>  <br />
-            }
+
 
         </div>
 
 
-        <div class="form-group">
+        <div id="urlList">
+            @Html.Partial("UrlListPartialView", new UrlListViewModel() { ArticleId = Model.Id, Urls = Model.AllUrl })
+        </div>
 
+        @*-------------------CUSTOM ROUTING------------------*@
+
+
+
+
+
+
+
+
+        <div class="form-group">
 
             <button id="btnSaveTinymce" type="submit" asp-area="Admin" asp-controller="Articles" asp-action="PostArticle" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> Uložit</button>
             <a asp-controller="Articles" asp-action="Index" asp-area="admin" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na přehled</a>

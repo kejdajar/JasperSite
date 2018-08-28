@@ -28,11 +28,11 @@
                     var textarea = tinyMCE.activeEditor.getContent();
                     var model = {
                         Id: $("#hiddenId").val(),
-                        Name: $("#tbName").val(),
-                        Url: $("#tbUrl").val(),
+                        Name: $("#tbName").val(),                      
                         HtmlContent: textarea,
                         PublishDate: $("#publishDate").val(),
-                        SelectedCategoryId: $("#selectCategory").val()
+                        SelectedCategoryId: $("#selectCategory").val(),
+                        Url: $("#tbUrl").val()
 
                     };
 
@@ -43,11 +43,13 @@
                         data: model,
                         dataType: 'HTML',
                         success: function (data) {
-                            savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                            //savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                            $("#urlList").html(data);
+                            $("#tbUrl").val("");
                         },
-        error: function(){
-        savedInfo("<strong>Chyba.</strong> Provedené změny nebylo možné uložit.", "alert-danger");
-        }
+        //failure: function(){
+        //savedInfo("<strong>Chyba.</strong> Provedené změny nebylo možné uložit.", "alert-danger");
+        //}
                     });
 
                 }

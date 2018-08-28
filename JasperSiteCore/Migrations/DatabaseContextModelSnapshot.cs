@@ -180,11 +180,12 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.UrlRewrite", b =>
                 {
                     b.Property<string>("Url")
+                        .ValueGeneratedOnAdd()
                         .HasMaxLength(2083);
 
                     b.Property<int>("ArticleId");
 
-                    b.HasKey("Url", "ArticleId");
+                    b.HasKey("Url");
 
                     b.HasIndex("ArticleId");
 
