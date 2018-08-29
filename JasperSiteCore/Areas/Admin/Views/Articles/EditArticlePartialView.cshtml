@@ -40,7 +40,7 @@
 
         </div>
 
-        <h3>Hlavní informace</h3>
+    
 
         <div class="form-group">
             <label asp-for="Categories"></label>
@@ -56,19 +56,15 @@
 
             <input id="publishDate" type="text" asp-for="PublishDate" class="form-control tbPublishDate" />
             <span asp-validation-for="PublishDate" class="text-danger"></span>
-
         </div>
 
-        <h3>Seznam URL adres článku</h3>
+       
 
         @*-------------------CUSTOM ROUTING------------------------*@
         <div class="form-group">
             <label asp-for="Url"></label>
             <input id="tbUrl" asp-for="Url" class="form-control" placeholder="Pokud nechcete přidávat další URL adresu, ponechte pole prázdné." />
             <span asp-validation-for="Url" class="text-danger"></span>
-
-
-
         </div>
 
 

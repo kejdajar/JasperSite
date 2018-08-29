@@ -31,7 +31,7 @@
 
 
 <div class="table-responsive">
-    @if (Model.Urls != null)
+    @if (Model.Urls.Count>0)
     {
         <table id="routeTable" class="table table-bordered j-table j-table-left">
             <tr><th>Odstranit</th><th class="col-sm-1">URL</th></tr>
@@ -50,7 +50,7 @@
     else
     {
         <div class="alert alert-warning">
-            Žádné URL adresy nebyly definovány.
+            Žádné URL adresy nebyly ještě přiřazeny.
         </div>
 
     }

@@ -150,10 +150,15 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     // URL rewriting
 
                     if (!string.IsNullOrEmpty(model.Url))
+                    {                      
+                       dbHelper.SetUrl(articleReference, model.Url);                        
+                    }
+
+                    // At least one ULR rewriting rule has to exist
+                    int numberOfRules = dbHelper.GetUrls(model.Id).Count();
+                    if(numberOfRules<1)
                     {
-                      
-                            dbHelper.SetUrl(articleReference, model.Url);
-                        
+                        throw new NoUrlRulesException("At least one rewriting rule has to be present.");
                     }
 
                     TempData["Success"] = true;
@@ -164,6 +169,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     throw new Exception();
                 }
             }
+            catch (NoUrlRulesException)
+            {
+                TempData["ErrorMessage"] = "Je nutné pøiøadit alespoò jednu URL adresu.";
+            }
             catch(InvalidUrlRewriteException ex)
             {
                 try
@@ -172,10 +181,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     TempData["ErrorMessage"] = "Zadaná URL adresa je již obsazená èlánkem: "+alreadyAssignedAricleName+ ".";
                 }
                 catch 
-                {
-                    
+                {                    
                     TempData["ErrorMessage"] = "Zadaná URL adresa je již obsazená.";
-
                 }
             }
             catch (Exception)

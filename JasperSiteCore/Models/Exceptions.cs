@@ -351,5 +351,30 @@ namespace JasperSiteCore.Models
 
     }
 
+    public class NoUrlRulesException : Exception
+    {
+        private static string _message = "No URL rules were found.";      
+
+        public NoUrlRulesException() : base(_message)
+        {
+
+        }
+        public NoUrlRulesException(string message)
+            : base(message)
+        {
+        }
+
+        public NoUrlRulesException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public NoUrlRulesException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
 
 }
