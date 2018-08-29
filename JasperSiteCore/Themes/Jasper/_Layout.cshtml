@@ -36,63 +36,47 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
 
     <div class="container jasper-container-outer">
 
-
-        <nav class="navbar navbar-inverse bg-inverse bg-faded navbar-toggleable-md">
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#containerNavbar" aria-controls="containerNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="/"><span class="website-name-title">@J.GetWebsiteName()</span></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <a class="navbar-brand" href="/"><span class="website-name-title">@try {@J.GetWebsiteName();}catch{ <text>Domů</text>}</span></a>
-            <div class="collapse navbar-collapse" id="containerNavbar">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/Admin/Login">Přihlášení</a>
+                        <a class="nav-link" asp-controller="Login" asp-action="Index" asp-area="Admin">Přihlášení</a>
                     </li>
-
-                    <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/Category") ? "active":"")">
-                        <a class="nav-link" href="/Home/Category/">Všechny rubriky</a>
+                    <li class="nav-item  @(Context.Request.Path.Value.StartsWith("/Home/Category") ? "active":"")">
+                        <a class="nav-link" href="/Home/Category">Všechny rubriky</a>
                     </li>
-
-                    <li class="nav-item  @(Context.Request.GetDisplayUrl().Contains("Home/About") ? "active":"")">
-                        <a class="nav-link" href="/Home/About/">O Autorovi</a>
+                    <li class="nav-item  @(Context.Request.Path.Value.StartsWith("/Home/About") ? "active":"")">
+                        <a class="nav-link" href="/Home/About">O Autorovi</a>
                     </li>
-
                     @{ List<Category> allCategories = J.GetAllCategories();}
-                   @if (allCategories != null)
-                   {
-                    @foreach (Category c in allCategories)
+                    @if (allCategories != null)
                     {
-                        <li class="nav-item @(Context.Request.GetDisplayUrl().Contains("Home/SingleCategory?id=" + c.Id) ? "active" : "")">
-                            <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
-                        </li>
+                        @foreach (Category c in allCategories)
+                        {
+                            <li class="nav-item @(Context.Request.Path.Value.StartsWith("Home/SingleCategory?id=" + c.Id) ? "active" : "")">
+                                <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
+                            </li>
+                        }
+
                     }
-
-                   }
-
                 </ul>
             </div>
         </nav>
 
-
-
-
-
         <div class="container-fluid j-render-container" style="margin-top:20px">
-
             @RenderBody()
         </div>
 
-
-
-
-
-
-        
         <div class="container-fluid j-footer">
             <footer style="padding:10px">
                 <p class="text-muted">
-                @J.Components.Holder("FooterHolder")
-                <a href="/Admin/">Vstup do administrace</a></p>
+                    @J.Components.Holder("FooterHolder")
+                    <a href="/Admin/">Vstup do administrace</a>
+                </p>
             </footer>
         </div>
     </div>
