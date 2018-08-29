@@ -7,7 +7,7 @@
 @*<form asp-action="SaveBlock" asp-controller="Blocks" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm" data-ajax-complete="savedInfo">*@
 <form asp-action="SaveBlock" asp-controller="Blocks" asp-area="Admin" id="tinymceForm">
 
-    <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Úprava textového bloku: <span id="modelNameHeader">@Model.Name</span></h1></div>
+    <h2>Úprava textového bloku: <span id="modelNameHeader">@Model.Name</span></h2>
 
     <section class="j-admin-section">
 
@@ -33,9 +33,9 @@
         </div>
         <div class="form-group">
 
-
-            <button id="btnSaveTinymce" type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
             <a href="/Admin/Blocks/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam bloků</a>
+            <button id="btnSaveTinymce" type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+
 
 
         </div>

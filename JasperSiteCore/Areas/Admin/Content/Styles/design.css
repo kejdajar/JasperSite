@@ -1,5 +1,23 @@
 ﻿/* Design for admin section */
 
+h5 {font-weight: 400;}
+h4 {font-weight: 400;}
+h3 {font-weight:400;}
+h2 {font-weight:400;}
+
+.j-section-divider {
+    margin-bottom:20px;
+}
+
+:root {
+    --main-content-color: #F1F1F1;
+    --main-section-color: #FFFFFF;
+}
+
+.mainContent {
+    background-color: var(--main-content-color);
+}
+
 * {
     margin:0px;
     padding:0px;
@@ -7,13 +25,14 @@
 
 body {
     font-size: 1em;
-    background-color: white;
-    font-family: 'Alegreya Sans', sans-serif;
+    background-color: var(--main-content-color);
+    /*font-family: 'Alegreya Sans', sans-serif;*/
+    font-family: 'Segoe UI';
 }
 
 /* margin-top -> content is not hidden under header panel */
 .j-margin-top {
-    margin-top: 95px;
+    margin-top: 70px;
 }
 
 
@@ -86,9 +105,9 @@ body {
 
 /* Icon color */
 .j-icon {
-    color: 
-    #CE93D8;
+    color: #CE93D8;
     padding-right: 10px;
+    font-size:1px;
 }
 
 /* One row of the header */
@@ -123,7 +142,7 @@ body {
 }
 
 .jasperHeading {
-    font-size: 2em;  
+    font-size: 1.6em;  
 
 }
 
@@ -216,7 +235,7 @@ table.j-table-clickable tr:not(:first-child):hover {
 .btn-jasper-icon {
  
     padding:6px;
-    width:60px;
+    width:45px;
   margin-top:1px;
   margin-left:1px;
  margin-bottom:1px;
@@ -312,8 +331,15 @@ fieldset[disabled] .btn-jasper.active {
         display: flex;
     }
 
+    
+}
+
+
+@media (max-width: 768px) {
+    
+
     .j-margin-top {
-        margin-top: 105px;
+        margin-top: 85px;
     }
 }
 /*--------------END Menu switching------------------*/
@@ -368,6 +394,9 @@ fieldset[disabled] .btn-jasper.active {
 
 .j-admin-section {
 margin-bottom:20px;
+background-color:var(--main-section-color);
+padding:10px;
+border:1px solid #ddd;
 }
 
 .j-left-border-block {

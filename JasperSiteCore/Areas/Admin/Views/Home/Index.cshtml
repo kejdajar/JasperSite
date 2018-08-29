@@ -102,75 +102,73 @@
 @Html.Partial("_SuccessModalPartialViewTemp")
 @Html.Partial("_ErrorModalPartialViewTemp")
 
-<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Přehled  </h1>
+<h2>Přehled </h2>
                                   
+   
+
+
+<div class="row">
+    <div class="col-lg-12">
+        
+        <section class="j-admin-section">
+
+            <h4><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>Rubriky a články</h4>
+
+
+
+            @if (Model.Articles.Count() > 0 && Model.Categories.Count > 0)
+            {
+                <div style="max-width:800px">
+                    <canvas id="chartCanvas"></canvas>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    <strong>Nic zde není!</strong> Pro zobrazení přehledu je vyžadována alespoň jedna rubrika a článek.
+                </div>
+
+            }
+
+
+        </section>
+
     </div>
+    <div class="col-lg-12">
+        <section class="j-admin-section  alert alert-info alert-dismissible">
 
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <h4><i class="fa fa-sticky-note j-icon" aria-hidden="true"></i>Tipy a triky</h4>
 
+            <ul class="list-group">
+                <li class="list-group-item">
+                    Vaší stránku si můžete zobrazit pomocí následujícího tlačítka v horní liště nástrojů:
+                    <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+                </li>
 
-<section class="j-admin-section">
+                <li class="list-group-item">
+                    Na tuto stránku se vždy můžete vrátit tlačítkem domů:
+                    <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+                </li>
 
-    <h2><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>Přehled rubrik a jejich článků</h2>
+                <li class="list-group-item">
+                    Aktualizovat konfigurační nastavení je možné pomocí tlačíka:
+                    <a asp-controller="Home" asp-action="Refresh" asp-area="admin" class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-refresh fa-1x" aria-hidden="true"></i></a>
+                </li>
 
-    @if (Model.Articles.Count() > 0 && Model.Categories.Count>0)
-    {
-        <div style="max-width:800px">
-            <canvas id="chartCanvas"></canvas>
-        </div>
-    }
-    else
-    {
-        <div class="alert alert-warning">
-            <strong>Nic zde není!</strong> Pro zobrazení přehledu je vyžadována alespoň jedna rubrika a článek.
-        </div>
+                @if (User.Identity.IsAuthenticated)
+                {
 
-    }
+                    <li class="list-group-item">
+                        Odhlásit se můžete pomocí tlačítka s vaším uživatelským jménem:
 
+                        <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name - odhlásit</a>
+                    </li>
 
-</section>
+                }
 
+            </ul>
 
-<section class="j-admin-section">
-    <h2><i class="fa fa-sticky-note j-icon" aria-hidden="true"></i>Tipy a triky</h2>
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        Vaší stránku si můžete zobrazit pomocí následujícího tlačítka v horní liště nástrojů: <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+        </section>
     </div>
-
-
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        Na tuto stránku se vždy můžete vrátit tlačítkem domů:     <a class="btn btn-jasper btn-jasper-icon" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
-    </div>
-
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-       Aktualizovat konfigurační nastavení je možné pomocí tlačíka: <a asp-controller="Home" asp-action="Refresh" asp-area="admin" class="btn btn-jasper btn-jasper-icon">  <i class="fa fa-refresh fa-1x" aria-hidden="true"></i></a>
-    </div>
-
-
-
-
-
-    @if (User.Identity.IsAuthenticated)
-    {
-
-        <div class="alert alert-info alert-dismissible fade show" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            Odhlásit se můžete pomocí tlačítka s vaším uživatelským jménem:
-
-            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-user-circle fa-1x"> </i> @User.Identity.Name - odhlásit</a>
-        </div>
-
-    }
-
-
-</section>
+</div>

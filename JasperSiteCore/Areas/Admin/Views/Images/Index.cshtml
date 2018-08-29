@@ -6,10 +6,10 @@
 @section Scripts
     {
 
-<script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
-<script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
+    <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
 
-<script>
+    <script>
         /* IMAGE UPLOAD DISABLE SUBMIT WHEN EMPTY */
         $(document).ready(
             function () {
@@ -27,17 +27,15 @@
             });
 
 
-        
 
-</script>
+
+    </script>
 }
 
-<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Obrázky</h1></div>
+<h2>Obrázky</h2>
+<section class="j-admin-section">
+    <h4><i class="fa fa-upload j-icon" aria-hidden="true"></i>Nahrání obrázku</h4>
 
-<h1> <i class="fa fa-upload j-icon" aria-hidden="true"></i> Nahrání obrázku</h1>
-
-
-<section class="j-admin-section j-left-border-block">
 
     <p>Pokud chcete ve Vašich příspěvcích používat vlastní obrázky, je nutné jejich nahrání:</p>
 
@@ -53,10 +51,12 @@
     </form>
 
 </section>
-<hr />
+
+
 <section class="j-admin-section">
     <div id="mainForm">
         @Html.PartialAsync("UploadedImagesPartialView").Result
     </div>
 </section>
+
 <div id="modalTargetDiv"></div>

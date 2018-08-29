@@ -13,11 +13,11 @@
     <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
 }
 
-<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Nastavení</h1></div>
+<h2>Nastavení</h2>
 
 @*=====FIRST FORM======*@
 <section class="j-admin-section">
-    <h2><i class="fa fa-file-text  j-icon" aria-hidden="true"></i> Název webové stránky</h2>
+    <h4><i class="fa fa-file-text j-icon" aria-hidden="true"></i>Název webové stránky</h4>
     <div id="mainForm">
         @Html.Partial("WebsiteNamePartialView", Model.model1)
     </div>
@@ -25,7 +25,7 @@
 @*=====FIRST FORM END======*@
 
 <section class="j-admin-section">
-    <h2><i class="fa fa-database j-icon" aria-hidden="true"></i> Instalace systému a správa databáze</h2>
+    <h4><i class="fa fa-database j-icon" aria-hidden="true"></i>Instalace systému</h4>
 
     <table class="table j-table-no-hover table-bordered">
         <tr><th>Akce</th><th>Popis</th></tr>
@@ -36,7 +36,7 @@
 
 @*=====SECOND FORM=====*@
 <section class="j-admin-section">
-    <h2><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Globální konfigurační soubor jasper.json</h2>
+    <h4><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Globální konfigurační soubor jasper.json</h4>
 
     <div id="mainForm2">
         @Html.Partial("JasperJsonPartialView", Model.model2)

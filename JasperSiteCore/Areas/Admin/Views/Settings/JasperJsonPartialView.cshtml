@@ -14,8 +14,11 @@
 </script>
 <form id="settingsForm" asp-action="SaveJasperJson" asp-controller="Settings"
       asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm2">
+    <div class="form-group">
+        <textarea asp-for="JasperJson" rows="15" class="form-control">test</textarea>
+    </div>
 
-    <textarea asp-for="JasperJson" rows="15" class="form-control">test</textarea>
-    <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit soubor jasper.json </button>
-
+    <div class="form-group">
+        <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit soubor jasper.json </button>
+    </div>
 </form>

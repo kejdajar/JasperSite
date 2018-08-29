@@ -4,7 +4,7 @@
 @model JasperSiteCore.Areas.Admin.ViewModels.ArticlesViewModel
 
 @{
- ViewData["Title"] = "Články";
+    ViewData["Title"] = "Články";
 }
 
 @section Scripts {
@@ -15,73 +15,48 @@
 }
 
 
-<div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i> Články</h1></div>
-<h2> <i class="fa fa-info-circle j-icon" aria-hidden="true"></i> Přehled</h2>
+<h2>Články </h2>
 
-<div class="table-responsive ">
-    <table class="table table-bordered j-left-border-block">
-        <tr>
-            <td>Celkový počet článků</td>
-            <td>@Model.NumberOfArticles</td>
-        </tr>
-        <tr>
-            <td>Celkový počet rubrik</td>
-            <td>@Model.NumberOfCategories</td>
-        </tr>
+<div class="j-admin-section">
+    <h4><i class="fa fa-info-circle j-icon" aria-hidden="true"></i>Přehled</h4>
+    <div class="table-responsive ">
+        <table class="table table-bordered j-left-border-block">
+            <tr>
+                <td>Celkový počet článků</td>
+                <td>@Model.NumberOfArticles</td>
+            </tr>
+            <tr>
+                <td>Celkový počet rubrik</td>
+                <td>@Model.NumberOfCategories</td>
+            </tr>
 
-    </table>
-</div>
-<hr />
-
-<h2><i class="fa fa-pencil  j-icon" aria-hidden="true"></i>  Nový článek</h2>
-@if (Model.UncategorizedCategoryExists)
-{
-    <a asp-area="Admin" asp-controller="Articles" asp-action="Add" class="btn btn-jasper" style="width:200px">Vytvořit</a>
-}
-else
-{
-    <div class=" alert alert-warning">
-        <p>Pro přidání nové rubriky je zapotřebí, aby existovala rubrika "Nezařazeno".</p>
-        <a asp-area="Admin" asp-controller="Articles" asp-action="CreateUncategorizedCategory" class="btn btn-jasper">Vytvořit rubriku "Nezařazeno"</a>
+        </table>
     </div>
-}
-<hr />
-
-
-
-<h2 id="articles"> <i class="fa fa-table j-icon" aria-hidden="true"></i>  Seznam článků</h2>
-
-@*TODO:FILTER PANEL NOT YET IMPLEMENTED*@
-@*<div class="j-filter-panel">
-
-        <div class="j-filter-container">
-            <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Kategorie</div></div>
-            <div class="j-input-container" style="width:140px">
-                <select id="selCategory">
-                    @foreach (Category c in Configuration.DbHelper.GetAllCategories())
-                    {
-                        <option value="@c.Id">@c.Name</option>
-                    }
-                </select>
-            </div>
-        </div>
-
-        <div class="j-filter-container">
-            <div class="j-label-container" style="width:80px"><div class="j-label-container-inner">Počet</div></div>
-            <div class="j-input-container">
-                <select id="selCategory" class="custom-select" style="width:140px">
-                    @for (int i = 1; i <= 10; i++)
-                    {
-                        <option value="@i">@i</option>
-                    }
-                </select>
-            </div>
-        </div>
-
-    </div>*@
-
-<div id="listOfArticles">
-    @Html.Partial("ArticlesListPartialView", Model.Articles)
 </div>
+
+<div class="j-admin-section">
+    <h4><i class="fa fa-pencil j-icon" aria-hidden="true"></i>Nový článek</h4>
+    @if (Model.UncategorizedCategoryExists)
+    {
+        <a asp-area="Admin" asp-controller="Articles" asp-action="Add" class="btn btn-jasper" style="width:200px">Vytvořit</a>
+    }
+    else
+    {
+        <div class=" alert alert-warning">
+            <p>Pro přidání nové rubriky je zapotřebí, aby existovala rubrika "Nezařazeno".</p>
+            <a asp-area="Admin" asp-controller="Articles" asp-action="CreateUncategorizedCategory" class="btn btn-jasper">Vytvořit rubriku "Nezařazeno"</a>
+        </div>
+    }
+</div>
+
+
+
+<div class="j-admin-section">
+    <h4><i class="fa fa-table j-icon" aria-hidden="true"></i>Seznam článků</h4>
+    <div id="listOfArticles">
+        @Html.Partial("ArticlesListPartialView", Model.Articles)
+    </div>
+</div>
+
 <div id="modalTargetDiv"></div>
 
