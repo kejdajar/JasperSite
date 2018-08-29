@@ -1,6 +1,9 @@
 {
+
+  "urlRewriting": "True",
   "articleFile": "Article.cshtml",
   "articleRoute": "/Home/Article/",
+  
   "blockHolders": [ "MainPageHolder", "FooterHolder", "AboutPageHolder" ],
   "missingImagePath": "./Images/missing.jpg",
   "routingList": {

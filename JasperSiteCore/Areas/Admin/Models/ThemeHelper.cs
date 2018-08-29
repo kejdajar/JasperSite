@@ -172,9 +172,12 @@ namespace JasperSiteCore.Areas.Admin.Models
         /// blockHolders in database will be synchronized with jasper.json
         /// </summary>
         /// <param name="Database"></param>
+        /// <exception cref="ThemeHelperException"></exception>
         public void UpdateAllThemeRelatedData(DatabaseContext Database)
         {
-            DbHelper dbHelper = new DbHelper(Database);
+            try
+            {
+                DbHelper dbHelper = new DbHelper(Database);
 
             // Firstly, this will add all unregistered themes to the database
             dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity());
@@ -194,8 +197,7 @@ namespace JasperSiteCore.Areas.Admin.Models
             // if they exist in jasper.json, everything in the DB will remain as is
             // if there are new blockHolders in jasper.json, they will be added to the DB
 
-            try
-            {
+           
                 // All themes info, even those that were already registered
                 List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfo();
 

@@ -1,6 +1,7 @@
 {
-  
-  "articleFile":  "Article.cshtml",
+
+  "urlRewriting": "True",
+  "articleFile": "Article.cshtml",
   "articleRoute": "/Home/Article/",
 
   "blockHolders": [ "MainPageHolder", "FooterHolder", "AboutPageHolder" ],

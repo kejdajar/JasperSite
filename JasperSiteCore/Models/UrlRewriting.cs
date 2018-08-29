@@ -38,6 +38,30 @@ namespace JasperSiteCore.Models
 
 
         /// <summary>
+        /// Removes last slash from URL if present.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        public static string CleanseUrl(string url)
+        {
+            try
+            {
+                if(url.EndsWith('/'))
+                {
+                    url = url.Remove(url.Length-1);
+                }
+
+                return url;
+            }
+            catch(Exception ex)
+            {
+                throw new InvalidUrlRewriteException("Url could not be cleansed.",ex);
+            }
+        }
+
+
+        /// <summary>
         /// This method takes nice url, for instance /Home/Article/my_first_article and returns appropriate articleId from the database.
         /// In case of failure returns -1;
         /// </summary>

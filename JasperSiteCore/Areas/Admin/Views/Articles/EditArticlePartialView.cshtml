@@ -59,7 +59,8 @@
         </div>
 
        
-
+        @if (JasperSiteCore.Models.Configuration.WebsiteConfig.UrlRewriting) 
+        {
         @*-------------------CUSTOM ROUTING------------------------*@
         <div class="form-group">
             <label asp-for="Url"></label>
@@ -73,7 +74,13 @@
         </div>
 
         @*-------------------CUSTOM ROUTING------------------*@
-
+        }
+        else
+        {
+            <div class="alert alert-info">
+                Přepisování URL adres není pro tento vzhled momentálně aktivováno.
+            </div>
+        }
 
 
 

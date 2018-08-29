@@ -202,18 +202,48 @@ namespace JasperSiteCore.Models
             }
         }
 
+
+
+        public bool UrlRewriting
+        {
+            get
+            {
+                try
+                {
+                    return _configurationObject.UrlRewriting;
+                }
+                catch (Exception)
+                {                    
+                    return false;
+                }
+            }
+            set
+            {
+                try
+                {
+                    _configurationObject.UrlRewriting = value;
+                }
+                catch (Exception ex)
+                {
+                    ThrowError(ex);
+                }
+            }
+        }
+
         public string ArticleRoute
         {
             get
             {
                 try
                 {
-                    return _configurationObject.ArticleRoute;
+                    
+                        return _configurationObject.ArticleRoute;                   
+                    
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    ThrowError(ex);
-                    return null;
+
+                    return string.Empty;
                 }
             }
             set
@@ -235,12 +265,13 @@ namespace JasperSiteCore.Models
             {
                 try
                 {
-                    return _configurationObject.ArticleFile;
+                  
+                        return _configurationObject.ArticleFile;
+                   
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    ThrowError(ex);
-                    return null;
+                    return string.Empty;
                 }
             }
             set
@@ -269,6 +300,8 @@ namespace JasperSiteCore.Models
     /// </summary>
     public class ConfigurationObject
     {
+        [JsonProperty("urlRewriting")]
+        public bool UrlRewriting { get; set; }
 
         [JsonProperty("articleFile")]
         public string ArticleFile { get; set; }

@@ -60,10 +60,31 @@ namespace JasperSiteCore.Controllers
                 else if (!string.IsNullOrEmpty(file = Configuration.CustomRouting.MapUrlToFile(rawUrl))) // Custom mapping for non-index pages, throws exception if view is not found
                 {
                     // url can't contain "%20" - normal space is required 
+
+                    // if urlRewriting is disabled + request for article page + request has parameter Id => id has to be
+                    // supplied for article view model                                    
+
+                    if(!Configuration.WebsiteConfig.UrlRewriting && UrlRewriting.CleanseUrl(rawUrl) == UrlRewriting.CleanseUrl(Configuration.WebsiteConfig.ArticleRoute))
+                    {
+                        string queryId;
+                        if (!string.IsNullOrEmpty(queryId=Request.Query["id"].ToString()))
+                        {
+                            try
+                            {
+                                return View(file.Replace("%20", " "),Convert.ToInt32(queryId));
+                            }
+                            catch 
+                            {
+                               // program will continue
+                            }
+                        }
+                    }
+
                     return View(file.Replace("%20", " "));
                 }
                 // --------------URL REWRITING FOR ARTICLES-----------------------------------------------------------------
-                else if (UrlRewriting.IsUrlRewriteRequest(rawUrl))
+                // first condition checks whether is URL rewriting allowed in theme jasper.json
+                else if (Configuration.WebsiteConfig.UrlRewriting && UrlRewriting.IsUrlRewriteRequest(rawUrl))
                 {
                     int articleIdFromRequest = UrlRewriting.ReturnArticleIdFromNiceUrl(rawUrl, _dataService);
                     if (articleIdFromRequest != -1) // appropriate articleId was found in the DB

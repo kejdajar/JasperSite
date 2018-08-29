@@ -154,9 +154,9 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                        dbHelper.SetUrl(articleReference, model.Url);                        
                     }
 
-                    // At least one ULR rewriting rule has to exist
+                    // At least one ULR rewriting rule has to exist and URL rewriting has to be allowed
                     int numberOfRules = dbHelper.GetUrls(model.Id).Count();
-                    if(numberOfRules<1)
+                    if(numberOfRules<1 && Configuration.WebsiteConfig.UrlRewriting)
                     {
                         throw new NoUrlRulesException("At least one rewriting rule has to be present.");
                     }

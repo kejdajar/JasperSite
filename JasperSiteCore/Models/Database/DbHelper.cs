@@ -1114,15 +1114,33 @@ namespace JasperSiteCore.Models.Database
         {
             try
             {
-                UrlRewrite firstUrlRule = Database.UrlRewrite.Where(ur => ur.Article.Id == article.Id).First();
+                if (Configuration.WebsiteConfig.UrlRewriting) // URL rewriting has to be allowed
+                {
+                    UrlRewrite firstUrlRule = Database.UrlRewrite.Where(ur => ur.Article.Id == article.Id).First();
 
-                // ie.: /first_article
-                string lastPartOfUrl = firstUrlRule.Url;
+                    // ie.: /first_article
+                    string lastPartOfUrl = firstUrlRule.Url;
 
-                // ie.: /Home/Articles
-                string articleRoute = Configuration.WebsiteConfig.ArticleRoute;
+                    // ie.: /Home/Articles
+                    string articleRoute = Configuration.WebsiteConfig.ArticleRoute;
 
-                return articleRoute+lastPartOfUrl;
+                    return articleRoute + lastPartOfUrl; 
+                }
+                else
+                {
+                    string articleRouteFromJasperJson = Configuration.WebsiteConfig.ArticleRoute;
+                    if (!string.IsNullOrEmpty(articleRouteFromJasperJson))
+                    {
+                        // remove last slash from url if present
+                        if(articleRouteFromJasperJson.EndsWith('/'))
+                        {
+                          articleRouteFromJasperJson=  articleRouteFromJasperJson.Remove(articleRouteFromJasperJson.Length -1);
+                        }
+
+                        return articleRouteFromJasperJson + "?id=" + article.Id.ToString();
+                    }
+                    else return string.Empty;
+                }
             }
             catch (Exception ex)
             {

@@ -65,7 +65,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 Configuration.Initialize();
-                dbHelper.ReconstructAndClearThemeData();
+                Configuration.ThemeHelper.UpdateAllThemeRelatedData(databaseContext);
 
                 if (isAjaxCall)
                 {
