@@ -1,5 +1,10 @@
 ﻿/* Design for admin section */
 
+.j-hr {
+    border-top: 1px solid rgba(0, 0, 0, 0.1)!important;    
+    
+}
+
 h5 {font-weight: 400;}
 h4 {font-weight: 400;}
 h3 {font-weight:400;}
@@ -10,6 +15,8 @@ h2 {font-weight:400;}
 }
 
 :root {
+    --main-black-color: #343A40;
+    --main-purple-color: #BA68C8;
     --main-content-color: #F1F1F1;
     --main-section-color: #FFFFFF;
 }
@@ -32,10 +39,8 @@ body {
 
 /* margin-top -> content is not hidden under header panel */
 .j-margin-top {
-    margin-top: 70px;
+    margin-top: 35px;
 }
-
-
 
 /* General styles */
 .j-base-color {
@@ -43,49 +48,9 @@ body {
 }
 
 
-
-
-/*---------------------Filter panel-----------------*/
-.j-filter-panel 
-{
-   border:1px solid rgb(236,238,239);
-   margin-top:10px;
-   margin-bottom:10px;
-   display:flex;
-   flex-wrap:wrap;
-}
-
-/* direct divs are group containers 
-    for label + input */
-.j-filter-panel > div.j-filter-container 
-{
-    display:flex;   
-    margin-bottom:5px;
-    margin-top:5px;
-}   
-
-.j-filter-panel > div.j-filter-container div.j-label-container
-{
-    display: block;
-    display: flex;  
-}
-
-.j-filter-panel > div.j-filter-container > div.j-label-container > div.j-label-container-inner
-{
-    margin:auto;
-}
-
- .j-filter-panel > div.j-filter-container > div.j-input-container 
- {
-     margin: auto;       
- }
-/*---------------------END Filter panel-----------------*/  
-
-
-
 /*---------------Header------------------------------*/
 #headerPanel {
-    background-color: #BA68C8;
+    background-color: var(--main-black-color);
     display: flex;
     color: white;
     width: 100%;
@@ -93,6 +58,20 @@ body {
     top: 0px;
     z-index: 1; 
     flex-wrap: wrap;
+    padding-right:2px;
+}
+
+/*.j-control-panel {
+    float: right;   
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+
+}*/
+
+.j-control-panel-margin-right{
+    margin-right:10px;
 }
 
 .j-gray-color {
@@ -139,6 +118,7 @@ body {
 #headerPanel .headerLine .mainTitle {
      margin-left: 20px;
      padding: 0px;
+     display:inline-block;
 }
 
 .jasperHeading {
@@ -242,6 +222,15 @@ table.j-table-clickable tr:not(:first-child):hover {
     
 }
 
+
+.btn-jasper-icon-control-panel {
+   padding: 2px;
+   margin-top:5px;
+   margin-bottom:5px;
+   margin-left:4px;
+   width:50px;
+}
+
 .btn-user-icon {
     padding: 6px;
   
@@ -318,7 +307,7 @@ fieldset[disabled] .btn-jasper.active {
 
 
 /*-----------Menu switching-------------------------*/
-.j-flex-row.j-secondary-header.mobile {
+/*.j-flex-row.j-secondary-header.mobile {
     display: none;
 }
 
@@ -335,11 +324,15 @@ fieldset[disabled] .btn-jasper.active {
 }
 
 
+
+*/
+
+
 @media (max-width: 768px) {
-    
+
 
     .j-margin-top {
-        margin-top: 85px;
+        margin-top: 45px;
     }
 }
 /*--------------END Menu switching------------------*/
@@ -372,7 +365,7 @@ fieldset[disabled] .btn-jasper.active {
 /* ----------END Custom search bar-------------- */
 
 .j-hamburger-menu {
-   color:black;
+   color:white;
 }
 
     .j-hamburger-menu:hover {

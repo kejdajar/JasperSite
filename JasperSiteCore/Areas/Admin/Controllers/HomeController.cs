@@ -41,6 +41,11 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 HomeViewModel model = new HomeViewModel();
                 model.Articles = dbHelper.GetAllArticles();
                 model.Categories = dbHelper.GetAllCategories();
+
+                string activeUserName = User.Identity.Name;
+                JasperSiteCore.Models.Database.User currentUser = dbHelper.GetAllUsers().Where(u => u.Username.Trim().ToLower() == activeUserName.Trim().ToLower()).Single();
+                model.CurrentUser = currentUser;
+
                 return model;
             }
             catch 

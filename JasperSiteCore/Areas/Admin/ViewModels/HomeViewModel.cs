@@ -12,5 +12,6 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
     {     
         public List<Article> Articles { get; set; }
         public List<Category> Categories { get; set; }
+        public User CurrentUser { get; set; }
     }
 }

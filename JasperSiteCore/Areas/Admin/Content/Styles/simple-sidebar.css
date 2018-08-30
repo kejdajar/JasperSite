@@ -4,10 +4,24 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
+:root {
+    --main-black-color: #343A40;
+    --main-purple-color: #BA68C8;
+    --main-content-color: #F1F1F1;
+    --main-section-color: #FFFFFF;
+}
+
+
  body {
     overflow-x: hidden;
    
  }
+
+
+ .menuGroup {
+     padding-top:20px;
+ }
+ 
 
 /* Toggle Styles */
 
@@ -21,27 +35,26 @@
 }
 
 #wrapper.toggled {
-    padding-left: 200px;
+    padding-left: 150px;
 }
 
 #sidebar-wrapper {
     z-index: 2;
     position: fixed;
-    left: 200px;
+    left: 150px;
     width: 0;
     height: 100%;
-    margin-left: -200px;
+    margin-left: -150px;
     overflow-y: auto;
-    background: #f9f9f9;
+    background: #343A40;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
-   
 }
 
 #wrapper.toggled #sidebar-wrapper {
-    width: 200px;
+    width: 150px;
 }
 
 #page-content-wrapper {
@@ -53,7 +66,7 @@
 
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
-    margin-right: -200px;
+    margin-right: -150px;
 }
 
 /* Sidebar Styles */
@@ -61,19 +74,15 @@
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 200px;
+    width: 150px;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-/* .sidebar-nav li {
-    text-indent: 20px;
-    line-height: 40px;
-} */
 
-.sidebar-nav li a {
-    font-size:1.2em;
+
+.sidebar-nav li a {   
     display: block;
     text-decoration: none;
     color: black;
@@ -93,7 +102,7 @@
 }
 
 .sidebar-nav > .sidebar-brand {
-    height: 65px;
+    height: 60px;
     font-size: 18px;
     line-height: 60px;
 }
@@ -110,7 +119,7 @@
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 200px;
+        padding-left: 150px;
     }
 
     #wrapper.toggled {
@@ -118,7 +127,7 @@
     }
 
     #sidebar-wrapper {
-        width: 200px;
+        width: 150px;
     }
 
     #wrapper.toggled #sidebar-wrapper {
@@ -142,7 +151,7 @@
 .j-link-container
 {
     
-    background-color:#f9f9f9;
+    background-color:var(--main-black-color);
 
     display: flex;
 
@@ -158,15 +167,17 @@
 .j-link 
 { margin:auto;
     text-decoration: none !important;
-    font-size:1.4em;
+    font-size:1.2em;
     white-space:nowrap;
-    color:#AB47BC;
+    color:white;
     width:100%;
-    padding-left: 40px;
+    
+    margin-left:15px;
+    padding:7px;
 }
 
 .j-fa-margin {
-    margin-right:10px;
+    margin-right:0px;
 }
 
 .j-menu-highlight {
@@ -175,25 +186,10 @@
 }
 
 .j-sidebar-brand {
-    
-    background-color: 
-    transparent;
-    text-indent: 60px;
-    line-height: 48px;
+        
+    line-height: 40px;
     font-size: 1.5em;
+    color:white;
+    text-indent:20px;
 }
 
-.j-sidebar-brand a {
-     text-decoration: none;
-     color:#AB47BC;
-}
-.j-sidebar-brand a:hover {
-   
-    color:#CE93D8;
-}
-
-/* 
-.j-link :hover
-{
-    color:red !important;
-} */
