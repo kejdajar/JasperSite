@@ -17,12 +17,10 @@
     @*********************************************************************** Styles ****************************************************************************@
     <environment include="Development">
 
+
         <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.css" />
-        <link href="~/node_modules/tether/dist/css/tether.css" rel="stylesheet" />
 
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
-
+        <link href="~/Areas/Admin/Content/Styles/design.css" rel="stylesheet" />
 
         <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 
@@ -30,16 +28,11 @@
 
     <environment exclude="Development">
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"
-              asp-fallback-href="~/node_modules/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
 
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/css/tether.min.css" rel="stylesheet"
-              asp-fallback-href="~/node_modules/tether/dist/css/tether.css" />
+        <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-        <!--Nalinkovat minifikaci-->
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
+
+        <link href="~/Areas/Admin/Content/Styles/design.min.css" rel="stylesheet" />
 
 
         <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -48,28 +41,20 @@
     @*********************************************************************** Scripts ****************************************************************************@
     <environment include="Development">
         <script src="~/node_modules/jquery/dist/jquery.js"></script>
-        <script src="~/node_modules/tether/dist/js/tether.js"></script>
+
+        <script src="~/node_modules/popper.js/dist/umd/popper.js"></script>
         <script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
         <script src="~/node_modules/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
     </environment>
 
     <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/node_modules/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" asp-fallback-href="~/node_modules/tether/dist/js/tether.min.js"></script>
+        <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
 
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-                asp-fallback-src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn">
-        </script>
+        <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
 
         <!-- Without CDN -->
         <script src="~/node_modules/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
@@ -81,7 +66,7 @@
 
     @if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
     {
-        <script  src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+        <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
         <script>
         $(document).ready(function(){
         $("#submitButton").click(function(e){
@@ -97,61 +82,64 @@
     }
 
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
 
-        <style>
-            .j-jumbotron {
-                background-color: #BA68C8;
+    <style>
+        .j-jumbotron {
+            /*background-color: #BA68C8;*/
+        }
+
+            .j-jumbotron h1 {
+                color: white;
             }
 
-                .j-jumbotron h1 {
-                    color: white;
-                }
-
-                .j-jumbotron h2 {
-                    color: #e7e7e7;
-                    font-size: 1.3em;
-                }
-
-            body {
-                margin-top: 20px;
+            .j-jumbotron h2 {
+                color: #e7e7e7;
+                font-size: 1.3em;
             }
 
-            .j-jumbotron-span {
-                color: black;
-            }
-        </style>     
+        body {
+            margin-top: 20px;
+        }
 
-    </head>
+        .j-jumbotron-span {
+            color: #BA68C8;
+        }
+    </style>
+
+</head>
 
 <body>
 
 
     @if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
-    { 
+    {
         <div id="modalTargetDiv"></div>
     }
 
-        <div class="container">
-            <div class="jumbotron j-jumbotron">
-                <h1>
-                    J<span class="j-jumbotron-span">asp</span>er Site <span class="j-jumbotron-span">Core</span>
-                </h1>
-                <h2>Instalace redakčního systému </h2>
-            </div>
+    <div class="container">
+       
+        <div style="margin-bottom:20px">
+            <h1>
+                J<span class="j-jumbotron-span">asp</span>er Site <span class="j-jumbotron-span">Core</span>
+            </h1>
+            <h2><small>Instalace redakčního systému</small> </h2>
+        </div>
+        
 
 
 
 
-            <div class="row">
+        <div class="row">
 
 
 
 
-                <section class="j-admin-section col-lg-6">
-                    <h2>Průvodce instalací</h2>
+            <section class="col-lg-6">
+                <div class="j-admin-section">
+                   
 
                     <form id="installForm" method="post" asp-area="Admin" asp-controller="Install" asp-action="Index">
 
@@ -164,7 +152,7 @@
                         <div class="form-group">
                             <label>Zadejte připojovací řetězec</label>
                             @*Data Source=(localdb)\jaspersitecore;Initial Catalog=JasperSiteCoreDb;Integrated Security=True"*@
-                            <input class="form-control" type="text" asp-for="ConnectionString" />
+                            <textarea rows="3" class="form-control" type="text" asp-for="ConnectionString"> </textarea>
                             <span asp-validation-for="ConnectionString" class="text-danger"></span><br />
 
 
@@ -218,11 +206,11 @@
                             }
                         </div>
                     </form>
+                </div>
+            </section>
 
-                </section>
-
-                <section class="j-admin-section col-lg-6">
-
+            <section class="col-lg-6">
+                <div class="j-admin-section">
                     @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
                     {
                         <div class="alert alert-warning" role="alert">
@@ -272,9 +260,10 @@
                         </div>
 
                     </div>
-                </section>
+                </div>
+            </section>
 
-            </div>
         </div>
-    </body>
+    </div>
+</body>
 </html>
