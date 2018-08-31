@@ -38,16 +38,26 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 model.model1 = UpdateSettingsNameViewModel();
-                model.model2 = UpdateJasperJsonViewModel();              
+                model.model2 = UpdateJasperJsonViewModel();
+                model.model3 = UpdateJasperJsonThemeViewModel();
                 return model;
             }
             catch (Exception) 
             {
                 model.model1.WebsiteName = string.Empty;
                 model.model2.JasperJson = string.Empty;
+
+                model.model3.JasperJson = string.Empty;
+                model.model3.Themes = new List<Theme>();
             }
            
             return model;
+        }
+
+        [HttpPost]
+        public IActionResult SaveThemeJasperJson()
+        {
+            return Ok();
         }
 
         [HttpPost]
@@ -85,6 +95,109 @@ namespace JasperSiteCore.Areas.Admin.Controllers
               return  RedirectToAction("Index", UpdatePage());
             }
         }
+
+        public JasperJsonThemeViewModel UpdateJasperJsonThemeViewModel()
+        {
+            JasperJsonThemeViewModel model = new JasperJsonThemeViewModel();
+            model.JasperJson = Configuration.WebsiteConfig.GetThemeJsonFileAsString();
+            
+            model.Themes = OrderAllThemesByActive();
+            return model;
+        }
+
+        private List<Theme> OrderAllThemesByActive()
+        {
+            // First item in the list will be the current theme
+            List<Theme> allThemes = _dbHelper.GetAllThemes();
+            int currentThemeId = _dbHelper.GetCurrentThemeIdFromDb();
+            Theme currentTheme = allThemes.Where(t => t.Id == currentThemeId).Single();
+            currentTheme.Name += " (aktuální)";
+            allThemes.Remove(currentTheme);
+            allThemes.Insert(0, currentTheme);
+            return allThemes;
+        }
+
+        [HttpGet]
+        public IActionResult FetchThemeJasperJsonData(int themeId)
+        {
+           string themeName= _dbHelper.GetAllThemes().Where(t => t.Id == themeId).Single().Name;
+           string jsonThemeData= Configuration.WebsiteConfig.GetThemeJsonFileAsString(themeName);
+
+            JasperJsonThemeViewModel model = new JasperJsonThemeViewModel();
+            model.JasperJson = jsonThemeData;
+
+            // currently selected theme will be first in the list
+            List<Theme> allThemes = _dbHelper.GetAllThemes();
+            Theme themeBeingShown = allThemes.Where(t => t.Id == themeId).Single();           
+            allThemes.Remove(themeBeingShown);
+            allThemes.Insert(0, themeBeingShown);
+
+            // currently activated theme will be marked
+            int currentThemeid = _dbHelper.GetCurrentThemeIdFromDb();
+            allThemes.Where(t => t.Id == currentThemeid).Single().Name += " (aktuální)";
+
+            model.Themes = allThemes;
+
+            return PartialView("JasperJsonThemePartialView", model);
+        }
+
+        [HttpPost]
+        public IActionResult PostThemeJasperJsonData(JasperJsonThemeViewModel viewModel)
+        {  
+            bool isAjaxRequest = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            int selectedThemeId = viewModel.SelectedThemeId;
+            string themeNameToBeUpdated = _dbHelper.GetAllThemes().Where(t => t.Id == selectedThemeId).Single().Name;
+            try
+            {
+                
+                string newJsonData = viewModel.JasperJson;
+
+                Configuration.WebsiteConfig.SaveThemeJsonFileAsString(newJsonData,themeNameToBeUpdated);
+                Configuration.ThemeHelper.UpdateAllThemeRelatedData(_databaseContext); // apply changes             
+
+                TempData["Success"] = true;
+             
+                
+            }
+            catch 
+            {
+                TempData["ErrorMessage"] = "Soubor nebylo možné aktualizovat.";               
+            }
+
+            //// update model
+            //JasperJsonThemeViewModel model = new JasperJsonThemeViewModel();
+            //model.JasperJson = Configuration.WebsiteConfig.GetThemeJsonFileAsString();
+            //// currently selected theme will be first in the list
+            //List<Theme> allThemes = _dbHelper.GetAllThemes();
+            //Theme themeToBeUpdated = _dbHelper.GetAllThemes().Where(t => t.Id == selectedThemeId).Single();
+            //themeToBeUpdated.Name += " (aktuální)";
+            //allThemes.Remove(themeToBeUpdated);
+            //allThemes.Insert(0, themeToBeUpdated);
+
+
+            JasperJsonThemeViewModel model = new JasperJsonThemeViewModel();
+            model.JasperJson = Configuration.WebsiteConfig.GetThemeJsonFileAsString();
+
+            // currently selected theme will be first in the list
+            List<Theme> allThemes = _dbHelper.GetAllThemes();
+            Theme themeBeingShown = allThemes.Where(t => t.Id == selectedThemeId).Single();
+            allThemes.Remove(themeBeingShown);
+            allThemes.Insert(0, themeBeingShown);
+
+            // currently activated theme will be marked
+            int currentThemeid = _dbHelper.GetCurrentThemeIdFromDb();
+            allThemes.Where(t => t.Id == currentThemeid).Single().Name += " (aktuální)";
+
+            model.Themes = allThemes;
+
+            if (isAjaxRequest)
+            {
+                return PartialView("JasperJsonThemePartialView", model);
+            }
+            else return RedirectToAction("Index");
+
+        }
+
 
         public JasperJsonViewModel UpdateJasperJsonViewModel()
         {

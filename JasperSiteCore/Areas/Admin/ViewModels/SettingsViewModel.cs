@@ -10,10 +10,10 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 {
     public class SettingsViewModel
     {
-      
-       public SettingsNameViewModel model1 { get; set; }
+
+        public SettingsNameViewModel model1 { get; set; }
         public JasperJsonViewModel model2 { get; set; }
-       
+        public JasperJsonThemeViewModel model3 { get; set; }
 
     }
 
@@ -21,12 +21,22 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
     {
         [Display(Name = "Název vašeho webu")]
         [Required(ErrorMessage = "Zvolte název vašeho webu")]
-       public string WebsiteName { get; set; }
+        public string WebsiteName { get; set; }
     }
 
     public class JasperJsonViewModel
     {
-        
- public string JasperJson { get; set; }
+        public string JasperJson { get; set; }
     }
+
+    public class JasperJsonThemeViewModel
+    {
+        public string JasperJson { get; set; }
+        public int SelectedThemeId { get; set; }
+
+        [Display(Name ="Zvolte vzhled")]
+        public List<Theme> Themes { get; set; }
+    }
+
+
 }

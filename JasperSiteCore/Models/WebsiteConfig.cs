@@ -64,6 +64,64 @@ namespace JasperSiteCore.Models
         {
            _dataProvider.SaveData(dataToSave);
         }
+        
+        public string GetThemeJsonFileAsString()
+        {
+            string path = _dataProvider.GetThemeJasperJsonLocation();
+            return System.IO.File.ReadAllText(path);
+        }
+
+        public string GetThemeJsonFileAsString(string themeName)
+        {
+            string path = _dataProvider.GetThemeJasperJsonLocation(themeName);
+            return System.IO.File.ReadAllText(path);
+        }
+
+        /// <summary>
+        /// Saves string to jasper.json theme file of the currently activated theme.
+        /// </summary>
+        /// <param name="jsonContent"></param>
+        /// <exception cref="GlobalConfigDataException"></exception>
+        public void SaveThemeJsonFileAsString(string jsonContent)
+        {
+            try
+            {
+                string path = _dataProvider.GetThemeJasperJsonLocation();
+                System.IO.File.WriteAllText(path, jsonContent);
+            }
+            catch (Exception)
+            {
+                throw new ConfigurationObjectException();
+            }
+        }
+
+
+        /// <summary>
+        /// Saves string to jasper.json theme file of the currently activated theme.
+        /// </summary>
+        /// <param name="jsonContent"></param>
+        /// <exception cref="GlobalConfigDataException"></exception>
+        public void SaveThemeJsonFileAsString(string jsonContent,string themeName)
+        {
+            try
+            {
+                string path = _dataProvider.GetThemeJasperJsonLocation(themeName);
+                System.IO.File.WriteAllText(path, jsonContent);
+            }
+            catch (Exception)
+            {
+                throw new ConfigurationObjectException();
+            }
+        }
+
+
+
+
+
+
+
+
+
 
         // Properties supporting get + set (saves data in file after calling CommitChanges())
 
@@ -293,6 +351,8 @@ namespace JasperSiteCore.Models
     {
         ConfigurationObject GetFreshData();
         void SaveData(ConfigurationObject dataToSave);
+        string GetThemeJasperJsonLocation();
+        string GetThemeJasperJsonLocation(string themeName);
     }
 
     /// <summary>        

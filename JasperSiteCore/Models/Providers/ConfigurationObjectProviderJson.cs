@@ -55,7 +55,7 @@ namespace JasperSiteCore.Models
         }
 
         /// <summary>
-        /// 
+        /// Returns path to the currently activated theme.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ThemeConfigurationFileNotFoundException"></exception>
@@ -78,6 +78,34 @@ namespace JasperSiteCore.Models
                 throw new ThemeConfigurationFileNotFoundException(ex);
             }
         }
+
+        /// <summary>
+        /// Returns path to the specified theme.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ThemeConfigurationFileNotFoundException"></exception>
+        /// <exception cref="ConfigurationObjectProviderJsonException"></exception>
+        public string GetThemeJasperJsonLocation(string themeName)
+        {
+            try
+            {
+                string path = System.IO.Path.Combine(Env.Hosting.ContentRootPath, GlobalWebsiteConfig.ThemeFolder);
+                string[] directories = Directory.GetDirectories(path, themeName);
+                if (directories.Count() == 1)
+                {
+                    string themeDirectoryUrl = directories[0]; // např. ~/Themes/JasperTheme
+                    return Path.Combine(themeDirectoryUrl, _jsonPath);
+                }
+                else throw new ConfigurationObjectProviderJsonException("Theme folder contains more themes with the same name.");
+            }
+            catch (Exception ex)
+            {
+                throw new ThemeConfigurationFileNotFoundException(ex);
+            }
+        }
+
+
+
 
         public void SaveData(ConfigurationObject dataToSave)
         {

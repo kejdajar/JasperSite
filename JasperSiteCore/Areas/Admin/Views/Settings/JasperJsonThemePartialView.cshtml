@@ -1,0 +1,67 @@
+﻿@model JasperSiteCore.Areas.Admin.ViewModels.JasperJsonThemeViewModel
+
+@Html.Partial("_SuccessModalPartialViewTemp")
+@Html.Partial("_ErrorModalPartialViewTemp")
+
+<script src="~/Areas/Admin/Content/Scripts/PartialViewUnobtrusiveFix.js"></script>
+<script>
+    $(document).ready(function(){
+
+        // By default, unobtrusive validation in partial view does not work after first submit
+        UnobtrusiveValidationFix('#themeSettingsForm');
+
+    $("#themeSelect").on('change',function(){
+   
+    $.ajax({    type: 'get',
+                url: '@Url.Action("FetchThemeJasperJsonData", "Settings")',
+                data: { "themeId":this.value}, // returns value from select list
+                success: function (data) {
+
+        $("#mainForm3").html(data);        
+
+                }
+
+    }); 
+    
+    });
+    
+    
+    $("#submitThemeJsonBtn").click(function(e){
+   e.preventDefault();
+
+    $.ajax({    type: 'post',
+                url: '@Url.Action("PostThemeJasperJsonData", "Settings")',
+                data: $("#themeSettingsForm").serialize(), 
+                success: function (data) {
+
+        $("#mainForm3").html(data);        
+
+                }
+
+    }); 
+    
+    });
+
+
+
+
+
+
+    });
+</script>
+<form id="themeSettingsForm" asp-action="SaveThemeJasperJson" asp-controller="Settings"
+      asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm3">
+   
+    <div class="form-group">
+        <label asp-for="Themes"></label>
+        <select id="themeSelect"  class="form-control" asp-for="SelectedThemeId" asp-items="@(new SelectList(Model.Themes,"Id","Name"))"></select>
+    </div>
+    
+    <div class="form-group">
+        <textarea asp-for="JasperJson" rows="15" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <button id="submitThemeJsonBtn" type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit a aplikovat </button>
+    </div>
+</form>

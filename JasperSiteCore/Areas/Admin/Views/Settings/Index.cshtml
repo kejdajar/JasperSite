@@ -59,9 +59,17 @@
 @*=====SECOND FORM=====*@
 <section class="j-admin-section">
     <h4><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Globální konfigurační soubor jasper.json</h4>
-
+   
     <div id="mainForm2">
         @Html.Partial("JasperJsonPartialView", Model.model2)
+    </div>
+</section>
+
+<section class="j-admin-section">
+    <h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Vzhledový konfigurační soubor jasper.json</h4>
+    
+    <div id="mainForm3">
+        @Html.Partial("JasperJsonThemePartialView", Model.model3)
     </div>
 </section>
 @*=====SECOND FORM END=====*@

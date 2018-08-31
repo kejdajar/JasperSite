@@ -19,8 +19,8 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
         [Display(Name = "Text článku")]
         public string HtmlContent { get; set; }
 
-        [Required(ErrorMessage ="Vyplňte prosím datum publikace")]
-        [Display(Name = "Datum publikace")]
+        [Required(ErrorMessage ="Vyplňte prosím datum vytvoření")]
+        [Display(Name = "Datum vytvoření")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? PublishDate { get; set; }
 

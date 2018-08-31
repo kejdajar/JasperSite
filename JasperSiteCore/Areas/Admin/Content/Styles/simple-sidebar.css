@@ -13,11 +13,9 @@
 
 
  body {
-    overflow-x: hidden;
-   
+    overflow-x: hidden;   
  }
-
-
+ 
  .menuGroup {
      padding-top:20px;
  }
