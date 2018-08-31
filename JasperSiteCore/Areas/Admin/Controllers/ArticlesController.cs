@@ -78,6 +78,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         }
 
         [HttpGet]
+        // Returns only articles with Published=true
         public IActionResult GetArticle(int id)
         {
             try
@@ -105,6 +106,9 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             try
             {
                 Article articleToEdit = dbHelper.GetArticleById(id);
+
+                //if (!articleToEdit.Publish) return null; // not published article will not be served
+
                 EditArticleViewModel model = new EditArticleViewModel
                 {
                     Id = articleToEdit.Id,
@@ -113,6 +117,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     PublishDate = articleToEdit.PublishDate,
                     Categories = dbHelper.GetAllCategories(),
                     SelectedCategoryId = articleToEdit.CategoryId,
+                    Publish = articleToEdit.Publish
                     
                 };
 
@@ -145,6 +150,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     newArticleData.Name = model.Name;
                     newArticleData.PublishDate = (DateTime)model.PublishDate;
                     newArticleData.CategoryId = model.SelectedCategoryId;
+                    newArticleData.Publish = model.Publish;
                     Article articleReference = dbHelper.EditArticle(newArticleData);
 
                     // URL rewriting

@@ -61,16 +61,21 @@
 
 @Html.Partial("_ErrorModalPartialViewTemp")
 @Html.Partial("_SuccessModalPartialViewTemp")
-
+<style>
+    .notPublished td {
+        background-color:lightyellow!important;
+    }
+</style>
 
 <div class="table-responsive">
 
     @if (Model != null)
     {<table class="table table-bordered j-table j-table-text-center" id="articleTable">
-            <tr><th>Jméno článku</th><th>Rubrika</th><th>Publikováno</th><th>Akce</th></tr>
+            <tr><th>Publikováno</th><th>Jméno článku</th><th>Rubrika</th><th>Datum vytvoření</th><th>Akce</th></tr>
             @foreach (Article a in Model)
             {
-                <tr data-href="@a.Id">
+                <tr data-href="@a.Id"  class="@((!a.Publish) ? "notPublished":"")">
+                    <td><input disabled type="checkbox" @((a.Publish) ? "checked":"")    /></td>
                     <td>@a.Name</td>
                     <td>@a.Category.Name</td>
                     <td>@a.PublishDate</td>

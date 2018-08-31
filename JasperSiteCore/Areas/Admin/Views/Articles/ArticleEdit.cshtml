@@ -21,6 +21,12 @@
             $('#btnSaveTinymce').click(function (e) {
                 
                 e.preventDefault();
+      var isForPublish = false;
+        if ($('#publishCheckBox').is(":checked"))
+{
+  isForPublish = true;
+}
+        
 
                 var frmValidation = $('#editForm').valid();
                 if (frmValidation) {
@@ -32,7 +38,8 @@
                         HtmlContent: textarea,
                         PublishDate: $("#publishDate").val(),
                         SelectedCategoryId: $("#selectCategory").val(),
-                        Url: $("#tbUrl").val()
+                        Url: $("#tbUrl").val(),
+                        Publish: isForPublish
 
                     };
 

@@ -140,6 +140,7 @@ namespace JasperSiteCore.Models.Database
                 oldArticleToChange.Name = article.Name;
                 oldArticleToChange.PublishDate = (DateTime)article.PublishDate;
                 oldArticleToChange.CategoryId = article.CategoryId;
+                oldArticleToChange.Publish = article.Publish;
                 Database.SaveChanges();
                 return oldArticleToChange;
             }
@@ -1620,14 +1621,14 @@ namespace JasperSiteCore.Models.Database
         }
 
         /// <summary>
-        /// Returns list of all articles. In case of failure returns null.
+        /// Returns list of all !PUBLISHED! articles. In case of failure returns null.
         /// </summary>
         /// <returns></returns>
         public List<Article> GetAllArticles()
         {
             try
             {
-                return _dbHelper.GetAllArticles();
+                return _dbHelper.GetAllArticles().Where(a=>a.Publish).ToList();
             }
             catch
             {
@@ -1636,7 +1637,7 @@ namespace JasperSiteCore.Models.Database
         }
 
         /// <summary>
-        /// Returns list of all articles from required category. In case of failure returns null;
+        /// Returns list of all !PUBLISHED! articles from required category. In case of failure returns null;
         /// </summary>
         /// <param name="categoryId"></param>
         /// <returns></returns>
@@ -1644,7 +1645,7 @@ namespace JasperSiteCore.Models.Database
         {
             try
             {
-                return _dbHelper.GetAllArticles(categoryId);
+                return _dbHelper.GetAllArticles(categoryId).Where(a=>a.Publish).ToList();
             }
             catch
             {
@@ -1781,7 +1782,7 @@ namespace JasperSiteCore.Models.Database
         }
 
         /// <summary>
-        /// Returns database attached object of Article by Id. In case of failure returns null.
+        /// Returns database attached object of !PUBLISHED! Article by Id. In case of failure returns null.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -1789,7 +1790,12 @@ namespace JasperSiteCore.Models.Database
         {
             try
             {
-                return _dbHelper.GetArticleById(id);
+             Article article = _dbHelper.GetArticleById(id);
+                if (article.Publish)
+                {
+                    return article;
+                }
+                else return null;
             }
             catch
             {

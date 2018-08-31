@@ -30,7 +30,8 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 
         public int SelectedCategoryId { get; set; }
 
-
+        [Display(Name="Publikovat článek")]
+        public bool Publish { get; set; }
       
         public string Url { get; set; }
 
