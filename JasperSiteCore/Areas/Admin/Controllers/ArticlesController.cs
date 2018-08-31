@@ -270,35 +270,79 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
        
         [HttpGet]
-        public IActionResult DeleteRoute(string name, int currentArticleId)
+        public IActionResult DeleteRoute(string name, int? currentArticleId)
         {
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
 
             try
             {
+                // Both parameters has to be filled in
+                if (string.IsNullOrEmpty(name) || currentArticleId == null)
+                {
+                    TempData["ErrorMessage"] = "Položku se nepodaøilo odstranit.";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    // Let's test if article and URL exists
+                    try
+                    {
+                        Article article = dbHelper.GetArticleById((int)currentArticleId);
+                        UrlRewrite rule= dbHelper.GetAllUrls().Where(url => url.Url == name).Single();
+                    }
+                    catch
+                    {
+                        TempData["ErrorMessage"] = "Položku se nepodaøilo odstranit.";
+                        return RedirectToAction("Index");
+                    }
+                   
+                    
+                }
+
+                // At least one ULR rewriting rule has to exist and URL rewriting has to be allowed
+                int numberOfRules = dbHelper.GetUrls((int)currentArticleId).Count();                                               
+
+                if (numberOfRules < 2 && Configuration.WebsiteConfig.UrlRewriting)
+                {
+                    throw new NoUrlRulesException("At least one rewriting rule has to be present.");
+                }
+
                 dbHelper.DeleteUrl(name);
+
                 TempData["Success"] = true;
+                  
+
             }
-            catch 
+            catch(InvalidUrlRewriteException)
             {
-                TempData["ErrorMessage"] = "Položku se nepodaøilo odstranit";            
+                TempData["ErrorMessage"] = "Daná URL adresa nebyla nalezena pro operaci odstranìní.";
+            }
+            catch (NoUrlRulesException)
+            {
+                TempData["ErrorMessage"] = "Pro daný èlánek musí existovat alespoò jedna URL adresa.";
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Položku se nepodaøilo odstranit";
             }
 
-            if(isAjax)
-            {
-                // Return URL routes only for current article
-                UrlListViewModel model = new UrlListViewModel();
-                model.Urls = dbHelper.GetAllUrls().Where(url => url.ArticleId == currentArticleId).Select(u => u.Url).ToList();
-                model.ArticleId = currentArticleId;
 
-                return PartialView("UrlListPartialView", model);
+            if (isAjax)
+            {
+                              
+                    // Return URL routes only for current article
+                    UrlListViewModel model = new UrlListViewModel();
+                    model.Urls = dbHelper.GetUrls((int)currentArticleId);
+                    model.ArticleId = (int)currentArticleId;
+                    return PartialView("UrlListPartialView", model); 
+                
             }
             else
             {
                 return RedirectToAction("Index");
-            }            
+            }
 
-           
+
         }
 
     }

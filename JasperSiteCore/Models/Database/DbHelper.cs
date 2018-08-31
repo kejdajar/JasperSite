@@ -1068,7 +1068,8 @@ namespace JasperSiteCore.Models.Database
         {
             try
             {
-                return Database.UrlRewrite.Where(ur => ur.ArticleId == articleId).Select(s => s.Url).ToList();
+               List<string> urls= Database.UrlRewrite.Where(ur => ur.ArticleId == articleId).Select(s => s.Url).ToList();               
+                return urls;
             }
             catch (Exception ex)
             {
