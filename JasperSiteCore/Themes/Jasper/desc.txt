@@ -1,1 +1,1 @@
-﻿<b>Jasper</b> je základní vzhled vaší webové stránky v červeném odstínu.
+﻿Jasper je základní vzhled vaší webové stránky v červeném odstínu.

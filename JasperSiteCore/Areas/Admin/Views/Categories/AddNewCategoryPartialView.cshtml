@@ -53,14 +53,13 @@
 <section class="j-admin-section">
     <h4><i class="fa fa-pencil j-icon" aria-hidden="true"></i>Nová rubrika</h4>
     <form asp-action="CreateNewCategory" asp-controller="Categories" method="post" id="formNewCategory">
-        <div class="input-group">
+        <div class="form-group">
             <input id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="Název rubriky" class="form-control" style="z-index:0" />
-
-
-            <div class="input-group-btn">
-                <input type="submit" class="btn btn-jasper" style="width:200px;z-index:0" value="Vytvořit" id="btnSubmit" />
-            </div>
+        </div>   
+        <div class="form-group">
+            <input type="submit" class="btn btn-jasper" style="width:200px;z-index:0" value="Vytvořit" id="btnSubmit" />
         </div>
+        
         <span asp-validation-for="NewCategory.NewCategoryName" class="text-danger"></span>
     </form>
 </section>

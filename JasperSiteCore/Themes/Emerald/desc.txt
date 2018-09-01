@@ -1,1 +1,1 @@
-﻿<b>Emerald</b> je základní vzhled vaší webové stránky v zeleném odstínu. 
+﻿Emerald je základní vzhled vaší webové stránky v zeleném odstínu. 

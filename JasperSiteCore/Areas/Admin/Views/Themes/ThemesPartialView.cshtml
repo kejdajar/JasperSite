@@ -15,7 +15,7 @@
 
             /* TOOLTIP & HIGHLIGHT */
             $("tr[data-theme='@Model.SelectedThemeName']").css("border-left", "10px solid #BA68C8");
-           
+
     $('[data-toggle="tooltip"]').tooltip();
 
             /* DELETE THEME AJAX*/
@@ -43,7 +43,7 @@
 
                             //savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
                         }
-                        
+
 
                     });
             }
@@ -85,7 +85,8 @@
 
 <form asp-action="Index" asp-controller="Themes" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1">
 
-    <div class="table-responsive">
+    @* OLD THEME LIST *@
+    @*<div class="table-responsive">
         <table class="table table-bordered j-table j-table-text-center j-theme-table" id="articleTable">
             <tr>  <th>Jméno vzhledu</th><th>Název</th><th>Popis vzhledu</th><th>Akce</th></tr>
 
@@ -142,10 +143,82 @@
                 </tr>
             }
         </table>
-    </div>
-    <input type="hidden" asp-for="PageNumber" />
-    @Html.Partial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.PageNumber, TotalNumberOfPages = Model.TotalNumberOfPages })
+    </div>*@
 
+
+
+
+    <div class="themeGalleryContainer">
+
+
+
+        @foreach (ThemeInfo info in Model.ThemeInfoList)
+        {
+            <div class="themeGalleryItem">
+                <div class="themeItemName">
+                    @info.ThemeName
+                    @if (info.ThemeName == Model.SelectedThemeName)
+                    {
+                        @: (aktuální)
+                    }
+                </div>
+                <div>
+                    @{string img = Url.Content(info.ThemeThumbnailUrl);}
+                    @if (!string.IsNullOrEmpty(img))
+                    {
+                        <img src="@img" class="img-fluid" />
+                    }
+                    else
+                    {
+                        <i class="fa fa-question fa-2x"></i>
+                    }
+                </div>
+                <div class="themeDescription">
+                    @if (!string.IsNullOrEmpty(info.ThemeDescription))
+                    {
+                        @Html.Raw(info.ThemeDescription)
+
+                    }
+                    else
+                    {
+                        <i>Popis není k dispozici</i>
+
+                    }
+                </div>
+                <div class="themeControl">
+                    @{
+                        if (info.ThemeName != Model.SelectedThemeName)
+                        {
+
+                            <a data-toggle="tooltip" title="Aktivovat" asp-area="Admin" asp-controller="Themes" asp-action="ActivateTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper" data-activate-name="@info.ThemeName"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a>
+                            <span data-toggle="modal" data-target="#myModal">
+                                <a data-toggle="tooltip" title="Odstranit" asp-area="Admin" asp-controller="Themes" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" data-delete-name="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                            </span>
+                        }
+
+                    }
+
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <input type="hidden" asp-for="PageNumber" />
+
+    <div class="pagingPartialBox">
+        @Html.Partial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.PageNumber, TotalNumberOfPages = Model.TotalNumberOfPages })
+    </div>
 </form>
 
 

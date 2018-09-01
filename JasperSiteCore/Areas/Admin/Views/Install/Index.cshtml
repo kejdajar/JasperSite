@@ -73,8 +73,8 @@
 
            if( $("#installForm").valid()) {
 
-        e.preventDefault();
-         appendWindow("Skutečně reinstalovat redakční systém?", "Tato akce je nevratná, veškerý obsah bude smazán.", function () { $("#installForm").submit();  }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Smazat data a reinstalovat systém");
+               e.preventDefault();
+               appendWindow("Skutečně reinstalovat redakční systém?", "Tato akce je nevratná, veškerý obsah bude smazán.", function () { toggleWindow(); $("body").addClass("loading"); $("#installForm").submit(); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Smazat data a reinstalovat systém");
        }
             });
         });
@@ -107,7 +107,58 @@
         .j-jumbotron-span {
             color: #BA68C8;
         }
-    </style>
+
+
+        /* Centered div with spinning icon (without shade) */
+
+        .modal-loading {
+            display:none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+            background-color:transparent;
+            z-index: 3;
+        }
+
+
+        body.loading .modal-loading {
+            overflow: hidden;
+        }
+
+        body.loading .modal-loading {
+            display: block;
+        }
+        
+
+
+        /* Background shade */       
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 255, 255, 255, .8 );
+        }
+
+        /* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+        body.loading .modal {
+            overflow: hidden;
+        }
+
+        /* Anytime the body has the loading class, our
+   modal element will be visible */
+        body.loading .modal {
+            display: block;
+        }
+       
+    </style> 
 
 </head>
 
@@ -120,14 +171,14 @@
     }
 
     <div class="container">
-       
+
         <div style="margin-bottom:20px">
             <h1>
                 J<span class="j-jumbotron-span">asp</span>er Site <span class="j-jumbotron-span">Core</span>
             </h1>
             <h2><small>Instalace redakčního systému</small> </h2>
         </div>
-        
+
 
 
 
@@ -139,9 +190,9 @@
 
             <section class="col-lg-6">
                 <div class="j-admin-section">
-                   
 
-                    <form id="installForm" method="post" asp-area="Admin" asp-controller="Install" asp-action="Index">
+
+                    <form id="installForm" method="post" asp-area="Admin" asp-controller="Install" asp-action="Index" >
 
                         <div class="form-group">
                             <label>Zvolte databázi</label>
@@ -206,6 +257,8 @@
                             }
                         </div>
                     </form>
+
+
                 </div>
             </section>
 
@@ -265,5 +318,12 @@
 
         </div>
     </div>
+
+
+
+
+    <div class="modal"></div>
+    <div class="modal-loading"><div><i class="fa fa-4x fa-spinner fa-spin"></i></div></div>
+
 </body>
 </html>

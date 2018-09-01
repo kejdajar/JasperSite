@@ -12,26 +12,28 @@
       $.ajax({
                         type: 'get',
                         url: '@Url.Action("DeleteRoute","Articles")',
-                        data:  {name: $(this).data("routeName"), 
+                        data:  {name: $(this).data("routeName"),
                                currentArticleId: @Model.ArticleId
                                },
                         dataType: 'HTML',
                         success: function (data) {
-                            
+
                             $("#urlList").html(data);
                         }
                     });
 
-    
+
 
 
     });
     });
 </script>
 
+@if(JasperSiteCore.Models.Configuration.WebsiteConfig.UrlRewriting)
+{
 
 <div class="table-responsive">
-    @if (Model.Urls.Count>0)
+    @if (Model.Urls.Count > 0)
     {
         <table id="routeTable" class="table table-bordered j-table j-table-left">
             <tr><th>Odstranit</th><th class="col-sm-1">URL</th></tr>
@@ -55,3 +57,12 @@
 
     }
 </div>
+
+
+  }
+        else
+        {
+<div class="alert alert-secondary">
+    Přepisování URL adres není pro tento vzhled momentálně aktivováno.
+</div>
+        }

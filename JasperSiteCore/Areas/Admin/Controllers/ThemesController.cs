@@ -45,7 +45,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             try
             {
-                int itemsPerPage = 3;
+                int itemsPerPage = 6;
                 int currentPage = model.PageNumber;
 
                 string next = collection["next"];
@@ -137,7 +137,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             try
             {
-                int itemsPerPage = 3;
+                int itemsPerPage = 6;
                 int currentPage = 1;
 
                 List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();

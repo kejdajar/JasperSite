@@ -1,1 +1,1 @@
-﻿<b>Onyx</b> je základní vzhled vaší webové stránky v modro černém odstínu.
+﻿Onyx je základní vzhled vaší webové stránky v modro černém odstínu.
