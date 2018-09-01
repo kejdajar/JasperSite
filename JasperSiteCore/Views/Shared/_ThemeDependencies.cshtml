@@ -4,16 +4,15 @@
 @* ---------------------------------------------------END MANUALLY DOWNLOADED AND MODIFIED PRISM------------------------ *@
 
 @*=========================================================Styles===========================================================**@
-<environment include="Development">
-    <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" /> <!--Bootstrap 4.1.3-->    
-    <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" /> <!--Font awesome 4.7 -->
+<environment include="Development">    
+    <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
 </environment>
 
 <environment exclude="Development">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"
-          asp-fallback-href="~/node_modules/bootstrap/dist/css/bootstrap.min.css"
-          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />   
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /> <!--Font awesome 4.7 -->
+   
+    <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 </environment>
 
 @*=========================================================Scripts===========================================================*@
@@ -25,20 +24,9 @@
 </environment>
 
 <environment exclude="Development">
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-            asp-fallback-src="~/node_modules/jquery/dist/jquery.min.js"
-            asp-fallback-test="window.jQuery"
-            crossorigin="anonymous"
-            integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-    </script>
-
-    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
-
    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
-            asp-fallback-src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"
-            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-            crossorigin="anonymous"
-            integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn">
-    </script>
+    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
 </environment>
