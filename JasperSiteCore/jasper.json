@@ -1,5 +1,5 @@
 {
-  "themeName": "Default",
+  "themeName": "Jasper",
   "themeFolder": "Themes",
   "connectionString": "Server=localhost;Database=jaspermysql;Uid=root;Pwd=root ",
   "typeOfDatabase": "mysql",

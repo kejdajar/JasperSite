@@ -376,5 +376,30 @@ namespace JasperSiteCore.Models
 
     }
 
+    public class NoHomepageException : Exception
+    {
+        private static string _message = "The global configuration jasper.json file is missing HomePage or HomePageFile attribute, or they have invalid values.";
+
+        public NoHomepageException() : base(_message)
+        {
+
+        }
+        public NoHomepageException(string message)
+            : base(message)
+        {
+        }
+
+        public NoHomepageException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public NoHomepageException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
+
 
 }

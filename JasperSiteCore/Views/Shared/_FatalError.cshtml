@@ -68,6 +68,13 @@
             color: #BA68C8;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            $("[name='reloadButton']").click(function () {
+                location.reload();
+            });
+        });
+    </script>
 
 </head>
 
@@ -81,7 +88,7 @@
         {
             if (ex != null)
             {
-                errorMessages.Add(ex.Message);
+                errorMessages.Add($" {ex.ToString()}, <b>{ex.Message}</b>");
                 if (ex.InnerException != null)
                 {
                     Recursion(ex.InnerException);
@@ -96,7 +103,7 @@
 
         try
         {
-            (errorMessages[0]) = "<b>Hlavní chyba:</b> " + errorMessages[0];
+            (errorMessages[0]) = "<b>Hlavní chyba:</b> "  + errorMessages[0];
             if (errorMessages.Count > 1)
             {
                 for (int i = 0; i <= errorMessages.Count(); i++)
@@ -139,7 +146,7 @@
                         {
                             if ((string)(TempData["ErrorInPageLevelCode"]) == "1")
                             {
-                                <div class="alert alert-danger">
+                                <div class="alert alert-warning">
                                     Na požadované stránce se nachází chyba, kterou je nutné opravit.
                                 </div>
                             }
@@ -176,6 +183,7 @@
                                 Vítejte uživateli @User.Identity.Name. Tuto sekci vidíte, protože máte roli <b>Admin</b>. <br />
                                 <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-undo fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
                                 <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Home" asp-area="admin" asp-action="Index"><i class="fa fa-diamond fa-1x"> </i> Přejít do administrace</a>
+                                <a name="reloadButton" class="btn btn-jasper btn-user-icon" style="left:5px;"><i class="fa fa-refresh"> </i> Načíst tuto stránku znovu</a>
                             </p>
 
                             <p>

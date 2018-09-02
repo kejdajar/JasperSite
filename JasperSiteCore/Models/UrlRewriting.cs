@@ -38,13 +38,15 @@ namespace JasperSiteCore.Models
 
 
         /// <summary>
-        /// Removes last slash from URL if present.
+        /// Removes last slash from URL if present. In case of null URL, string.empty is returned.
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
         /// <exception cref="InvalidUrlRewriteException"></exception>
         public static string CleanseUrl(string url)
         {
+            if (string.IsNullOrEmpty(url)) return string.Empty;
+
             try
             {
                 if(url.EndsWith('/'))

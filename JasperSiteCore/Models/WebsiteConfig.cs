@@ -39,7 +39,7 @@ namespace JasperSiteCore.Models
             string errorMsg = "JSON theme configuration data file could not be found or contains invalid data.";
 
             if (Configuration.GlobalWebsiteConfig != null)
-                errorMsg += (Configuration.GlobalWebsiteConfig.ThemeName != null) ? "Folder with missing jasper.json: " + Configuration.GlobalWebsiteConfig.ThemeName.ToString() + ". " : string.Empty;
+                errorMsg += (Configuration.GlobalWebsiteConfig.ThemeName != null) ? "Folder with jasper.json: " + Configuration.GlobalWebsiteConfig.ThemeName.ToString() + ". " : string.Empty;
 
             throw new ConfigurationObjectProviderJsonException(errorMsg, innerException);
         }
@@ -131,7 +131,11 @@ namespace JasperSiteCore.Models
             {
                 try
                 {
-                    return _configurationObject.RoutingList;
+                    Routing routingList = _configurationObject.RoutingList;
+                    if (routingList.HomePage.Count() <1 || string.IsNullOrEmpty(routingList.HomePageFile))
+                    { throw new NoHomepageException(); }
+                    else return routingList;
+
                 }
                 catch (Exception ex)
                 {
@@ -211,12 +215,12 @@ namespace JasperSiteCore.Models
             {
                 try
                 {
-                    return _configurationObject.BlockHolders;
+                 List<string> blockHolders= _configurationObject.BlockHolders;
+                    if (blockHolders == null) return new List<string>(); else return blockHolders;
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    ThrowError(ex);
-                    return null;
+                    return new List<string>();
                 }
             }
             set

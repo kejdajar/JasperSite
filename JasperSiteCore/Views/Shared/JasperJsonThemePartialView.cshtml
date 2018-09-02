@@ -31,7 +31,7 @@
    e.preventDefault();
 
     $.ajax({    type: 'post',
-                url: '@Url.Action("PostThemeJasperJsonData", "Settings")',
+                url: '@Url.Action("PostThemeJasperJsonData", "Settings", new { Area = "admin" })',
                 data: $("#themeSettingsForm").serialize(), 
                 success: function (data) {
 

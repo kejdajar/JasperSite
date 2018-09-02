@@ -147,9 +147,12 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             bool isAjaxRequest = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             int selectedThemeId = viewModel.SelectedThemeId;
             string themeNameToBeUpdated = _dbHelper.GetAllThemes().Where(t => t.Id == selectedThemeId).Single().Name;
+            string oldDataBackup = string.Empty;
+
             try
             {
-                
+                oldDataBackup =  Configuration.WebsiteConfig.GetThemeJsonFileAsString(themeNameToBeUpdated);
+
                 string newJsonData = viewModel.JasperJson;
 
                 Configuration.WebsiteConfig.SaveThemeJsonFileAsString(newJsonData,themeNameToBeUpdated);
@@ -161,7 +164,10 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             }
             catch 
             {
-                TempData["ErrorMessage"] = "Soubor nebylo možné aktualizovat.";               
+                TempData["ErrorMessage"] = "Soubor nebylo možné aktualizovat.";
+              
+                // revert chages
+                Configuration.WebsiteConfig.SaveThemeJsonFileAsString(oldDataBackup, themeNameToBeUpdated);
             }
 
             //// update model
@@ -176,7 +182,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
 
             JasperJsonThemeViewModel model = new JasperJsonThemeViewModel();
-            model.JasperJson = Configuration.WebsiteConfig.GetThemeJsonFileAsString();
+            model.JasperJson = Configuration.WebsiteConfig.GetThemeJsonFileAsString(themeNameToBeUpdated);
 
             // currently selected theme will be first in the list
             List<Theme> allThemes = _dbHelper.GetAllThemes();
@@ -190,6 +196,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
             model.Themes = allThemes;
 
+            ModelState.Clear();
             if (isAjaxRequest)
             {
                 return PartialView("JasperJsonThemePartialView", model);
