@@ -89,6 +89,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Views\Shared\JasperJsonPartialView.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
@@ -96,13 +100,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Areas\Admin\Views\Settings\JasperJsonThemePartialView.cshtml">
+    <Content Update="Views\Shared\JasperJsonThemePartialView.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Admin\Views\Shared\_SuccessModalPartialViewTemp.cshtml">
+    <Content Update="Views\Shared\_SuccessModalPartialViewTemp.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\Admin\Views\Shared\_ErrorModalPartialViewTemp.cshtml">
+    <Content Update="Views\Shared\_ErrorModalPartialViewTemp.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_FatalError.cshtml">

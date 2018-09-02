@@ -87,19 +87,7 @@
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
 
     <style>
-        .j-jumbotron {
-            /*background-color: #BA68C8;*/
-        }
-
-            .j-jumbotron h1 {
-                color: white;
-            }
-
-            .j-jumbotron h2 {
-                color: #e7e7e7;
-                font-size: 1.3em;
-            }
-
+        
         body {
             margin-top: 20px;
         }
@@ -248,6 +236,13 @@
 
                             @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
                             {
+                                <script>
+                                    $(document).ready(function () {
+                                        $("#submitButton").click(function () {
+                                            $("body").addClass("loading");
+                                        });
+                                    });
+                                </script>
                                 <input id="submitButton" type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
                             }
                             else

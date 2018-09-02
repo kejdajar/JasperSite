@@ -1,4 +1,5 @@
 ﻿@using JasperSiteCore.Models.Database
+@model JasperSiteCore.Areas.Admin.ViewModels.SettingsViewModel
 @inject IJasperDataServicePublic J;
 @{
     ViewData["Title"] = "Závažná chyba";
@@ -17,10 +18,10 @@
     @*********************************************************************** Styles ****************************************************************************@
     <environment include="Development">
 
-        <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.css" />     
+        <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
         <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
-        <link href="~/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />      
+        <link href="~/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
     </environment>
 
@@ -37,8 +38,7 @@
 
     @*********************************************************************** Scripts ****************************************************************************@
     <environment include="Development">
-        <script src="~/node_modules/jquery/dist/jquery.js"></script>
-        <script src="~/node_modules/tether/dist/js/tether.js"></script>
+        <script src="~/node_modules/jquery/dist/jquery.js"></script>       
         <script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
         <script src="~/node_modules/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
@@ -50,8 +50,10 @@
         <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
         <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
         <script src="~/node_modules/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
-     
+
     </environment>
+    <!--Used by _SuccessModalPartialViewTemp.cshtml -->
+    <script src="~/Areas/Admin/Content/Scripts/SavedInfoPanel.js"></script>
 
     @{Html.RenderPartial("_ValidationScriptsPartial");}
 
@@ -59,30 +61,13 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
+
+
     <style>
-        .j-jumbotron {
-            background-color: #BA68C8;
-        }
-
-            .j-jumbotron h1 {
-                color: white;
-            }
-
-            .j-jumbotron h2 {
-                color: #e7e7e7;
-                font-size: 1.3em;
-            }
-
-        body {
-            margin-top: 20px;
-        }
-
-        .j-jumbotron-span {
-            color: black;
+        .j-header-color {
+            color: #BA68C8;
         }
     </style>
-
-
 
 </head>
 
@@ -130,69 +115,65 @@
         catch { }
     }
 
+    <div id="headerPanel"></div> @*Panel for appended success message *@
+
     <div class="container">
 
         @if (User.Identity.IsAuthenticated)
         {
-            <div class="jumbotron j-jumbotron">
-                <h1>
-                    J<span class="j-jumbotron-span">asp</span>er Site <span class="j-jumbotron-span">Core</span>
-                </h1>
-                <h2>Detekovány závažné chyby </h2>
-            </div>
-
+            <h1>J<span class="j-header-color">asp</span>er Site <span class="j-header-color">Core</span></h1>
+            <h2><small>Detekovány závažné chyby</small></h2>
 
             <div class="row">
 
+                <div class="col-lg-12">
+                    <section class="j-admin-section ">
+                        <p>
+                            Na této stránce se nachází seznam všech chyb, které je potřeba opravit, než
+                            bude možné redakční systém spolehlivě používat.
+                        </p>
 
-                <section class="j-admin-section col-lg-12">
-                    <p>
-                        Na této stránce se nachází seznam všech chyb, které je potřeba opravit, než
-                        bude možné redakční systém spolehlivě používat.
-                    </p>
 
 
-
-                    @if (TempData["ErrorInPageLevelCode"] != null)
-                    {
-                        if ((string)(TempData["ErrorInPageLevelCode"]) == "1")
+                        @if (TempData["ErrorInPageLevelCode"] != null)
                         {
-                            <div class="alert alert-danger">
-                                Na požadované stránce se nachází syntaktická chyba, kterou je nutné opravit.
-                            </div>
+                            if ((string)(TempData["ErrorInPageLevelCode"]) == "1")
+                            {
+                                <div class="alert alert-danger">
+                                    Na požadované stránce se nachází chyba, kterou je nutné opravit.
+                                </div>
+                            }
+
                         }
 
-                    }
 
-
-
-                    @if (errorMessages.Count > 0)
-                    {
-                        @foreach (string message in errorMessages)
+                        @if (errorMessages.Count > 0)
                         {
+                            @foreach (string message in errorMessages)
+                            {
 
-                            <div class="alert alert-danger">
-                                @Html.Raw(message)
-                            </div>
+                                <div class="alert alert-danger">
+                                    @Html.Raw(message)
+                                </div>
+                            }
+
                         }
+                        else
+                        {
+                            @*<div class="alert alert-warning">
+                   Žádné podrobnosti k chybám nejsou k dispozici.
+                </div>*@
 
-                    }
-                    else
-                    {
-                        @*<div class="alert alert-warning">
-               Žádné podrobnosti k chybám nejsou k dispozici.
-            </div>*@
-
-                    }
-
+                        }
+                    </section>
 
                     @if (User.IsInRole("Admin"))
                     {
-                        <div class="alert alert-info">
+                        <div class="j-admin-section">
 
                             <p>
                                 <b>Administrátorská sekce:</b> <br />
-                                Vítejte uživateli @User.Identity.Name. Tuto modře označenou sekci vidíte, protože máte roli <b>Admin</b>. <br />
+                                Vítejte uživateli @User.Identity.Name. Tuto sekci vidíte, protože máte roli <b>Admin</b>. <br />
                                 <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-undo fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
                                 <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Home" asp-area="admin" asp-action="Index"><i class="fa fa-diamond fa-1x"> </i> Přejít do administrace</a>
                             </p>
@@ -200,35 +181,55 @@
                             <p>
                                 <br /><b>Řešení problémů:</b> <br />
 
-
-                                <a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateConfigurationWithThemeReset" asp-area="Admin">
-                                    Aplikovat data z konfiguračních souborů
-                                </a><br /> Všechna konfigurační data, která byla dočasně uložena do paměti budou znovu načtena z konfiguračních souborů.
-
-                                <br />
-                                <a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze vzhledů</a> <br />
-                                V případě poškození databáze vzhledů tato možnost zresetuje databázi vzhledů a odstraní přiřazené textové bloky k jednotlivým kontejnerům příslušných vzhledů.
+                                <table class="table j-table-no-hover table-bordered">
+                                    <tr><th>Akce</th><th>Popis</th></tr>
+                                    <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Home" asp-action="Refresh" asp-area="Admin">Aktualizovat a aplikovat</a></td><td>Všechny změny v globálních a vzhledových souborech jasper.json budou aplikovány.</td></tr>
+                                    <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateAllThemesData" asp-area="Admin">Aktualizovat a aplikovat pouze vzhledy</a></td><td>Zkontroluje integritu evidovaných vzhledů a aktualizuje konfigurační nastevení všech vzhledů.</td></tr>
+                                    <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateConfiguration" asp-area="Admin">Pouze aktualizovat</a></td><td>Všechny změny v globálních a vzhledových souborech jasper.json budou načteny do paměti, ale změny týkající se vzhledů nebudou aplikovány.</td></tr>
+                                    <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze vzhledů</a></td><td>V případě poškození databáze vzhledů tato možnost zresetuje databázi vzhledů a odstraní přiřazené textové bloky k jednotlivým kontejnerům příslušných vzhledů. </td></tr>
+                                </table>
 
                             </p>
+
+
                         </div>
+
+                        <section class="j-admin-section">
+                            <h4><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Globální konfigurační soubor jasper.json</h4>
+
+                            <div id="mainForm2">
+                                @Html.Partial("JasperJsonPartialView", Model.model2)
+                            </div>
+                        </section>
+
+                        <section class="j-admin-section">
+                            <h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Vzhledový konfigurační soubor jasper.json</h4>
+
+                            <div id="mainForm3">
+                                @Html.Partial("JasperJsonThemePartialView", Model.model3)
+                            </div>
+                        </section>
                     }
 
                     @if (!User.IsInRole("Admin"))
                     {
-                        <div class="alert alert-info">
+                        <div class="j-admin-section">
+
                             <b>Sekce uživatele systému:</b> <br />
-                            Vítejte uživateli @User.Identity.Name. Tuto modře označenou sekci vidíte, protože jste přihlášen, ale nemáte administrátorská práva. Pro více možností se přihlašte jako administrátor. <br />
+                            Vítejte uživateli @User.Identity.Name. Tuto sekci vidíte, protože jste přihlášen, ale nemáte administrátorská práva. Pro více možností se přihlašte jako administrátor. <br />
                             <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-undo fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
                             <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Home" asp-area="admin" asp-action="Index"><i class="fa fa-diamond fa-1x"> </i> Přejít do administrace</a>
+
                         </div>
 
                     }
 
-                                    
 
 
 
-                </section>
+
+
+                </div>
             </div>
         }
         else
@@ -236,27 +237,28 @@
             @* Page for normal visitor *@
 
             <div class="jumbotron">
-                <h1>@{ string websiteHeader = J.GetWebsiteName();
-                   @if (websiteHeader == null)
-                   {
-                       websiteHeader = "Omlouváme se, ";
-                   }    }             
-                   
+                <h1>
+                    @{ string websiteHeader = J.GetWebsiteName();
+                        @if (websiteHeader == null)
+                        {
+                            websiteHeader = "Omlouváme se, ";
+                        } }
+
                 @websiteHeader
-                </h1>
-                <h4>stránka je momentálně mimo provoz. </h4>
-            </div>
+            </h1>
+            <h4>stránka je momentálně mimo provoz </h4>
+        </div>
 
-            <div class="row">
+        <div class="row">
 
-            </div>
+        </div>
 
-            <footer>
-                <hr />
-               Tento web využívá redakční systém JasperSiteCore. 
-                <a asp-controller="Login" asp-action="Index" asp-area="Admin" >Přihlásit se</a>
-            </footer>
-        }
+        <footer>
+            <hr />
+            Tento web využívá redakční systém JasperSiteCore.
+            <a asp-controller="Login" asp-action="Index" asp-area="Admin">Přihlásit se</a>
+        </footer>
+    }
     </div>
 
 

@@ -182,8 +182,7 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.UrlRewrite", b =>
                 {
                     b.Property<string>("Url")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(2083);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("ArticleId");
 

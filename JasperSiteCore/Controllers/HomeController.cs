@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using JasperSiteCore.Models;
 using Microsoft.AspNetCore.Hosting;
 using JasperSiteCore.Models.Database;
+using JasperSiteCore.Areas.Admin.ViewModels;
 
 namespace JasperSiteCore.Controllers
 {
@@ -13,12 +14,14 @@ namespace JasperSiteCore.Controllers
     public class HomeController : Controller
     {
         // HomeController catches all requests coming from /Home/*
-        public HomeController(IJasperDataServicePublic dataService)
+        public HomeController(IJasperDataServicePublic dataServicePublic)
         {
-            this._dataService = dataService;
+            this._dataServicePublic = dataServicePublic;
+           
         }
 
-        private IJasperDataServicePublic _dataService { get; set; }
+        private IJasperDataServicePublic _dataServicePublic { get; set; }
+      
 
         // GET: Home
         /// <summary>
@@ -33,6 +36,7 @@ namespace JasperSiteCore.Controllers
         {
             try
             {
+
                 // Test, whether the installation was already completed and database was seeded
                 if (!Configuration.InstallationCompleted())
                 {
@@ -86,7 +90,7 @@ namespace JasperSiteCore.Controllers
                 // first condition checks whether is URL rewriting allowed in theme jasper.json
                 else if (Configuration.WebsiteConfig.UrlRewriting && UrlRewriting.IsUrlRewriteRequest(rawUrl))
                 {
-                    int articleIdFromRequest = UrlRewriting.ReturnArticleIdFromNiceUrl(rawUrl, _dataService);
+                    int articleIdFromRequest = UrlRewriting.ReturnArticleIdFromNiceUrl(rawUrl, _dataServicePublic);
                     if (articleIdFromRequest != -1) // appropriate articleId was found in the DB
                     {
                         string articleFileLocation = Configuration.WebsiteConfig.ArticleFile;
@@ -144,9 +148,65 @@ namespace JasperSiteCore.Controllers
 
                 TempData["ExceptionMessage"] = ex;
 
-                return View("_FatalError");
+                return View("_FatalError", UpdateModel());
             }
 
+        }
+
+        private JasperJsonThemeViewModel UpdateJasperJsonThemeViewModel()
+        {
+            JasperJsonThemeViewModel model = new JasperJsonThemeViewModel();
+            model.JasperJson = Configuration.WebsiteConfig.GetThemeJsonFileAsString();
+
+            model.Themes = OrderAllThemesByActive();
+            return model;
+        }
+
+        private List<Theme> OrderAllThemesByActive()
+        {
+            // First item in the list will be the current theme
+            List<Theme> allThemes = _dataServicePublic.GetAllThemes();
+            int currentThemeId = _dataServicePublic.GetCurrentThemeIdFromDb();
+            Theme currentTheme = allThemes.Where(t => t.Id == currentThemeId).Single();
+            currentTheme.Name += " (aktuální)";
+            allThemes.Remove(currentTheme);
+            allThemes.Insert(0, currentTheme);
+            return allThemes;
+        }
+
+        public JasperJsonViewModel UpdateJasperJsonViewModel()
+        {
+            JasperJsonViewModel model = new JasperJsonViewModel();
+            try
+            {
+                model.JasperJson = Configuration.GlobalWebsiteConfig.GetGlobalJsonFileAsString();
+                return model;
+            }
+            catch
+            {
+                model.JasperJson = string.Empty;
+                return model;
+            }
+        }
+
+        public SettingsViewModel UpdateModel()
+        {
+            SettingsViewModel model = new SettingsViewModel();
+            try
+            {
+
+                model.model2 = UpdateJasperJsonViewModel();
+                model.model3 = UpdateJasperJsonThemeViewModel();
+
+            }
+            catch (Exception)
+            {
+
+                model.model2.JasperJson = string.Empty;
+                model.model3.JasperJson = string.Empty;
+                model.model3.Themes = new List<Theme>();
+            }
+            return model;
         }
 
 

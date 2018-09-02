@@ -11,8 +11,8 @@ using System;
 namespace JasperSiteCore.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180828180218_updatedRoutingTable")]
-    partial class updatedRoutingTable
+    [Migration("20180902132130_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,8 @@ namespace JasperSiteCore.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired();
+
+                    b.Property<bool>("Publish");
 
                     b.Property<DateTime>("PublishDate");
 
@@ -181,8 +183,7 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.UrlRewrite", b =>
                 {
                     b.Property<string>("Url")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(2083);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("ArticleId");
 

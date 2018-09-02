@@ -13,9 +13,10 @@
     $("#themeSelect").on('change',function(){
    
     $.ajax({    type: 'get',
-                url: '@Url.Action("FetchThemeJasperJsonData", "Settings")',
+                url: '@Url.Action("FetchThemeJasperJsonData", "Settings",new { Area="admin"})',
                 data: { "themeId":this.value}, // returns value from select list
-                success: function (data) {
+        success: function (data) {
+           
 
         $("#mainForm3").html(data);        
 

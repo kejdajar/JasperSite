@@ -169,8 +169,7 @@ namespace JasperSiteCore.Models.Database
 
     public class UrlRewrite
     {
-        [Key]
-        [MaxLength(2083)]
+        [Key]       
         public string Url { get; set; }
 
         [ForeignKey("Article")]

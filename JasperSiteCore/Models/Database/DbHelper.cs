@@ -1220,6 +1220,7 @@ namespace JasperSiteCore.Models.Database
         void DeleteUserById(int id);
         List<string> CheckThemeFolderAndDatabaseIntegrity();
         List<string> FindManuallyDeletedThemes();
+        int GetCurrentThemeIdFromDb();
 
         List<UrlRewrite> GetAllUrls();
         List<string> GetUrls(int articleId);
@@ -1274,6 +1275,7 @@ namespace JasperSiteCore.Models.Database
         bool DeleteUserById(int id);
         List<string> CheckThemeFolderAndDatabaseIntegrity();
         List<string> FindManuallyDeletedThemes();
+        int GetCurrentThemeIdFromDb();
 
         string Url(Article article);
         bool SetUrl(Article article, string url);
@@ -2070,6 +2072,25 @@ namespace JasperSiteCore.Models.Database
             catch 
             {
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Returns current theme Id. In case of failure returns -1.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        public int GetCurrentThemeIdFromDb()
+        {
+            try
+            {
+                string themeName = Configuration.GlobalWebsiteConfig.ThemeName;
+                int id = Database.Themes.Where(t => t.Name == themeName).Single().Id;
+                return id;
+            }
+            catch (Exception)
+            {
+                return -1;
             }
         }
     }

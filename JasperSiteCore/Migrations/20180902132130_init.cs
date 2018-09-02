@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace JasperSiteCore.Migrations
 {
-    public partial class updatedRoutingTable : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -98,6 +98,7 @@ namespace JasperSiteCore.Migrations
                     CategoryId = table.Column<int>(nullable: false),
                     HtmlContent = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: false),
+                    Publish = table.Column<bool>(nullable: false),
                     PublishDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -178,7 +179,7 @@ namespace JasperSiteCore.Migrations
                 name: "UrlRewrite",
                 columns: table => new
                 {
-                    Url = table.Column<string>(maxLength: 2083, nullable: false),
+                    Url = table.Column<string>(nullable: false),
                     ArticleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
