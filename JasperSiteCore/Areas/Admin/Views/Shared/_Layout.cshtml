@@ -5,57 +5,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-
-    @* ===============================STYLES================================ *@
-    <environment include="Development">
-        <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.css" />        
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/simple-sidebar.css" />
-        <link href="~/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
-    </environment>
+    
 
     <environment exclude="Development">
-
-
-        <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design-with-sidebar.min.css" />
-        <link href="~/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <script src="~/bundles/admin.bundle.js"></script>
     </environment>
 
-    @* ===============================SCRIPTS================================ *@
+  
     <environment include="Development">
-        <script src="~/node_modules/jquery/dist/jquery.js"></script>
-        <script src="~/node_modules/popper.js/dist/umd/popper.js"></script>
-        <script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/node_modules/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
-    </environment>
-
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
-                asp-fallback-src="~/node_modules/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
-        </script>
-
-        <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
-
-
-        <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
-        <script src="~/node_modules/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
-    </environment>
+        <script src="~/bundles/admin.bundle.js"></script>
+    </environment>    
 
     @RenderSection("Scripts", required: false)
-    @RenderSection("Styles", required: false)
-
-    @* Renders popup with error messages *@
-    @{Html.RenderPartial("_ValidationScriptsPartial");}
+    @RenderSection("Styles", required: false)  
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
+  
     
     <!-- Menu switching -->
     <script>

@@ -3,7 +3,7 @@
     // Before first POST, client side validation works - after first post, returned partial view is not validated again
     // --> Now after first POST all validation works as expected
 
- function UnobtrusiveValidationFix(formSelector) {
+ module.exports= function UnobtrusiveValidationFix(formSelector) {
 
             $(formSelector).submit(function () {
                 var form = $(formSelector)

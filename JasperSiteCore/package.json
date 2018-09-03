@@ -13,5 +13,10 @@
     "jquery-validation-unobtrusive": "^3.2.10",
     "popper.js": "^1.14.3",
     "tinymce": "^4.8.2"
+  },
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "style-loader": "^0.23.0",
+    "url-loader": "^1.1.1"
   }
 }

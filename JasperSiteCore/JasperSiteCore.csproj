@@ -22,6 +22,7 @@
     <Content Remove="wwwroot\js\**" />
     <EmbeddedResource Remove="wwwroot\css\**" />
     <EmbeddedResource Remove="wwwroot\js\**" />
+    <None Remove="node_modules\**" />
     <None Remove="wwwroot\css\**" />
     <None Remove="wwwroot\js\**" />
   </ItemGroup>

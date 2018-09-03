@@ -3,7 +3,7 @@
          This method shows (appends to header) slideUp notification box with specified text and style (ie. alert-warning).
          When the notification box is not visible, it is automatically removed from DOM.
          */
-        function savedInfo(text,style) {         
+module.exports= function savedInfo(text, style) {         
 
             var panel = $(`<div name="savedInfoPanel" class="j-flex-row j-secondary-header" >
                                 <div class="alert ${style}" role="alert" style="margin:0px;width:100%">
