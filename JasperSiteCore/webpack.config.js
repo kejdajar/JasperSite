@@ -8,8 +8,8 @@ mode: "production",
         admin: "./wwwroot/scripts/admin.js",
         login: "./wwwroot/scripts/login.js",
         chart: "./wwwroot/scripts/chart.js",
-        jqueryUI: "./wwwroot/scripts/jqueryUI.js",
-        tinymce: "./wwwroot/scripts/tinymce.js"
+        
+     
     },
     output: {
 path: path.resolve(__dirname,"wwwroot/bundles"),

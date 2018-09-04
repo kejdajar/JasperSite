@@ -153,12 +153,12 @@ namespace JasperSiteCore
             });
 
             //work in progress - some packages are directly served from node_modules
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(
-               Path.Combine(Directory.GetCurrentDirectory(), "node_modules")), // Physical folder location
-                RequestPath = new PathString("/node_modules") // Url
-            });
+            //app.UseStaticFiles(new StaticFileOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //   Path.Combine(Directory.GetCurrentDirectory(), "node_modules")), // Physical folder location
+            //    RequestPath = new PathString("/node_modules") // Url
+            //});
 
 
             #region DefaultRoutingDisabled

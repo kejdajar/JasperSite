@@ -7,28 +7,28 @@
 }
 @* Jquery UI is used only on this specific page *@
 @section Scripts {
-    <script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
-
+    @*<script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>*@
+    <script src="~/nodeLib/jquery-ui-dist/jquery-ui.min.js"></script>
 
     <script src="~/Areas/Admin/Content/Scripts/EditArticle.js"></script>
-   
+
 
 
 
     <script>
         /* AJAX TINYMCE SUBMIT */
         $(document).ready(function () {
-            
+
 
             $('#btnSaveTinymce').click(function (e) {
-                
+
                 e.preventDefault();
       var isForPublish = false;
         if ($('#publishCheckBox').is(":checked"))
 {
   isForPublish = true;
 }
-        
+
 
                 var frmValidation = $('#editForm').valid();
                 if (frmValidation) {
@@ -36,7 +36,7 @@
                     var textarea = tinyMCE.activeEditor.getContent();
                     var model = {
                         Id: $("#hiddenId").val(),
-                        Name: $("#tbName").val(),                      
+                        Name: $("#tbName").val(),
                         HtmlContent: textarea,
                         PublishDate: $("#publishDate").val(),
                         SelectedCategoryId: $("#selectCategory").val(),
@@ -62,8 +62,8 @@
                     });
 
                 }
-                
-               
+
+
             });
 
         });
@@ -72,7 +72,8 @@
 }
 @section Styles {
 
-    <link href="~/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
+    @*<link href="~/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />*@
+    <link href="~/nodeLib/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
 
 }
 <style>
@@ -83,11 +84,11 @@
 <h2>Úprava článku</h2>
 
 
-<section class="j-admin-section" >
-<div id="mainForm">
-    @* Invokes View Component that renders edit fields *@
-    @*@await Component.InvokeAsync("EditArticle", new { articleId = Model })*@
-    @Html.Partial("EditArticlePartialView",Model)
-</div>
+<section class="j-admin-section">
+    <div id="mainForm">
+        @* Invokes View Component that renders edit fields *@
+        @*@await Component.InvokeAsync("EditArticle", new { articleId = Model })*@
+        @Html.Partial("EditArticlePartialView", Model)
+    </div>
 </section>
 <div id="modalTargetDiv"></div>
