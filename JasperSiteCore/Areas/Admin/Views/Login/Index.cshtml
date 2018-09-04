@@ -10,41 +10,16 @@ Layout = null;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Přihlášení do administrace</title>
-
-    @* ===============================STYLES================================ *@
+ 
    
     <environment include="Development">
-       
-        <link rel="stylesheet" href="~/node_modules/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.css" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/login-page.css" />
+        <script src="~/bundles/login.bundle.js"></script>
     </environment>
 
     <environment exclude="Development">
-               
-        <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/design.min.css" />
-        <link rel="stylesheet" href="~/Areas/Admin/Content/Styles/login-page.min.css" />
-      
+        <script src="~/bundles/login.bundle.js"></script>
     </environment>
 
-    @* ===============================SCRIPTS================================ *@
-    <environment include="Development">
-        <script src="~/node_modules/jquery/dist/jquery.js"></script>
-        <script src="~/node_modules/popper.js/dist/umd/popper.js"></script>
-        <script src="~/node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    </environment>
-
-    <environment exclude="Development">
-
-        <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
-        <script src="~/node_modules/popper.js/dist/umd/popper.min.js"></script>
-        <script src="~/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    </environment>
-
-
-    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans" rel="stylesheet">
 
 </head>
 <body>

@@ -9,8 +9,8 @@
 @Html.Partial("_ErrorModalPartialViewTemp")
 
     <div id="mainForm">
-        <div class="jumbotron j-jumbotron"><h1><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Vytvoření nového uživatele</h1></div>
-
+    <h2>Přidání nového uživatele</h2>
+    <div class="j-admin-section">
         <form asp-action="SaveNewUser" asp-controller="Users" asp-area="Admin" method="post">
 
             <div class="form-horizontal">
@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label asp-for="NewPasswordPlainText"></label>
 
-                    <input type="text" asp-for="NewPasswordPlainText" class="form-control j-input-password" autocomplete="off"/>
+                    <input type="text" asp-for="NewPasswordPlainText" class="form-control j-input-password" autocomplete="off" />
                     <span asp-validation-for="NewPasswordPlainText" class="text-danger"></span>
 
                 </div>
@@ -70,4 +70,5 @@
             </div>
 
         </form>
+    </div>
     </div>
