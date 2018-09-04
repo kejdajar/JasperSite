@@ -127,6 +127,9 @@ namespace JasperSiteCore.Areas.Admin.Controllers
             {
                 string oldConnString = Configuration.GlobalWebsiteConfig.ConnectionString;
                 bool oldInstallationCompleted = Configuration.GlobalWebsiteConfig.InstallationCompleted;
+                string oldTypeOfDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
+                string oldThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
+
                 try
                 {
 
@@ -161,6 +164,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     // Reset settings 
                     Configuration.GlobalWebsiteConfig.ConnectionString = oldConnString;
                     Configuration.GlobalWebsiteConfig.InstallationCompleted = oldInstallationCompleted;
+                    Configuration.GlobalWebsiteConfig.ThemeName = oldThemeName;
+                    Configuration.GlobalWebsiteConfig.TypeOfDatabase = oldTypeOfDatabase;
 
                     ModelState.Clear();
                     return View(UpdateModel());

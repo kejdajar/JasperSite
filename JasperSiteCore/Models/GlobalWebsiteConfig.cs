@@ -34,27 +34,21 @@ namespace JasperSiteCore.Models
 
         public string ThemeName
         {
-            get { return ConfigurationDataObject.ThemeName; }
+            get { string name = ConfigurationDataObject.ThemeName;
+                if (name == null) return string.Empty; else return name;
+            }
             set
             {
                 ConfigurationDataObject.ThemeName = value;
                 CommitChanges();
             }
-        }
-
-        public  string ThemeFolder
-        {
-            get { return ConfigurationDataObject.ThemeFolder; }
-            set
-            {
-                ConfigurationDataObject.ThemeFolder = value;
-                CommitChanges();
-            }
-        }
+        }      
 
         public string ConnectionString
         {
-            get { return ConfigurationDataObject.ConnectionString; }
+            get { string connString = ConfigurationDataObject.ConnectionString;
+                if (connString == null) return string.Empty; else return connString;
+            }
             set
             {
                 ConfigurationDataObject.ConnectionString = value;
@@ -64,7 +58,9 @@ namespace JasperSiteCore.Models
 
         public string TypeOfDatabase
         {
-            get { return ConfigurationDataObject.TypeOfDatabase; }
+            get { string typeOfDb= ConfigurationDataObject.TypeOfDatabase;
+                if (typeOfDb == null) return string.Empty; else return typeOfDb;
+                    }
             set
             {
                 ConfigurationDataObject.TypeOfDatabase = value;
@@ -99,8 +95,7 @@ namespace JasperSiteCore.Models
         public void ResetToDefaults()
         {
             Configuration.GlobalWebsiteConfig.ConnectionString = "";
-            Configuration.GlobalWebsiteConfig.InstallationCompleted = false;
-            Configuration.GlobalWebsiteConfig.ThemeFolder = "Themes";
+            Configuration.GlobalWebsiteConfig.InstallationCompleted = false;           
             Configuration.GlobalWebsiteConfig.ThemeName = "Default";
             Configuration.GlobalWebsiteConfig.TypeOfDatabase = "mssql";
         }
@@ -143,10 +138,7 @@ namespace JasperSiteCore.Models
     public class GlobalConfigData
     {
         [JsonProperty("themeName")]
-        public string ThemeName { get; set; }
-
-        [JsonProperty("themeFolder")]
-        public string ThemeFolder { get; set; }
+        public string ThemeName { get; set; }    
 
 
         [JsonProperty("connectionString")]

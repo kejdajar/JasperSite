@@ -40,9 +40,14 @@ namespace JasperSiteCore.Models
             WebsiteConfig = websiteConfig;
             CustomRouting = customRouting;
             ThemeHelper = themeHelper;
-                        
+
         }
 
+        public static string ThemeFolder
+        {
+            get { return "Themes"; }
+           
+        }
         
 
         public static void CreateAndSeedDb(DatabaseContext dbContext,bool ensureDbIsDeleted = false)

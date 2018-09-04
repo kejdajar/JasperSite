@@ -64,7 +64,7 @@ namespace JasperSiteCore.Models
         {
             try
             {
-                string path = System.IO.Path.Combine(Env.Hosting.ContentRootPath, GlobalWebsiteConfig.ThemeFolder);
+                string path = System.IO.Path.Combine(Env.Hosting.ContentRootPath, Configuration.ThemeFolder);
                 string[] directories = Directory.GetDirectories(path, GlobalWebsiteConfig.ThemeName);
                 if (directories.Count() == 1)
                 {
@@ -89,7 +89,7 @@ namespace JasperSiteCore.Models
         {
             try
             {
-                string path = System.IO.Path.Combine(Env.Hosting.ContentRootPath, GlobalWebsiteConfig.ThemeFolder);
+                string path = System.IO.Path.Combine(Env.Hosting.ContentRootPath, Configuration.ThemeFolder);
                 string[] directories = Directory.GetDirectories(path, themeName);
                 if (directories.Count() == 1)
                 {

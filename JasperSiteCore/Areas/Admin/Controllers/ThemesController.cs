@@ -67,7 +67,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                 
                 model2.SelectedThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
-                model2.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
+                model2.ThemeFolder = Configuration.ThemeFolder;
                 model2.PageNumber = paging.CurrentPageNumber;
                 model2.ItemsPerPage = paging.ItemsPerPage;
                 model2.TotalNumberOfPages = paging.NumberOfPagesNeeded;
@@ -146,7 +146,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
 
                 ThemesViewModel model = new ThemesViewModel();
                 model.SelectedThemeName = Configuration.GlobalWebsiteConfig.ThemeName;
-                model.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
+                model.ThemeFolder = Configuration.ThemeFolder;
                 model.PageNumber = paging.CurrentPageNumber;
                 model.ItemsPerPage = paging.ItemsPerPage;
                 model.TotalNumberOfPages = paging.NumberOfPagesNeeded;
@@ -166,8 +166,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                 model.ManuallyDeletedThemeNames = null;
                 model.NotRegisteredThemeNames = null;
                 model.PageNumber = 1;
-                model.SelectedThemeName = "Globální soubor jasper.json uvádí jako vzhled: " + ex.MissingThemeName + " který ale ve složce "+ Configuration.GlobalWebsiteConfig.ThemeFolder+" neexistuje";
-                model.ThemeFolder = Configuration.GlobalWebsiteConfig.ThemeFolder;
+                model.SelectedThemeName = "Globální soubor jasper.json uvádí jako vzhled: " + ex.MissingThemeName + " který ale ve složce "+ Configuration.ThemeFolder+" neexistuje";
+                model.ThemeFolder = Configuration.ThemeFolder;
                 model.ThemeInfoList = null;
                 model.TotalNumberOfPages = default(int);
                 return model;
@@ -316,7 +316,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         {
             try
             {
-                string themeFolderPath = System.IO.Path.Combine("./", Configuration.GlobalWebsiteConfig.ThemeFolder).Replace('\\', '/');
+                string themeFolderPath = System.IO.Path.Combine("./", Configuration.ThemeFolder).Replace('\\', '/');
                 bool atLeastOneThemeAlreadyExists = false;
 
                 foreach (IFormFile file in files)

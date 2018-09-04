@@ -120,13 +120,13 @@ namespace JasperSiteCore.Models
             if (string.IsNullOrWhiteSpace(path)) return null;            
 
              // can contain relative parts ie. "Themes\\Jasper\\..//Styles/style.css"
-            string p = System.IO.Path.Combine(GlobalWebsiteConfig.ThemeFolder, GlobalWebsiteConfig.ThemeName, path);
+            string p = System.IO.Path.Combine(Configuration.ThemeFolder, GlobalWebsiteConfig.ThemeName, path);
 
             // creates full path and resolves relative parts ==> "c:\\...\Themes\\Jasper\\Styles\\style.css" 
             string fullPath = System.IO.Path.GetFullPath(p); 
 
             // creates full path to the Themes folder ===> "c:\\..\\Themes"
-            string refFullPath = System.IO.Path.GetFullPath(GlobalWebsiteConfig.ThemeFolder);
+            string refFullPath = System.IO.Path.GetFullPath(Configuration.ThemeFolder);
 
             // convert strings to absolute uris
             Uri urifullPath = new Uri(fullPath, UriKind.Absolute);

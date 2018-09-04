@@ -41,7 +41,7 @@ namespace JasperSiteCore.Areas.Admin.Models
         {
             try
             {
-                string themeFolder = Configuration.CustomRouting.GlobalWebsiteConfig.ThemeFolder;
+                string themeFolder = Configuration.ThemeFolder;
                 string path = Path.Combine("~/", themeFolder, themeName, "thumbnail.jpg").Replace('\\', '/');
                 string pathExistsCheck = Path.Combine(Env.Hosting.ContentRootPath, themeFolder, themeName, "thumbnail.jpg");
                 //bool fileExists = File.Exists(@"C:/Users/kejda/Desktop/Projekty/JasperSiteCore/JasperSiteCore/Themes/Default/thumbnail.jpg");
@@ -59,14 +59,14 @@ namespace JasperSiteCore.Areas.Admin.Models
         }
 
         /// <summary>
-        /// Returns list of installed themes in folder specified by Configuration.GlobalWebsiteConfig.ThemeFolder.
+        /// Returns list of installed themes in folder specified by Configuration.ThemeFolder.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ThemeHelperException"></exception>
         public List<ThemeInfo> GetInstalledThemesInfo()
         {
 
-            return GetInstalledThemesInfo(Configuration.GlobalWebsiteConfig.ThemeFolder);
+            return GetInstalledThemesInfo(Configuration.ThemeFolder);
 
         }
 
@@ -155,7 +155,7 @@ namespace JasperSiteCore.Areas.Admin.Models
                 DbHelper dbHelper = new DbHelper(dbContext);
                 dbHelper.DeleteThemeByName(themeName);
 
-                string themeFolder = Configuration.CustomRouting.GlobalWebsiteConfig.ThemeFolder;
+                string themeFolder = Configuration.ThemeFolder;
                 string themeFolderPath = Path.Combine("./", themeFolder, themeName).Replace('\\', '/');
                 System.IO.Directory.Delete(themeFolderPath, true);
                 return true;
