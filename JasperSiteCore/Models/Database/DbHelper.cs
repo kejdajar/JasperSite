@@ -141,6 +141,7 @@ namespace JasperSiteCore.Models.Database
                 oldArticleToChange.PublishDate = (DateTime)article.PublishDate;
                 oldArticleToChange.CategoryId = article.CategoryId;
                 oldArticleToChange.Publish = article.Publish;
+                oldArticleToChange.Keywords = article.Keywords;
                 Database.SaveChanges();
                 return oldArticleToChange;
             }
@@ -1795,6 +1796,13 @@ namespace JasperSiteCore.Models.Database
              Article article = _dbHelper.GetArticleById(id);
                 if (article.Publish)
                 {
+                    // Keywords are returning string.empty, not null,
+                    // because keywords are often used in _Layout: ViewData["Keywords"]
+                    if(article.Keywords==null)
+                    {
+                        article.Keywords = string.Empty;
+                    }
+
                     return article;
                 }
                 else return null;

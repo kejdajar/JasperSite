@@ -8,9 +8,9 @@
 
     Article article = J.GetArticleById(Model);
     @if (article != null)
-    {
-        ViewData["Title"] = article.Name;
-
+            {
+                ViewData["Title"] = article.Name;
+                ViewData["Keywords"] = article.Keywords;
 
         <div class="container-fluid article-text">
             <j-article id="@Model">

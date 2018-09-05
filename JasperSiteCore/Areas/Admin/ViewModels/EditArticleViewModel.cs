@@ -32,6 +32,9 @@ namespace JasperSiteCore.Areas.Admin.ViewModels
 
         [Display(Name="Publikovat článek")]
         public bool Publish { get; set; }
+
+        [Display(Name="Klíčová slova")]
+        public string Keywords { get; set; }
       
         public string Url { get; set; }
 

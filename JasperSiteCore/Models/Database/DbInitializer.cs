@@ -70,11 +70,11 @@ namespace JasperSiteCore.Models.Database
 
             Article[] articles = new Article[]
             {
-                new Article {Name="Ukázkový článek",Publish=true, HtmlContent=articleContent,PublishDate = DateTime.Now,Category=categories[0]},
-                 new Article {Name="Druhý článek", Publish=true, HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[1]},
-                 new Article {Name="Třetí článek", Publish=true, HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[1]},
-                   new Article {Name="Čtvrtý článek", Publish=true, HtmlContent="<h2>nadpis text</h2>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(120),Category=categories[2]},
-                    new Article {Name="Pátý článek", Publish=true, HtmlContent="test", PublishDate = DateTime.Now + TimeSpan.FromMinutes(180),Category=categories[2]},
+                new Article {Name="Ukázkový článek",Publish=true, HtmlContent=articleContent,PublishDate = DateTime.Now,Category=categories[0],Keywords="článek, ukázka, demo"},
+                 new Article {Name="Druhý článek", Publish=true, HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[1],Keywords="článek, ukázka, demo"},
+                 new Article {Name="Třetí článek", Publish=true, HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[1],Keywords="článek, ukázka, demo"},
+                   new Article {Name="Čtvrtý článek", Publish=true, HtmlContent="<h2>nadpis text</h2>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(120),Category=categories[2],Keywords="článek, ukázka, demo"},
+                    new Article {Name="Pátý článek", Publish=true, HtmlContent="test", PublishDate = DateTime.Now + TimeSpan.FromMinutes(180),Category=categories[2],Keywords="článek, ukázka, demo"},
             };
 
             foreach(Article a in articles)

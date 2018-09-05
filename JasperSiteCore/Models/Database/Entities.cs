@@ -27,6 +27,8 @@ namespace JasperSiteCore.Models.Database
         public Category Category { get; set; }     
         
         public bool Publish { get; set; }
+
+        public string Keywords { get; set; }
     }
 
     public class Category

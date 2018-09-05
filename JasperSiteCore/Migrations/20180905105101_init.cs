@@ -14,7 +14,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -27,7 +27,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Data = table.Column<byte[]>(nullable: false)
                 },
                 constraints: table =>
@@ -40,7 +40,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -53,7 +53,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Key = table.Column<string>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
@@ -67,7 +67,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Content = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: false)
                 },
@@ -81,7 +81,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -94,9 +94,10 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CategoryId = table.Column<int>(nullable: false),
                     HtmlContent = table.Column<string>(nullable: true),
+                    Keywords = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: false),
                     Publish = table.Column<bool>(nullable: false),
                     PublishDate = table.Column<DateTime>(nullable: false)
@@ -117,7 +118,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ImageDataId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: false)
                 },
@@ -137,7 +138,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Nickname = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: false),
                     RoleId = table.Column<int>(nullable: false),
@@ -160,7 +161,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: false),
                     ThemeId = table.Column<int>(nullable: false)
                 },
@@ -198,7 +199,7 @@ namespace JasperSiteCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     BlockHolderId = table.Column<int>(nullable: false),
                     Order = table.Column<int>(nullable: false),
                     TextBlockId = table.Column<int>(nullable: false)

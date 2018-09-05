@@ -58,6 +58,11 @@
             <span asp-validation-for="PublishDate" class="text-danger"></span>
         </div>
 
+        <div class="form-group">
+            <label asp-for="Keywords"></label>
+            <input id="tbKeywords" type="text" asp-for="Keywords" class="form-control" />
+            <span asp-validation-for="Keywords" class="text-danger"></span>
+        </div>
 
 
 
@@ -73,33 +78,34 @@
             </div>
         }
 
-            <div id="urlList"> @* We still need to render the partial view, even though the routing is disabled, because of custom errors*@
-                @Html.Partial("UrlListPartialView", new UrlListViewModel() { ArticleId = Model.Id, Urls = Model.AllUrl })
-            </div>
+        <div id="urlList">
+            @* We still need to render the partial view, even though the routing is disabled, because of custom errors*@
+            @Html.Partial("UrlListPartialView", new UrlListViewModel() { ArticleId = Model.Id, Urls = Model.AllUrl })
+        </div>
 
-            @*-------------------CUSTOM ROUTING------------------*@
-      
+        @*-------------------CUSTOM ROUTING------------------*@
+
         <div class="form-group">
             <div class="form-check">
                 <input id="publishCheckBox" class="form-check-input" type="checkbox" asp-for="Publish">
                 <label class="form-check-label" asp-for="Publish"></label>
                 <span asp-validation-for="Publish" class="text-danger"></span>
             </div>
-            </div>
-
-
-
-            <div class="form-group">
-
-                <button id="btnSaveTinymce" type="submit" asp-area="Admin" asp-controller="Articles" asp-action="PostArticle" class="btn btn-jasper"><i class="fa fa-floppy-o fa-1x" aria-hidden="true"></i> Uložit</button>
-                <a asp-controller="Articles" asp-action="Index" asp-area="admin" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na přehled</a>
-
-                <a id="btnDeleteArticle" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
-
-
-
-            </div>
         </div>
+
+
+
+        <div class="form-group">
+
+            <button id="btnSaveTinymce" type="submit" asp-area="Admin" asp-controller="Articles" asp-action="PostArticle" class="btn btn-jasper"><i class="fa fa-floppy-o fa-1x" aria-hidden="true"></i> Uložit</button>
+            <a asp-controller="Articles" asp-action="Index" asp-area="admin" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na přehled</a>
+
+            <a id="btnDeleteArticle" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
+
+
+
+        </div>
+    </div>
 
 </form>
 

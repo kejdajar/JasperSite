@@ -17,17 +17,20 @@ namespace JasperSiteCore.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
+                .HasAnnotation("ProductVersion", "2.0.1-rtm-125");
 
             modelBuilder.Entity("JasperSiteCore.Models.Database.Article", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CategoryId");
 
                     b.Property<string>("HtmlContent");
+
+                    b.Property<string>("Keywords");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -46,7 +49,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.BlockHolder", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -63,7 +67,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.Category", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -76,7 +81,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.Holder_Block", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("BlockHolderId");
 
@@ -96,7 +102,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.Image", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ImageDataId");
 
@@ -113,7 +120,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.ImageData", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<byte[]>("Data")
                         .IsRequired();
@@ -126,7 +134,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.Role", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -139,7 +148,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.Setting", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Key")
                         .IsRequired();
@@ -154,7 +164,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.TextBlock", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Content");
 
@@ -169,7 +180,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.Theme", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -196,7 +208,8 @@ namespace JasperSiteCore.Migrations
             modelBuilder.Entity("JasperSiteCore.Models.Database.User", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Nickname")
                         .IsRequired();

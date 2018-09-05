@@ -117,7 +117,8 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     PublishDate = articleToEdit.PublishDate,
                     Categories = dbHelper.GetAllCategories(),
                     SelectedCategoryId = articleToEdit.CategoryId,
-                    Publish = articleToEdit.Publish
+                    Publish = articleToEdit.Publish,
+                    Keywords = articleToEdit.Keywords                    
                     
                 };
 
@@ -151,6 +152,7 @@ namespace JasperSiteCore.Areas.Admin.Controllers
                     newArticleData.PublishDate = (DateTime)model.PublishDate;
                     newArticleData.CategoryId = model.SelectedCategoryId;
                     newArticleData.Publish = model.Publish;
+                    newArticleData.Keywords = model.Keywords;
                     Article articleReference = dbHelper.EditArticle(newArticleData);
 
                     // URL rewriting
