@@ -33,6 +33,8 @@
         $(document).ready(function(){
         $("#submitButton").click(function(e){
 
+          
+
            if( $("#installForm").valid()) {
 
                e.preventDefault();
@@ -198,13 +200,7 @@
 
                             @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
                             {
-                                <script>
-                                    $(document).ready(function () {
-                                        $("#submitButton").click(function () {
-                                            $("body").addClass("loading");
-                                        });
-                                    });
-                                </script>
+                               
                                 <input id="submitButton" type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
                             }
                             else

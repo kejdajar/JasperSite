@@ -90,14 +90,39 @@
     });
 
 
-    
-
-
-
-
-    
 
 </script>
+
+
+     <script>
+
+         /* Tip Refresh Button */
+$(document).ready(function(){
+        $("#tipRefreshButton").click(function(e){
+       e.preventDefault();
+
+
+                    $.ajax({
+
+                        type: 'get',
+                        url: '@Url.Action("Refresh","Home")',
+                        success: function (data) {
+                            savedInfo("Všekeré konfigurační nastavení bylo aktualizováno.", "alert-success");
+                        },
+        error: function(){
+        savedInfo("<strong>Chyba.</strong> Konfigurační nastavení nebylo možné aktualizovat.", "alert-danger");
+        }
+                    })
+
+
+
+
+
+
+        });
+});
+</script>
+
 
 @Html.Partial("_SuccessModalPartialViewTemp")
 @Html.Partial("_ErrorModalPartialViewTemp")
@@ -155,7 +180,7 @@
 
                 <li class="list-group-item">
                     Aktualizace konfiguračních souborů pomocí:
-                    <a asp-controller="Home" asp-action="Refresh" asp-area="admin" class="btn btn-jasper btn-jasper-icon-control-panel">  <i class="fa fa-refresh fa-1x" aria-hidden="true"></i></a>
+                    <a id="tipRefreshButton" asp-controller="Home" asp-action="Refresh" asp-area="admin" class="btn btn-jasper btn-jasper-icon-control-panel">  <i class="fa fa-refresh fa-1x" aria-hidden="true"></i></a>
                 </li>
 
                 @if (User.Identity.IsAuthenticated)
