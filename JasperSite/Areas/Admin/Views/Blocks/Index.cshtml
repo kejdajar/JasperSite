@@ -1,0 +1,32 @@
+﻿@using JasperSite.Models.Database
+@using JasperSite.Models
+@using JasperSite.Areas.Admin.Controllers
+
+@model JasperSite.Areas.Admin.ViewModels.BlockViewModel
+@{
+    ViewData["Title"] = "Bloky";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+
+  
+    <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+}
+<style>
+    .j-table-headers-left th {
+        text-align: left;
+    }
+</style>
+
+<h2>Správa textových bloků</h2>
+
+
+
+
+
+
+<!--ADD NEW BLOCK-->
+<div id="mainForm1">
+    @{Html.RenderPartial("BlockFormPartialView");}
+</div>
+<div id="modalTargetDiv"></div>

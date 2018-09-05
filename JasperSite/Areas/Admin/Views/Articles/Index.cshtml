@@ -1,0 +1,62 @@
+﻿@using JasperSite.Models.Database
+@using JasperSite.Models
+@inject DatabaseContext databaseContext
+@model JasperSite.Areas.Admin.ViewModels.ArticlesViewModel
+
+@{
+    ViewData["Title"] = "Články";
+}
+
+@section Scripts {
+
+    
+    <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+
+}
+
+
+<h2>Články </h2>
+
+<div class="j-admin-section">
+    <h4><i class="fa fa-info-circle j-icon" aria-hidden="true"></i>Přehled</h4>
+    <div class="table-responsive ">
+        <table class="table table-bordered j-left-border-block">
+            <tr>
+                <td>Celkový počet článků</td>
+                <td>@Model.NumberOfArticles</td>
+            </tr>
+            <tr>
+                <td>Celkový počet rubrik</td>
+                <td>@Model.NumberOfCategories</td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+<div class="j-admin-section">
+    <h4><i class="fa fa-pencil j-icon" aria-hidden="true"></i>Nový článek</h4>
+    @if (Model.UncategorizedCategoryExists)
+    {
+        <a asp-area="Admin" asp-controller="Articles" asp-action="Add" class="btn btn-jasper" style="width:200px">Vytvořit</a>
+    }
+    else
+    {
+        <div class=" alert alert-warning">
+            <p>Pro přidání nové rubriky je zapotřebí, aby existovala rubrika "Nezařazeno".</p>
+            <a asp-area="Admin" asp-controller="Articles" asp-action="CreateUncategorizedCategory" class="btn btn-jasper">Vytvořit rubriku "Nezařazeno"</a>
+        </div>
+    }
+</div>
+
+
+
+<div class="j-admin-section">
+    <h4><i class="fa fa-table j-icon" aria-hidden="true"></i>Seznam článků</h4>
+    <div id="listOfArticles">
+        @Html.Partial("ArticlesListPartialView", Model.Articles)
+    </div>
+</div>
+
+<div id="modalTargetDiv"></div>
+

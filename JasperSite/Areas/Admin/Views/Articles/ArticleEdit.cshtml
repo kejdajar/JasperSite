@@ -1,0 +1,95 @@
+﻿@model JasperSite.Areas.Admin.ViewModels.EditArticleViewModel
+@using JasperSite.Models.Database
+@using JasperSite.Models
+@{
+    ViewData["Title"] = Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@* Jquery UI is used only on this specific page *@
+@section Scripts {
+    @*<script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>*@
+    <script src="~/nodeLib/jquery-ui-dist/jquery-ui.min.js"></script>
+
+    <script src="~/Areas/Admin/Content/Scripts/EditArticle.js"></script>
+
+
+
+
+    <script>
+        /* AJAX TINYMCE SUBMIT */
+        $(document).ready(function () {
+
+
+            $('#btnSaveTinymce').click(function (e) {
+
+                e.preventDefault();
+      var isForPublish = false;
+        if ($('#publishCheckBox').is(":checked"))
+{
+  isForPublish = true;
+}
+
+
+                var frmValidation = $('#editForm').valid();
+                if (frmValidation) {
+
+                    var textarea = tinyMCE.activeEditor.getContent();
+                    var model = {
+                        Id: $("#hiddenId").val(),
+                        Name: $("#tbName").val(),
+                        HtmlContent: textarea,
+                        PublishDate: $("#publishDate").val(),
+                        SelectedCategoryId: $("#selectCategory").val(),
+                        Url: $("#tbUrl").val(),
+                        Publish: isForPublish,
+                        Keywords: $("#tbKeywords").val(),
+
+                    };
+
+                    $.ajax({
+
+                        type: 'post',
+                        url: '@Url.Action("PostArticle","Articles")',
+                        data: model,
+                        dataType: 'HTML',
+                        success: function (data) {
+                           // savedInfo("Veškeré provedené změny byly uloženy.", "alert-success");
+                            $("#urlList").html(data);
+                            $("#tbUrl").val("");
+                        },
+        //failure: function(){
+        //savedInfo("<strong>Chyba.</strong> Provedené změny nebylo možné uložit.", "alert-danger");
+        //}
+                    });
+
+                }
+
+
+            });
+
+        });
+    </script>
+
+}
+@section Styles {
+
+    @*<link href="~/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />*@
+    <link href="~/nodeLib/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
+
+}
+<style>
+    div.mce-fullscreen {
+        z-index: 3;
+    }
+</style>
+<h2>Úprava článku</h2>
+
+
+<section class="j-admin-section">
+    <div id="mainForm">
+        @* Invokes View Component that renders edit fields *@
+        @*@await Component.InvokeAsync("EditArticle", new { articleId = Model })*@
+        @Html.Partial("EditArticlePartialView", Model)
+    </div>
+</section>
+<div id="modalTargetDiv"></div>

@@ -1,0 +1,36 @@
+﻿<h1>V&iacute;tejte!</h1>
+<p>Toto je v&aacute;&scaron; prvn&iacute; čl&aacute;nek vytvořen&yacute; pomoc&iacute; redakčn&iacute;ho syst&eacute;mu JasperSite.</p>
+<p>Va&scaron;e čl&aacute;nky mohou obsahovat obr&aacute;zky:</p>
+<p><img class="img-fluid" src="/Admin/Images/GetImage?id=1" alt="Uk&aacute;zkov&yacute; obr&aacute;zek" width="571" height="216" /></p>
+<p>D&aacute;le tak&eacute; tabulky:</p>
+<table style="border-collapse: collapse; width: 24.1041%; height: 53px;" border="1">
+<tbody>
+<tr style="height: 16px;">
+<td style="width: 50%; height: 16px;"><strong>Město</strong></td>
+<td style="width: 50%; height: 16px;"><strong>Počet obyvatel</strong></td>
+</tr>
+<tr style="height: 16px;">
+<td style="width: 50%; height: 16px;">Praha</td>
+<td style="width: 50%; height: 16px;">1,3 mil</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>Je možn&eacute; použ&iacute;vat i zv&yacute;razněn&iacute; syntaxe pro jazyky jako: C#, F#, CSS, HTML, JavaScript, Smalltalk a dal&scaron;&iacute;:</p>
+<pre class="language-csharp"><code>// Uk&aacute;zka k&oacute;du tohoto redakčn&iacute;ho sys&eacute;tmu
+private static Mock&lt;DbSet&lt;T&gt;&gt; CreateDbSetMock&lt;T&gt;(List&lt;T&gt; elements) where T : class
+        {
+            var elementsAsQueryable = elements.AsQueryable();
+            var dbSetMock = new Mock&lt;DbSet&lt;T&gt;&gt;();
+
+            dbSetMock.As&lt;IQueryable&lt;T&gt;&gt;().Setup(m =&gt; m.Provider).Returns(elementsAsQueryable.Provider);
+            dbSetMock.As&lt;IQueryable&lt;T&gt;&gt;().Setup(m =&gt; m.Expression).Returns(elementsAsQueryable.Expression);
+            dbSetMock.As&lt;IQueryable&lt;T&gt;&gt;().Setup(m =&gt; m.ElementType).Returns(elementsAsQueryable.ElementType);
+            dbSetMock.As&lt;IQueryable&lt;T&gt;&gt;().Setup(m =&gt; m.GetEnumerator()).Returns(elementsAsQueryable.GetEnumerator());
+            dbSetMock.Setup(d =&gt; d.Add(It.IsAny&lt;T&gt;())).Callback&lt;T&gt;(s =&gt; elements.Add(s));
+            dbSetMock.Setup(d =&gt; d.Remove(It.IsAny&lt;T&gt;())).Callback&lt;T&gt;(s =&gt; elements.Remove(s));
+            return dbSetMock;
+        }</code></pre>
+<p>Můžete přid&aacute;vat i videa,&nbsp;<a title="web ČZU" href="https://www.czu.cz/cs/" target="_blank" rel="noopener">odkazy</a>, nebo emotikony&nbsp;<img src="/nodeLib/tinymce/plugins/emoticons/img/smiley-laughing.gif" alt="laughing" />&nbsp;:</p>
+<p><iframe src="//www.youtube.com/embed/gyZ-nNYCZ2c" width="100%" height="314" allowfullscreen="allowfullscreen"></iframe></p>
+<p>&nbsp;</p>

@@ -1,0 +1,98 @@
+﻿@using JasperSite.Models.Database;
+@model JasperSite.Areas.Admin.ViewModels.EditUserViewModel
+
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
+
+
+<script>
+    $(document).ready(function(){
+
+        // By default, unobtrusive validation in partial view does not work after first submit
+        UnobtrusiveValidationFix("#formId");
+
+    });
+</script>
+
+<h2>Úprava uživatele</h2>
+
+
+<div class="j-admin-section">
+    @if (Model != null)
+    {
+
+        <h4>Uživatel: @Model.Username</h4>
+
+
+        <form id="formId" asp-action="EditUser" asp-controller="Users"
+              asp-area="Admin" data-ajax="true" data-ajax-update="#mainForm" method="post">
+
+            <div class="form-horizontal">
+
+                @*<div asp-validation-summary="All" class="text-danger"></div>*@
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Nickname"></label>
+
+                    <input asp-for="Nickname" class="form-control" />
+                    <span asp-validation-for="Nickname" class="text-danger"></span>
+
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+
+                    <input asp-for="Username" class="form-control" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="AllRoles"></label>
+
+                    <select class="form-control" asp-for="RoleId" asp-items="@(new SelectList(Model.AllRoles, "Id", "Name"))"></select>
+
+                    <span asp-validation-for="RoleId" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NewPasswordPlainText"></label>
+
+                    <input asp-for="NewPasswordPlainText" class="form-control j-input-password" placeholder="Ponechte prázdné, pokud chcete zachovat stávající heslo." />
+                    <span asp-validation-for="NewPasswordPlainText" class="text-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="NewPasswordPlainTextAgain"></label>
+
+                    <input asp-for="NewPasswordPlainTextAgain" class="form-control j-input-password" placeholder="Ponechte prázdné, pokud chcete zachovat stávající heslo." />
+                    <span asp-validation-for="NewPasswordPlainTextAgain" class="text-danger"></span>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <a href="/Admin/Users/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam uživatelů</a>
+                    <button id="mainSubmitButton" type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+
+
+
+                </div>
+
+            </div>
+
+        </form>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Hledaný uživatel nebyl nalezen, nebo došlo k neočekávané chybě.
+        </div>
+
+    }
+
+</div>

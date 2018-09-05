@@ -1,0 +1,224 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using JasperSite.Models
+@using JasperSite.Areas.Admin.Models
+@using JasperSite.ViewModels
+@model JasperSite.Areas.Admin.ViewModels.ThemesViewModel
+
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
+
+<script>
+        $(document).ready(function () {
+
+            /* TOOLTIP & HIGHLIGHT */
+            $("tr[data-theme='@Model.SelectedThemeName']").css("border-left", "10px solid #BA68C8");
+
+    $('[data-toggle="tooltip"]').tooltip();
+
+            /* DELETE THEME AJAX*/
+
+            $('[data-delete-name]').click(function (e) {
+                e.preventDefault();
+                var themeName = $(this).data("deleteName");
+
+
+
+                appendWindow("Skutečně odstranit vzhled?", `Vzhled  <b> ${themeName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(themeName); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
+
+            });
+
+            function ajaxCall(themeName) {
+                toggleWindow();
+                    $.ajax({
+                        type: 'get',
+                        url: '@Url.Action("DeleteTheme","Themes")',
+                        data: { themeName: themeName },
+                        dataType: 'HTML',
+                        success: function (data) {
+
+                            $("#mainForm1").html(data);
+
+                            //savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        }
+
+
+                    });
+            }
+
+
+
+            /* ACTIVATE THEME AJAX*/
+                var activateLinks = $("a[data-activate-name]");
+
+                activateLinks.click(function (e) {
+                    e.preventDefault();
+                    var currentLink = $(this);
+                    var themeName = currentLink.data("activateName");
+
+                    appendWindow("Skutečně aktivovat vzhled?", `Vzhled <b> ${themeName}</b> bude aktivován. Stávající textové bloky budou přiřazeny do stejně pojmenovaných kontejnerů nového vzhledu. Pokud vzhled obsahuje jinak pojmenované kontejnery, bude nutné nakonfigurovat textové bloky znovu ručně.`, function () { return ajaxCallActivateTheme(themeName); }, "#modalTargetDiv", "btn-jasper-activate","fa fa-check-circle fa-1x","Aktivovat");
+
+            });
+
+            function ajaxCallActivateTheme(themeName) {
+                toggleWindow();
+                $.ajax({
+                        type: 'get',
+                        url: '@Url.Action("ActivateTheme","Themes")',
+                        data: { themeName: themeName },
+                        dataType: 'HTML',
+                        success: function (data) {
+
+                            $("#mainForm1").html(data);
+                           // savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        }
+                    });
+            }
+
+        });
+</script>
+
+
+
+
+<form asp-action="Index" asp-controller="Themes" asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1">
+
+    @* OLD THEME LIST *@
+    @*<div class="table-responsive">
+        <table class="table table-bordered j-table j-table-text-center j-theme-table" id="articleTable">
+            <tr>  <th>Jméno vzhledu</th><th>Název</th><th>Popis vzhledu</th><th>Akce</th></tr>
+
+            @foreach (ThemeInfo info in Model.ThemeInfoList)
+            {
+                <tr data-theme="@info.ThemeName" id="test">
+                    <td style="text-align:center;vertical-align:middle">
+
+                        @{string img = Url.Content(info.ThemeThumbnailUrl);}
+                        @if (!string.IsNullOrEmpty(img))
+                        {
+                            <img src="@img" class="img-fluid" style="max-width:130px;max-height:130px" />
+
+                        }
+                        else
+                        {
+
+                            <i class="fa fa-question fa-2x"></i>
+                        }
+
+                    </td>
+                    <td>@info.ThemeName </td>
+                    <td style="text-align:left">
+                        @if (!string.IsNullOrEmpty(info.ThemeDescription))
+                        {
+                            @Html.Raw(info.ThemeDescription)
+
+                        }
+                        else
+                        {
+                            <i>Popis není k dispozici</i>
+
+                        }
+                    </td>
+                    <td style="text-align:center;vertical-align:middle">
+                        @{
+                            if (info.ThemeName != Model.SelectedThemeName)
+                            {
+
+                                <a data-toggle="tooltip" title="Aktivovat" asp-area="Admin" asp-controller="Themes" asp-action="ActivateTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper" data-activate-name="@info.ThemeName"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a>
+                                <span data-toggle="modal" data-target="#myModal">
+                                    <a data-toggle="tooltip" title="Odstranit" asp-area="Admin" asp-controller="Themes" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" data-delete-name="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                                </span>
+                            }
+                            else
+                            { <i class="fa fa-check fa-1x" aria-hidden="true"></i>
+                                <br /> @(info.ThemeName == Model.SelectedThemeName ? "Aktuální" : "")
+
+                            }
+                        }
+
+
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>*@
+
+
+
+
+    <div class="themeGalleryContainer">
+
+
+
+        @foreach (ThemeInfo info in Model.ThemeInfoList)
+        {
+            <div class="themeGalleryItem">
+                <div class="themeItemName">
+                    @info.ThemeName
+                    @if (info.ThemeName == Model.SelectedThemeName)
+                    {
+                        @: (aktuální)
+                    }
+                </div>
+                <div>
+                    @{string img = Url.Content(info.ThemeThumbnailUrl);}
+                    @if (!string.IsNullOrEmpty(img))
+                    {
+                        <img src="@img" class="img-fluid" />
+                    }
+                    else
+                    {
+                        <i class="fa fa-question fa-2x"></i>
+                    }
+                </div>
+                <div class="themeDescription">
+                    @if (!string.IsNullOrEmpty(info.ThemeDescription))
+                    {
+                        @Html.Raw(info.ThemeDescription)
+
+                    }
+                    else
+                    {
+                        <i>Popis není k dispozici</i>
+
+                    }
+                </div>
+                <div class="themeControl">
+                    @{
+                        if (info.ThemeName != Model.SelectedThemeName)
+                        {
+
+                            <a data-toggle="tooltip" title="Aktivovat" asp-area="Admin" asp-controller="Themes" asp-action="ActivateTheme" asp-route-ThemeName="@info.ThemeName" class="btn btn-jasper" data-activate-name="@info.ThemeName"> <i class="fa fa-check-circle fa-1x" aria-hidden="true"></i>  </a>
+                            <span data-toggle="modal" data-target="#myModal">
+                                <a data-toggle="tooltip" title="Odstranit" asp-area="Admin" asp-controller="Themes" asp-action="DeleteTheme" asp-route-ThemeName="@info.ThemeName" data-delete-name="@info.ThemeName" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                            </span>
+                        }
+
+                    }
+
+                </div>
+            </div>
+        }
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <input type="hidden" asp-for="PageNumber" />
+
+    <div class="pagingPartialBox">
+        @Html.Partial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.PageNumber, TotalNumberOfPages = Model.TotalNumberOfPages })
+    </div>
+</form>
+
+

@@ -1,0 +1,246 @@
+﻿@using JasperSite.Models.Database
+@{
+    ViewBag.Title = "Přehled";
+}
+@model JasperSite.Areas.Admin.ViewModels.HomeViewModel
+
+<script src="~/bundles/chart.bundle.js"></script>
+
+
+@if (Model.Categories != null)
+{
+<script>
+
+    $(document).ready(function () {
+        var ctx = $("#chartCanvas");
+
+        var options = {
+          
+            legend: { display: false },
+
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+
+                        // no decimal numbers on Y axis
+                        userCallback: function (label, index, labels) {
+                            // when the floored value is the same as the value we have a whole number
+                            if (Math.floor(label) === label) {
+                                return label;
+                            }
+
+                        },
+
+                    }
+                }]
+            }
+            
+        };
+
+        var data = {
+
+           
+            labels: [
+
+                @foreach (var category in Model.Categories)
+                {
+
+                  @:"@Html.Raw(category.Name)",
+
+                }
+            ],
+            datasets: [
+                {
+                    label: "Počet článků v rubrice",
+                    backgroundColor: [
+                        @foreach (var category in Model.Categories)
+                        {
+                            var random = new Random();
+                            //var color = String.Format("#{0:X6}", random.Next(0x1000000));                            
+                            //@:"@color",
+
+
+                            @:"rgba(186, @random.Next(0, 140), @random.Next(126, 256), 1)",
+                        }
+                    ],
+                    data: [
+                        @foreach (var category in Model.Categories)
+                        {
+
+                            var articles = from a in Model.Articles
+                                           where a.CategoryId == category.Id
+                                           select a;
+
+                            var count = articles.Count();
+
+
+                           @:"@count",
+
+                        }
+                    ]
+                }
+            ]
+        };
+
+        var myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: options
+        });
+
+    });
+
+
+
+</script>
+}
+
+     <script>
+
+         /* Tip Refresh Button */
+$(document).ready(function(){
+        $("#tipRefreshButton").click(function(e){
+       e.preventDefault();
+
+
+                    $.ajax({
+
+                        type: 'get',
+                        url: '@Url.Action("Refresh","Home")',
+                        success: function (data) {
+                            savedInfo("Všekeré konfigurační nastavení bylo aktualizováno.", "alert-success");
+                        },
+        error: function(){
+        savedInfo("<strong>Chyba.</strong> Konfigurační nastavení nebylo možné aktualizovat.", "alert-danger");
+        }
+                    })
+
+
+
+
+
+
+        });
+});
+</script>
+
+
+@Html.Partial("_SuccessModalPartialViewTemp")
+@Html.Partial("_ErrorModalPartialViewTemp")
+
+<h2>Přehled </h2>
+                                  
+   <style>
+       .list-group-item {
+           padding:8px;
+       }
+   </style>
+
+
+<div class="row">
+
+
+
+
+    <div class="col-lg-6">
+
+        <section class="j-admin-section">
+
+            @if (Model.CurrentUser != null)
+            {
+                <h4><i class="fa fa-star j-icon" aria-hidden="true"></i>Vítejte zpět</h4>
+
+                <small> Dnes je @DateTime.Now.ToLongDateString()</small>
+                <hr />
+                <p> Vaše uživateslké jméno: @Model.CurrentUser.Username</p>
+
+                <p>Vaše přezdívka: @Model.CurrentUser.Nickname</p>
+                <p>  Vaše uživatelská role je:  @Model.CurrentUser.Role.Name</p>
+
+                <p>Redakční systém právě eviduje @Model.Articles.Count() článků a @Model.Categories.Count() kategorií</p>
+
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    Nepodařilo se načíst požadované informace.
+                </div>
+            }
+        </section>
+
+    </div>
+
+    <div class="col-lg-6">
+        <section class="j-admin-section  alert alert-info alert-dismissible">
+
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <h4><i class="fa fa-sticky-note j-icon" aria-hidden="true"></i>Tipy a triky</h4>
+            <hr class="j-hr" />
+            <ul class="list-group">
+                <li class="list-group-item">
+                    Vaší stránku zobrazíte pomocí: 
+                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+                </li>
+
+                <li class="list-group-item">
+                    Na tuto stránku se můžete vrátit pomocí:
+                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+                </li>
+
+                <li class="list-group-item">
+                    Aktualizace konfiguračních souborů pomocí:
+                    <a id="tipRefreshButton" asp-controller="Home" asp-action="Refresh" asp-area="admin" class="btn btn-jasper btn-jasper-icon-control-panel">  <i class="fa fa-refresh fa-1x" aria-hidden="true"></i></a>
+                </li>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    <li class="list-group-item">
+                        Odhlásit se můžete pomocí:
+
+                        <a class="btn btn-jasper btn-jasper-icon-control-panel" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-sign-out fa-1x"> </i> </a>
+                    </li>
+
+                }
+
+            </ul>
+
+        </section>
+       
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="j-admin-section">
+
+            <h4><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>Rubriky a články</h4>
+            <hr />
+
+            @if (Model.Articles != null && Model.Categories != null)
+            {
+                @if (Model.Articles.Count() > 0 && Model.Categories.Count > 0)
+                {
+                    <div style="max-width:800px">
+                        <canvas id="chartCanvas"></canvas>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning">
+                        <strong>Nic zde není!</strong> Pro zobrazení přehledu je vyžadována alespoň jedna rubrika a článek.
+                    </div>
+
+                }
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    Nepodařilo se získat informace o rubrikách a článcích.
+                </div>
+            }
+
+        </section>
+    </div>
+</div>

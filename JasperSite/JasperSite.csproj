@@ -1,0 +1,123 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
+    <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Areas/**" CopyToPublishDirectory="Always" />
+    <None Include="Themes/**" CopyToPublishDirectory="Always" />
+    <None Include="node_modules/**" CopyToPublishDirectory="Always" />
+
+
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\css\**" />
+    <Compile Remove="wwwroot\js\**" />
+    <Content Remove="wwwroot\css\**" />
+    <Content Remove="wwwroot\js\**" />
+    <EmbeddedResource Remove="wwwroot\css\**" />
+    <EmbeddedResource Remove="wwwroot\js\**" />
+    <None Remove="node_modules\**" />
+    <None Remove="wwwroot\css\**" />
+    <None Remove="wwwroot\js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Areas\Admin\Views\Articles\ArticlesListPartialView.cshtml" />
+    <Content Remove="Areas\Admin\Views\Articles\EditArticlePartialView.cshtml" />
+    <Content Remove="Areas\Admin\Views\Blocks\AddedAndLooseHoldersPartialView.cshtml" />
+    <Content Remove="Areas\Admin\Views\Blocks\BlockFormPartialView.cshtml" />
+    <Content Remove="Areas\Admin\Views\Shared\TinyMceSettingsPartialView.cshtml" />
+    <Content Remove="Themes\Default\AboutAuthor.cshtml" />
+    <Content Remove="Themes\Default\AboutProject.cshtml" />
+    <Content Remove="Themes\Emerald\About.cshtml" />
+    <Content Remove="Themes\Onyx\About.cshtml" />
+    <Content Remove="Themes\Jasper\About.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Areas\Admin\ViewModels\AddedAndLooseHoldersViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\AddUserViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\ArticlesViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\BlockViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\CategoriesViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\EditBlockViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\EditUserViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\HomeViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\ImagesViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\InstallViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\LoginViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\SettingsViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\UrlListViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\UsersViewModel.cs" />
+    <None Remove="Areas\Admin\Views\Settings\JasperJsonThemePartialView.cshtml" />
+    <None Remove="Areas\Admin\Views\Shared\_ErrorModalPartialViewTemp.cshtml" />
+    <None Remove="Areas\Admin\Views\Shared\_SuccessModalPartialViewTemp.cshtml" />
+    <None Remove="Areas\Admin\Views\Users\AddUser.cshtml" />
+    <None Remove="Themes\Emerald\Article.cshtml" />
+    <None Remove="Themes\Emerald\Category.cshtml" />
+    <None Remove="Themes\Emerald\Error.cshtml" />
+    <None Remove="Themes\Emerald\Index.cshtml" />
+    <None Remove="Themes\Emerald\jasper.json" />
+    <None Remove="Themes\Emerald\SingleCategory.cshtml" />
+    <None Remove="Themes\Emerald\_Layout.cshtml" />
+    <None Remove="Themes\Emerald\_ViewImports.cshtml" />
+    <None Remove="Themes\Onyx\Article.cshtml" />
+    <None Remove="Themes\Onyx\Category.cshtml" />
+    <None Remove="Themes\Onyx\Error.cshtml" />
+    <None Remove="Themes\Onyx\Index.cshtml" />
+    <None Remove="Themes\Onyx\jasper.json" />
+    <None Remove="Themes\Onyx\SingleCategory.cshtml" />
+    <None Remove="Themes\Onyx\_Layout.cshtml" />
+    <None Remove="Themes\Onyx\_ViewImports.cshtml" />
+    <None Remove="Themes\Jasper\Article.cshtml" />
+    <None Remove="Themes\Jasper\Category.cshtml" />
+    <None Remove="Themes\Jasper\Error.cshtml" />
+    <None Remove="Themes\Jasper\Index.cshtml" />
+    <None Remove="Themes\Jasper\jasper.json" />
+    <None Remove="Themes\Jasper\SingleCategory.cshtml" />
+    <None Remove="Themes\Jasper\_Layout.cshtml" />
+    <None Remove="Themes\Jasper\_ViewImports.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Areas\Admin\Content\Styles\login-page.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Shared\JasperJsonPartialView.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Shared\JasperJsonThemePartialView.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_SuccessModalPartialViewTemp.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_ErrorModalPartialViewTemp.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Shared\_FatalError.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\bundles\" />
+    <Folder Include="wwwroot\nodeLib\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,74 @@
+﻿@using JasperSite.Models
+
+@model JasperSite.Areas.Admin.ViewModels.SettingsViewModel
+
+@{
+    ViewData["Title"] = "Nastavení";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+
+   
+}
+
+<h2>Nastavení</h2>
+
+@*=====FIRST FORM======*@
+<section class="j-admin-section">
+    <h4><i class="fa fa-file-text j-icon" aria-hidden="true"></i>Název webové stránky</h4>
+    <div id="mainForm">
+        @Html.Partial("WebsiteNamePartialView", Model.model1)
+    </div>
+</section>
+@*=====FIRST FORM END======*@
+
+
+
+
+
+<section class="j-admin-section">
+    <h4><i class="fa fa-cog j-icon" aria-hidden="true"></i>Pokročilé možnosti</h4>
+    <p>Pokud jste manuálně modifikovali vzhledy na serveru, nebo upravovali konfigurační nastavení aplikace, můžou se hodit následující možnosti:</p>
+       
+    <table class="table j-table-no-hover table-bordered">
+        <tr><th>Akce</th><th>Popis</th></tr>
+        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Home" asp-action="Refresh" asp-area="Admin">Aktualizovat a aplikovat</a></td><td>Všechny změny v globálních a vzhledových souborech jasper.json budou aplikovány.</td></tr>
+        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateAllThemesData" asp-area="Admin">Aktualizovat a aplikovat pouze vzhledy</a></td><td>Zkontroluje integritu evidovaných vzhledů a aktualizuje konfigurační nastevení všech vzhledů.</td></tr>
+        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateConfiguration" asp-area="Admin">Pouze aktualizovat</a></td><td>Všechny změny v globálních a vzhledových souborech jasper.json budou načteny do paměti, ale změny týkající se vzhledů nebudou aplikovány.</td></tr>
+        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze vzhledů</a></td><td>V případě poškození databáze vzhledů tato možnost zresetuje databázi vzhledů a odstraní přiřazené textové bloky k jednotlivým kontejnerům příslušných vzhledů. </td></tr>
+    </table>
+
+
+</section>
+
+
+<section class="j-admin-section">
+    <h4><i class="fa fa-database j-icon" aria-hidden="true"></i>Instalace systému</h4>
+
+    <table class="table j-table-no-hover table-bordered">
+        <tr><th>Akce</th><th>Popis</th></tr>
+        <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="Install" asp-action="Index" asp-area="Admin">Zobrazit instalační okno</a></td><td>Tato možnost zobrazí instalační okno, pomocí něhož je možné obnovit tovární nastavení redakčního systému.</td></tr>
+    </table>
+
+</section>
+
+
+
+@*=====SECOND FORM=====*@
+<section class="j-admin-section">
+    <h4><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Globální konfigurační soubor jasper.json</h4>
+   
+    <div id="mainForm2">
+        @Html.Partial("JasperJsonPartialView", Model.model2)
+    </div>
+</section>
+
+<section class="j-admin-section">
+    <h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Vzhledový konfigurační soubor jasper.json</h4>
+    
+    <div id="mainForm3">
+        @Html.Partial("JasperJsonThemePartialView", Model.model3)
+    </div>
+</section>
+@*=====SECOND FORM END=====*@

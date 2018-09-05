@@ -1,0 +1,71 @@
+﻿@model JasperSite.Areas.Admin.ViewModels.CategoriesViewModel
+@using JasperSite.Models.Database;
+@{
+    ViewBag.Title = "Categories";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+ 
+    <script>
+    /* AJAX */
+    $(document).ready(function () {
+
+
+    $('#btnSubmit').click(function (e) {
+
+        e.preventDefault();
+        var frmValidation = $('#formNewCategory').valid(); // Unobtrusive validation has to be called manually
+
+        if (frmValidation) {
+
+
+
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("CreateNewCategory", "Categories")',
+                data:  $("#formNewCategory").serialize(),
+
+                success: function (data) {
+
+
+        $("#categoryPartialForm").html(data);
+
+        // savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+
+                },
+
+
+
+            });
+
+        }
+
+
+        });
+
+
+    });
+    </script>
+}
+
+
+
+
+<h2>Rubriky</h2>
+
+
+ 
+
+
+
+    <div id="categoryPartialForm">
+        @Html.Partial("AddNewCategoryPartialView")
+    </div>
+
+
+<div class="alert alert-secondary alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Tip:</strong> Odstraněním rubriky, která obsahuje články, dojde k automatickému přesunu článků do rubriky "Nezařazeno".
+</div>
+
+<div id="modalTargetDiv"></div>

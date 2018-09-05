@@ -1,0 +1,72 @@
+﻿@using JasperSite.Models.Database
+@using JasperSite.Models
+@using JasperSite.Helpers
+@{
+    Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
+    ViewData["Title"] = "Hlavní stránka";
+}
+
+
+
+<div class="container-fluid">
+    <div class="jumbotron">
+        <h1>Hlavní stránka</h1>
+
+    </div>
+
+    <div>
+        @J.Components.Holder("MainPageHolder")
+    </div>
+
+    @{List<Category> allCategories = J.GetAllCategories();}
+
+    @if (allCategories != null)
+    {
+
+        @foreach (Category c in allCategories)
+        {
+            List<Article> allArticlesFromCategory = J.GetAllArticles(c.Id);
+
+            <h2 style="margin:10px"><i class="fa fa-leaf" aria-hidden="true"></i> @c.Name</h2>
+            @if (allArticlesFromCategory.Count > 0)
+            {
+                @foreach (Article article in allArticlesFromCategory)
+                {
+
+                    <div class="list-group">
+                        <a href="@J.Url(article)" class="list-group-item list-group-item-action flex-column align-items-start ">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">@article.Name</h5>
+                                <small>@article.PublishDate.ToLongDateString()</small>
+                            </div>
+                            <p class="mb-1"><i></i></p>
+                            <small>@article.Category.Name</small>
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="list-group">
+                    <div class="list-group-item list-group-item-action flex-column align-items-start ">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Žádné články k dispozici</h5>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            }
+
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Sekce kategorií momentálně není k dispozici.
+        </div>
+
+    }
+
+</div>

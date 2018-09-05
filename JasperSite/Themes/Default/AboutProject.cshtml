@@ -1,0 +1,91 @@
+﻿@using JasperSite.Helpers;
+@{
+    Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
+    ViewData["Title"] = "O Projektu";
+}
+
+
+<div class="container-fluid">
+    <style>
+        p {
+            text-align: justify;
+        }
+
+        dl dt, dd {
+            text-align: justify;
+        }
+    </style>
+
+    <div class="jumbotron">
+        <h1> O projektu </h1>
+    </div>
+
+
+
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-12">
+            <section class="j-admin-section">
+                <h2><i class="fa fa-desktop j-icon" aria-hidden="true"></i>Redakční systém</h2>
+                <p>
+                    Tento redakční systém byl nazván    <b>J<span style="color:#BA68C8">asp</span>erSite</b>.
+                    Původ tohoto názvu je následující:
+                    <dl>
+                        <dt>J<span style="color:#BA68C8">asp</span>er</dt>
+                        <dd>
+                            Toto slovo znamená v překladu z angličtiny jaspis, což je minerál mnoha různých barev.
+                            Dále se jedná o slovní hríčku, kde tři písmena <span style="color:#BA68C8"><b>asp</b></span> odkazují na název technologie
+                            ASP.NET (<i>Active Server Pages</i>), která byla použita pro implementaci tohoto systému. Nakonec
+                            první dvě písmena <b>JA</b> odpovídají prvním písmenům autorova křestního jména.
+                        </dd>
+                        <dt>Site</dt>
+                        <dd>Slovo site je referencí na webovou stránku, z ang. <i>website.</i></dd>                        
+                    </dl>
+                </p>
+            </section>
+        </div>
+
+        <div class="col-lg-6 col-sm-12 ">
+            <section class="j-admin-section">
+                <h2><i class="fa fa-graduation-cap j-icon" aria-hidden="true"></i>Diplomová práce</h2>
+                <p>
+                    Tento redakční systém <i>(CMS - Content Management System)</i> vznikl jako součást
+                    diplomové práce spadající pod Českou zemědělskou univerzitu v Praze, Provozně ekonomickou fakultu, Katedru systémového inženýrství.
+                </p>
+                <p>
+                    Autorem tohoto projektu je student navazujícího magisterského studijního programu INFON, Bc. Jaromír Kejda. Tento projekt je
+                    součástí praktické části diplomové práce: <i>Návrh a implementace redakčního systému v ASP.NET Core.</i>
+                </p>
+
+                <img src="~/Areas/Admin/Content/Images/logo.png" class="img-fluid" />
+                <img src="~/Areas/Admin/Content/Images/logo_pef.png" class="img-fluid" />
+
+            </section>
+        </div>
+
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-12 ">
+            <section class="j-admin-section">
+                <h2><i class="fa fa-code-fork j-icon" aria-hidden="true"></i>Verze</h2>
+                <table class="table  table-bordered j-table-no-hover">
+                    <tr><th>Název</th><th>Vlastnost</th></tr>
+                    <tr>
+                        <td>Verze</td>
+                        <td>1.0.0</td>
+                    </tr>
+
+                    <tr>  <td>Autor</td> <td>Bc. Jaromír Kejda</td> </tr>
+                    <tr>   <td>Dostupné jako</td> <td>Součást diplomové práce: Návrh a implementace redakčního systému v ASP.NET MVC Core</td></tr>
+
+                </table>
+            </section>
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,102 @@
+﻿@using JasperSite.Models.Database
+@model List<Article>
+@* Script with custom bootstrap pop-up window *@
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+        /* Delete Ajax call */
+        var allDeleteLinks = $('a[data-remove-id]').click(function (e) {
+
+            e.stopPropagation(); // table row click will not trigger simultaneously
+
+            e.preventDefault();
+            var singleLink = $(this);
+
+            var Id = singleLink.data('removeId');
+            var articleName = singleLink.data('articleName');
+
+
+            appendWindow("Skutečně odstranit článek?", `Článek <b> ${articleName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
+
+
+
+        });
+
+          function ajaxCall(articleId) {
+                toggleWindow();
+                 $.ajax({
+                    type: 'get',
+                    url: '@Url.Action("Delete", "Articles")',
+                    data: { id: articleId },
+                    dataType: 'HTML',
+                    success: function (data) {
+                        $("#listOfArticles").html(data);
+                        
+                    }
+                });
+            }
+
+
+
+        /* Clickable row */
+        $("#articleTable").addClass("j-table-clickable");/* If JS is enabled, table is clickable */
+        /*Table row is clickable as a whole*/
+        $("#articleTable tr:gt(0)").click(function () {
+            var id = $(this).data("href")
+            window.location = "/Admin/Articles/GetArticle?id=" + id;
+        });
+
+
+
+
+
+
+
+    });
+</script>
+
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
+<style>
+    .notPublished td {
+        background-color:lightyellow!important;
+    }
+</style>
+
+<div class="table-responsive">
+
+    @if (Model != null)
+    {<table class="table table-bordered j-table j-table-text-center" id="articleTable">
+            <tr><th>Publikováno</th><th>Jméno článku</th><th>Rubrika</th><th>Datum vytvoření</th><th>Akce</th></tr>
+            @foreach (Article a in Model)
+            {
+                <tr data-href="@a.Id"  class="@((!a.Publish) ? "notPublished":"")">
+                    <td><input disabled type="checkbox" @((a.Publish) ? "checked":"")    /></td>
+                    <td>@a.Name</td>
+                    <td>@a.Category.Name</td>
+                    <td>@a.PublishDate</td>
+
+                    <td>
+                        <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-id="@a.Id" data-remove-id="@a.Id" data-article-name="@a.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                        <a href="/Admin/Articles/GetArticle?id=@a.Id" class="btn btn-jasper">Upravit</a>
+                    </td>
+                </tr>
+
+            }
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            <strong>Nic zde není!</strong> Momentálně nemáte žádné uložené články.
+        </div>
+
+    }
+
+
+</div>
+

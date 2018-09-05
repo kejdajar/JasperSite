@@ -1,0 +1,15 @@
+﻿@using JasperSite.Models.Database;
+@model JasperSite.Areas.Admin.ViewModels.EditUserViewModel
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+
+   
+}
+
+
+<div id="mainForm">
+    @Html.Partial("EditUserPartialView")
+</div>
