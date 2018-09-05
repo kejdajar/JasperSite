@@ -264,7 +264,7 @@ namespace JasperSiteCore.Models.Database
                 // Articles will be now returned to the DB as uncategorized               
                 foreach (Article returningArticle in assignedArticles)
                 {
-                    returningArticle.CategoryId = categoryToBeRemoved.Id;
+                    returningArticle.CategoryId = categoryForUnassignedArticles.Id;
                 }
                 Database.SaveChanges();
 
