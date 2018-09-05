@@ -56,7 +56,17 @@
 
 <section class="j-admin-section">
     <div id="mainForm">
-        @Html.PartialAsync("UploadedImagesPartialView").Result
+        @try
+        {
+            @Html.PartialAsync("UploadedImagesPartialView").Result
+        }
+        catch
+        {
+            <div class="alert alert-warning" style="margin-bottom:0px;">
+                Seznam obrázků se nepodařilo načíst.
+            </div>
+        }
+
     </div>
 </section>
 

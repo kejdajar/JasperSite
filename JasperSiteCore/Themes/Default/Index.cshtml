@@ -8,6 +8,12 @@
     <script>
         $(document).ready(function () {
             $('.carousel').carousel();
+
+
+          
+            $('[data-toggle="tooltip"]').tooltip();
+            
+
         });        
         
      </script>
@@ -17,8 +23,26 @@
         .carousel-item {
             height:300px;            
         }
+
+        #technologies {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap:wrap;
+        }
+
+        #technologies img {
+           margin:10px;
+            max-height:150px;
+        }
+      
+      
     </style>
 }
+
+
+
+
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-bottom:5px">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -27,25 +51,26 @@
         </ol>
         <div class="carousel-inner" role="listbox">
             <div class="carousel-item active">
-                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/mountains.jpg")" alt="First slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3>JasperSiteCore</h3>
-                    <p>Jednoduchý redakční systém.</p>
+                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/bg_pen_paper.jpg")" alt="First slide">
+                <div class="carousel-caption d-none d-md-block" style="color:black!important">
+                    <h3>J<span style="color:#AB47BC">asp</span>erSite<span style="color:#AB47BC">Core</span></h3>
+                    <p>Jednoduchý multiplatformní redakční systém.</p>
                 </div>
 
             </div>
             <div class="carousel-item">
                 <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/brush.jpg")" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block">
-                    <h3>Vytvářejte své vlastní vzhledy</h3>
-                    <p>Pro pokročilejší uživatele.</p>
+                    <h3>Dodatečné vzhledy</h3>
+                    <p>Systém podporuje vytváření vlastních vzhledů</p>
+
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/stones.jpg")" alt="Third slide">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3>Široká volba možností</h3>
-                    <p>Systém se vám přizpůsobí na míru.</p>
+                <img class="d-block img-fluid" src="@Helper.JasperUrl("./Images/bg_programming.jpg")" alt="Third slide">
+                <div class="carousel-caption d-none d-md-block" style="background-color:rgba(0, 0, 0, 0.5)!important" >
+                  <h3>Široké možnosti konfigurace</h3>
+                    <p>Díky konfiguračním souborům je možné nastavit celý systém i jednotlivé vzhledy</p>
                 </div>
             </div>
         </div>
@@ -67,19 +92,21 @@
                 <div class="col-md-6">
 
                     <ul class="list-group">
-                        <li class="list-group-item active"> <h3 style="text-align:center">Vítejte</h3></li>
-                        <li class="list-group-item">JasperSiteCore je redakční systém na platformě ASP.NET Core MVC.</li>
+                        <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important"> <h5 style="text-align:center">Vítejte</h5></li>
+                        <li class="list-group-item">JasperSiteCore je multiplatformní redakční systém na platformě ASP.NET Core MVC.</li>
                         <li class="list-group-item">Umožňuje rychle vytvářet vlastní webové stránky.</li>
                         <li class="list-group-item">Obsahuje správu článků, rubrik, uživatelů, vzhledů a další nastavení.</li>
+
                     </ul>
+
                 </div>
 
                 <div class="col-md-6">
 
                     <ul class="list-group">
-                        <li class="list-group-item active">  <h3 style="text-align:center">Studentský projekt</h3></li>
+                        <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">  <h5 style="text-align:center">Studentský projekt</h5></li>
                         <li class="list-group-item">
-                            Tento projekt vznikl jako praktická část diplomové práce na PEF ČZU Praha, obor INFON.
+                            <p> Tento projekt vznikl jako praktická část diplomové práce na PEF ČZU Praha, obor INFON.</p>
                             <img src="@Helper.JasperUrl("./Images/logo.gif")" class="img-fluid" style="max-height:145px" />
                         </li>
                     </ul>
@@ -88,17 +115,20 @@
             </div>
         </section>
 
+
+
+
         <section class="j-section">
             <div class="row">
 
                 <div class="col-md-12">
                     <div class="list-group">
-                        <div class="list-group-item list-group-item-action flex-column align-items-start active">
-                            <h3 style="text-align:center">Krok za krokem</h3>
+                        <div class="list-group-item list-group-item-action flex-column align-items-start active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">
+                            <h5 style="text-align:center;padding:0px">Krok za krokem</h5>
                         </div>
-                        <div  class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Ukázková stránka</h5>
+                                <h6 class="mb-1">Ukázková stránka</h6>
                                 <small class="text-muted">1. krok</small>
                             </div>
                             <p class="mb-1">Právě se nacházíte na ukázkové stránce. Tato stránka je samostatný vzhled, ale neukazuje vámi žádný vytvořený obsah.</p>
@@ -106,7 +136,7 @@
                         </div>
                         <a asp-action="index" asp-area="admin" asp-controller="login" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Přihlášení</h5>
+                                <h6 class="mb-1">Přihlášení</h6>
                                 <small class="text-muted">2. krok</small>
                             </div>
                             <p class="mb-1">
@@ -119,7 +149,7 @@
 
                         <a asp-action="index" asp-area="admin" asp-controller="users" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Změna hesla</h5>
+                                <h6 class="mb-1">Změna hesla</h6>
                                 <small class="text-muted">3. krok</small>
                             </div>
                             <p class="mb-1">
@@ -134,12 +164,12 @@
 
                         <a asp-action="index" asp-area="admin" asp-controller="home" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">Dokončení nastavení</h5>
+                                <h6 class="mb-1">Dokončení nastavení</h6>
                                 <small class="text-muted">4. krok</small>
                             </div>
                             <p class="mb-1">
-                                Nakonec přidejte další uživatele s omezenými právy (role redaktor), změntě název 
-                                vaší stránky a vyberte si vhodný vzhled. Dále můžete již dle libosti přidávat 
+                                Nakonec přidejte další uživatele s omezenými právy (role redaktor), změntě název
+                                vaší stránky a vyberte si vhodný vzhled. Dále můžete již dle libosti přidávat
                                 další rubriky a články.
                             </p>
                             <p class="mb-1">
@@ -154,8 +184,49 @@
 
 
 
-                   
+
                 </div>
             </div>
-            </section>
+        </section>
+
+        <section class="j-section">
+
+
+            <ul class="list-group">
+                <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">
+                    <h5 style="text-align:center">Technologie</h5>
+                </li>
+                <li class="list-group-item ">
+
+
+                    <div id="technologies">
+
+
+                        <img data-toggle="tooltip" title=".NET Core" src="~/Themes/Default/Images/netcore.svg" class="img-fluid" />
+
+                        <img data-toggle="tooltip" title="ASP.NET Core MVC" src="~/Themes/Default/Images/aspnet_logo.svg" class="img-fluid" />
+
+                        <img data-toggle="tooltip" title="Bootstrap" src="~/Themes/Default/Images/bootstrap.jpg" class="img-fluid" style="max-width:120px" />
+
+                        <img data-toggle="tooltip" title="webpack" src="~/Themes/Default/Images/webpack.svg" class="img-fluid" />
+
+                        <img data-toggle="tooltip" title="Gulp" src="~/Themes/Default/Images/gulp.svg" class="img-fluid" />
+
+                        <img data-toggle="tooltip" title="GIT" src="~/Themes/Default/Images/git.svg" class="img-fluid" />
+
+                        <img data-toggle="tooltip" title="Font Awesome" src="~/Themes/Default/Images/font-awesome.png" class="img-fluid" style="max-width:180px" />
+
+
+                        <img data-toggle="tooltip" title="jQuery" src="~/Themes/Default/Images/jquery.svg" class="img-fluid" style="max-width:200px" />
+
+                        <img data-toggle="tooltip" title="MySQL" src="~/Themes/Default/Images/mysql.svg" class="img-fluid" style="max-width:160px" />
+
+                        <img data-toggle="tooltip" title="MS SQL Server" src="~/Themes/Default/Images/mssql.jpg" class="img-fluid" style="max-width:160px" />
+
+
+                    </div>
+                </li>
+            </ul>
+
+        </section>
     </div>

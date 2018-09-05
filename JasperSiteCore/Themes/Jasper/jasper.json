@@ -16,17 +16,7 @@
     ],
     "homePageFile": "Index.cshtml",
     "errorPageFile": "Error.cshtml"
-  },
-  "appSettings": [
-    {
-      "key": "keyName01",
-      "value": "value01"
-    },
-    {
-      "key": "kayName01",
-      "value": "value01"
-    }
-  ],
+  }, 
   "customPageMapping": [
     {
       "routes": [

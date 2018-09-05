@@ -99,10 +99,18 @@ namespace JasperSiteCore.Areas.Admin.Controllers
         public JasperJsonThemeViewModel UpdateJasperJsonThemeViewModel()
         {
             JasperJsonThemeViewModel model = new JasperJsonThemeViewModel();
-            model.JasperJson = Configuration.WebsiteConfig.GetThemeJsonFileAsString();
-            
-            model.Themes = OrderAllThemesByActive();
-            return model;
+            try
+            {               
+                model.JasperJson = Configuration.WebsiteConfig.GetThemeJsonFileAsString();
+                model.Themes = OrderAllThemesByActive();
+                return model;
+            }
+            catch
+            {
+                model.JasperJson = null;
+                model.Themes = null;
+                return model;
+            }
         }
 
         private List<Theme> OrderAllThemesByActive()

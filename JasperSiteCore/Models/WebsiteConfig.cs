@@ -155,32 +155,33 @@ namespace JasperSiteCore.Models
             }
         }
 
-        public List<ConfigurationObject.KeyValue> AppSettings
-        {
-            get
-            {
-                try
-                {
-                    return _configurationObject.AppSettings;
-                }
-                catch (Exception ex)
-                {
-                    ThrowError(ex);
-                    return null;
-                }
-            }
-            set
-            {
-                try
-                {
-                    _configurationObject.AppSettings = value;
-                }
-                catch (Exception ex)
-                {
-                    ThrowError(ex);
-                }
-            }
-        }
+        //----- Discontinued------
+        //public List<ConfigurationObject.KeyValue> AppSettings
+        //{
+        //    get
+        //    {
+        //        try
+        //        {
+        //            return _configurationObject.AppSettings;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ThrowError(ex);
+        //            return null;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        try
+        //        {
+        //            _configurationObject.AppSettings = value;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ThrowError(ex);
+        //        }
+        //    }
+        //}
 
         public List<ConfigurationObject.RouteMapping> CustomPageMapping
         {
@@ -403,8 +404,9 @@ namespace JasperSiteCore.Models
         [JsonProperty("routingList")]
         public Routing RoutingList { get; set; }
 
-        [JsonProperty("appSettings")]
-        public List<KeyValue> AppSettings { get; set; }
+        // ---Discontinued----
+        //[JsonProperty("appSettings")]
+        //public List<KeyValue> AppSettings { get; set; }
 
         // CustomPageMapping
         [JsonProperty("customPageMapping")]

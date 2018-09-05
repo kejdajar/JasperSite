@@ -1,0 +1,1 @@
+https://github.com/gulpjs/artwork/blob/master/gulp.svg

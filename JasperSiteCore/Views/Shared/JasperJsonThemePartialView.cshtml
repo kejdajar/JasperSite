@@ -53,11 +53,20 @@
 <form id="themeSettingsForm" asp-action="SaveThemeJasperJson" asp-controller="Settings"
       asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm3">
    
+    @if (Model.Themes != null)
+    {
     <div class="form-group">
         <label asp-for="Themes"></label>
-        <select id="themeSelect"  class="form-control" asp-for="SelectedThemeId" asp-items="@(new SelectList(Model.Themes,"Id","Name"))"></select>
+        <select id="themeSelect"  class="form-control" asp-for="SelectedThemeId" asp-items="@(new SelectList(Model.Themes, "Id", "Name"))"></select>
     </div>
-    
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Při získávání seznamu vzhledů došlo k chybě.
+        </div>
+    }
+
     <div class="form-group">
         <textarea asp-for="JasperJson" rows="15" class="form-control"></textarea>
     </div>
