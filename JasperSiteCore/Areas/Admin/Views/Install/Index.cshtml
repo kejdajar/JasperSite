@@ -26,24 +26,36 @@
     @Html.Partial("_ErrorModalPartialViewTemp")
 
 
-    @if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
-    {
+    
         <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
         <script>
         $(document).ready(function(){
-        $("#submitButton").click(function(e){
+        $("#submitButtonReinstall").click(function(e){
 
-          
-
+           
            if( $("#installForm").valid()) {
 
                e.preventDefault();
                appendWindow("Skutečně reinstalovat redakční systém?", "Tato akce je nevratná, veškerý obsah bude smazán.", function () { toggleWindow(); $("body").addClass("loading"); $("#installForm").submit(); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Smazat data a reinstalovat systém");
+              
        }
             });
+
+            /* Installation has not yet been completed */
+            $("#submitButtonClean").click(function (e) {
+
+
+                if ($("#installForm").valid()) {
+
+                    $("body").addClass("loading"); 
+                }
+            });
+
+
+
         });
         </script>
-    }
+    
 
 
     <!-- Google Fonts -->
@@ -117,10 +129,9 @@
 <body>
 
 
-    @if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
-    {
+   
         <div id="modalTargetDiv"></div>
-    }
+    
 
     <div class="container">
 
@@ -201,12 +212,12 @@
                             @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
                             {
                                
-                                <input id="submitButton" type="submit" value="Dokončit instalaci" class="btn btn-jasper" />
+                                <input id="submitButtonClean" type="submit" value="Dokončit instalaci" class="btn btn-jasper" asp-area="Admin" asp-controller="Install" asp-action="Index"/>
                             }
                             else
                             {
 
-                                <input id="submitButton" type="submit" value="Reinstalovat systém" class="btn btn-warning" />
+                                <input id="submitButtonReinstall" type="submit" value="Reinstalovat systém" class="btn btn-warning" asp-area="Admin" asp-controller="Install" asp-action="Index"/>
                             }
                         </div>
                     </form>

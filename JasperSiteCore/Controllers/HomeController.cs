@@ -192,6 +192,7 @@ namespace JasperSiteCore.Controllers
         public SettingsViewModel UpdateModel()
         {
             SettingsViewModel model = new SettingsViewModel();
+            
             try
             {
 
@@ -201,6 +202,8 @@ namespace JasperSiteCore.Controllers
             }
             catch (Exception)
             {
+                model.model2 = new JasperJsonViewModel();
+                model.model3 = new JasperJsonThemeViewModel();
 
                 model.model2.JasperJson = string.Empty;
                 model.model3.JasperJson = string.Empty;
