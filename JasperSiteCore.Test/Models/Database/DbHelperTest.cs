@@ -92,9 +92,9 @@ namespace JasperSiteCore.Test.Models.Database
 
             // Arrange articles
             List<Article> articles = new List<Article>() {
-                new Article(){Id=1,Name="Nezařazeno - článek 1"},
-                 new Article(){Id=2,Name="Programování - článek 1"},
-                  new Article(){Id=3,Name="Škola - článek 1"},
+                new Article(){Id=1,Name="Nezařazeno - článek 1",CategoryId=1},
+                 new Article(){Id=2,Name="Programování - článek 1",CategoryId=2},
+                  new Article(){Id=3,Name="Škola - článek 1",CategoryId=3},
             };
             Mock<DbSet<Article>> mockSetArticles = CreateDbSetMock(articles);
 

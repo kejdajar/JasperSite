@@ -247,8 +247,9 @@ namespace JasperSiteCore.Models.Database
 
             try
             {
-                Category categoryToBeRemoved = GetAllCategories().Where(c => c.Id == categoryId).Single();
-                Category categoryForUnassignedArticles = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single();
+                List<Category> allCategories = GetAllCategories();
+                Category categoryToBeRemoved = allCategories.Where(c => c.Id == categoryId).Single();              
+                Category categoryForUnassignedArticles = allCategories.Where(c => c.Name == "Nezařazeno").Single();
 
                 if (categoryToBeRemoved.Name == "Nezařazeno")
                 {
