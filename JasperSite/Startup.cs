@@ -14,6 +14,7 @@ using JasperSite.Models;
 using JasperSite.Models.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Data.SqlClient;
 
 
 namespace JasperSite
@@ -72,7 +73,8 @@ namespace JasperSite
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
             //    APPLICATON DATABASE SEEDING
-            //    DatabaseContext dbContext = ((ServiceProvider)serviceProvider).GetRequiredService<DatabaseContext>();
+            //  DatabaseContext dbContext = ((ServiceProvider)serviceProvider).GetRequiredService<DatabaseContext>();
+             
 
             //    Initializes GlobalWebsiteConfig, WebsiteCongig, ThemeHelper, CustomRouting
             //    Does not require DB Context, only reads data from text files on disc

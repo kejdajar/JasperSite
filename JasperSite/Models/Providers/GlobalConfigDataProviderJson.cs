@@ -15,7 +15,7 @@ namespace JasperSite.Models.Providers
             _jsonPath = jsonPath;
         }
 
-        private string _jsonPath;
+        private readonly string _jsonPath;
 
         /// <summary>
         /// Gets the lastest data from json configuration file

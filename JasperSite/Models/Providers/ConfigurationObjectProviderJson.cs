@@ -26,7 +26,7 @@ namespace JasperSite.Models
             }
         }
 
-        private string _jsonPath;
+        private readonly string _jsonPath;
 
         public GlobalWebsiteConfig GlobalWebsiteConfig { get; set; }
 

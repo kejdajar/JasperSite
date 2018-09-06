@@ -7,6 +7,9 @@ using JasperSite.Models;
 using Microsoft.AspNetCore.Hosting;
 using JasperSite.Models.Database;
 using JasperSite.Areas.Admin.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace JasperSite.Controllers
 {
@@ -30,12 +33,14 @@ namespace JasperSite.Controllers
         /// 2) If the rawUrl is pointing to _FatalError.cshtml, let's serve it immediatelly.
         /// 3)
         /// </summary>
-        /// <returns>Returns appropriate view.</returns>
+        /// <returns>Returns an appropriate view.</returns>
         [HttpGet]
         public IActionResult Index()
         {
             try
             {
+             
+               
 
                 // Test, whether the installation was already completed and database was seeded
                 if (!Configuration.InstallationCompleted())
@@ -50,7 +55,22 @@ namespace JasperSite.Controllers
                 // This error view will be returned usually in case of syntax error in view file.
                 TempData["ErrorInPageLevelCode"] = "1";
                 if (rawUrl == "/Views/Shared/_FatalError.cshtml") return View(rawUrl);
-                               
+
+
+                // Let's test whether we can connect to the database
+                try
+                {
+                  // If there is any error with the connection, this statement will throw exception.
+                  (((_dataServicePublic.Database as DatabaseContext).Database).GetService<IDatabaseCreator>() as RelationalDatabaseCreator).Exists();
+                }
+                catch (Exception)
+                {
+                    //return ShowWebsiteErrorPage(); --> this will show theme error page
+                    TempData["ExceptionMessage"] = new DatabaseConnectionFailureException();
+                    return View("_FatalError", UpdateModel()); // This page shows different output for production setting
+                }
+                
+
                 string file;// helper variable for storing physical file adress for custom routing system
 
                 if (Configuration.CustomRouting.IsHomePage(rawUrl)) // For the main (index) page only
@@ -122,15 +142,7 @@ namespace JasperSite.Controllers
                         // Website error page
                         if (!Env.Hosting.IsDevelopment())
                         {
-                            try
-                            {
-                                string errorPageFileLocation = Configuration.CustomRouting.GetErrorPageFile();
-                                return View(errorPageFileLocation); // Custom error page from the theme will be served.
-                            }
-                            catch (Exception ex)
-                            {
-                                throw new CustomRoutingException(ex); // This will eventually raise the Fatal Error Page in Production mode.
-                            }
+                            return ShowWebsiteErrorPage();
 
                         }
                         else
@@ -151,6 +163,19 @@ namespace JasperSite.Controllers
                 return View("_FatalError", UpdateModel());
             }
 
+        }
+
+        private ViewResult ShowWebsiteErrorPage()
+        {
+            try
+            {
+                string errorPageFileLocation = Configuration.CustomRouting.GetErrorPageFile();
+                return View(errorPageFileLocation); // Custom error page from the theme will be served.
+            }
+            catch (Exception ex)
+            {
+                throw new CustomRoutingException(ex); // This will eventually raise the Fatal Error Page in Production mode.
+            }
         }
 
         private JasperJsonThemeViewModel UpdateJasperJsonThemeViewModel()

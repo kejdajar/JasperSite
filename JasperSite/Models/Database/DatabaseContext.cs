@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JasperSite.Areas.Admin.ViewModels;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace JasperSite.Models.Database
 {
@@ -28,7 +29,7 @@ namespace JasperSite.Models.Database
         // Url rewrite
         DbSet<UrlRewrite> UrlRewrite { get; set; }
 
-        int SaveChanges();
+        int SaveChanges();    
 
     }
 
@@ -41,9 +42,10 @@ namespace JasperSite.Models.Database
         public DatabaseContext(string connectionString) : base()
         {
             this._connectionString = connectionString;
-        }
-        private string _connectionString = null;
 
+        }
+        private string _connectionString = null;              
+      
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

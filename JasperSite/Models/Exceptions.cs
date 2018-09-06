@@ -401,5 +401,29 @@ namespace JasperSite.Models
 
     }
 
+    public class DatabaseConnectionFailureException : Exception
+    {
+        private static string _message = "Application couldn't connect to the database, bacause it is unavailable or the connection string is invalid.";
+
+        public DatabaseConnectionFailureException() : base(_message)
+        {
+
+        }
+        public DatabaseConnectionFailureException(string message)
+            : base(message)
+        {
+        }
+
+        public DatabaseConnectionFailureException(Exception inner)
+            : base(_message, inner)
+        {
+        }
+
+        public DatabaseConnectionFailureException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
+
+    }
 
 }
