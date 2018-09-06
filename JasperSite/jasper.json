@@ -1,6 +1,6 @@
 {
   "themeName": "Default",
-  "connectionString": "Server=localhost;Database=jaspermysql;Uid=root;Pwd=root ",
+ "connectionString": "Server=localhost;Database=jaspermysql;Uid=root;Pwd=root ",
   "typeOfDatabase": "mysql",
   "installationCompleted": "True"
 }

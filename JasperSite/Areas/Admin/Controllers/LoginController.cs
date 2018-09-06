@@ -63,6 +63,10 @@ namespace JasperSite.Areas.Admin.Controllers
             // Input data cleansing: username IS NOT CASE-INSENSITIVE, with no leading and trailing whitespaces
             model.Username = model.Username.ToLower().Trim();
 
+            // If the user was locked out of the system due to incorrenct connection string, 
+            // they can correct it through FTP --> now it has to be reloaded.
+            Configuration.GlobalWebsiteConfig.RefreshData();
+
             try
             {
                 User user = _dbHelper.GetUserWithUsername(model.Username);

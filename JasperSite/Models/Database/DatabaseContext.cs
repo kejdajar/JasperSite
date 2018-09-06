@@ -8,12 +8,12 @@ using JasperSite.Areas.Admin.ViewModels;
 namespace JasperSite.Models.Database
 {
     public interface IDatabaseContext
-    {        
+    {
         DbSet<Article> Articles { get; set; }
         DbSet<Category> Categories { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<User> Users { get; set; }
-        DbSet<Setting> Settings { get; set; }        
+        DbSet<Setting> Settings { get; set; }
 
         // Blocks
         DbSet<Theme> Themes { get; set; }
@@ -29,32 +29,43 @@ namespace JasperSite.Models.Database
         DbSet<UrlRewrite> UrlRewrite { get; set; }
 
         int SaveChanges();
-        
+
     }
 
-    public class DatabaseContext: DbContext,IDatabaseContext
+    public class DatabaseContext : DbContext, IDatabaseContext
     {
+        public DatabaseContext()
+        {
+        }
 
-       
+        public DatabaseContext(string connectionString) : base()
+        {
+            this._connectionString = connectionString;
+        }
+        private string _connectionString = null;
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           
-                string typeOfDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
-                switch (typeOfDatabase)
-                {
-                    case "mssql": optionsBuilder.UseSqlServer(Configuration.GlobalWebsiteConfig.ConnectionString); break;
-                    case "mysql": optionsBuilder.UseMySql(Configuration.GlobalWebsiteConfig.ConnectionString); break;
-                    default: throw new NotSupportedDatabaseException();
-                }
-            
-           
-          
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                this._connectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
+            }
+
+            string typeOfDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
+
+            switch (typeOfDatabase)
+            {
+                case "mssql": optionsBuilder.UseSqlServer(_connectionString); break;
+                case "mysql": optionsBuilder.UseMySql(_connectionString); break;
+                default: throw new NotSupportedDatabaseException();
+            }
+
         }
-       
-        
+
+
         public virtual DbSet<Article> Articles { get; set; }
-        public virtual DbSet<Category> Categories{ get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
@@ -62,7 +73,7 @@ namespace JasperSite.Models.Database
         // Blocks
         public virtual DbSet<Theme> Themes { get; set; }
         public virtual DbSet<BlockHolder> BlockHolders { get; set; }
-        public virtual  DbSet<TextBlock> TextBlocks { get; set; }
+        public virtual DbSet<TextBlock> TextBlocks { get; set; }
         public virtual DbSet<Holder_Block> Holder_Block { get; set; }
 
         //Images
@@ -86,13 +97,13 @@ namespace JasperSite.Models.Database
             modelBuilder.Entity<TextBlock>().ToTable("TextBlocks");
             modelBuilder.Entity<Holder_Block>().ToTable("HolderBlocks");
 
-           // Images
+            // Images
             modelBuilder.Entity<Image>().ToTable("Images");
             modelBuilder.Entity<ImageData>().ToTable("ImageData");
 
             // Url rewrite
             modelBuilder.Entity<UrlRewrite>().ToTable("UrlRewrite");
-            
+
 
             //// Composite primary key
             //modelBuilder.Entity<UrlRewrite>().HasKey(table => new {
@@ -102,6 +113,6 @@ namespace JasperSite.Models.Database
 
         }
 
-        
+
     }
 }
