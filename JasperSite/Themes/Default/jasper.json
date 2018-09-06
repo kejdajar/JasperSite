@@ -1,7 +1,4 @@
 {
-
-  "articleFile": "Article.cshtml",
-  "articleRoute": "/Home/Article/",
   "blockHolders": [ "MainPageHolder", "FooterHolder", "AboutPageHolder" ],
   "routingList": {
     "homePage": [

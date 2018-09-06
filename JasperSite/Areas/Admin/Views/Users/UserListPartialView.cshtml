@@ -68,40 +68,29 @@
 <div class="table-responsive">
     @if (Model.Users != null)
     {
-        <table id="usersTable" class="table table-bordered j-table j-table-text-center">
-            <tr><th>Odstranit</th><th>Uživatelské jméno</th><th>Přezdívka</th><th>Role</th><th>Upravit</th></tr>
+        <table id="usersTable" class="table table-bordered j-table ">
+            <tr><th>Uživatelské jméno</th><th>Přezdívka</th><th >Role</th><th class="col-sm-1">Akce</th></tr>
             @foreach (User u in Model.Users)
             {
-                <tr data-href="@u.Id" style="@((User.Identity.Name.Trim().ToLower() == u.Username.Trim().ToLower()) ? "border-left:10px solid #BA68C8" : "" )">
-                    <td>
-                        @if (User.Identity.Name.Trim().ToLower() == u.Username.Trim().ToLower())
-                        {<i class="fa fa-check fa-1x" aria-hidden="true"></i>
-                            @: <span data-toggle="tooltip" title="Aktivního uživatele není možné odstranit.">Aktivní uživatel</span>
+            <tr data-href="@u.Id" style="@((User.Identity.Name.Trim().ToLower() == u.Username.Trim().ToLower()) ? "border-left:10px solid #BA68C8" : "" )">
+                
+                <td>@u.Username</td>
+                <td>@u.Nickname</td>
+                <td>@u.Role.Name</td>
+                <td><a href="/Admin/Users/EditUser?id=@u.Id" class="btn btn-jasper">Upravit</a>
+                
+                    @if (User.Identity.Name.Trim().ToLower() == u.Username.Trim().ToLower())
+                    {
+                    <span data-toggle="tooltip" title="Aktivního uživatele není možné odstranit">  <a href="#" class="btn btn-jasper btn-jasper-delete disabled"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></span>
+                       
+                    }
+                    else
+                    {
+                        <a title="Odstranit" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-id="@u.Id" data-remove-id="@u.Id" data-user-name="@u.Username" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                    }
 
-
-
-
-
-
-
-
-                        }
-                        else
-                        {
-                            <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-id="@u.Id" data-remove-id="@u.Id" data-user-name="@u.Username" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
-
-
-                        }
-
-                    </td>
-
-
-
-                    <td>@u.Username</td>
-                    <td>@u.Nickname</td>
-                    <td>@u.Role.Name</td>
-                    <td><a href="/Admin/Users/EditUser?id=@u.Id" class="btn btn-jasper">Upravit</a></td>
-                </tr>
+                </td>
+            </tr>
             }
         </table>
     }

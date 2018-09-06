@@ -280,6 +280,23 @@ namespace JasperSite.Areas.Admin.Controllers
                 // Refreshing the page will not cause re-post
                 return RedirectToAction("Index", UpdatePage());
             }
-        }       
+        }
+
+        [HttpGet]
+        public ActionResult UpdateConfiguration()
+        {
+            try
+            {
+                Configuration.Initialize();
+                //TempData["Success"] = true;
+            }
+            catch (Exception)
+            {
+                TempData["ErrorMessage"] = "Nebylo možné aktualizovat nastavení systému";
+            }
+
+            return RedirectToAction("Index");
+
+        }
     }
 }
