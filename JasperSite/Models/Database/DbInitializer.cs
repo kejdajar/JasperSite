@@ -77,11 +77,17 @@ namespace JasperSite.Models.Database
                     new Article {Name="Pátý článek", Publish=true, HtmlContent="test", PublishDate = DateTime.Now + TimeSpan.FromMinutes(180),Category=categories[2],Keywords="článek, ukázka, demo"},
             };
 
-            foreach(Article a in articles)
+            //for (int i = 1; i <= 10000; i++)
+            //{
+            //    Article a = new Article { Name = "Ukázkový článek", Publish = true, HtmlContent = articleContent, PublishDate = DateTime.Now, Category = categories[0], Keywords = "článek, ukázka, demo" };
+            //    DatabaseContext.Articles.Add(a);
+            //}
+
+            foreach (Article a in articles)
             {
                 DatabaseContext.Articles.Add(a);
             }
-//DatabaseContext.SaveChanges();
+            //DatabaseContext.SaveChanges();
 
             Role adminRole = new Role() { Name = "Admin" };
             Role redactorRole = new Role() { Name = "Redaktor" };
