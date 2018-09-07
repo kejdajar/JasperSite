@@ -9,6 +9,8 @@ using JasperSite.Models;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using JasperSite.Helpers;
 
 namespace JasperSite.Areas.Admin.Controllers
 {    
@@ -35,6 +37,11 @@ namespace JasperSite.Areas.Admin.Controllers
                 if (articles.Count > 0)
                     model.Articles = articles;
                 else model.Articles = null;
+
+
+                // Paging section --> first page, items per page
+                model.ArticleListModel = UpdateArticleListModel(1, 10);
+
             }
             catch
             {
@@ -75,6 +82,61 @@ namespace JasperSite.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View(UpdatePage());
+        }
+
+        public ArticleListViewModel UpdateArticleListModel(int currentPage, int itemsPerPage)
+        {
+            ArticleListViewModel modelOutput = new ArticleListViewModel();
+            List<Article> articleList = dbHelper.GetAllArticles();
+            articleList.OrderBy(a => a.Name);
+
+            JasperPaging<Article> paging = new JasperPaging<Article>(articleList, currentPage, itemsPerPage);
+
+            modelOutput.CurrentPage = paging.CurrentPageNumber;
+            modelOutput.TotalNumberOfPages = paging.NumberOfPagesNeeded;
+            modelOutput.Articles = paging.GetCurrentPageItems();
+            return modelOutput;
+
+        }
+
+        [HttpPost]
+        public IActionResult ArticlePaging(ArticleListViewModel model, IFormCollection collection)
+        {
+
+            ArticleListViewModel modelOutput = new ArticleListViewModel();
+
+            try
+            {
+                int itemsPerPage = 10;
+                int currentPage = model.CurrentPage;
+
+                string next = collection["next"];
+                string prev = collection["prev"];
+
+                if (next != null)
+                    currentPage++;
+                if (prev != null)
+                    currentPage--;
+
+                modelOutput = UpdateArticleListModel(currentPage, itemsPerPage);
+
+            }
+            catch
+            {
+                TempData["ErrorMessage"] = "Pøi provádìní poøadavku došlo k chybì";
+            }
+
+            bool isAjaxRequest = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+
+            if (isAjaxRequest)
+            {
+                ModelState.Clear();
+                return PartialView("ArticlesListPartialView", modelOutput);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
@@ -235,7 +297,7 @@ namespace JasperSite.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id, int page)
         {
             bool isAjax = HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest";
 
@@ -252,7 +314,7 @@ namespace JasperSite.Areas.Admin.Controllers
             
             if (isAjax)
             {
-                return PartialView("ArticlesListPartialView", dbHelper.GetAllArticles());
+                return PartialView("ArticlesListPartialView", UpdateArticleListModel(page,10)); 
             }
             else
             {

@@ -33,15 +33,10 @@ namespace JasperSite.Helpers
         public int NumberOfPagesNeeded { get; }
 
         public List<T> GetCurrentPageItems()
-        {
-           
-
-            List<T> list = (FullDataCollection).Skip(ItemsPerPage * (CurrentPageNumber - 1)).Take(ItemsPerPage).ToList();
-            
+        {   
+            List<T> list = (FullDataCollection).Skip(ItemsPerPage * (CurrentPageNumber - 1)).Take(ItemsPerPage).ToList();            
             return list;
         }
-
-
         
     }
 }

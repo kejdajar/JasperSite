@@ -1626,13 +1626,32 @@ namespace JasperSite.Models.Database
 
         /// <summary>
         /// Returns list of all !PUBLISHED! articles. In case of failure returns null.
+        /// If the URL rewriting is activated and article has no assigned URL, it will not be returned.
         /// </summary>
         /// <returns></returns>
         public List<Article> GetAllArticles()
         {
             try
             {
-                return _dbHelper.GetAllArticles().Where(a=>a.Publish).ToList();
+                List<Article> allPublishedArticles = _dbHelper.GetAllArticles().Where(a => a.Publish).ToList();
+                if(Configuration.WebsiteConfig.UrlRewriting)
+                {
+                    List<Article> articlesToBeRemovedFromList = new List<Article>();
+                   foreach(Article a in allPublishedArticles)
+                    {
+                        if(_dbHelper.GetUrls(a.Id).Count() <1)
+                        {
+                            articlesToBeRemovedFromList.Add(a);
+                        }
+                    }
+                    
+                   // Cycle through items that have to be removed
+                   foreach(Article toBeDeleted in articlesToBeRemovedFromList)
+                    {
+                        allPublishedArticles.Remove(toBeDeleted);
+                    }
+                }
+                return allPublishedArticles;
             }
             catch
             {

@@ -15,5 +15,7 @@ namespace JasperSite.Areas.Admin.ViewModels
 
         public int NumberOfCategories { get; set; }
         public bool UncategorizedCategoryExists { get; set; }
+
+        public ArticleListViewModel ArticleListModel { get; set; }
     }
 }

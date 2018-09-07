@@ -1,5 +1,6 @@
-﻿@using JasperSite.Models.Database
-@model List<Article>
+﻿@using JasperSite.Models.Database;
+@using JasperSite.ViewModels;
+@model JasperSite.Areas.Admin.ViewModels.ArticleListViewModel;
 @inject JasperSite.Models.Database.IJasperDataServicePublic J;
 @* Script with custom bootstrap pop-up window *@
 
@@ -32,11 +33,11 @@
                  $.ajax({
                     type: 'get',
                     url: '@Url.Action("Delete", "Articles")',
-                    data: { id: articleId },
+                    data: { id: articleId, page:@Model.CurrentPage },
                     dataType: 'HTML',
                     success: function (data) {
                         $("#listOfArticles").html(data);
-                        
+
                     }
                 });
             }
@@ -54,7 +55,7 @@
 
 
         $("[data-toggle='tooltip']").tooltip();
-    
+
 
 
     });
@@ -67,59 +68,64 @@
 
 <style>
     .notPublished td {
-        background-color:lightyellow!important;
+        background-color: lightyellow !important;
     }
 </style>
 
 <div class="table-responsive">
+    <form asp-action="ArticlePaging" asp-controller="Articles" data-ajax="true" data-ajax-method="post" data-ajax-update="#listOfArticles">
+        <input type="hidden" asp-for="CurrentPage" />
+        @if (Model != null)
+        {<table class="table table-bordered j-table j-table-text-center" id="articleTable">
+                <tr><th>Jméno článku</th><th>Rubrika</th><th>Datum vytvoření</th><th>Podrobnosti</th><th>Akce</th></tr>
+                @foreach (Article a in Model.Articles)
+                {
+                    <tr data-href="@a.Id">
 
-    @if (Model != null)
-    {<table class="table table-bordered j-table j-table-text-center" id="articleTable">
-            <tr><th>Jméno článku</th><th>Rubrika</th><th>Datum vytvoření</th><th>Podrobnosti</th><th>Akce</th></tr>
-            @foreach (Article a in Model)
-            {
-            <tr data-href="@a.Id">
+                        <td>@a.Name</td>
+                        <td>@a.Category.Name</td>
+                        <td>@a.PublishDate</td>
+                        <td>
 
-                <td>@a.Name</td>
-                <td>@a.Category.Name</td>
-                <td>@a.PublishDate</td>
-                <td>
-                    
-                    @* Show warning, that article has no URL assigned, although URL rewriting is activated *@
-                    @if (JasperSite.Models.Configuration.WebsiteConfig.UrlRewriting && J.GetUrls(a.Id).Count() < 1)
-                    {
-                        <span data-toggle="tooltip" title="článek nemá přiřazenou žádnou URL adresu"> <i class="fa fa-2x fa-exclamation-triangle" style="color:red"></i></span>
-                    }
-                    else
-                    {
-                        @if (!a.Publish)
-                        {
-                            <span data-toggle="tooltip" title="rozepsaný článek"> <i class="fa fa-2x fa-pencil-square" style="color:gold"></i></span>
-                        }
-                        else
-                        {
-                            <span data-toggle="tooltip" title="publikovaný článek"> <i class="fa fa-2x fa-check-circle-o" style="color:#BA68C8"></i></span>
-                        }
-                    }
+                            @* Show warning, that article has no URL assigned, although URL rewriting is activated *@
+                            @if (JasperSite.Models.Configuration.WebsiteConfig.UrlRewriting && J.GetUrls(a.Id).Count() < 1)
+                            {
+                                <span data-toggle="tooltip" title="článek nemá přiřazenou žádnou URL adresu"> <i class="fa fa-2x fa-exclamation-triangle" style="color:#959595"></i></span>
+                            }
+                            else
+                            {
+                                @if (!a.Publish)
+                                {
+                                    <span data-toggle="tooltip" title="rozepsaný článek"> <i class="fa fa-2x fa-pencil-square" style="color:#959595"></i></span>
+                                }
+                                else
+                                {
+                                    <span data-toggle="tooltip" title="publikovaný článek"> <i class="fa fa-2x fa-check-circle-o" style="color:#959595"></i></span>
+                                }
+                            }
 
-                </td>
-            <td>
-                <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-id="@a.Id" data-remove-id="@a.Id" data-article-name="@a.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
-                <a href="/Admin/Articles/GetArticle?id=@a.Id" class="btn btn-jasper">Upravit</a>
-            </td>
-            </tr>
+                        </td>
+                        <td>
+                            <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-id="@a.Id" data-remove-id="@a.Id" data-article-name="@a.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                            <a href="/Admin/Articles/GetArticle?id=@a.Id" class="btn btn-jasper">Upravit</a>
+                        </td>
+                    </tr>
 
-            }
-        </table>
-    }
-    else
-    {
-        <div class="alert alert-warning">
-            <strong>Nic zde není!</strong> Momentálně nemáte žádné uložené články.
+                }
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>Nic zde není!</strong> Momentálně nemáte žádné uložené články.
+            </div>
+
+        }
+
+        <div class="pagingPartialBox">
+            @Html.Partial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.CurrentPage, TotalNumberOfPages = Model.TotalNumberOfPages })
         </div>
 
-    }
-
-
+    </form>
 </div>
 

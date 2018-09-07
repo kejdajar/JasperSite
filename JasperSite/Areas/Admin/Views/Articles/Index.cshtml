@@ -1,5 +1,7 @@
 ﻿@using JasperSite.Models.Database
 @using JasperSite.Models
+@using JasperSite.ViewModels;
+@using JasperSite.Areas.Admin.ViewModels;
 @inject DatabaseContext databaseContext
 @model JasperSite.Areas.Admin.ViewModels.ArticlesViewModel
 
@@ -9,7 +11,7 @@
 
 @section Scripts {
 
-    
+
     <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
 
 }
@@ -54,7 +56,7 @@
 <div class="j-admin-section">
     <h4><i class="fa fa-table j-icon" aria-hidden="true"></i>Seznam článků</h4>
     <div id="listOfArticles">
-        @Html.Partial("ArticlesListPartialView", Model.Articles)
+        @Html.Partial("ArticlesListPartialView",Model.ArticleListModel)
     </div>
 </div>
 
