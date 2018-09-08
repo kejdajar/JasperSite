@@ -136,7 +136,7 @@ namespace JasperSite
 
                      
             
-            //"Theme" folder must serve static files
+            //Theme folder must serve static files
                 app.UseStaticFiles(new StaticFileOptions()
             {
                 
