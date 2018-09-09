@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <MvcRazorCompileOnPublish>false</MvcRazorCompileOnPublish>
     <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
+    <UserSecretsId>f520360b-845a-4af2-b313-d7f10389015f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

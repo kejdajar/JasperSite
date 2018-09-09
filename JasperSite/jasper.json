@@ -1,6 +1,6 @@
 {
   "themeName": "Jasper",
-  "connectionString": "Server=localhost;Database=jaspermysql;Uid=root;Pwd=root ",
-  "typeOfDatabase": "mysql",
+  "connectionString": "Data Source=DESKTOP\\DEVELOPMENT;Initial Catalog=mssqljaspersite;Integrated Security=True",
+  "typeOfDatabase": "mssql",
   "installationCompleted": "True"
 }
