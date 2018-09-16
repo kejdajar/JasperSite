@@ -5,7 +5,10 @@
 
 @*=========================================================Styles===========================================================**@
 
-
+@* at least basic layout will work when JS is disabled (webpack bundles css files into .js file) *@
+<noscript>
+    <link href="~/nodeLib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</noscript>
 
 <environment include="Development">
     <script src="~/bundles/theme.bundle.js"></script>    @*Includes scripts and CSS*@

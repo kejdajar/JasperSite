@@ -6,6 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
     
+    @* In case of disabled javascript, at least some basic css will be loaded *@
+    @* If JS is active, this will not be rendered and web pack will bundle all JS and CSS files *@
+    <noscript>
+        <link href="~/nodeLib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/Areas/Admin/Content/Styles/design.min.css" rel="stylesheet" />
+        <link href="~/Areas/Admin/Content/Styles/design-with-sidebar.min.css" rel="stylesheet" />
+        <link href="~/nodeLib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        
+    @* No-JS warning would be otherwise blocking part of the page *@
+        <style>
+            .j-margin-top {
+                margin-top:50px!important;
+            }
+        </style>
+    </noscript>
 
     <environment exclude="Development">
         <script src="~/bundles/admin.bundle.js"></script>
