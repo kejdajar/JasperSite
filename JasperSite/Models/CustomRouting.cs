@@ -20,7 +20,7 @@ namespace JasperSite.Models
         {
             foreach (string homeRouteUrl in GetHomePageUrls())
             {
-                if (rawUrl == homeRouteUrl)
+                if (UrlRewriting.CompareUrls(rawUrl,homeRouteUrl))
                 {
                     return true;
                 }
@@ -48,15 +48,23 @@ namespace JasperSite.Models
         /// <exception cref="CustomRoutingException"></exception>
         public string GetHomePageFile()
         {
-            string physicalFileUrl = WebsiteConfig.RoutingList.HomePageFile;
-            string path = RelativeThemePathToRootRelativePath(physicalFileUrl);
-            if(System.IO.File.Exists(path))
+            try
             {
-                return path;
+                string physicalFileUrl = WebsiteConfig.RoutingList.HomePageFile;
+                string path = RelativeThemePathToRootRelativePath(physicalFileUrl);
+                if (System.IO.File.Exists(path))
+                {
+                    // path can contain spaces in form of %20, which has to be converted to normal spaces                   
+                    return path.Replace("%20", " ");
+                }
+                else
+                {
+                    throw new CustomRoutingException("Following view could not be found: " + path);
+                }
             }
-            else
+            catch (Exception)
             {
-                throw new CustomRoutingException("Following view could not be found: " + path);
+                throw new CustomRoutingException("GetHomePageFile() method was unable to resolve the homepage URL.");
             }
             
         }
@@ -90,13 +98,21 @@ namespace JasperSite.Models
             List<ConfigurationObject.RouteMapping> collection = WebsiteConfig.CustomPageMapping;
             foreach(ConfigurationObject.RouteMapping routeObject in collection)
             {
-                 if(routeObject.Routes.Contains(rawUrl))
+                // all URLs are normalized
+                List<string> normalizedRoutes = new List<string>();
+                foreach(string nonNormalizedRoute in routeObject.Routes)
+                {
+                    normalizedRoutes.Add(UrlRewriting.NormalizeUrl(nonNormalizedRoute));
+                }
+                
+                 if(normalizedRoutes.Contains(UrlRewriting.NormalizeUrl(rawUrl))) // raw URL is normalized as well
                 {
                     string physicalFileUrl = routeObject.File;
                     string path = RelativeThemePathToRootRelativePath(physicalFileUrl);
                     if (System.IO.File.Exists(path))
                     {
-                        return path;
+                        // path can't contain spaces in form of %20
+                        return path.Replace("%20"," ");
                     }
                     else
                     {

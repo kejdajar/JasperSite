@@ -45,21 +45,21 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Login" asp-action="Index" asp-area="Admin">Přihlášení</a>
+                        <a class="nav-link" asp-controller="login" asp-action="index" asp-area="admin">Přihlášení</a>
                     </li>
-                    <li class="nav-item  @(Context.Request.Path.Value.StartsWith("/Home/Category") ? "active":"")">
-                        <a class="nav-link" href="/Home/Category">Všechny rubriky</a>
+                    <li class="nav-item  @(Context.Request.Path.Value.ToLower().StartsWith("/home/category") ? "active":"")">
+                        <a class="nav-link" href="/home/category">Všechny rubriky</a>
                     </li>
-                    <li class="nav-item  @(Context.Request.Path.Value.StartsWith("/Home/About") ? "active":"")">
-                        <a class="nav-link" href="/Home/About">O Autorovi</a>
+                    <li class="nav-item  @(Context.Request.Path.Value.ToLower().StartsWith("/home/about") ? "active":"")">
+                        <a class="nav-link" href="/home/about">O Autorovi</a>
                     </li>
                     @{ List<Category> allCategories = J.GetAllCategories();}
                     @if (allCategories != null)
                     {
                         @foreach (Category c in allCategories)
                         {
-                            <li class="nav-item @(Context.Request.Path.Value.StartsWith("Home/SingleCategory?id=" + c.Id) ? "active" : "")">
-                                <a class="nav-link" href="/Home/SingleCategory?id=@c.Id">@c.Name</a>
+                            <li class="nav-item @(Context.Request.Path.Value.ToLower().StartsWith("/home/singlecategory?id=" + c.Id) ? "active" : "")">
+                                <a class="nav-link" href="/home/singlecategory?id=@c.Id">@c.Name</a>
                             </li>
                         }
 

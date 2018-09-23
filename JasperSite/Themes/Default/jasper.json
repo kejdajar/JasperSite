@@ -2,35 +2,23 @@
   "blockHolders": [ "MainPageHolder", "FooterHolder", "AboutPageHolder" ],
   "routingList": {
     "homePage": [
-      "/Home/Index/",
-      "/Home/Index",
-      "/Home/",
-      "/Home",
-      "/",
-      ""
+      "/home/index",      
+      "/"     
     ],
     "homePageFile": "Index.cshtml",
     "errorPageFile": "Error.cshtml"
   },  
-  "customPageMapping": [
+  "customPageMapping": [   
     {
       "routes": [
-        "/Home/Article",
-        "/Home/Article/"
-      ],
-      "file": "Article.cshtml"
-    },
-    {
-      "routes": [
-        "/Home/AboutProject",
-        "/Home/AboutProject/"
+        "/home/about-project"
+       
       ],
       "file": "AboutProject.cshtml"
     },
     {
       "routes": [
-        "/Home/AboutAuthor",
-        "/Home/AboutAuthor/"
+        "/home/about-author"      
       ],
       "file": "AboutAuthor.cshtml"
     }

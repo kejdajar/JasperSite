@@ -1,56 +1,48 @@
 {
   "urlRewriting": "True",
   "articleFile": "Article.cshtml",
-  "articleRoute": "/Home/Article/",
+  "articleRoute": "/home/article/",
 
   "blockHolders": [ "MainPageHolder", "FooterHolder", "AboutPageHolder" ],
   "missingImagePath": "./Images/missing.jpg",
   "routingList": {
     "homePage": [
-      "/Home/Index/",
-      "/Home/Index",
-      "/Home/",
-      "/Home",
-      "/",
-      ""
+      "/home/index",
+      "/home",
+      "/"
     ],
     "homePageFile": "Index.cshtml",
     "errorPageFile": "Error.cshtml"
-  }, 
+  },
   "customPageMapping": [
     {
       "routes": [
-        "/Home/Category",
-        "/Home/Category/",
-        "/b"
+        "/home/category",
+        "/category"
       ],
       "file": "Category.cshtml"
     },
     {
       "routes": [
-        "/Home/Tutorial",
-        "/Home/Tutorial/"
+        "/home/tutorial"
       ],
       "file": "Tutorial.cshtml"
     },
     {
       "routes": [
-        "/Home/Article",
-        "/Home/Article/"
+        "/home/article"
       ],
       "file": "Article.cshtml"
     },
     {
       "routes": [
-        "/Home/SingleCategory",
-        "/Home/SingleCategory/"
+        "/home/singlecategory"
       ],
       "file": "SingleCategory.cshtml"
     },
     {
       "routes": [
-        "/Home/About",
-        "/Home/About/"
+        "/home/about"
       ],
       "file": "About.cshtml"
     }

@@ -19,7 +19,8 @@ namespace JasperSite.Models
         {
             try
             {
-                string articlesRoute = Configuration.WebsiteConfig.ArticleRoute;
+                string articlesRoute = UrlRewriting.NormalizeUrl(Configuration.WebsiteConfig.ArticleRoute);
+                inputURL = UrlRewriting.NormalizeUrl(inputURL);
 
                 if (inputURL.StartsWith(articlesRoute))
                 {
@@ -38,12 +39,14 @@ namespace JasperSite.Models
 
 
         /// <summary>
-        /// Removes last slash from URL if present. In case of null URL, string.empty is returned.
+        /// Removes last slash from URL if present. Adds slash to the begginning of the URL if absent.
+        /// Additionally, the URL is translated to lowercase.
+        /// E.g. : Home/Articles/ --> /home/articles
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
         /// <exception cref="InvalidUrlRewriteException"></exception>
-        public static string CleanseUrl(string url)
+        public static string NormalizeUrl(string url)
         {
             if (string.IsNullOrEmpty(url)) return string.Empty;
 
@@ -54,12 +57,45 @@ namespace JasperSite.Models
                     url = url.Remove(url.Length-1);
                 }
 
-                return url;
+                if (!url.StartsWith('/'))
+                {
+                    url = "/" + url;
+                }
+                
+                return url.ToLower();
             }
             catch(Exception ex)
             {
                 throw new InvalidUrlRewriteException("Url could not be cleansed.",ex);
             }
+        }
+
+        /// <summary>
+        /// Normalizes and then compares URLs.
+        /// </summary>
+        /// <param name="url1"></param>
+        /// <param name="url2"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        public static bool CompareUrls(string url1, string url2)
+        {
+            try
+            {
+                string normalized1 = NormalizeUrl(url1);
+                string normalized2 = NormalizeUrl(url2);
+                if (normalized1 == normalized2)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidUrlRewriteException(ex);              
+            }      
         }
 
 
@@ -74,8 +110,10 @@ namespace JasperSite.Models
         {
             try
             {
+                inputURL = UrlRewriting.NormalizeUrl(inputURL);
+
                 // mydomain.cz + /Home/Articles
-                string articlesRoute = Configuration.WebsiteConfig.ArticleRoute;
+                string articlesRoute =UrlRewriting.NormalizeUrl(Configuration.WebsiteConfig.ArticleRoute);
 
                 if (inputURL.StartsWith(articlesRoute))
                 {
@@ -83,6 +121,9 @@ namespace JasperSite.Models
                     if (ix != -1)
                     {
                         string requestedArticleUrl = inputURL.Substring(ix + articlesRoute.Length);
+
+                        // database stores URL without slashes:
+                        requestedArticleUrl = requestedArticleUrl.Replace("/", "");
 
                         int articleId = dataService.Database.UrlRewrite.Where(ur => ur.Url == requestedArticleUrl).Select(s => s.ArticleId).Single();
 

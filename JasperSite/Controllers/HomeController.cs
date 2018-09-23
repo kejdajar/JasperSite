@@ -65,27 +65,23 @@ namespace JasperSite.Controllers
 
                 if (Configuration.CustomRouting.IsHomePage(rawUrl)) // For the main (index) page only
                 {
-                    string viewToReturn = Configuration.CustomRouting.GetHomePageFile(); // throws CustomRouting exception when view is not found
-                   
-                    // url can't contain "%20" - normal space is required 
-                    return View(viewToReturn.Replace("%20", " "));
-
+                    string viewToReturn = Configuration.CustomRouting.GetHomePageFile(); // throws CustomRouting exception when view is not found                                     
+                    return View(viewToReturn);
                 }
                 else if (!string.IsNullOrEmpty(file = Configuration.CustomRouting.MapUrlToFile(rawUrl))) // Custom mapping for non-index pages, throws exception if view is not found
                 {
-                    // url can't contain "%20" - normal space is required 
-
+                  
                     // if urlRewriting is disabled + request for article page + request has parameter Id => id has to be
                     // supplied for article view model                                    
 
-                    if(!Configuration.WebsiteConfig.UrlRewriting && UrlRewriting.CleanseUrl(rawUrl) == UrlRewriting.CleanseUrl(Configuration.WebsiteConfig.ArticleRoute))
+                    if(!Configuration.WebsiteConfig.UrlRewriting && UrlRewriting.CompareUrls(rawUrl,Configuration.WebsiteConfig.ArticleRoute))
                     {
                         string queryId;
                         if (!string.IsNullOrEmpty(queryId=Request.Query["id"].ToString()))
                         {
                             try
                             {
-                                return View(file.Replace("%20", " "),Convert.ToInt32(queryId));
+                                return View(file,Convert.ToInt32(queryId));
                             }
                             catch 
                             {
@@ -94,7 +90,7 @@ namespace JasperSite.Controllers
                         }
                     }
 
-                    return View(file.Replace("%20", " "));
+                    return View(file);
                 }
                 // --------------URL REWRITING FOR ARTICLES-----------------------------------------------------------------
                 // first condition checks whether is URL rewriting allowed in theme jasper.json
@@ -118,7 +114,7 @@ namespace JasperSite.Controllers
                 } // --------------END URL REWRITING FOR ARTICLES--------------------------------------------------------------
                 else // page was not found
                 {
-                    bool isRequestFromAdminArea = (rawUrl.ToLower()).StartsWith("/admin") ? true : false;
+                    bool isRequestFromAdminArea = (rawUrl.ToLower()).StartsWith("/admin",false,System.Globalization.CultureInfo.CurrentCulture) ? true : false;
                     if (isRequestFromAdminArea)
                     {
                         // Admin error page
