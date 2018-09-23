@@ -19,29 +19,21 @@ namespace JasperSite.Controllers
         // HomeController catches all requests coming from /Home/*
         public HomeController(IJasperDataServicePublic dataServicePublic)
         {
-            this._dataServicePublic = dataServicePublic;
-           
+            this._dataServicePublic = dataServicePublic;           
         }
 
-        private IJasperDataServicePublic _dataServicePublic { get; set; }
-      
+        private IJasperDataServicePublic _dataServicePublic { get; set; }      
 
-        // GET: Home
+      
         /// <summary>
-        /// Main action method for custom routing system.
-        /// 1) If installation has not yet been completed, redirects to install page.
-        /// 2) If the rawUrl is pointing to _FatalError.cshtml, let's serve it immediatelly.
-        /// 3)
+        /// Main action method for custom routing system.          
         /// </summary>
         /// <returns>Returns an appropriate view.</returns>
         [HttpGet]
         public IActionResult Index()
         {
             try
-            {
-             
-               
-
+            {    
                 // Test, whether the installation was already completed and database was seeded
                 if (!Configuration.InstallationCompleted())
                 {
@@ -55,8 +47,7 @@ namespace JasperSite.Controllers
                 // This error view will be returned usually in case of syntax error in view file.
                 TempData["ErrorInPageLevelCode"] = "1";
                 if (rawUrl == "/Views/Shared/_FatalError.cshtml") return View(rawUrl);
-
-
+                
                 // Let's test whether we can connect to the database
                 try
                 {
@@ -68,8 +59,7 @@ namespace JasperSite.Controllers
                     //return ShowWebsiteErrorPage(); --> this will show theme error page
                     TempData["ExceptionMessage"] = new DatabaseConnectionFailureException();
                     return View("_FatalError", UpdateModel()); // This page shows different output for production setting
-                }
-                
+                }                
 
                 string file;// helper variable for storing physical file adress for custom routing system
 

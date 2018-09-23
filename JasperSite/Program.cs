@@ -14,20 +14,11 @@ namespace JasperSite
     public class Program
     {
         public static void Main(string[] args)
-        {
-            //var host = new WebHostBuilder()
-            //    .UseKestrel()
-            //    .UseContentRoot(Directory.GetCurrentDirectory())
-            //    .UseIISIntegration()
-            //    .UseStartup<Startup>()
-            //    .UseApplicationInsights()
-            //    .Build();
-
-            //host.Run();
-
-            //BuildWebHost(args).Run();
+        {          
 
             var host = BuildWebHost(args);
+           
+            // Old seeding
             //using (var scope = host.Services.CreateScope())
             //{
             //    var services = scope.ServiceProvider;
@@ -44,6 +35,7 @@ namespace JasperSite
             //    }
             //    host.Run();
             //}
+
             host.Run();
         }
         public static IWebHost BuildWebHost(string[] args) =>

@@ -1,6 +1,7 @@
 ﻿// Configure bundling and minification for the project.
 [
   // **** ADMIN SECTION MINIFICATION *****
+  // This minified files are used whenever JS is disabled (webpack won't work)
   {
     "outputFileName": "Areas/Admin/Content/Styles/login-page.min.css",
     "inputFiles": [
@@ -19,7 +20,7 @@
     "inputFiles": [
       "Areas/Admin/Content/Styles/design.css"
     ]
-  },  
+  },
 
   // **** SHARED STYLES MINIFICATION *****
   {
@@ -84,6 +85,7 @@
     ]
   }
 
+  // Template
   //{
   //  "outputFileName": "wwwroot/js/site.min.js",
   //  "inputFiles": [
