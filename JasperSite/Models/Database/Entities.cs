@@ -29,6 +29,7 @@ namespace JasperSite.Models.Database
         public bool Publish { get; set; }
 
         public string Keywords { get; set; }
+      
     }
 
     public class Category

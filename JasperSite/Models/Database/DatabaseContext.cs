@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JasperSite.Areas.Admin.ViewModels;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using JasperSite.Models.Providers;
 
 namespace JasperSite.Models.Database
 {
@@ -39,29 +40,56 @@ namespace JasperSite.Models.Database
         {
         }
 
-        public DatabaseContext(string connectionString) : base()
+        public DatabaseContext(IDatabaseContextOptions options) : base()
         {
-            this._connectionString = connectionString;
+            if (options == null) throw new ArgumentException();
 
-        }
-        private string _connectionString = null;              
-      
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (string.IsNullOrEmpty(_connectionString))
+            if(string.IsNullOrEmpty(options.ConnectionString) || string.IsNullOrEmpty(options.TypeOfDatabase) )
             {
-                this._connectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
+                throw new ArgumentException();
             }
 
-            string typeOfDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
+            this._connectionString = options.ConnectionString;
+            this._typeOfDatabase = options.TypeOfDatabase;
+        }
 
-            switch (typeOfDatabase)
+        private string _connectionString = string.Empty;
+        private string _typeOfDatabase = string.Empty;
+      
+
+        /// <summary>
+        /// This method is called on every HTTP request and also by .NET Command-line tools (e.g. $update-database).
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {            
+            // if connection string was not passed manually in constructor
+            if (string.IsNullOrEmpty(_connectionString) || string.IsNullOrEmpty(_typeOfDatabase))
+            {
+                // If Configuration.Initialize(); was not called yet, Configuration.GlobalWebsiteConfig is empty.
+                // This happens when CLI tools are used for migrations -> in that case they will use 
+                // settings from global jasper.json file.
+                if (Configuration.GlobalWebsiteConfig == null)
+                {
+                    GlobalConfigDataProviderJson provider = new GlobalConfigDataProviderJson("jasper.json");
+                    GlobalWebsiteConfig configForCliTools = new GlobalWebsiteConfig(provider);
+                    this._connectionString = configForCliTools.ConnectionString;
+                    this._typeOfDatabase = configForCliTools.TypeOfDatabase;                    
+                }
+                else
+                {
+                    this._connectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
+                    this._typeOfDatabase = Configuration.GlobalWebsiteConfig.TypeOfDatabase;
+                }                
+            }          
+
+            switch (_typeOfDatabase)
             {
                 case "mssql": optionsBuilder.UseSqlServer(_connectionString); break;
                 case "mysql": optionsBuilder.UseMySql(_connectionString); break;
                 default: throw new NotSupportedDatabaseException();
             }
+           
 
         }
 
@@ -105,16 +133,17 @@ namespace JasperSite.Models.Database
 
             // Url rewrite
             modelBuilder.Entity<UrlRewrite>().ToTable("UrlRewrite");
-
-
-            //// Composite primary key
-            //modelBuilder.Entity<UrlRewrite>().HasKey(table => new {
-            //    table.Url,
-            //    table.ArticleId
-            //});
-
+           
         }
-
-
     }
+
+    /// <summary>
+    /// Options for DatabaseContext class.
+    /// </summary>
+    public interface IDatabaseContextOptions
+    {
+        string ConnectionString { get; set; }
+        string TypeOfDatabase { get; set; }
+    }
+
 }
