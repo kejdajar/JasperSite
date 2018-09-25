@@ -61,12 +61,15 @@ namespace JasperSite.Helpers
         [HtmlTargetElement("j-date", TagStructure = TagStructure.WithoutEndTag)]
         public class JDateTagHelper : TagHelper
         {
+
+        public string Format { get; set; }
+
             public override void Process(TagHelperContext context, TagHelperOutput output)
             {
                 DataTransfer data = (DataTransfer)context.Items[typeof(JArticleTagHelper)];
                 output.TagName = "";
-                output.Content.SetHtmlContent(HtmlEncoder.Default.Encode(data.Article.PublishDate.ToLongDateString() + ", " + data.Article.PublishDate.ToLongTimeString()));
-
+            //output.Content.SetHtmlContent(HtmlEncoder.Default.Encode(data.Article.PublishDate.ToLongDateString() + ", " + data.Article.PublishDate.ToLongTimeString()));
+            output.Content.SetHtmlContent(data.Article.PublishDate.ToString(Format));
             }
         }
 
