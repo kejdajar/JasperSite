@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Html;
 using System.Text;
 using JasperSite.Helpers;
 
+
 namespace JasperSite.Models.Database
 {
     /// <summary>
@@ -50,7 +51,7 @@ namespace JasperSite.Models.Database
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException(ex);             
+                throw new DatabaseHelperException(ex);
             }
 
         }
@@ -69,9 +70,9 @@ namespace JasperSite.Models.Database
             }
             catch (Exception ex)
             {
-               
-                    throw new DatabaseHelperException(ex);
-                             
+
+                throw new DatabaseHelperException(ex);
+
             }
 
         }
@@ -131,10 +132,10 @@ namespace JasperSite.Models.Database
         /// <exception cref="DatabaseHelperException"></exception>
         public Article EditArticle(Article article)
         {
-           
+
             try
             {
-               
+
                 Article oldArticleToChange = Database.Articles.Where(a => a.Id == article.Id).Single();
                 oldArticleToChange.HtmlContent = article.HtmlContent;
                 oldArticleToChange.Name = article.Name;
@@ -168,7 +169,7 @@ namespace JasperSite.Models.Database
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException("Specified article could not be found.",ex);
+                throw new DatabaseHelperException("Specified article could not be found.", ex);
             }
 
         }
@@ -188,9 +189,9 @@ namespace JasperSite.Models.Database
             }
             catch (Exception ex)
             {
-               
-                    throw new DatabaseHelperException(ex);
-                              
+
+                throw new DatabaseHelperException(ex);
+
             }
 
 
@@ -210,8 +211,8 @@ namespace JasperSite.Models.Database
             }
             catch (Exception ex)
             {
-                    throw new DatabaseHelperException(ex);                
-            
+                throw new DatabaseHelperException(ex);
+
             }
 
         }
@@ -248,7 +249,7 @@ namespace JasperSite.Models.Database
             try
             {
                 List<Category> allCategories = GetAllCategories();
-                Category categoryToBeRemoved = allCategories.Where(c => c.Id == categoryId).Single();              
+                Category categoryToBeRemoved = allCategories.Where(c => c.Id == categoryId).Single();
                 Category categoryForUnassignedArticles = allCategories.Where(c => c.Name == "Nezařazeno").Single();
 
                 if (categoryToBeRemoved.Name == "Nezařazeno")
@@ -296,7 +297,7 @@ namespace JasperSite.Models.Database
             catch
             {
                 return false;
-            }      
+            }
         }
 
         /// <summary>
@@ -304,17 +305,17 @@ namespace JasperSite.Models.Database
         /// </summary>
         /// <exception cref="DatabaseHelperException"></exception>
         public void CreateUncategorizedCategory()
-        {          
+        {
             try
             {
-                if (UncategorizedCategoryExists()) throw new DatabaseHelperException("Uncategorized category already exists."); 
+                if (UncategorizedCategoryExists()) throw new DatabaseHelperException("Uncategorized category already exists.");
                 Category uncategorized = new Category() { Name = "Nezařazeno" };
                 Database.Categories.Add(uncategorized);
                 Database.SaveChanges();
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException("Uncategorized category could not be created.",ex);
+                throw new DatabaseHelperException("Uncategorized category could not be created.", ex);
             }
         }
 
@@ -336,7 +337,7 @@ namespace JasperSite.Models.Database
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException(ex);               
+                throw new DatabaseHelperException(ex);
             }
         }
 
@@ -436,7 +437,7 @@ namespace JasperSite.Models.Database
             catch (Exception ex)
             {
 
-                throw new DatabaseHelperException("Specified user could not be found",ex) ;
+                throw new DatabaseHelperException("Specified user could not be found", ex);
             }
         }
 
@@ -450,7 +451,7 @@ namespace JasperSite.Models.Database
             try
             {
                 int adminRoleId = Database.Roles.Where(r => r.Name == "admin").Single().Id;
-                return Database.Users.Where(u=>u.RoleId == adminRoleId).ToList();
+                return Database.Users.Where(u => u.RoleId == adminRoleId).ToList();
             }
             catch (Exception ex)
             {
@@ -479,7 +480,6 @@ namespace JasperSite.Models.Database
         }
         #endregion
 
-       
         #region Themes
 
         /// <summary>
@@ -711,7 +711,7 @@ namespace JasperSite.Models.Database
             }
             catch (Exception ex)
             {
-                throw new DatabaseHelperException("Current theme Id could not be found", ex);           
+                throw new DatabaseHelperException("Current theme Id could not be found", ex);
             }
         }
 
@@ -731,7 +731,7 @@ namespace JasperSite.Models.Database
             }
             catch (Exception ex)
             {
-               throw new DatabaseHelperException(ex);                              
+                throw new DatabaseHelperException(ex);
             }
         }
 
@@ -999,7 +999,7 @@ namespace JasperSite.Models.Database
 
         }
         #endregion
-        
+
         #region Images
 
         /// <summary>
@@ -1050,15 +1050,15 @@ namespace JasperSite.Models.Database
         /// <returns></returns>
         /// <exception cref="InvalidUrlRewriteException"></exception>
         public List<UrlRewrite> GetAllUrls()
-        {         
+        {
             try
             {
                 return Database.UrlRewrite.ToList();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new InvalidUrlRewriteException(ex);
-            }            
+            }
         }
 
         /// <summary>
@@ -1067,11 +1067,11 @@ namespace JasperSite.Models.Database
         /// <param name="articleId"></param>
         /// <returns></returns>
         /// <exception cref="InvalidUrlRewriteException"></exception>
-        public List<string> GetUrls (int articleId)
+        public List<string> GetUrls(int articleId)
         {
             try
             {
-               List<string> urls= Database.UrlRewrite.Where(ur => ur.ArticleId == articleId).Select(s => s.Url).ToList();               
+                List<string> urls = Database.UrlRewrite.Where(ur => ur.ArticleId == articleId).Select(s => s.Url).ToList();
                 return urls;
             }
             catch (Exception ex)
@@ -1096,11 +1096,11 @@ namespace JasperSite.Models.Database
 
             // Check for duplicity
             List<UrlRewrite> allRewrites = GetAllUrls();
-            foreach(UrlRewrite ur in allRewrites)
+            foreach (UrlRewrite ur in allRewrites)
             {
-                if(ur.Url == url)
+                if (ur.Url == url)
                 {
-                    throw new InvalidUrlRewriteException("Specified URL is already assigned.") {AssignedArticleId = ur.ArticleId};
+                    throw new InvalidUrlRewriteException("Specified URL is already assigned.") { AssignedArticleId = ur.ArticleId };
                 }
             }
 
@@ -1128,7 +1128,7 @@ namespace JasperSite.Models.Database
                     // ie.: /Home/Articles
                     string articleRoute = Configuration.WebsiteConfig.ArticleRoute;
 
-                    return articleRoute + lastPartOfUrl; 
+                    return articleRoute + lastPartOfUrl;
                 }
                 else
                 {
@@ -1136,9 +1136,9 @@ namespace JasperSite.Models.Database
                     if (!string.IsNullOrEmpty(articleRouteFromJasperJson))
                     {
                         // remove last slash from url if present
-                        if(articleRouteFromJasperJson.EndsWith('/'))
+                        if (articleRouteFromJasperJson.EndsWith('/'))
                         {
-                          articleRouteFromJasperJson=  articleRouteFromJasperJson.Remove(articleRouteFromJasperJson.Length -1);
+                            articleRouteFromJasperJson = articleRouteFromJasperJson.Remove(articleRouteFromJasperJson.Length - 1);
                         }
 
                         return articleRouteFromJasperJson + "?id=" + article.Id.ToString();
@@ -1174,7 +1174,57 @@ namespace JasperSite.Models.Database
 
         #endregion
 
+        #region Routing methods
+
+        /// <summary>
+        /// Transforms Theme-relative Url to Root-relative Url
+        /// </summary>
+        /// <param name="url">Theme-relative Url</param>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
+        public string File(string url)
+        {
+            try
+            {
+                // without slash on the beginning it would work only on pages without route parameters
+                // urls has to look like: /Themes/Jasper/Styles/style.css
+                // without the slash it would create the following: localhost/Home/Category/Themes/Jasper/Styles/style.css = undesirable
+                string path = "/" + Configuration.CustomRouting.RelativeThemePathToRootRelativePath(url);
+
+
+                // If the theme name (== folder with theme) contains space, it will be by default rendered as %20 which will
+                // eventually break the: return View() method. Therefore the %20 has to be replaced by regular space.
+                string returnPath = path.Replace("%20", " ");
+                return returnPath;
+            }
+            catch (Exception ex)
+            {
+                throw new CustomRoutingException("Path to the specified file could not be resolved.", ex);
+            }
+        }
+
+        /// <summary>
+        /// This method is used for setting Layout of a Razor view page.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
+        public string Layout(string url)
+        {
+            try
+            {
+                string path = File(url);
+                path = "~" + path;
+                return path;
+            }
+            catch (Exception ex)
+            {
+                throw new CustomRoutingException("Path to the specified file could not be resolved.", ex);
+            }
+        }
     }
+    #endregion
+
 
     public interface IJasperDataService
     {
@@ -1197,7 +1247,7 @@ namespace JasperSite.Models.Database
         User GetUserById(int userId);
         List<User> GetAllUsers();
         List<Role> GetAllRoles();
-        void ChangePassword(int userId, string newHashedPassword, string newSalt);        
+        void ChangePassword(int userId, string newHashedPassword, string newSalt);
         string GetWebsiteName();
         void SetWebsiteName(string newWebsiteName);
         List<BlockHolder> GetAllBlockHolders();
@@ -1212,7 +1262,7 @@ namespace JasperSite.Models.Database
         void DeleteBlockHolderById(int id);
         void DeleteThemeByName(string name);
         void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded);
-        void ReconstructAndClearThemeData(); 
+        void ReconstructAndClearThemeData();
         List<Image> GetAllImages();
         TextBlock GetTextBlockById(int id);
         Holder_Block GetHolder_Block(int textBlockId, int holderId);
@@ -1224,11 +1274,16 @@ namespace JasperSite.Models.Database
         List<string> FindManuallyDeletedThemes();
         int GetCurrentThemeIdFromDb();
 
+        // URL methods
         List<UrlRewrite> GetAllUrls();
         List<string> GetUrls(int articleId);
         void SetUrl(Article article, string url);
         string Url(Article article);
         void DeleteUrl(string url);
+
+        // Former Helper methods
+        string File(string url);
+        string Layout(string url);
     }
 
     public interface IJasperDataServicePublic
@@ -1284,6 +1339,10 @@ namespace JasperSite.Models.Database
         List<string> GetUrls(int articleId);
         List<UrlRewrite> GetAllUrls();
         bool DeleteUrl(string url);
+
+        // Former Helper methods
+        string File(string url);
+        string Layout(string url);
     }
 
 
@@ -1295,12 +1354,12 @@ namespace JasperSite.Models.Database
         public DbHelperPublic(IDatabaseContext database)
         {
             this.Database = database ?? throw new DatabaseContextNullException();
-            
+
             // slave object
             this._dbHelper = new DbHelper(database);
 
             this.Components = new Components(Database, _dbHelper);
-           
+
         }
 
         public IDatabaseContext Database { get; set; }
@@ -1318,7 +1377,7 @@ namespace JasperSite.Models.Database
             {
                 return _dbHelper.AddArticle();
             }
-            catch 
+            catch
             {
                 return null;
             }
@@ -1334,7 +1393,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-               return _dbHelper.AddHolderToBlock(holderId, blockId);               
+                return _dbHelper.AddHolderToBlock(holderId, blockId);
             }
             catch
             {
@@ -1352,7 +1411,7 @@ namespace JasperSite.Models.Database
             try
             {
                 return _dbHelper.AddNewBlock(block);
-                
+
             }
             catch
             {
@@ -1369,7 +1428,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-                return _dbHelper.AddCategory(categoryName);                
+                return _dbHelper.AddCategory(categoryName);
             }
             catch
             {
@@ -1386,7 +1445,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-               return  _dbHelper.AddHolder_Block(hb);               
+                return _dbHelper.AddHolder_Block(hb);
             }
             catch
             {
@@ -1403,7 +1462,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-               return _dbHelper.AddUser(newUser);             
+                return _dbHelper.AddUser(newUser);
             }
             catch
             {
@@ -1564,7 +1623,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-               _dbHelper.DeleteThemeByName(name);
+                _dbHelper.DeleteThemeByName(name);
                 return true;
             }
             catch
@@ -1600,7 +1659,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-               return _dbHelper.EditArticle(article);             
+                return _dbHelper.EditArticle(article);
             }
             catch
             {
@@ -1634,19 +1693,19 @@ namespace JasperSite.Models.Database
             try
             {
                 List<Article> allPublishedArticles = _dbHelper.GetAllArticles().Where(a => a.Publish).ToList();
-                if(Configuration.WebsiteConfig.UrlRewriting)
+                if (Configuration.WebsiteConfig.UrlRewriting)
                 {
                     List<Article> articlesToBeRemovedFromList = new List<Article>();
-                   foreach(Article a in allPublishedArticles)
+                    foreach (Article a in allPublishedArticles)
                     {
-                        if(_dbHelper.GetUrls(a.Id).Count() <1)
+                        if (_dbHelper.GetUrls(a.Id).Count() < 1)
                         {
                             articlesToBeRemovedFromList.Add(a);
                         }
                     }
-                    
-                   // Cycle through items that have to be removed
-                   foreach(Article toBeDeleted in articlesToBeRemovedFromList)
+
+                    // Cycle through items that have to be removed
+                    foreach (Article toBeDeleted in articlesToBeRemovedFromList)
                     {
                         allPublishedArticles.Remove(toBeDeleted);
                     }
@@ -1668,7 +1727,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-                return _dbHelper.GetAllArticles(categoryId).Where(a=>a.Publish).ToList();
+                return _dbHelper.GetAllArticles(categoryId).Where(a => a.Publish).ToList();
             }
             catch
             {
@@ -1813,12 +1872,12 @@ namespace JasperSite.Models.Database
         {
             try
             {
-             Article article = _dbHelper.GetArticleById(id);
+                Article article = _dbHelper.GetArticleById(id);
                 if (article.Publish)
                 {
                     // Keywords are returning string.empty, not null,
                     // because keywords are often used in _Layout: ViewData["Keywords"]
-                    if(article.Keywords==null)
+                    if (article.Keywords == null)
                     {
                         article.Keywords = string.Empty;
                     }
@@ -1860,7 +1919,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-                return _dbHelper.GetHolder_Block(textBlockId,holderId);
+                return _dbHelper.GetHolder_Block(textBlockId, holderId);
             }
             catch
             {
@@ -1966,7 +2025,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-                _dbHelper.RemoveHolderFromBlock(holderId,blockId);
+                _dbHelper.RemoveHolderFromBlock(holderId, blockId);
                 return true;
             }
             catch
@@ -2023,7 +2082,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-              return  _dbHelper.Url(article);
+                return _dbHelper.Url(article);
             }
             catch
             {
@@ -2043,7 +2102,7 @@ namespace JasperSite.Models.Database
                 _dbHelper.SetUrl(article, url);
                 return true;
             }
-            catch 
+            catch
             {
                 return false;
             }
@@ -2060,7 +2119,7 @@ namespace JasperSite.Models.Database
             {
                 return _dbHelper.GetUrls(articleId);
             }
-            catch 
+            catch
             {
                 return null;
             }
@@ -2077,7 +2136,7 @@ namespace JasperSite.Models.Database
             {
                 return _dbHelper.GetAllUrls();
             }
-            catch 
+            catch
             {
                 return null;
             }
@@ -2097,7 +2156,7 @@ namespace JasperSite.Models.Database
                 Database.SaveChanges();
                 return true;
             }
-            catch 
+            catch
             {
                 return false;
             }
@@ -2121,6 +2180,58 @@ namespace JasperSite.Models.Database
                 return -1;
             }
         }
-    }
 
+
+
+        /// <summary>
+        /// Transforms Theme-relative Url to Root-relative Url. In case of error returns empty string.
+        /// </summary>
+        /// <param name="url">Theme-relative Url</param>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
+        public string File(string url)
+        {
+            try
+            {
+                // without slash on the beginning it would work only on pages without route parameters
+                // urls has to look like: /Themes/Jasper/Styles/style.css
+                // without the slash it would create the following: localhost/Home/Category/Themes/Jasper/Styles/style.css = undesirable
+                string path = "/" + Configuration.CustomRouting.RelativeThemePathToRootRelativePath(url);
+
+
+                // If the theme name (== folder with theme) contains space, it will be by default rendered as %20 which will
+                // eventually break the: return View() method. Therefore the %20 has to be replaced by regular space.
+                string returnPath = path.Replace("%20", " ");
+                return returnPath;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// This method is used for setting Layout of a Razor view page. In case of error returns empty string.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
+        public string Layout(string url)
+        {
+            try
+            {
+                string path = File(url);
+                path = "~" + path;
+                return path;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+
+
+    }
 }
+
+

@@ -4,7 +4,7 @@
 @{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
 @{
     string categoryName = @J.GetCategoryNameById(query);
-    Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
+    Layout =J.Layout("_Layout.cshtml");
     ViewData["Title"] = categoryName;
 }
 

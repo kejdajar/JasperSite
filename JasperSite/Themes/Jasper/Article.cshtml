@@ -1,16 +1,20 @@
 ﻿@model int
 @using JasperSite.Models.Database
 @inject DatabaseContext databaseContext
-@*@{ var query = Convert.ToInt32(Context.Request.Query["id"]);}*@
+
+
 @{
-    Layout = Helper.JasperUrl("_Layout.cshtml", addTilde: true);
+    Layout = J.Layout("_Layout.cshtml");
 
 
     Article article = J.GetArticleById(Model);
+
+
+
     @if (article != null)
-            {
-                ViewData["Title"] = article.Name;
-                ViewData["Keywords"] = article.Keywords;
+    {
+        ViewData["Title"] = article.Name;
+        ViewData["Keywords"] = article.Keywords;
 
         <div class="container-fluid article-text">
             <j-article id="@Model">

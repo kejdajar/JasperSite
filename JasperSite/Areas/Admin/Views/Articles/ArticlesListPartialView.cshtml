@@ -75,7 +75,8 @@
 <div class="table-responsive">
     <form asp-action="ArticlePaging" asp-controller="Articles" data-ajax="true" data-ajax-method="post" data-ajax-update="#listOfArticles">
         <input type="hidden" asp-for="CurrentPage" />
-        @if (Model != null)
+
+        @if (Model.Articles.Count() > 0)
         {<table class="table table-bordered j-table j-table-text-center" id="articleTable">
                 <tr><th>Jméno článku</th><th>Rubrika</th><th>Datum vytvoření</th><th>Podrobnosti</th><th>Akce</th></tr>
                 @foreach (Article a in Model.Articles)
@@ -113,6 +114,9 @@
 
                 }
             </table>
+            <div class="pagingPartialBox">
+                @Html.Partial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.CurrentPage, TotalNumberOfPages = Model.TotalNumberOfPages })
+            </div>
         }
         else
         {
@@ -122,9 +126,7 @@
 
         }
 
-        <div class="pagingPartialBox">
-            @Html.Partial("_JasperPagingPartialView", new JasperPagingViewModel() { DisplayPageNumber = Model.CurrentPage, TotalNumberOfPages = Model.TotalNumberOfPages })
-        </div>
+
 
     </form>
 </div>

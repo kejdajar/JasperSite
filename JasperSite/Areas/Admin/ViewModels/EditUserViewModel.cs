@@ -25,11 +25,13 @@ namespace JasperSite.Areas.Admin.ViewModels
         public string Username { get; set; }
 
         [StringLength(int.MaxValue,MinimumLength = 1, ErrorMessage = "Minimální délka hesla je jeden znak. ")]        
-        [Display(Name = "Zadejte vaše nové heslo")]        
+        [Display(Name = "Zadejte vaše nové heslo")]      
+        [DataType(DataType.Password)]
         public string NewPasswordPlainText { get; set; }
 
         [Display(Name="Zadejte vaše nové heslo znovu")] 
         [Compare("NewPasswordPlainText",ErrorMessage ="Zadaná hesla se musí shodovat.")]
+        [DataType(DataType.Password)]
         public string NewPasswordPlainTextAgain { get; set; }
 
         public int RoleId { get; set; }       

@@ -4,11 +4,11 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="shortcut icon" href="@Helper.JasperUrl("./favicon.ico")" type="image/x-icon">
+    <link rel="shortcut icon" href="@J.File("./favicon.ico")" type="image/x-icon">
     <meta charset="utf-8" />
-    <meta name="keywords" content="@Html.(@ViewData["Keywords"])" />
+    <meta name="keywords" content="@ViewData["Keywords"]" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>@Html.Raw(ViewData["Title"])</title>
 
     @*
         Loads all scripts and css files (some through CDN, or locally, if development flag is set),
@@ -22,17 +22,18 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
 
 
     <environment include="Development">
-        <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.css")" />
-        <script src="@Helper.JasperUrl("./Scripts/script.js")"></script>
+        <link rel="stylesheet" href="@J.File("./Styles/style.css")" />
+        <script src="@J.File("./Scripts/script.js")"></script>
     </environment>
 
     <environment exclude="Development">
-        <link rel="stylesheet" href="@Helper.JasperUrl("./Styles/style.min.css")" />
-        <script src="@Helper.JasperUrl("./Scripts/script.min.js")"></script>
+        <link rel="stylesheet" href="@J.File("./Styles/style.min.css")" />
+        <script src="@J.File("./Scripts/script.min.js")"></script>
     </environment>
 
 </head>
 <body>
+  
   
 
     <div class="container jasper-container-outer">
