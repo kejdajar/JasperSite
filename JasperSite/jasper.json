@@ -1,5 +1,5 @@
 {
-  "themeName": "Onyx",
+  "themeName": "Default",
   "connectionString": "Data Source=DESKTOP\\DEVELOPMENT;Initial Catalog=mssqljaspersite;Integrated Security=True",
   "typeOfDatabase": "mssql",
   "installationCompleted": "True"

@@ -45,28 +45,7 @@ body {
 }
 
 
-@media (max-width: 768px) {
 
-    .jasper-container-outer {
-        width:100%;
-        margin:0px;
-        padding:0px;
-    }
-
-    .jasper-container-inner {
-        margin:0px;
-     width:100%;
-        background-color: white;
-    }
-
-    body {
-        margin:0px;
-        padding:0px;
-        background-image: none;
-    }
-
- 
-}
 
 /*
   Overides bootstrap navbar: fully expanded menu is wraping it's content. 

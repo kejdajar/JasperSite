@@ -7,7 +7,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     /*font-family: "Helvetica Neue", Helvetica, Arial, "sans-serif";*/
-    font-family: "Noto Sans";
+    font-family: "Noto Sans";   
 }
 .article-text {
     font-family: "Open Sans";
@@ -43,28 +43,6 @@ body {
 }
 
 
-@media (max-width: 768px) {
-
-    .jasper-container-outer {
-        width:100%;
-        margin:0px;
-        padding:0px;
-    }
-
-    .jasper-container-inner {
-        margin:0px;
-     width:100%;
-        background-color: white;
-    }
-
-    body {
-        margin:0px;
-        padding:0px;
-        background-image: none;
-    }
-
- 
-}
 
 
 /*
@@ -88,10 +66,7 @@ body {
 }
 
  /*@media (min-width: 576px) {
-    
-     .container {
-      
-     }
+         
 
 }
  @media (min-width: 768px) {

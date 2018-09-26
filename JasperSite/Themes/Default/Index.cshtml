@@ -2,48 +2,46 @@
 @{
     Layout = J.Layout("_Layout.cshtml");
     ViewData["Title"] = "JasperSite";
- }
+}
 
- @section Scripts {
+@section Scripts {
     <script>
         $(document).ready(function () {
             $('.carousel').carousel();
 
 
-          
-            $('[data-toggle="tooltip"]').tooltip();
-            
 
-        });        
-        
-     </script>
- }
+            $('[data-toggle="tooltip"]').tooltip();
+
+
+        });
+
+    </script>
+}
 @section Styles {
     <style>
         .carousel-item {
-            height:300px;            
+            height: 300px;
         }
 
         #technologies {
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-wrap:wrap;
+            flex-wrap: wrap;
         }
 
-        #technologies img {
-           margin:10px;
-            max-height:150px;
-        }
-      
-      
+            #technologies img {
+                margin: 10px;
+                max-height: 150px;
+            }
     </style>
 }
 
 
 
 
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin-bottom:5px">
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
             <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -84,149 +82,151 @@
         </a>
     </div>
 
+   
 
-    <div class="container jasper-container-inner">
 
-        <section class="j-section">
-            <div class="row">
-                <div class="col-md-6">
+<div class="container jasper-container-inner">
 
-                    <ul class="list-group">
-                        <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important"> <h5 style="text-align:center">Vítejte</h5></li>
-                        <li class="list-group-item">JasperSite je multiplatformní redakční systém na platformě ASP.NET Core MVC.</li>
-                        <li class="list-group-item">Umožňuje rychle vytvářet vlastní webové stránky.</li>
-                        <li class="list-group-item">Obsahuje správu článků, rubrik, uživatelů, vzhledů a další nastavení.</li>
+    <section class="j-section">
+        <div class="row">
+            <div class="col-md-6">
 
-                    </ul>
+                <ul class="list-group">
+                    <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important"> <h5 style="text-align:center">Vítejte</h5></li>
+                    <li class="list-group-item">JasperSite je multiplatformní redakční systém na platformě ASP.NET Core MVC.</li>
+                    <li class="list-group-item">Umožňuje rychle vytvářet vlastní webové stránky.</li>
+                    <li class="list-group-item">Obsahuje správu článků, rubrik, uživatelů, vzhledů a další nastavení.</li>
 
-                </div>
+                </ul>
 
-                <div class="col-md-6">
-
-                    <ul class="list-group">
-                        <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">  <h5 style="text-align:center">Studentský projekt</h5></li>
-                        <li class="list-group-item">
-                            <p> Tento projekt vznikl jako praktická část diplomové práce na PEF ČZU Praha, obor INFON.</p>
-                            <img src="@J.File("./Images/logo.gif")" class="img-fluid" style="max-height:145px" />
-                        </li>
-                    </ul>
-
-                </div>
             </div>
-        </section>
+
+            <div class="col-md-6">
+
+                <ul class="list-group">
+                    <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">  <h5 style="text-align:center">Studentský projekt</h5></li>
+                    <li class="list-group-item">
+                        <p> Tento projekt vznikl jako praktická část diplomové práce na PEF ČZU Praha, obor INFON.</p>
+                        <img src="@J.File("./Images/logo.gif")" class="img-fluid" style="max-height:145px" />
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </section>
 
 
 
 
-        <section class="j-section">
-            <div class="row">
+    <section class="j-section">
+        <div class="row">
 
-                <div class="col-md-12">
-                    <div class="list-group">
-                        <div class="list-group-item list-group-item-action flex-column align-items-start active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">
-                            <h5 style="text-align:center;padding:0px">Krok za krokem</h5>
-                        </div>
-                        <div class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">Ukázková stránka</h6>
-                                <small class="text-muted">1. krok</small>
-                            </div>
-                            <p class="mb-1">Právě se nacházíte na ukázkové stránce. Tato stránka je samostatný vzhled, ale neukazuje vámi žádný vytvořený obsah.</p>
-                            <small class="text-muted">Podobně může vypadat i vaše stránka.</small>
-                        </div>
-                        <a asp-action="index" asp-area="admin" asp-controller="login" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">Přihlášení</h6>
-                                <small class="text-muted">2. krok</small>
-                            </div>
-                            <p class="mb-1">
-                                Přihlaste se do administrace pomocí předpřipraveného administrátorského účtu:
-                                <ul><li>jméno: admin</li><li>heslo: admin</li></ul>
-                                <small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>
-                            </p>
-
-                        </a>
-
-                        <a asp-action="index" asp-area="admin" asp-controller="users" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">Změna hesla</h6>
-                                <small class="text-muted">3. krok</small>
-                            </div>
-                            <p class="mb-1">
-                                V sekci uživatelé si změnte svoje administrátorské heslo na nějaké bezpečnější.
-
-                            </p>
-                            <p class="mb-1">
-                                <small class="text-muted">Používejte malá a velká písmena, číslice a speciální znaky pro zvýšení bezpečnosti hesla.</small>
-                            </p>
-
-                        </a>
-
-                        <a asp-action="index" asp-area="admin" asp-controller="home" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
-                            <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">Dokončení nastavení</h6>
-                                <small class="text-muted">4. krok</small>
-                            </div>
-                            <p class="mb-1">
-                                Nakonec přidejte další uživatele s omezenými právy (role redaktor), změntě název
-                                vaší stránky a vyberte si vhodný vzhled. Dále můžete již dle libosti přidávat
-                                další rubriky a články.
-                            </p>
-                            <p class="mb-1">
-                                <small class="text-muted">Tento redakční systém toho umí pochopitelně mnohem více!</small>
-                            </p>
-
-                        </a>
-
+            <div class="col-md-12">
+                <div class="list-group">
+                    <div class="list-group-item list-group-item-action flex-column align-items-start active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">
+                        <h5 style="text-align:center;padding:0px">Krok za krokem</h5>
                     </div>
+                    <div class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">Ukázková stránka</h6>
+                            <small class="text-muted">1. krok</small>
+                        </div>
+                        <p class="mb-1">Právě se nacházíte na ukázkové stránce. Tato stránka je samostatný vzhled, ale neukazuje vámi žádný vytvořený obsah.</p>
+                        <small class="text-muted">Podobně může vypadat i vaše stránka.</small>
+                    </div>
+                    <a asp-action="index" asp-area="admin" asp-controller="login" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">Přihlášení</h6>
+                            <small class="text-muted">2. krok</small>
+                        </div>
+                        <p class="mb-1">
+                            Přihlaste se do administrace pomocí předpřipraveného administrátorského účtu:
+                            <ul><li>jméno: admin</li><li>heslo: admin</li></ul>
+                            <small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>
+                        </p>
+
+                    </a>
+
+                    <a asp-action="index" asp-area="admin" asp-controller="users" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">Změna hesla</h6>
+                            <small class="text-muted">3. krok</small>
+                        </div>
+                        <p class="mb-1">
+                            V sekci uživatelé si změnte svoje administrátorské heslo na nějaké bezpečnější.
+
+                        </p>
+                        <p class="mb-1">
+                            <small class="text-muted">Používejte malá a velká písmena, číslice a speciální znaky pro zvýšení bezpečnosti hesla.</small>
+                        </p>
+
+                    </a>
+
+                    <a asp-action="index" asp-area="admin" asp-controller="home" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">Dokončení nastavení</h6>
+                            <small class="text-muted">4. krok</small>
+                        </div>
+                        <p class="mb-1">
+                            Nakonec přidejte další uživatele s omezenými právy (role redaktor), změntě název
+                            vaší stránky a vyberte si vhodný vzhled. Dále můžete již dle libosti přidávat
+                            další rubriky a články.
+                        </p>
+                        <p class="mb-1">
+                            <small class="text-muted">Tento redakční systém toho umí pochopitelně mnohem více!</small>
+                        </p>
+
+                    </a>
+
+                </div>
 
 
 
 
+
+
+            </div>
+        </div>
+    </section>
+
+    <section class="j-section">
+
+
+        <ul class="list-group">
+            <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">
+                <h5 style="text-align:center">Technologie</h5>
+            </li>
+            <li class="list-group-item ">
+
+
+                <div id="technologies">
+
+
+                    <img data-toggle="tooltip" title=".NET Core" src="~/Themes/Default/Images/netcore.svg" class="img-fluid" />
+
+                    <img data-toggle="tooltip" title="ASP.NET Core MVC" src="~/Themes/Default/Images/aspnet_logo.svg" class="img-fluid" />
+
+                    <img data-toggle="tooltip" title="Bootstrap" src="~/Themes/Default/Images/bootstrap.jpg" class="img-fluid" style="max-width:120px" />
+
+                    <img data-toggle="tooltip" title="webpack" src="~/Themes/Default/Images/webpack.svg" class="img-fluid" />
+
+                    <img data-toggle="tooltip" title="Gulp" src="~/Themes/Default/Images/gulp.svg" class="img-fluid" />
+
+                    <img data-toggle="tooltip" title="GIT" src="~/Themes/Default/Images/git.svg" class="img-fluid" />
+
+                    <img data-toggle="tooltip" title="Font Awesome" src="~/Themes/Default/Images/font-awesome.png" class="img-fluid" style="max-width:180px" />
+
+
+                    <img data-toggle="tooltip" title="jQuery" src="~/Themes/Default/Images/jquery.svg" class="img-fluid" style="max-width:200px" />
+
+                    <img data-toggle="tooltip" title="MySQL" src="~/Themes/Default/Images/mysql.svg" class="img-fluid" style="max-width:160px" />
+
+                    <img data-toggle="tooltip" title="MS SQL Server" src="~/Themes/Default/Images/mssql.jpg" class="img-fluid" style="max-width:160px" />
 
 
                 </div>
-            </div>
-        </section>
+            </li>
+        </ul>
 
-        <section class="j-section">
-
-
-            <ul class="list-group">
-                <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">
-                    <h5 style="text-align:center">Technologie</h5>
-                </li>
-                <li class="list-group-item ">
-
-
-                    <div id="technologies">
-
-
-                        <img data-toggle="tooltip" title=".NET Core" src="~/Themes/Default/Images/netcore.svg" class="img-fluid" />
-
-                        <img data-toggle="tooltip" title="ASP.NET Core MVC" src="~/Themes/Default/Images/aspnet_logo.svg" class="img-fluid" />
-
-                        <img data-toggle="tooltip" title="Bootstrap" src="~/Themes/Default/Images/bootstrap.jpg" class="img-fluid" style="max-width:120px" />
-
-                        <img data-toggle="tooltip" title="webpack" src="~/Themes/Default/Images/webpack.svg" class="img-fluid" />
-
-                        <img data-toggle="tooltip" title="Gulp" src="~/Themes/Default/Images/gulp.svg" class="img-fluid" />
-
-                        <img data-toggle="tooltip" title="GIT" src="~/Themes/Default/Images/git.svg" class="img-fluid" />
-
-                        <img data-toggle="tooltip" title="Font Awesome" src="~/Themes/Default/Images/font-awesome.png" class="img-fluid" style="max-width:180px" />
-
-
-                        <img data-toggle="tooltip" title="jQuery" src="~/Themes/Default/Images/jquery.svg" class="img-fluid" style="max-width:200px" />
-
-                        <img data-toggle="tooltip" title="MySQL" src="~/Themes/Default/Images/mysql.svg" class="img-fluid" style="max-width:160px" />
-
-                        <img data-toggle="tooltip" title="MS SQL Server" src="~/Themes/Default/Images/mssql.jpg" class="img-fluid" style="max-width:160px" />
-
-
-                    </div>
-                </li>
-            </ul>
-
-        </section>
-    </div>
+    </section>
+</div>
