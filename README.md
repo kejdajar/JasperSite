@@ -1,13 +1,34 @@
 # JasperSite
-JasperSite je webový redakční systém postavený na technologii ASP.NET Core MVC.  
+JasperSite is a web content management system built on top of ASP.NET Core MVC. The founder of this project is Ing. Jaromír Kejda. This project is a part of his master's thesis: _Design and Implementation of Content Management System in ASP.NET Core_ - for more information refer to the __CZU__ branch of this repository or visit [jaromirkejda.net](www.jaromirkejda.net) (Czech only). 
 
-Projekt je součástí obhajoby diplomové práce na téma: _Návrh a implementace redakčního systému v ASP.NET Core_,
-vedené na České zemědělské univerzitě v Praze, Provozně ekonomické fakultě, Katedře systémového inženýrství.
-Autorem diplomové práce a redakčního systému _JasperSite_ je Bc. Jaromír Kejda. Očekávané datum obhajoby 
-této práce je přelom květen/červen 2019.
+## Branches
+This repository consists of three main branches:
 
-# Historie
-Ačkoliv práce na tomto projektu začala 8.8.2017, již 27.7.2017 byla zahájena práce na předchůdci tohoto systému, tehdy
-ještě pod technologí ASP.NET MVC 4. Několik málo funkcionalit bylo z tohoto původního, dnes již neexistujícího projektu přejato,
-ale většina kódu byla napsána znovu. Dne 5. září 2018 poté došlo k přejmenování původního názvu projektu z JasperSiteCore na kratší
-název JasperSite.
+1. __master__ - the most stable releases of JasperSite
+2. __develop__ - experimental features and unstable code
+3. __czu__ - legacy version of JasperSite, published as a part of master's thesis
+
+## Supported languages
+The source code of this program is written and commented in English. Unfortunately, the admin section of the CMS currently supports only _Czech Language_.
+
+## Installation
+Follow the next steps according to your needs:
+
+### Development Installation
+1. Clone this repository using GIT or download directly the source files.
+2. Use Visual Studio, Visual Studio Code, or any other IDE to open the JasperSite.sln solution file or solution folder.
+3. Make sure that you have .NET Core 2.1 SDK present on your machine.
+4. Make sure that _jasper.json_ configuration file in the root directory has property _installationCompleted_ set to False (or anything other than True): `"installationCompleted": "False"`
+5. Run the application using Visual Studio, or navigate in CMD to the _JasperSite_ subfolder and run `dotnet run` or on a Windows machine run the `run.bat` file.
+6. If you didn't use Visual Studio in the previous step, navigate to the `http://localhost:5000` in your browser.
+7. Follow the instructions displayed onscreen.
+
+
+### Production Installation
+For the installation on a production server follow either the same steps as in development installation and use built-in publish feature of Visual Studio, or download the already compiled project from the releases section, which is ready to be uploaded to the production server, for instance through FTP.
+If you want to run this compiled project locally, you can navigate to the root folder and run `dotnet JasperSite.dll` via CMD. 
+
+
+## History
+Although the beginning of this project is dated 8/8/2017, an older preparatory version of this CMS was used as its foundation.
+The major part of this old version built on ASP.NET MVC was rewritten and the whole project was ported to ASP.NET Core MVC. On 5/9/2018 the CMS (formerly known as __JasperSiteCore__) was renamed to shorter __JasperSite__. Later on, the whole project was upgraded to .NET Core 2.1.
