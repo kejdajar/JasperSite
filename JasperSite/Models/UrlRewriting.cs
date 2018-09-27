@@ -125,6 +125,7 @@ namespace JasperSite.Models
                         // database stores URL without slashes:
                         requestedArticleUrl = requestedArticleUrl.Replace("/", "");
 
+                        requestedArticleUrl = requestedArticleUrl.Replace("%20", " "); // in case custom URL contains space (in DB is space not saved as %20)
                         int articleId = dataService.Database.UrlRewrite.Where(ur => ur.Url == requestedArticleUrl).Select(s => s.ArticleId).Single();
 
                         //  string relativeUrl= inputURL.Replace(requestedArticleUrl, "?id=" + articleId);

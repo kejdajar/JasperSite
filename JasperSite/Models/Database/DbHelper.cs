@@ -16,33 +16,450 @@ using JasperSite.Helpers;
 
 namespace JasperSite.Models.Database
 {
+
+    // *********************** ADMINISTRATION BUILDING ****************************** //
+
     /// <summary>
-    /// DbHelper is class is used in theme views and administration controllers. It implements the IJasperDataService interface, which
-    /// is used for dependency injection.
+    /// An interface used for injecting data into ADMINISTRATION views. Not suitable for THEME views.
+    /// Specified methods SHOULD throw exception on failure.
+    /// </summary>
+    public interface IJasperDataService
+    {
+        // Properties
+        IDatabaseContext Database { get; set; }
+        Components Components { get; set; }
+
+        #region Articles
+
+        /// <summary>
+        /// Returns list of all articles with categories included.
+        /// </summary>
+        /// <returns>Returns list of articles.</returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<Article> GetAllArticles();
+
+        /// <summary>
+        /// Gets all articles in the specified category.
+        /// </summary>
+        /// <param name="categoryId">Required category Id.</param>
+        /// <returns>Returns list of articles.</returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<Article> GetAllArticles(int categoryId);
+
+        /// <summary>
+        /// Returns article by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Returns single article.</returns>
+        /// <exception cref="DatabaseHelperException">Returns single article.</exception>
+        Article GetArticleById(int id);
+
+        /// <summary>
+        /// Adds new default article. Returns article Db Id.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        Article AddArticle();
+
+        /// <summary>
+        /// Updates article with new values and returns DB attached object.
+        /// </summary>
+        /// <param name="articleViewModel"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        Article EditArticle(Article article);
+
+        /// <summary>
+        /// Deletes article from database.
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void DeleteArticle(int articleId);
+
+        #endregion
+
+        #region Categories
+
+        /// <summary>
+        /// Returns list of all categories.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<Category> GetAllCategories();
+
+        /// <summary>
+        /// Returns category name by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        string GetCategoryNameById(int id);
+
+        /// <summary>
+        /// Adds new category.
+        /// </summary>
+        /// <param name="categoryName">Category name.</param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        Category AddCategory(string categoryName);
+
+        /// <summary>
+        /// Deletes category with corresponding Id and marks assigned articles as uncategorized.
+        /// </summary>
+        /// <param name="categoryId">Id of the category to be removed.</param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void DeleteCategory(int categoryId);
+
+        /// <summary>
+        /// If uncategorized category exists, then returns true.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        bool UncategorizedCategoryExists();
+
+        /// <summary>
+        /// Adds uncategorized category 
+        /// </summary>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void CreateUncategorizedCategory();
+
+        #endregion
+
+        #region Users
+
+        /// <summary>
+        /// Returns user with the passed name.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        User GetUserWithUsername(string username);
+
+        /// <summary>
+        /// Returns user with passed Id.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        User GetUserById(int userId);
+
+        /// <summary>
+        /// Returns list of all users.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<User> GetAllUsers();
+
+        /// <summary>
+        /// Hashes, adds salt and saves new password for user
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="newHashedPassword"></param>
+        /// <param name="newSalt"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void ChangePassword(int userId, string newHashedPassword, string newSalt);
+
+        /// <summary>
+        /// Returns the list of users with "admin" role
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<User> GetAllAdministrators();
+
+        /// <summary>
+        /// Adds a new user.
+        /// </summary>
+        /// <param name="u"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        User AddUser(User u);
+
+        /// <summary>
+        /// Deletes user by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void DeleteUserById(int id);
+
+        #endregion
+
+        #region Roles
+
+        /// <summary>
+        /// Returns list of all user roles.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<Role> GetAllRoles();
+
+        #endregion
+
+        #region Themes
+
+        /// <summary>
+        /// Returns list of all themes.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<Theme> GetAllThemes();
+
+        /// <summary>
+        /// Deletes theme by name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void DeleteThemeByName(string name);
+
+        /// <summary>
+        /// Creates database theme objects with corresponding relationships.
+        /// </summary>
+        /// <param name="themeNamesToBeAdded"></param>        
+        /// <exception cref="DatabaseHelperException"></exception>
+        void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded);
+
+        /// <summary>
+        /// 1) Removes all themes from database.
+        /// 2) All text block and their content will be untouched.
+        /// 3) Themes records & block holders in Db will be recreated based on physical files in Theme folder.
+        /// 4) All text blocks will be marked as unassigned.
+        /// </summary>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void ReconstructAndClearThemeData();
+
+        /// <summary>       
+        /// Returns all theme names that have not yet been stored in the database.
+        /// </summary>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<string> CheckThemeFolderAndDatabaseIntegrity();
+
+        /// <summary>
+        /// Finds theme names that are registered in Db but not physically present in theme folder.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<string> FindManuallyDeletedThemes();
+
+        /// <summary>
+        /// Returns current theme Id.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        int GetCurrentThemeIdFromDb();
+
+        #endregion
+
+        #region Settings
+
+        /// <summary>
+        /// Returns the name of the website based on key: "WebsiteName"
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        string GetWebsiteName();
+
+        /// <summary>
+        /// Sets the website name based od key: "WebsiteName"
+        /// </summary>
+        /// <param name="newWebsiteName"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void SetWebsiteName(string newWebsiteName);
+
+        #endregion
+
+        #region Blocks
+
+        /// <summary>
+        /// Returns list of all BlockHolders
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<BlockHolder> GetAllBlockHolders();
+
+        /// <summary>
+        /// Returns list of all TextBlocks
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<TextBlock> GetAllTextBlocks();
+
+        /// <summary>
+        /// Returns all Holder_Blocks (= join table for Holder and TextBlocks)
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<Holder_Block> GetAllHolder_Blocks();
+
+        /// <summary>
+        /// Adds new block and returns it.
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        TextBlock AddNewBlock(TextBlock block);
+
+        /// <summary>
+        /// Adds new holder_block (= join table)
+        /// </summary>
+        /// <param name="hb"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        Holder_Block AddHolder_Block(Holder_Block hb);
+
+        /// <summary>
+        /// Deletes a text block by ID. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void DeleteTextBlockById(int id);
+
+        /// <summary>
+        /// Adds holder to block.
+        /// </summary>
+        /// <param name="holderId"></param>
+        /// <param name="blockId"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        Holder_Block AddHolderToBlock(int holderId, int blockId);
+
+        /// <summary>
+        /// Removes holder from block.
+        /// </summary>
+        /// <param name="holderId"></param>
+        /// <param name="blockId"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void RemoveHolderFromBlock(int holderId, int blockId);
+
+        /// <summary>
+        /// Deletes block holder by Id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void DeleteBlockHolderById(int id);
+
+        /// <summary>
+        /// Returns text block by id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        TextBlock GetTextBlockById(int id);
+
+        /// <summary>
+        /// Returns Holder_Block join table
+        /// </summary>
+        /// <param name="textBlockId"></param>
+        /// <param name="holderId"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        Holder_Block GetHolder_Block(int textBlockId, int holderId);
+
+        /// <summary>
+        /// Text blocks are stored in holders in custom order. This methods specifies in which order text blocks
+        /// are displayed on page.
+        /// </summary>
+        /// <param name="textBlockId"></param>
+        /// <param name="holderId"></param>
+        /// <param name="order"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order);
+
+        #endregion
+
+        #region Images
+
+        /// <summary>
+        /// Returns list of all images.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<Image> GetAllImages();
+
+        /// <summary>
+        /// Deletes image by Id.
+        /// </summary>
+        /// <param name="imgId"></param>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void DeleteImageById(int imgId);
+
+        #endregion
+
+        #region Url
+
+        /// <summary>
+        /// Returns all UrlRewrite records.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        List<UrlRewrite> GetAllUrls();
+
+        /// <summary>
+        /// Returns list of all URL for the specified article.
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        List<string> GetUrls(int articleId);
+
+        /// <summary>
+        /// Updates or creates a new URL rewrite rule.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="url"></param>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        void SetUrl(Article article, string url);
+
+        /// <summary>
+        /// Returns the first URL found.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        string Url(Article article);
+
+        /// <summary>
+        /// Deletes all records with specified URL.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
+        void DeleteUrl(string url);
+
+        /// <summary>
+        /// Transforms Theme-relative Url to Root-relative Url
+        /// </summary>
+        /// <param name="url">Theme-relative Url</param>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
+        string File(string url);
+
+        /// <summary>
+        /// This method is used for setting Layout of a Razor view page.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
+        string Layout(string url);
+
+        #endregion
+    }
+
+
+    /// <summary>
+    /// DbHelper is class is used in administration pages and administration controllers. It implements the IJasperDataService interface, which
+    /// is used for dependency injection. This class is not suitable for building themes, as it throws exceptions.
     /// </summary>
     public class DbHelper : IJasperDataService
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="database"></param>
-        /// <exception cref="DatabaseContextNullException"></exception>
+        
         public DbHelper(IDatabaseContext database)
         {
             this.Database = database ?? throw new DatabaseContextNullException();
             this.Components = new Components(Database, this);
         }
 
+        // Properties
         public IDatabaseContext Database { get; set; }
         public Components Components { get; set; }
 
         #region Articles
-        /// <summary>
-        /// Returns list of all articles with categories included.
-        /// </summary>
-        /// <returns>Returns list of articles.</returns>
-        /// <exception cref="DatabaseHelperException"></exception>
-        public List<Article> GetAllArticles()
+       
+    
+       /// <see cref="IJasperDataService.GetAllArticles"/>     
+       public List<Article> GetAllArticles()
         {
             try
             {
@@ -56,12 +473,8 @@ namespace JasperSite.Models.Database
 
         }
 
-        /// <summary>
-        /// Gets all articles in the specified category.
-        /// </summary>
-        /// <param name="categoryId">Required category Id.</param>
-        /// <returns>Returns list of articles.</returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetAllArticles(int)"/>  
         public List<Article> GetAllArticles(int categoryId)
         {
             try
@@ -76,13 +489,8 @@ namespace JasperSite.Models.Database
             }
 
         }
-
-        /// <summary>
-        /// Returns article by Id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>Returns single article.</returns>
-        /// <exception cref="DatabaseHelperException">Returns single article.</exception>
+       
+        /// <see cref="IJasperDataService.GetArticleById(int)"/> 
         public Article GetArticleById(int id)
         {
             try
@@ -97,11 +505,8 @@ namespace JasperSite.Models.Database
         }
 
 
-        /// <summary>
-        /// Adds new default article. Returns article Db Id.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+        
+        /// <see cref="IJasperDataService.AddArticle"/> 
         public Article AddArticle()
         {
             try
@@ -125,17 +530,12 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Updates article with new values and returns DB attached object.
-        /// </summary>
-        /// <param name="articleViewModel"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.EditArticle(Article)"/> 
         public Article EditArticle(Article article)
         {
-
             try
             {
-
                 Article oldArticleToChange = Database.Articles.Where(a => a.Id == article.Id).Single();
                 oldArticleToChange.HtmlContent = article.HtmlContent;
                 oldArticleToChange.Name = article.Name;
@@ -152,12 +552,8 @@ namespace JasperSite.Models.Database
             }
 
         }
-
-        /// <summary>
-        /// Deletes article from database.
-        /// </summary>
-        /// <param name="articleId"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+     
+        /// <see cref="IJasperDataService.DeleteArticle(int)"/> 
         public void DeleteArticle(int articleId)
         {
             try
@@ -176,11 +572,8 @@ namespace JasperSite.Models.Database
         #endregion
 
         #region Categories
-        /// <summary>
-        /// Returns list of all categories.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+        
+        /// <see cref="IJasperDataService.GetAllCategories"/>    
         public List<Category> GetAllCategories()
         {
             try
@@ -193,16 +586,10 @@ namespace JasperSite.Models.Database
                 throw new DatabaseHelperException(ex);
 
             }
-
-
         }
 
-        /// <summary>
-        /// Returns category name by Id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetCategoryNameById(int)"/>    
         public string GetCategoryNameById(int id)
         {
             try
@@ -212,16 +599,11 @@ namespace JasperSite.Models.Database
             catch (Exception ex)
             {
                 throw new DatabaseHelperException(ex);
-
             }
 
         }
-
-        /// <summary>
-        /// Adds new category.
-        /// </summary>
-        /// <param name="categoryName">Category name.</param>
-        /// <exception cref="DatabaseHelperException"></exception>
+      
+        /// <see cref="IJasperDataService.AddCategory(string)"/>    
         public Category AddCategory(string categoryName)
         {
             try
@@ -238,14 +620,10 @@ namespace JasperSite.Models.Database
 
         }
 
-        /// <summary>
-        /// Deletes category with corresponding Id and marks assigned articles as uncategorized.
-        /// </summary>
-        /// <param name="categoryId">Id of the category to be removed.</param>
-        /// <exception cref="DatabaseHelperException"></exception>
+      
+        /// <see cref="IJasperDataService.DeleteCategory(int)"/>    
         public void DeleteCategory(int categoryId)
         {
-
             try
             {
                 List<Category> allCategories = GetAllCategories();
@@ -282,11 +660,8 @@ namespace JasperSite.Models.Database
 
         }
 
-        /// <summary>
-        /// If uncategorized category exists, then returns true.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.UncategorizedCategoryExists"/>    
         public bool UncategorizedCategoryExists()
         {
             try
@@ -300,10 +675,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Adds uncategorized category 
-        /// </summary>
-        /// <exception cref="DatabaseHelperException"></exception>
+   
+        /// <see cref="IJasperDataService.CreateUncategorizedCategory"/>    
         public void CreateUncategorizedCategory()
         {
             try
@@ -323,12 +696,8 @@ namespace JasperSite.Models.Database
 
         #region Users
 
-        /// <summary>
-        /// Returns user with the passed name.
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetUserWithUsername(string)"/>    
         public User GetUserWithUsername(string username)
         {
             try
@@ -341,12 +710,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns user with passed Id.
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+        
+        /// <see cref="IJasperDataService.GetUserById(int)"/>  
         public User GetUserById(int userId)
         {
             try
@@ -360,11 +725,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns list of all users.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetAllUsers"/>  
         public List<User> GetAllUsers()
         {
             try
@@ -378,13 +740,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Hashes, adds salt and saves new password for user
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="newHashedPassword"></param>
-        /// <param name="newSalt"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+        
+        /// <see cref="IJasperDataService.ChangePassword(int, string, string)"/>  
         public void ChangePassword(int userId, string newHashedPassword, string newSalt)
         {
             try
@@ -401,11 +758,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Adds a new user.
-        /// </summary>
-        /// <param name="u"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.AddUser(User)"/>  
         public User AddUser(User newUser)
         {
             try
@@ -421,11 +775,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Deletes user by Id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.DeleteUserById(int)"/>  
         public void DeleteUserById(int id)
         {
             try
@@ -441,11 +792,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns the list of users with "admin" role
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+      
+        /// <see cref="IJasperDataService."/>  
         public List<User> GetAllAdministrators()
         {
             try
@@ -462,11 +810,9 @@ namespace JasperSite.Models.Database
         #endregion
 
         #region Roles
-        /// <summary>
-        /// Returns list of all user roles.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+
+       
+        /// <see cref="IJasperDataService.GetAllRoles"/>    
         public List<Role> GetAllRoles()
         {
             try
@@ -478,15 +824,13 @@ namespace JasperSite.Models.Database
                 throw new DatabaseHelperException(ex);
             }
         }
+
         #endregion
 
         #region Themes
 
-        /// <summary>
-        /// Returns list of all themes.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetAllThemes"/>
         public List<Theme> GetAllThemes()
         {
             try
@@ -500,11 +844,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Deletes theme by name.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.DeleteThemeByName(string)"/>
         public void DeleteThemeByName(string name)
         {
             try
@@ -520,11 +861,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Creates database theme objects with corresponding relationships.
-        /// </summary>
-        /// <param name="themeNamesToBeAdded"></param>        
-        /// <exception cref="DatabaseHelperException"></exception>
+        
+        ///<see cref="IJasperDataService.AddThemesFromFolderToDatabase(List{string})"/>
         public void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded)
         {
             try
@@ -578,13 +916,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// 1) Removes all themes from database.
-        /// 2) All text block and their content will be untouched.
-        /// 3) Themes records & block holders in Db will be recreated based on physical files in Theme folder.
-        /// 4) All text blocks will be marked as unassigned.
-        /// </summary>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.ReconstructAndClearThemeData"/>
         public void ReconstructAndClearThemeData()
         {
             try
@@ -628,10 +961,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>       
-        /// Returns all theme names that have not yet been stored in the database.
-        /// </summary>
-        /// <exception cref="DatabaseHelperException"></exception>
+      
+        /// <see cref="IJasperDataService.CheckThemeFolderAndDatabaseIntegrity"/>
         public List<string> CheckThemeFolderAndDatabaseIntegrity()
         {
             try
@@ -663,11 +994,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Finds theme names that are registered in Db but not physically present in theme folder.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.FindManuallyDeletedThemes"/>
         public List<string> FindManuallyDeletedThemes()
         {
             try
@@ -696,11 +1024,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns current theme Id.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetCurrentThemeIdFromDb"/>
         public int GetCurrentThemeIdFromDb()
         {
             try
@@ -718,11 +1043,8 @@ namespace JasperSite.Models.Database
         #endregion
 
         #region Settings
-        /// <summary>
-        /// Returns the name of the website based on key: "WebsiteName"
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+        
+        /// <see cref="IJasperDataService.GetWebsiteName"/>
         public string GetWebsiteName()
         {
             try
@@ -735,11 +1057,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Sets the website name based od key: "WebsiteName"
-        /// </summary>
-        /// <param name="newWebsiteName"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.SetWebsiteName(string)"/>
         public void SetWebsiteName(string newWebsiteName)
         {
             try
@@ -756,13 +1075,10 @@ namespace JasperSite.Models.Database
         }
         #endregion
 
-        #region Blocks and Holders
+        #region Blocks
 
-        /// <summary>
-        /// Returns list of all BlockHolders
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetAllBlockHolders"/>
         public List<BlockHolder> GetAllBlockHolders()
         {
             try
@@ -776,11 +1092,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns list of all TextBlocks
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetAllTextBlocks"/>
         public List<TextBlock> GetAllTextBlocks()
         {
             try
@@ -794,11 +1107,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns all Holder_Blocks (= join table for Holder and TextBlocks)
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetAllHolder_Blocks"/>
         public List<Holder_Block> GetAllHolder_Blocks()
         {
             try
@@ -812,12 +1122,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Adds new block and returns it.
-        /// </summary>
-        /// <param name="block"></param>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.AddNewBlock(TextBlock)"/>
         public TextBlock AddNewBlock(TextBlock block)
         {
             try
@@ -833,11 +1139,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Adds new holder_block (= join table)
-        /// </summary>
-        /// <param name="hb"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+      
+        /// <see cref="IJasperDataService.AddHolder_Block(Holder_Block)"/>
         public Holder_Block AddHolder_Block(Holder_Block hb)
         {
             try
@@ -852,11 +1155,8 @@ namespace JasperSite.Models.Database
             };
         }
 
-        /// <summary>
-        /// Deletes a text block by ID. 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+        
+        /// <see cref="IJasperDataService.DeleteTextBlockById(int)"/>
         public void DeleteTextBlockById(int id)
         {
             try
@@ -872,12 +1172,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Adds holder to block.
-        /// </summary>
-        /// <param name="holderId"></param>
-        /// <param name="blockId"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+      
+        /// <see cref="IJasperDataService.AddHolderToBlock(int, int)"/>
         public Holder_Block AddHolderToBlock(int holderId, int blockId)
         {
             try
@@ -894,12 +1190,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Removes holder from block.
-        /// </summary>
-        /// <param name="holderId"></param>
-        /// <param name="blockId"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+     
+        /// <see cref="IJasperDataService.RemoveHolderFromBlock(int, int)"/>
         public void RemoveHolderFromBlock(int holderId, int blockId)
         {
             try
@@ -915,11 +1207,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Deletes block holder by Id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+        
+        /// <see cref="IJasperDataService.DeleteBlockHolderById(int)"/>
         public void DeleteBlockHolderById(int id)
         {
             try
@@ -935,12 +1224,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns text block by id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+       
+        /// <see cref="IJasperDataService.GetTextBlockById(int)"/>
         public TextBlock GetTextBlockById(int id)
         {
             try
@@ -954,13 +1239,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns Holder_Block join table
-        /// </summary>
-        /// <param name="textBlockId"></param>
-        /// <param name="holderId"></param>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+      
+        /// <see cref="IJasperDataService.GetHolder_Block(int, int)"/>
         public Holder_Block GetHolder_Block(int textBlockId, int holderId)
         {
             try
@@ -975,14 +1255,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Text blocks are stored in holders in custom order. This methods specifies in which order text blocks
-        /// are displayed on page.
-        /// </summary>
-        /// <param name="textBlockId"></param>
-        /// <param name="holderId"></param>
-        /// <param name="order"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+      
+        /// <see cref="IJasperDataService.SaveTextBlockOrderNumberInHolder(int, int, int)/>
         public void SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order)
         {
             try
@@ -1001,12 +1275,8 @@ namespace JasperSite.Models.Database
         #endregion
 
         #region Images
-
-        /// <summary>
-        /// Returns list of all images.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="DatabaseHelperException"></exception>
+      
+        /// <see cref="IJasperDataService.GetAllImages"/>
         public List<Image> GetAllImages()
         {
             try
@@ -1021,11 +1291,8 @@ namespace JasperSite.Models.Database
         }
 
 
-        /// <summary>
-        /// Deletes image by Id.
-        /// </summary>
-        /// <param name="imgId"></param>
-        /// <exception cref="DatabaseHelperException"></exception>
+     
+        /// <see cref="IJasperDataService.DeleteImageById(int)"/>
         public void DeleteImageById(int imgId)
         {
             try
@@ -1040,15 +1307,13 @@ namespace JasperSite.Models.Database
                 throw new DatabaseHelperException(ex);
             }
         }
+
         #endregion
 
-        #region UrlRewriting
+        #region Url
 
-        /// <summary>
-        /// Returns all UrlRewrite records.
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="InvalidUrlRewriteException"></exception>
+        
+        /// <see cref="IJasperDataService.GetAllUrls"/>
         public List<UrlRewrite> GetAllUrls()
         {
             try
@@ -1061,12 +1326,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns list of all URL for the specified article.
-        /// </summary>
-        /// <param name="articleId"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidUrlRewriteException"></exception>
+       
+        /// <see cref="IJasperDataService.GetUrls(int)"/>
         public List<string> GetUrls(int articleId)
         {
             try
@@ -1080,12 +1341,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Updates or creates a new URL rewrite rule.
-        /// </summary>
-        /// <param name="article"></param>
-        /// <param name="url"></param>
-        /// <exception cref="InvalidUrlRewriteException"></exception>
+     
+        /// <see cref="IJasperDataService.SetUrl(Article, string)"/>
         public void SetUrl(Article article, string url)
         {
             UrlRewrite urlRewrite = new UrlRewrite()
@@ -1108,12 +1365,8 @@ namespace JasperSite.Models.Database
             Database.SaveChanges();
         }
 
-        /// <summary>
-        /// Returns the first URL found.
-        /// </summary>
-        /// <param name="article"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidUrlRewriteException"></exception>
+     
+        /// <see cref="IJasperDataService.Url(Article)"/>
         public string Url(Article article)
         {
             try
@@ -1152,11 +1405,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Deletes all records with specified URL.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <exception cref="InvalidUrlRewriteException"></exception>
+    
+        /// <see cref="IJasperDataService.DeleteUrl(string)"/>
         public void DeleteUrl(string url)
         {
             try
@@ -1169,19 +1419,10 @@ namespace JasperSite.Models.Database
             {
                 throw new InvalidUrlRewriteException(ex);
             }
-        }
+        }       
 
-
-        #endregion
-
-        #region Routing methods
-
-        /// <summary>
-        /// Transforms Theme-relative Url to Root-relative Url
-        /// </summary>
-        /// <param name="url">Theme-relative Url</param>
-        /// <returns></returns>
-        /// <exception cref="CustomRoutingException"></exception>
+       
+        /// <see cref="IJasperDataService.File(string)"/>
         public string File(string url)
         {
             try
@@ -1203,12 +1444,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// This method is used for setting Layout of a Razor view page.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        /// <exception cref="CustomRoutingException"></exception>
+        
+        /// <see cref="IJasperDataService.Layout(string)"/>
         public string Layout(string url)
         {
             try
@@ -1222,132 +1459,411 @@ namespace JasperSite.Models.Database
                 throw new CustomRoutingException("Path to the specified file could not be resolved.", ex);
             }
         }
-    }
-    #endregion
+  #endregion
+
+    }  
 
 
-    public interface IJasperDataService
-    {
-        // Properties
-        IDatabaseContext Database { get; set; }
-        Components Components { get; set; }
+    // *********************** THEME BUILDING ************************************** //
 
-        // Methods
-        List<Article> GetAllArticles();
-        List<Article> GetAllArticles(int categoryId);
-        Article GetArticleById(int id);
-        Article AddArticle();
-        Article EditArticle(Article article);
-        void DeleteArticle(int articleId);
-        List<Category> GetAllCategories();
-        string GetCategoryNameById(int id);
-        Category AddCategory(string categoryName);
-        void DeleteCategory(int categoryId);
-        User GetUserWithUsername(string username);
-        User GetUserById(int userId);
-        List<User> GetAllUsers();
-        List<Role> GetAllRoles();
-        void ChangePassword(int userId, string newHashedPassword, string newSalt);
-        string GetWebsiteName();
-        void SetWebsiteName(string newWebsiteName);
-        List<BlockHolder> GetAllBlockHolders();
-        List<Theme> GetAllThemes();
-        List<TextBlock> GetAllTextBlocks();
-        List<Holder_Block> GetAllHolder_Blocks();
-        TextBlock AddNewBlock(TextBlock block);
-        Holder_Block AddHolder_Block(Holder_Block hb);
-        void DeleteTextBlockById(int id);
-        Holder_Block AddHolderToBlock(int holderId, int blockId);
-        void RemoveHolderFromBlock(int holderId, int blockId);
-        void DeleteBlockHolderById(int id);
-        void DeleteThemeByName(string name);
-        void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded);
-        void ReconstructAndClearThemeData();
-        List<Image> GetAllImages();
-        TextBlock GetTextBlockById(int id);
-        Holder_Block GetHolder_Block(int textBlockId, int holderId);
-        void SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order);
-        void DeleteImageById(int imgId);
-        User AddUser(User u); // rename
-        void DeleteUserById(int id);
-        List<string> CheckThemeFolderAndDatabaseIntegrity();
-        List<string> FindManuallyDeletedThemes();
-        int GetCurrentThemeIdFromDb();
-
-        // URL methods
-        List<UrlRewrite> GetAllUrls();
-        List<string> GetUrls(int articleId);
-        void SetUrl(Article article, string url);
-        string Url(Article article);
-        void DeleteUrl(string url);
-
-        // Former Helper methods
-        string File(string url);
-        string Layout(string url);
-    }
-
+    /// <summary>
+    /// An interface used for injecting data into THEME views. Not suitable for ADMINISTRATION views.
+    /// Specified methods SHOULDN'T throw exception on failure.
+    /// </summary>
     public interface IJasperDataServicePublic
     {
         // Properties
         IDatabaseContext Database { get; set; }
         Components Components { get; set; }
 
-        // Methods
+        #region Articles
+
+        /// <summary>
+        /// Returns list of all !PUBLISHED! articles. In case of failure returns null.
+        /// If the URL rewriting is activated and article has no assigned URL, it will not be returned.
+        /// </summary>
+        /// <returns></returns>
         List<Article> GetAllArticles();
+
+        /// <summary>
+        /// Returns list of all !PUBLISHED! articles from required category. In case of failure returns null;
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
         List<Article> GetAllArticles(int categoryId);
+
+        /// <summary>
+        /// Returns database attached object of !PUBLISHED! Article by Id. In case of failure returns null.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Article GetArticleById(int id);
+
+        /// <summary>
+        /// Adds new article and returns DB attached object. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
         Article AddArticle();
+
+        /// <summary>
+        /// Updates article data and returns database attached object. In case of error returns null;
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>
         Article EditArticle(Article articleViewModel);
+
+        /// <summary>
+        /// Deletes article and returns true. In case of failure returns false.
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
         bool DeleteArticle(int articleId);
+
+        #endregion
+
+        #region Categories
+
+        /// <summary>
+        /// Returns list of all categories. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>       
         List<Category> GetAllCategories();
+
+        /// <summary>
+        /// Returns category name by Id. In case of failure returns null.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         string GetCategoryNameById(int id);
+
+        /// <summary>
+        /// Adds new category and returns DB attached object. In case of error returns null.
+        /// </summary>
+        /// <param name="categoryName"></param>
+        /// <returns></returns>
         Category AddCategory(string categoryName);
+
+        /// <summary>
+        /// Deletes category and returns true. In case of failure returns false.
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
         bool DeleteCategory(int categoryId);
+
+        /// <summary>
+        /// If uncategorized category exists, then returns true.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        bool UncategorizedCategoryExists();
+
+        /// <summary>
+        /// Adds uncategorized category. In case of failure returns false;
+        /// </summary>
+        /// <exception cref="DatabaseHelperException"></exception>
+        bool CreateUncategorizedCategory();
+
+        #endregion
+
+        #region Users
+
+        /// <summary>
+        /// Returns database attached User. In case of failure returns null.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         User GetUserWithUsername(string username);
+
+        /// <summary>
+        /// Returns database attached User. In case of failure returns null.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         User GetUserById(int userId);
+
+        /// <summary>
+        /// Returns list of all users. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
         List<User> GetAllUsers();
-        List<Role> GetAllRoles();
+
+        /// <summary>
+        /// Changes user's password and returns true. In case of failure returns false.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="newHashedPassword"></param>
+        /// <param name="newSalt"></param>
+        /// <returns></returns>
         bool ChangePassword(int userId, string newHashedPassword, string newSalt);
-        string GetWebsiteName();
-        bool SetWebsiteName(string newWebsiteName);
-        List<BlockHolder> GetAllBlockHolders();
-        List<Theme> GetAllThemes();
-        List<TextBlock> GetAllTextBlocks();
-        List<Holder_Block> GetAllHolder_Blocks();
-        TextBlock AddNewBlock(TextBlock block);
-        Holder_Block AddHolder_Block(Holder_Block hb);
-        bool DeleteTextBlockById(int id);
-        Holder_Block AddHolderToBlock(int holderId, int blockId);
-        bool RemoveHolderFromBlock(int holderId, int blockId);
-        bool DeleteBlockHolderById(int id);
-        bool DeleteThemeByName(string name);
-        bool AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded);
-        bool ReconstructAndClearThemeData();
-        List<Image> GetAllImages();
-        TextBlock GetTextBlockById(int id);
-        Holder_Block GetHolder_Block(int textBlockId, int holderId);
-        bool SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order);
-        bool DeleteImageById(int imgId);
+
+        /// <summary>
+        /// Returns the list of users with the "admin" role. In case of error returns empty list.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        List<User> GetAllAdministrators();
+
+        /// <summary>
+        /// Adds new user and returns DB attached object. In case of failure returns null.
+        /// </summary>
+        /// <param name="newUser"></param>
+        /// <returns></returns>
         User AddUser(User newUser);
+
+        /// <summary>
+        /// Deletes user by Id and returns true. In case of error returns false.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         bool DeleteUserById(int id);
+
+        #endregion
+
+        #region Roles
+
+        /// <summary>
+        /// Returns list of all roles. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
+        List<Role> GetAllRoles();
+
+        #endregion
+
+        #region Themes
+
+        /// <summary>
+        /// Returns list of all themes. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
+        List<Theme> GetAllThemes();
+
+        /// <summary>
+        /// Deletes theme by name and returns true. In case of failure returns false.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        bool DeleteThemeByName(string name);
+
+        /// <summary>
+        /// Adds themes from folder to database and returns true. In case of failure returns false.
+        /// </summary>
+        /// <param name="themeNamesToBeAdded"></param>
+        /// <returns></returns>
+        bool AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded);
+
+        /// <summary>
+        /// 1) Removes all themes from database.
+        /// 2) All text block and their content will be untouched.
+        /// 3) Themes records & block holders in Db will be recreated based on physical files in Theme folder.
+        /// 4) All text blocks will be marked as unassigned. 
+        /// 5) Finally returns true. In case of failure returns false.
+        /// </summary>
+        /// <returns></returns>
+        bool ReconstructAndClearThemeData();
+
+        /// <summary>
+        /// Returns all theme names that have not yet been stored in the database. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
         List<string> CheckThemeFolderAndDatabaseIntegrity();
+
+        /// <summary>
+        /// Returns list of names of manually deleted themes. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
         List<string> FindManuallyDeletedThemes();
+
+        /// <summary>
+        /// Returns current theme Id. In case of failure returns -1.
+        /// </summary>
+        /// <returns></returns>
         int GetCurrentThemeIdFromDb();
 
-        string Url(Article article);
-        bool SetUrl(Article article, string url);
-        List<string> GetUrls(int articleId);
+        #endregion
+
+        #region Settings
+
+        /// <summary>
+        /// Returns website name. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
+        string GetWebsiteName();
+
+        /// <summary>
+        /// Sets the website name. In case if failure returns false.
+        /// </summary>
+        /// <param name="newWebsiteName"></param>
+        /// <returns></returns>
+        bool SetWebsiteName(string newWebsiteName);
+
+        #endregion
+
+        #region Blocks
+
+        /// <summary>
+        /// Returns list of all blockHolders. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
+        List<BlockHolder> GetAllBlockHolders();
+
+        /// <summary>
+        /// Returns list of all TextBlocks. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
+        List<TextBlock> GetAllTextBlocks();
+
+        /// <summary>
+        /// Returns list of all Holder_Blocks. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
+        List<Holder_Block> GetAllHolder_Blocks();
+
+        /// <summary>
+        /// Adds new block and returns DB attached object. In case of error returns null.
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns></returns>
+        TextBlock AddNewBlock(TextBlock block);
+
+        /// <summary>
+        /// Adds new holder_block and returns DB attached object. In case of failure returns null.
+        /// </summary>
+        /// <param name="hb"></param>
+        /// <returns></returns>
+        Holder_Block AddHolder_Block(Holder_Block hb);
+
+        /// <summary>
+        /// Deletes TextBlock by Id and returns true. In case of failure returns false.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool DeleteTextBlockById(int id);
+
+        /// <summary>
+        /// Adds holder to block and returns DB attached object. In case of failure returns null.
+        /// </summary>
+        /// <param name="holderId"></param>
+        /// <param name="blockId"></param>
+        /// <returns></returns>
+        Holder_Block AddHolderToBlock(int holderId, int blockId);
+
+        /// <summary>
+        /// Removes holder from block and returns true. In case of failure returns false.
+        /// </summary>
+        /// <param name="holderId"></param>
+        /// <param name="blockId"></param>
+        /// <returns></returns>
+        bool RemoveHolderFromBlock(int holderId, int blockId);
+
+        /// <summary>
+        /// Deletes BlockHolder by Id and returns true. In case of failure returns false.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool DeleteBlockHolderById(int id);
+
+        /// <summary>
+        /// Returns database attached TextBlock. In case of failure returns null.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        TextBlock GetTextBlockById(int id);
+
+        /// <summary>
+        /// Returns database attached Holder_Block. In case of failure returns false.
+        /// </summary>
+        /// <param name="textBlockId"></param>
+        /// <param name="holderId"></param>
+        /// <returns></returns>
+        Holder_Block GetHolder_Block(int textBlockId, int holderId);
+
+        /// <summary>
+        /// Saves order of TextBlock in Holder. In case of failure returns false.
+        /// </summary>
+        /// <param name="textBlockId"></param>
+        /// <param name="holderId"></param>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        bool SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order);
+
+        #endregion
+
+        #region Images
+
+        /// <summary>
+        /// Returns list of all images. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>
+        List<Image> GetAllImages();
+
+        /// <summary>
+        /// Deletes image by Id and returns true. In case of failure returns false.
+        /// </summary>
+        /// <param name="imgId"></param>
+        /// <returns></returns>
+        bool DeleteImageById(int imgId);
+
+        #endregion
+
+        #region Url
+
+        /// <summary>
+        /// Returns all UrlRewrite records. In case of failure returns null.
+        /// </summary>
+        /// <returns></returns>   
         List<UrlRewrite> GetAllUrls();
+
+        /// <summary>
+        /// Returns list of all URL for the specified article. In case of failure returns null.
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>    
+        List<string> GetUrls(int articleId);
+
+        /// <summary>
+        /// Updates or creates a new URL rewrite rule and returns true. In case of error returns false.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <param name="url"></param>  
+        bool SetUrl(Article article, string url);
+
+        /// <summary>
+        /// Returns the first URL found. In case of failure returns string.empty.
+        /// </summary>
+        /// <param name="article"></param>
+        /// <returns></returns>       
+        string Url(Article article);
+
+        /// <summary>
+        /// Deletes all records with specified URL and returns true. In case of error returns false.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <exception cref="InvalidUrlRewriteException"></exception>
         bool DeleteUrl(string url);
 
-        // Former Helper methods
+        /// <summary>
+        /// Transforms Theme-relative Url to Root-relative Url. In case of error returns empty string.
+        /// </summary>
+        /// <param name="url">Theme-relative Url</param>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
         string File(string url);
+
+        /// <summary>
+        /// This method is used for setting Layout of a Razor view page. In case of error returns empty string.
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        /// <exception cref="CustomRoutingException"></exception>
         string Layout(string url);
+
+        #endregion
+        
     }
 
 
     /// <summary>
-    /// This class is wrapper around DbHelper class. 
+    /// This class methods never throw exceptions and are suitable for building themes.
     /// </summary>
     public class DbHelperPublic : IJasperDataServicePublic
     {
@@ -1367,327 +1883,10 @@ namespace JasperSite.Models.Database
         private DbHelper _dbHelper { get; set; }
 
 
-        /// <summary>
-        /// Adds new article and returns DB attached object. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public Article AddArticle()
-        {
-            try
-            {
-                return _dbHelper.AddArticle();
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        #region Articles
 
-        /// <summary>
-        /// Adds holder to block and returns DB attached object. In case of failure returns null.
-        /// </summary>
-        /// <param name="holderId"></param>
-        /// <param name="blockId"></param>
-        /// <returns></returns>
-        public Holder_Block AddHolderToBlock(int holderId, int blockId)
-        {
-            try
-            {
-                return _dbHelper.AddHolderToBlock(holderId, blockId);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Adds new block and returns DB attached object. In case of error returns null.
-        /// </summary>
-        /// <param name="block"></param>
-        /// <returns></returns>
-        public TextBlock AddNewBlock(TextBlock block)
-        {
-            try
-            {
-                return _dbHelper.AddNewBlock(block);
-
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Adds new category and returns DB attached object. In case of error returns null.
-        /// </summary>
-        /// <param name="categoryName"></param>
-        /// <returns></returns>
-        public Category AddCategory(string categoryName)
-        {
-            try
-            {
-                return _dbHelper.AddCategory(categoryName);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Adds new holder_block and returns DB attached object. In case of failure returns null.
-        /// </summary>
-        /// <param name="hb"></param>
-        /// <returns></returns>
-        public Holder_Block AddHolder_Block(Holder_Block hb)
-        {
-            try
-            {
-                return _dbHelper.AddHolder_Block(hb);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Adds new user and returns DB attached object. In case of failure returns null.
-        /// </summary>
-        /// <param name="newUser"></param>
-        /// <returns></returns>
-        public User AddUser(User newUser)
-        {
-            try
-            {
-                return _dbHelper.AddUser(newUser);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Adds themes from folder to database and returns true. In case of failure returns false.
-        /// </summary>
-        /// <param name="themeNamesToBeAdded"></param>
-        /// <returns></returns>
-        public bool AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded)
-        {
-            try
-            {
-                _dbHelper.AddThemesFromFolderToDatabase(themeNamesToBeAdded);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Changes user's password and returns true. In case of failure returns false.
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="newHashedPassword"></param>
-        /// <param name="newSalt"></param>
-        /// <returns></returns>
-        public bool ChangePassword(int userId, string newHashedPassword, string newSalt)
-        {
-            try
-            {
-                _dbHelper.ChangePassword(userId, newHashedPassword, newSalt);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Returns all theme names that have not yet been stored in the database. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<string> CheckThemeFolderAndDatabaseIntegrity()
-        {
-            try
-            {
-                return _dbHelper.CheckThemeFolderAndDatabaseIntegrity();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Deletes article and returns true. In case of failure returns false.
-        /// </summary>
-        /// <param name="articleId"></param>
-        /// <returns></returns>
-        public bool DeleteArticle(int articleId)
-        {
-            try
-            {
-                _dbHelper.DeleteArticle(articleId);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Deletes BlockHolder by Id and returns true. In case of failure returns false.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public bool DeleteBlockHolderById(int id)
-        {
-            try
-            {
-                _dbHelper.DeleteBlockHolderById(id);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Deletes category and returns true. In case of failure returns false.
-        /// </summary>
-        /// <param name="categoryId"></param>
-        /// <returns></returns>
-        public bool DeleteCategory(int categoryId)
-        {
-            try
-            {
-                _dbHelper.DeleteCategory(categoryId);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Deletes image by Id and returns true. In case of failure returns false.
-        /// </summary>
-        /// <param name="imgId"></param>
-        /// <returns></returns>
-        public bool DeleteImageById(int imgId)
-        {
-            try
-            {
-                _dbHelper.DeleteImageById(imgId);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Deletes TextBlock by Id and returns true. In case of failure returns false.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public bool DeleteTextBlockById(int id)
-        {
-            try
-            {
-                _dbHelper.DeleteTextBlockById(id);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Deletes theme by name and returns true. In case of failure returns false.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public bool DeleteThemeByName(string name)
-        {
-            try
-            {
-                _dbHelper.DeleteThemeByName(name);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Deletes user by Id and returns true. In case of error returns false.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public bool DeleteUserById(int id)
-        {
-            try
-            {
-                _dbHelper.DeleteUserById(id);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Updates article data and returns database attached object. In case of error returns null;
-        /// </summary>
-        /// <param name="article"></param>
-        /// <returns></returns>
-        public Article EditArticle(Article article)
-        {
-            try
-            {
-                return _dbHelper.EditArticle(article);
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of names of manually deleted themes. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<string> FindManuallyDeletedThemes()
-        {
-            try
-            {
-                return _dbHelper.FindManuallyDeletedThemes();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of all !PUBLISHED! articles. In case of failure returns null.
-        /// If the URL rewriting is activated and article has no assigned URL, it will not be returned.
-        /// </summary>
-        /// <returns></returns>
+       
+        /// <see cref="IJasperDataServicePublic.GetAllArticles"/>
         public List<Article> GetAllArticles()
         {
             try
@@ -1718,11 +1917,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns list of all !PUBLISHED! articles from required category. In case of failure returns null;
-        /// </summary>
-        /// <param name="categoryId"></param>
-        /// <returns></returns>
+     
+        /// <see cref="IJasperDataServicePublic.GetAllArticles(int)"/>
         public List<Article> GetAllArticles(int categoryId)
         {
             try
@@ -1735,139 +1931,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns list of all blockHolders. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<BlockHolder> GetAllBlockHolders()
-        {
-            try
-            {
-                return _dbHelper.GetAllBlockHolders();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of all categories. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<Category> GetAllCategories()
-        {
-            try
-            {
-                return _dbHelper.GetAllCategories();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of all Holder_Blocks. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<Holder_Block> GetAllHolder_Blocks()
-        {
-            try
-            {
-                return _dbHelper.GetAllHolder_Blocks();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of all images. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<Image> GetAllImages()
-        {
-            try
-            {
-                return _dbHelper.GetAllImages();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of all roles. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<Role> GetAllRoles()
-        {
-            try
-            {
-                return _dbHelper.GetAllRoles();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of all TextBlocks. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<TextBlock> GetAllTextBlocks()
-        {
-            try
-            {
-                return _dbHelper.GetAllTextBlocks();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of all themes. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<Theme> GetAllThemes()
-        {
-            try
-            {
-                return _dbHelper.GetAllThemes();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of all users. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public List<User> GetAllUsers()
-        {
-            try
-            {
-                return _dbHelper.GetAllUsers();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// Returns database attached object of !PUBLISHED! Article by Id. In case of failure returns null.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+      
+        /// <see cref="IJasperDataServicePublic.GetArticleById(int)"/>
         public Article GetArticleById(int id)
         {
             try
@@ -1892,11 +1957,67 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns category name by Id. In case of failure returns null.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        
+        /// <see cref="IJasperDataServicePublic.AddArticle"/>
+        public Article AddArticle()
+        {
+            try
+            {
+                return _dbHelper.AddArticle();
+            }
+            catch
+            {
+                return null;
+            }
+        }    
+       
+        /// <see cref="IJasperDataServicePublic.EditArticle(Article)"/>
+        public Article EditArticle(Article article)
+        {
+            try
+            {
+                return _dbHelper.EditArticle(article);
+            }
+            catch
+            {
+                return null;
+            }
+        } 
+
+    
+        /// <see cref="IJasperDataServicePublic.DeleteArticle(int)"/>
+        public bool DeleteArticle(int articleId)
+        {
+            try
+            {
+                _dbHelper.DeleteArticle(articleId);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Categories
+
+        /// <see cref="IJasperDataServicePublic.GetAllCategories"/>
+        public List<Category> GetAllCategories()
+        {
+            try
+            {
+                return _dbHelper.GetAllCategories();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+      
+        /// <see cref="IJasperDataServicePublic.GetCategoryNameById(int)"/>
         public string GetCategoryNameById(int id)
         {
             try
@@ -1909,17 +2030,13 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns database attached Holder_Block. In case of failure returns false.
-        /// </summary>
-        /// <param name="textBlockId"></param>
-        /// <param name="holderId"></param>
-        /// <returns></returns>
-        public Holder_Block GetHolder_Block(int textBlockId, int holderId)
+       
+        /// <see cref="IJasperDataServicePublic.AddCategory(string)"/>
+        public Category AddCategory(string categoryName)
         {
             try
             {
-                return _dbHelper.GetHolder_Block(textBlockId, holderId);
+                return _dbHelper.AddCategory(categoryName);
             }
             catch
             {
@@ -1927,45 +2044,56 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns database attached TextBlock. In case of failure returns null.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public TextBlock GetTextBlockById(int id)
+       
+        /// <see cref="IJasperDataServicePublic.DeleteCategory(int)"/>
+        public bool DeleteCategory(int categoryId)
         {
             try
             {
-                return _dbHelper.GetTextBlockById(id);
+                _dbHelper.DeleteCategory(categoryId);
+                return true;
             }
             catch
             {
-                return null;
+                return false;
             }
         }
 
-        /// <summary>
-        /// Returns database attached User. In case of failure returns null.
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
-        public User GetUserById(int userId)
+       
+        /// <see cref="IJasperDataServicePublic.UncategorizedCategoryExists"/>    
+        public bool UncategorizedCategoryExists()
         {
             try
             {
-                return _dbHelper.GetUserById(userId);
+                _dbHelper.UncategorizedCategoryExists();
+                return true;
             }
             catch
             {
-                return null;
+                return false;
+            }
+        }
+       
+        /// <see cref="IJasperDataServicePublic.CreateUncategorizedCategory"/>    
+        public bool CreateUncategorizedCategory()
+        {
+            try
+            {
+                _dbHelper.CreateUncategorizedCategory();
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 
-        /// <summary>
-        /// Returns database attached User. In case of failure returns null.
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
+        #endregion
+
+        #region Users
+
+     
+        /// <see cref="IJasperDataServicePublic.GetUserWithUsername(string)"/>
         public User GetUserWithUsername(string username)
         {
             try
@@ -1978,15 +2106,13 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Returns website name. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>
-        public string GetWebsiteName()
+  
+        /// <see cref="IJasperDataServicePublic.GetUserById(int)"/>
+        public User GetUserById(int userId)
         {
             try
             {
-                return _dbHelper.GetWebsiteName();
+                return _dbHelper.GetUserById(userId);
             }
             catch
             {
@@ -1994,14 +2120,146 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// 1) Removes all themes from database.
-        /// 2) All text block and their content will be untouched.
-        /// 3) Themes records & block holders in Db will be recreated based on physical files in Theme folder.
-        /// 4) All text blocks will be marked as unassigned. 
-        /// 5) Finally returns true. In case of failure returns false.
-        /// </summary>
-        /// <returns></returns>
+      
+        /// <see cref="IJasperDataServicePublic.GetAllUsers"/>
+        public List<User> GetAllUsers()
+        {
+            try
+            {
+                return _dbHelper.GetAllUsers();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.ChangePassword(int, string, string)"/>
+        public bool ChangePassword(int userId, string newHashedPassword, string newSalt)
+        {
+            try
+            {
+                _dbHelper.ChangePassword(userId, newHashedPassword, newSalt);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        
+        /// <see cref="IJasperDataServicePublic.GetAllAdministrators"/>  
+        public List<User> GetAllAdministrators()
+        {
+            try
+            {
+                return _dbHelper.GetAllAdministrators();
+            }
+            catch
+            {
+                return new List<User>();
+            }
+        }
+
+        
+        /// <see cref="IJasperDataServicePublic.AddUser(User)"/>
+        public User AddUser(User newUser)
+        {
+            try
+            {
+                return _dbHelper.AddUser(newUser);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+     
+        /// <see cref="IJasperDataServicePublic.DeleteUserById(int)"/>
+        public bool DeleteUserById(int id)
+        {
+            try
+            {
+                _dbHelper.DeleteUserById(id);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Roles
+
+      
+        /// <see cref="IJasperDataServicePublic.GetAllRoles"/>
+        public List<Role> GetAllRoles()
+        {
+            try
+            {
+                return _dbHelper.GetAllRoles();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        #endregion
+
+        #region Themes
+
+      
+        /// <see cref="IJasperDataServicePublic.GetAllThemes"/>
+        public List<Theme> GetAllThemes()
+        {
+            try
+            {
+                return _dbHelper.GetAllThemes();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        
+        /// <see cref="IJasperDataServicePublic.DeleteThemeByName(string)"/>
+        public bool DeleteThemeByName(string name)
+        {
+            try
+            {
+                _dbHelper.DeleteThemeByName(name);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+      
+        /// <see cref="IJasperDataServicePublic.AddThemesFromFolderToDatabase(List{string})"/>
+        public bool AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded)
+        {
+            try
+            {
+                _dbHelper.AddThemesFromFolderToDatabase(themeNamesToBeAdded);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        
+        /// <see cref="IJasperDataServicePublic.ReconstructAndClearThemeData"/>
         public bool ReconstructAndClearThemeData()
         {
             try
@@ -2015,109 +2273,14 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Removes holder from block and returns true. In case of failure returns false.
-        /// </summary>
-        /// <param name="holderId"></param>
-        /// <param name="blockId"></param>
-        /// <returns></returns>
-        public bool RemoveHolderFromBlock(int holderId, int blockId)
+
+       
+        /// <see cref="IJasperDataServicePublic.CheckThemeFolderAndDatabaseIntegrity"/>
+        public List<string> CheckThemeFolderAndDatabaseIntegrity()
         {
             try
             {
-                _dbHelper.RemoveHolderFromBlock(holderId, blockId);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Saves order of TextBlock in Holder. In case of failure returns false.
-        /// </summary>
-        /// <param name="textBlockId"></param>
-        /// <param name="holderId"></param>
-        /// <param name="order"></param>
-        /// <returns></returns>
-        public bool SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order)
-        {
-            try
-            {
-                _dbHelper.SaveTextBlockOrderNumberInHolder(textBlockId, holderId, order);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Sets the website name. In case if failure returns false.
-        /// </summary>
-        /// <param name="newWebsiteName"></param>
-        /// <returns></returns>
-        public bool SetWebsiteName(string newWebsiteName)
-        {
-            try
-            {
-                _dbHelper.SetWebsiteName(newWebsiteName);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-
-        /// <summary>
-        /// Returns the first URL found. In case of failure returns string.empty.
-        /// </summary>
-        /// <param name="article"></param>
-        /// <returns></returns>        
-        public string Url(Article article)
-        {
-            try
-            {
-                return _dbHelper.Url(article);
-            }
-            catch
-            {
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
-        /// Updates or creates a new URL rewrite rule and returns true. In case of error returns false.
-        /// </summary>
-        /// <param name="article"></param>
-        /// <param name="url"></param>       
-        public bool SetUrl(Article article, string url)
-        {
-            try
-            {
-                _dbHelper.SetUrl(article, url);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Returns list of all URL for the specified article. In case of failure returns null.
-        /// </summary>
-        /// <param name="articleId"></param>
-        /// <returns></returns>        
-        public List<string> GetUrls(int articleId)
-        {
-            try
-            {
-                return _dbHelper.GetUrls(articleId);
+                return _dbHelper.CheckThemeFolderAndDatabaseIntegrity();
             }
             catch
             {
@@ -2125,16 +2288,13 @@ namespace JasperSite.Models.Database
             }
         }
 
-
-        /// <summary>
-        /// Returns all UrlRewrite records. In case of failure returns null.
-        /// </summary>
-        /// <returns></returns>        
-        public List<UrlRewrite> GetAllUrls()
+      
+        /// <see cref="IJasperDataServicePublic.FindManuallyDeletedThemes"/>
+        public List<string> FindManuallyDeletedThemes()
         {
             try
             {
-                return _dbHelper.GetAllUrls();
+                return _dbHelper.FindManuallyDeletedThemes();
             }
             catch
             {
@@ -2142,30 +2302,7 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// Deletes all records with specified URL and returns true. In case of error returns false.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <exception cref="InvalidUrlRewriteException"></exception>
-        public bool DeleteUrl(string url)
-        {
-            try
-            {
-                var itemsToDelete = Database.UrlRewrite.Where(u => u.Url == url);
-                Database.UrlRewrite.RemoveRange(itemsToDelete);
-                Database.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Returns current theme Id. In case of failure returns -1.
-        /// </summary>
-        /// <returns></returns>
+       
         /// <exception cref="DatabaseHelperException"></exception>
         public int GetCurrentThemeIdFromDb()
         {
@@ -2181,14 +2318,333 @@ namespace JasperSite.Models.Database
             }
         }
 
+        #endregion
+
+        #region Settings 
+      
+        /// <see cref="IJasperDataServicePublic.GetWebsiteName"/>
+        public string GetWebsiteName()
+        {
+            try
+            {
+                return _dbHelper.GetWebsiteName();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+     
+        /// <see cref="IJasperDataServicePublic.SetWebsiteName(string)"/>
+        public bool SetWebsiteName(string newWebsiteName)
+        {
+            try
+            {
+                _dbHelper.SetWebsiteName(newWebsiteName);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Blocks
+
+        /// <see cref="IJasperDataServicePublic.GetAllBlockHolders"/>
+        public List<BlockHolder> GetAllBlockHolders()
+        {
+            try
+            {
+                return _dbHelper.GetAllBlockHolders();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.GetAllTextBlocks"/>
+        public List<TextBlock> GetAllTextBlocks()
+        {
+            try
+            {
+                return _dbHelper.GetAllTextBlocks();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+      
+        /// <see cref="IJasperDataServicePublic.GetAllHolder_Blocks"/>
+        public List<Holder_Block> GetAllHolder_Blocks()
+        {
+            try
+            {
+                return _dbHelper.GetAllHolder_Blocks();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+       
+
+      
+        /// <see cref="IJasperDataServicePublic.AddNewBlock(TextBlock)"/>
+        public TextBlock AddNewBlock(TextBlock block)
+        {
+            try
+            {
+                return _dbHelper.AddNewBlock(block);
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.AddHolder_Block(Holder_Block)"/>
+        public Holder_Block AddHolder_Block(Holder_Block hb)
+        {
+            try
+            {
+                return _dbHelper.AddHolder_Block(hb);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.DeleteTextBlockById(int)"/>
+        public bool DeleteTextBlockById(int id)
+        {
+            try
+            {
+                _dbHelper.DeleteTextBlockById(id);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
 
-        /// <summary>
-        /// Transforms Theme-relative Url to Root-relative Url. In case of error returns empty string.
-        /// </summary>
-        /// <param name="url">Theme-relative Url</param>
-        /// <returns></returns>
-        /// <exception cref="CustomRoutingException"></exception>
+       
+        /// <see cref="IJasperDataServicePublic.AddHolderToBlock(int, int)"/>
+        public Holder_Block AddHolderToBlock(int holderId, int blockId)
+        {
+            try
+            {
+                return _dbHelper.AddHolderToBlock(holderId, blockId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
+
+       
+        /// <see cref="IJasperDataServicePublic.RemoveHolderFromBlock(int, int)"/>
+        public bool RemoveHolderFromBlock(int holderId, int blockId)
+        {
+            try
+            {
+                _dbHelper.RemoveHolderFromBlock(holderId, blockId);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+      
+        /// <see cref="IJasperDataServicePublic.DeleteBlockHolderById(int)"/>
+        public bool DeleteBlockHolderById(int id)
+        {
+            try
+            {
+                _dbHelper.DeleteBlockHolderById(id);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.GetTextBlockById(int)"/>
+        public TextBlock GetTextBlockById(int id)
+        {
+            try
+            {
+                return _dbHelper.GetTextBlockById(id);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.GetHolder_Block(int, int)"/>
+        public Holder_Block GetHolder_Block(int textBlockId, int holderId)
+        {
+            try
+            {
+                return _dbHelper.GetHolder_Block(textBlockId, holderId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.SaveTextBlockOrderNumberInHolder(int, int, int)"/>
+        public bool SaveTextBlockOrderNumberInHolder(int textBlockId, int holderId, int order)
+        {
+            try
+            {
+                _dbHelper.SaveTextBlockOrderNumberInHolder(textBlockId, holderId, order);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        #endregion
+
+        #region Images
+
+       
+        /// <see cref="IJasperDataServicePublic.GetAllImages"/>
+        public List<Image> GetAllImages()
+        {
+            try
+            {
+                return _dbHelper.GetAllImages();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        
+        /// <see cref="IJasperDataServicePublic.DeleteImageById(int)"/>
+        public bool DeleteImageById(int imgId)
+        {
+            try
+            {
+                _dbHelper.DeleteImageById(imgId);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        #endregion
+
+        #region Url
+
+       
+        /// <see cref="IJasperDataServicePublic.GetAllUrls"/>
+        public List<UrlRewrite> GetAllUrls()
+        {
+            try
+            {
+                return _dbHelper.GetAllUrls();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+          
+        /// <see cref="IJasperDataServicePublic.GetUrls(int)"/>
+        public List<string> GetUrls(int articleId)
+        {
+            try
+            {
+                return _dbHelper.GetUrls(articleId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+            
+        /// <see cref="IJasperDataServicePublic.SetUrl(Article, string)"/>
+        public bool SetUrl(Article article, string url)
+        {
+            try
+            {
+                _dbHelper.SetUrl(article, url);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.Url(Article)"/>
+        public string Url(Article article)
+        {
+            try
+            {
+                return _dbHelper.Url(article);
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.DeleteUrl(string)"/>
+        public bool DeleteUrl(string url)
+        {
+            try
+            {
+                var itemsToDelete = Database.UrlRewrite.Where(u => u.Url == url);
+                Database.UrlRewrite.RemoveRange(itemsToDelete);
+                Database.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+       
+        /// <see cref="IJasperDataServicePublic.File(string)"/>
         public string File(string url)
         {
             try
@@ -2210,12 +2666,8 @@ namespace JasperSite.Models.Database
             }
         }
 
-        /// <summary>
-        /// This method is used for setting Layout of a Razor view page. In case of error returns empty string.
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-        /// <exception cref="CustomRoutingException"></exception>
+        
+        /// <see cref="IJasperDataServicePublic.Layout(string)/>
         public string Layout(string url)
         {
             try
@@ -2229,6 +2681,8 @@ namespace JasperSite.Models.Database
                 return string.Empty;
             }
         }
+
+        #endregion
 
 
     }
