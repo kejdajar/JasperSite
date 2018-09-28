@@ -11,6 +11,9 @@ using System.IO;
 using System.Net.Http.Headers;
 using System.IO.Compression;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {
@@ -22,15 +25,19 @@ namespace JasperSite.Areas.Admin.Controllers
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
 
-        public HomeController(DatabaseContext dbContext)
+        public HomeController(DatabaseContext dbContext, IStringLocalizer<HomeController> localizer)
         {
             this.databaseContext = dbContext;
             this.dbHelper = new DbHelper(dbContext);
+            this._localizer = localizer;
         }
+
+        private readonly IStringLocalizer<HomeController> _localizer;
 
         // GET: Admin/Home
         public ActionResult Index()
         {
+            ViewData["Language"] = _localizer["Language"];
             return View(UpdatePage());
         }  
 
@@ -92,10 +99,21 @@ namespace JasperSite.Areas.Admin.Controllers
                 {
                     return Redirect(Request.Headers["Referer"].ToString()); // refreshes current page
                 }
-            }
-
-           
+            }          
             
+        }
+
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
 
     }

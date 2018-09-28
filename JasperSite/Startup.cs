@@ -15,7 +15,10 @@ using JasperSite.Models.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Data.SqlClient;
-
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace JasperSite
 {
@@ -45,9 +48,30 @@ namespace JasperSite
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
                 options.LoginPath = "/Admin/Login";
                 options.AccessDeniedPath = "/Admin/Login/UnauthorizedUser";
-            });
+            });           
 
-            services.AddMvc();
+            // Added compatibility with new features, added support for localization
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                  .AddDataAnnotationsLocalization();
+
+            // Localization folder is "Resources"
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+            // Configure supported cultures and localization options
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+                {
+                    new CultureInfo("en"),
+                    new CultureInfo("cs")
+                };
+
+                options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");              
+                options.SupportedCultures = supportedCultures;               
+                options.SupportedUICultures = supportedCultures;
+
+            });
 
             // DB Context service has to be added in ConfigureServices() method
             services.AddDbContext<DatabaseContext>();
@@ -75,7 +99,6 @@ namespace JasperSite
             //    APPLICATON DATABASE SEEDING
             //  DatabaseContext dbContext = ((ServiceProvider)serviceProvider).GetRequiredService<DatabaseContext>();
              
-
             //    Initializes GlobalWebsiteConfig, WebsiteCongig, ThemeHelper, CustomRouting
             //    Does not require DB Context, only reads data from text files on disc
                JasperSite.Models.Configuration.Initialize();
@@ -84,7 +107,23 @@ namespace JasperSite
             //    JasperSite.Models.Configuration.CreateAndSeedDb(dbContext);
 
             Env.ServiceProvider = serviceProvider;
-            
+
+            var supportedCultures = new[]
+            { 
+                new CultureInfo("en"),
+                new CultureInfo("cs")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                // Default culture is English
+                DefaultRequestCulture = new RequestCulture("en"),
+                // Formatting numbers, dates, etc.
+                SupportedCultures = supportedCultures,
+                // UI strings that we have localized.
+                SupportedUICultures = supportedCultures
+            });
+
             // authentication - maybe not necessary here
             app.UseAuthentication();             
 

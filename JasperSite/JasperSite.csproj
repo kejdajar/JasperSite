@@ -42,6 +42,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Remove="Resources\Views\Admin\Views\Home\Index.cs.resx" />
+    <EmbeddedResource Remove="Resources\Views\Admin\Views\Shared\_Layout.cs.resx" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Areas\Admin\ViewModels\AddedAndLooseHoldersViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\AddUserViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\ArticleListViewModel.cs" />
@@ -277,6 +282,8 @@
     <None Include="node_modules\font-awesome\scss\_screen-reader.scss" />
     <None Include="node_modules\font-awesome\scss\_stacked.scss" />
     <None Include="node_modules\font-awesome\scss\_variables.scss" />
+    <None Include="Resources\Views\Admin\Views\Home\Index.cs.resx" />
+    <None Include="Resources\Views\Admin\Views\Shared\_Layout.cs.resx" />
     <None Include="Views\Shared\JasperJsonPartialView.cshtml" />
   </ItemGroup>
 

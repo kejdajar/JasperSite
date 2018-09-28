@@ -1,4 +1,20 @@
-﻿@using JasperSite.Models.Database
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
+}
+
+
+
 @{
     ViewBag.Title = "Přehled";
 }
@@ -9,13 +25,13 @@
 
 @if (Model.Categories != null)
 {
-<script>
+    <script>
 
     $(document).ready(function () {
         var ctx = $("#chartCanvas");
 
         var options = {
-          
+
             legend: { display: false },
 
             scales: {
@@ -35,12 +51,12 @@
                     }
                 }]
             }
-            
+
         };
 
         var data = {
 
-           
+
             labels: [
 
                 @foreach (var category in Model.Categories)
@@ -57,7 +73,7 @@
                         @foreach (var category in Model.Categories)
                         {
                             var random = new Random();
-                            //var color = String.Format("#{0:X6}", random.Next(0x1000000));                            
+                            //var color = String.Format("#{0:X6}", random.Next(0x1000000));
                             //@:"@color",
 
 
@@ -93,10 +109,10 @@
 
 
 
-</script>
+    </script>
 }
 
-     <script>
+<script>
 
          /* Tip Refresh Button */
 $(document).ready(function(){
@@ -132,12 +148,12 @@ $(document).ready(function(){
 
 
 <h2>Přehled </h2>
-                                  
-   <style>
-       .list-group-item {
-           padding:8px;
-       }
-   </style>
+
+<style>
+    .list-group-item {
+        padding: 8px;
+    }
+</style>
 
 
 <div class="row">
@@ -162,6 +178,16 @@ $(document).ready(function(){
 
                 <p>Redakční systém právě eviduje @Model.Articles.Count() článků a @Model.Categories.Count() kategorií</p>
 
+                <form id="selectLanguage" asp-controller="Home"
+                      asp-action="SetLanguage" asp-route-returnUrl="@returnUrl"
+                      method="post" class="form-horizontal" role="form">
+                    <label asp-for="@requestCulture.RequestCulture.UICulture.Name">@Localizer["Language"]</label>
+                    <select name="culture"
+                            onchange="this.form.submit();"
+                            asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems"></select>
+                </form>
+                <h1> @Localizer["Language"]</h1>
+                <h2>directly from controller:     @ViewData["Language"]</h2>
             }
             else
             {
@@ -181,7 +207,7 @@ $(document).ready(function(){
             <hr class="j-hr" />
             <ul class="list-group">
                 <li class="list-group-item">
-                    Vaší stránku zobrazíte pomocí: 
+                    Vaší stránku zobrazíte pomocí:
                     <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
                 </li>
 
@@ -209,7 +235,7 @@ $(document).ready(function(){
             </ul>
 
         </section>
-       
+
 
     </div>
 </div>
@@ -251,17 +277,17 @@ $(document).ready(function(){
     <div class="col-lg-12">
         <section class="j-admin-section">
 
-            <h4><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>Diplomová práce</h4>            
+            <h4><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>Diplomová práce</h4>
             <hr />
             <p style="text-align:justify">
                 Redakční systém je součástí diplomové práce:<i> Návrh a implementace redakčního systému v ASP.NET Core</i>, vedené na České zemědělské univerzitě v Praze, Provozně ekonomické fakultě, Katedře systémového inženýrství.
                 Autorem diplomové práce a redakčního systému <i>JasperSite</i> je Bc. Jaromír Kejda.
             </p>
 
-        
-                <img src="~/Areas/Admin/Content/Images/logo.png" class="img-fluid" style="max-height:100px"/>
-                <img src="~/Areas/Admin/Content/Images/logo_pef.png" class="img-fluid" />
-                   
+
+            <img src="~/Areas/Admin/Content/Images/logo.png" class="img-fluid" style="max-height:100px" />
+            <img src="~/Areas/Admin/Content/Images/logo_pef.png" class="img-fluid" />
+
 
         </section>
     </div>
