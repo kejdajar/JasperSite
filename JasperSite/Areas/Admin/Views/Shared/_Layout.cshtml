@@ -86,7 +86,7 @@ $(document).ready(function(){
         <!---------------------------------------Sidebar-------------------------------------------->
         <nav>
             <div id="sidebar-wrapper">
-                <h1>Layout message @Localizer["Language"]</h1>
+               
                 <div class="j-sidebar-brand">
                     <h4>J<span style="color:#BA68C8">asp</span>erSite</h4>
                 </div>
@@ -94,7 +94,7 @@ $(document).ready(function(){
                     <div class="j-link-container">
                         <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "j-menu-highlight" : "" )" asp-controller="Home" asp-action="Index" asp-area="Admin">
                             <i class="fa fa-home j-fa-margin" aria-hidden="true"></i>
-                            Přehled
+                           @Localizer["Overview"]
                         </a>
 
 
@@ -103,56 +103,56 @@ $(document).ready(function(){
                     <div class="j-link-container">
                         <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Categories" ? "j-menu-highlight" : "" )" asp-controller="Categories" asp-action="Index" asp-area="Admin">
                             <i class="fa fa-folder j-fa-margin" aria-hidden="true"></i>
-                            Rubriky
+                            @Localizer["Categories"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
                         <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Articles" ? "j-menu-highlight" : "" )" asp-controller="Articles" asp-action="Index" asp-area="Admin">
                             <i class="fa fa-edit j-fa-margin" aria-hidden="true"></i>
-                            Články
+                            @Localizer["Articles"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
                         <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Themes" asp-action="Index" asp-area="Admin">
                             <i class="fa fa-paint-brush j-fa-margin " aria-hidden="true"></i>
-                            Vzhled
+                            @Localizer["Themes"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
                         <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Blocks" ? "j-menu-highlight" : "" )" asp-controller="Blocks" asp-action="Index" asp-area="Admin">
                             <i class="fa fa-comment-o j-fa-margin" aria-hidden="true"></i>
-                            Bloky
+                            @Localizer["Text blocks"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
                         <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Images" ? "j-menu-highlight" : "" )" asp-controller="Images" asp-action="Index" asp-area="Admin">
                             <i class="fa fa-image j-fa-margin" aria-hidden="true"></i>
-                            Obrázky
+                            @Localizer["Images"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
                         <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "j-menu-highlight" : "" )" asp-controller="Users" asp-action="Index" asp-area="Admin">
                             <i class="fa fa-user-circle-o j-fa-margin" aria-hidden="true"></i>
-                            Uživatelé
+                            @Localizer["Users"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
                         <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Settings" ? "j-menu-highlight" : "" )" asp-controller="Settings" asp-action="Index" asp-area="Admin">
                             <i class="fa fa-cogs j-fa-margin" aria-hidden="true"></i>
-                            Nastavení
+                            @Localizer["Settings"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
                         <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "j-menu-highlight" : "" )" asp-controller="About" asp-action="Index" asp-area="Admin">
                             <i class="fa fa-info-circle j-fa-margin" aria-hidden="true"></i>
-                            O systému
+                            @Localizer["About"]
                         </a>
                     </div>
 

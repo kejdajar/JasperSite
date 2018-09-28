@@ -186,8 +186,7 @@ $(document).ready(function(){
                             onchange="this.form.submit();"
                             asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems"></select>
                 </form>
-                <h1> @Localizer["Language"]</h1>
-                <h2>directly from controller:     @ViewData["Language"]</h2>
+               
             }
             else
             {

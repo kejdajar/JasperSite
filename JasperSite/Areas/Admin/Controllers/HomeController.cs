@@ -25,19 +25,18 @@ namespace JasperSite.Areas.Admin.Controllers
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
 
-        public HomeController(DatabaseContext dbContext, IStringLocalizer<HomeController> localizer)
+        public HomeController(DatabaseContext dbContext)
         {
             this.databaseContext = dbContext;
             this.dbHelper = new DbHelper(dbContext);
-            this._localizer = localizer;
+          
         }
 
-        private readonly IStringLocalizer<HomeController> _localizer;
+      
 
         // GET: Admin/Home
         public ActionResult Index()
-        {
-            ViewData["Language"] = _localizer["Language"];
+        {           
             return View(UpdatePage());
         }  
 
