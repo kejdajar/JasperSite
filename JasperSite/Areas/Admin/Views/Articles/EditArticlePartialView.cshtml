@@ -2,6 +2,11 @@
 @model EditArticleViewModel
 @*@Html.Partial("InsertImagePartialView")*@
 @{ Html.RenderPartial("TinyMceSettingsPartialView");}
+
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
 <script>
     $(document).ready(function () {
@@ -11,7 +16,7 @@
         $("#btnDeleteArticle").click(function (e) {
             e.preventDefault();
 
-            appendWindow("Skutečně odstranit článek?", `Tento článek bude nenávratně odstraněn.`, function () { window.location = "@Url.Action("Delete", "Articles", new { Area = "Admin",id=Model.Id })"; }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
+            appendWindow("@Localizer["Really delete this article?"]", `@Localizer["This article will be permanently deleted."]`, function () { window.location = "@Url.Action("Delete", "Articles", new { Area = "Admin",id=Model.Id })"; }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]");
         });
     });
 </script>
@@ -60,7 +65,7 @@
 
         <div class="form-group">
             <label asp-for="Keywords"></label>
-            <input id="tbKeywords" type="text" asp-for="Keywords" class="form-control" placeholder="Zadejte klíčová slova oddělená čárkou" />
+            <input id="tbKeywords" type="text" asp-for="Keywords" class="form-control" placeholder="@Localizer["Insert comma separated keywords."]" />
             <span asp-validation-for="Keywords" class="text-danger"></span>
         </div>
 
@@ -73,7 +78,7 @@
             @*-------------------CUSTOM ROUTING------------------------*@
             <div class="form-group">
                 <label asp-for="Url"></label>
-                <input id="tbUrl" asp-for="Url" class="form-control" placeholder="Pokud nechcete přidávat další URL adresu, ponechte pole prázdné." />
+                <input id="tbUrl" asp-for="Url" class="form-control" placeholder="@Localizer["If you don't want to add another URL address, leave the field blank."]" />
                 <span asp-validation-for="Url" class="text-danger"></span>
             </div>
         }
@@ -97,10 +102,10 @@
 
         <div class="form-group">
 
-            <button id="btnSaveTinymce" type="submit" asp-area="Admin" asp-controller="Articles" asp-action="PostArticle" class="btn btn-jasper"><i class="fa fa-floppy-o fa-1x" aria-hidden="true"></i> Uložit</button>
-            <a asp-controller="Articles" asp-action="Index" asp-area="admin" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na přehled</a>
+            <button id="btnSaveTinymce" type="submit" asp-area="Admin" asp-controller="Articles" asp-action="PostArticle" class="btn btn-jasper"><i class="fa fa-floppy-o fa-1x" aria-hidden="true"></i> @Localizer["Save"]</button>
+            <a asp-controller="Articles" asp-action="Index" asp-area="admin" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> @Localizer["Back to overview"]</a>
 
-            <a id="btnDeleteArticle" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>   Odstranit článek</a>
+            <a id="btnDeleteArticle" asp-area="Admin" asp-controller="Articles" asp-action="Delete" asp-route-Id="@Model.Id" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  @Localizer["Delete article"]</a>
 
 
 

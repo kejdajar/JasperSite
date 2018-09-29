@@ -16,7 +16,7 @@
 
 
 @{
-    ViewBag.Title = "Přehled";
+    ViewBag.Title=Localizer["Overview"];
 }
 @model JasperSite.Areas.Admin.ViewModels.HomeViewModel
 
@@ -68,7 +68,7 @@
             ],
             datasets: [
                 {
-                    label: "Počet článků v rubrice",
+                    label: "@Localizer["Number of articles in category"]",
                     backgroundColor: [
                         @foreach (var category in Model.Categories)
                         {
@@ -125,10 +125,11 @@ $(document).ready(function(){
                         type: 'get',
                         url: '@Url.Action("Refresh","Home")',
                         success: function (data) {
-                            savedInfo("Všekeré konfigurační nastavení bylo aktualizováno.", "alert-success");
+                         savedInfo("@Localizer["Configuration settings updated."]", "alert-success");
+                            
                         },
         error: function(){
-        savedInfo("<strong>Chyba.</strong> Konfigurační nastavení nebylo možné aktualizovat.", "alert-danger");
+        savedInfo("@Localizer["<strong>Error.</strong> Configuration settings could not be updated."]", "alert-danger");
         }
                     })
 
@@ -147,7 +148,7 @@ $(document).ready(function(){
 
 
 
-<h2>Přehled </h2>
+<h2>@Localizer["Overview"] </h2>
 
 <style>
     .list-group-item {
@@ -167,16 +168,16 @@ $(document).ready(function(){
 
             @if (Model.CurrentUser != null)
             {
-                <h4><i class="fa fa-star j-icon" aria-hidden="true"></i>Vítejte zpět</h4>
+                <h4><i class="fa fa-star j-icon" aria-hidden="true"></i>@Localizer["Welcome back"]</h4>
 
                 <small> Dnes je @DateTime.Now.ToLongDateString()</small>
                 <hr />
-                <p> Vaše uživatelské jméno: @Model.CurrentUser.Username</p>
+                <p> @Localizer["Your username"]: @Model.CurrentUser.Username</p>
 
-                <p>Vaše přezdívka: @Model.CurrentUser.Nickname</p>
-                <p>  Vaše uživatelská role je:  @Model.CurrentUser.Role.Name</p>
+                <p>@Localizer["Your username"]: @Model.CurrentUser.Nickname</p>
+                <p>  @Localizer["Your user role is"]:  @Model.CurrentUser.Role.Name</p>
 
-                <p>Redakční systém právě eviduje @Model.Articles.Count() článků a @Model.Categories.Count() kategorií</p>
+                <p>@Localizer["The CMS currently registers {0} articles and {1} categories", @Model.Articles.Count(), @Model.Categories.Count()]</p>
 
                 <form id="selectLanguage" asp-controller="Home"
                       asp-action="SetLanguage" asp-route-returnUrl="@returnUrl"
@@ -191,7 +192,7 @@ $(document).ready(function(){
             else
             {
                 <div class="alert alert-warning">
-                    Nepodařilo se načíst požadované informace.
+                    @Localizer["Requested information could not be loaded."]                   
                 </div>
             }
         </section>
@@ -202,32 +203,32 @@ $(document).ready(function(){
         <section class="j-admin-section  alert alert-info alert-dismissible">
 
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <h4><i class="fa fa-sticky-note j-icon" aria-hidden="true"></i>Tipy a triky</h4>
+            <h4><i class="fa fa-sticky-note j-icon" aria-hidden="true"></i>@Localizer["Tips and Tricks"]</h4>
             <hr class="j-hr" />
             <ul class="list-group">
                 <li class="list-group-item">
-                    Vaší stránku zobrazíte pomocí:
+                   @Localizer["You can display your page using"]:
                     <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
                 </li>
 
                 <li class="list-group-item">
-                    Na tuto stránku se můžete vrátit pomocí:
+                   @Localizer["You can return to this page using"]:
                     <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
                 </li>
 
                 <li class="list-group-item">
-                    Aktualizace konfiguračních souborů pomocí:
+                   @Localizer["Update configuration files using"]:
                     <a id="tipRefreshButton" asp-controller="Home" asp-action="Refresh" asp-area="admin" class="btn btn-jasper btn-jasper-icon-control-panel">  <i class="fa fa-refresh fa-1x" aria-hidden="true"></i></a>
                 </li>
 
                 @if (User.Identity.IsAuthenticated)
                 {
 
-                    <li class="list-group-item">
-                        Odhlásit se můžete pomocí:
+                <li class="list-group-item">
+                    @Localizer["You can logout using"]:
 
-                        <a class="btn btn-jasper btn-jasper-icon-control-panel" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-sign-out fa-1x"> </i> </a>
-                    </li>
+                    <a class="btn btn-jasper btn-jasper-icon-control-panel" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-sign-out fa-1x"> </i> </a>
+                </li>
 
                 }
 
@@ -242,7 +243,7 @@ $(document).ready(function(){
     <div class="col-lg-12">
         <section class="j-admin-section">
 
-            <h4><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>Rubriky a články</h4>
+            <h4><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>@Localizer["Categories and Articles"]</h4>
             <hr />
 
             @if (Model.Articles != null && Model.Categories != null)
@@ -256,7 +257,7 @@ $(document).ready(function(){
                 else
                 {
                     <div class="alert alert-warning">
-                        <strong>Nic zde není!</strong> Pro zobrazení přehledu je vyžadována alespoň jedna rubrika a článek.
+                       @Localizer["<strong>This place is empty!</strong> In order to display overview it is required at least one category and article."]
                     </div>
 
                 }
@@ -264,7 +265,7 @@ $(document).ready(function(){
             else
             {
                 <div class="alert alert-warning">
-                    Nepodařilo se získat informace o rubrikách a článcích.
+                   @Localizer["Information about categories and articles could not be fetched."]
                 </div>
             }
 
@@ -276,11 +277,11 @@ $(document).ready(function(){
     <div class="col-lg-12">
         <section class="j-admin-section">
 
-            <h4><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>Diplomová práce</h4>
+            <h4><i class="fa fa-bar-chart j-icon" aria-hidden="true"></i>@Localizer["Master's Thesis"]</h4>
             <hr />
             <p style="text-align:justify">
-                Redakční systém je součástí diplomové práce:<i> Návrh a implementace redakčního systému v ASP.NET Core</i>, vedené na České zemědělské univerzitě v Praze, Provozně ekonomické fakultě, Katedře systémového inženýrství.
-                Autorem diplomové práce a redakčního systému <i>JasperSite</i> je Bc. Jaromír Kejda.
+
+               @Localizer["JasperSite is a part of master's thesis: <i>Design and implementation of Content Management System in ASP.NET Core</i>, published on Czech University of Life Sciences. The author of this content management system and the related master's thesis is Bc. Jaromír Kejda."]
             </p>
 
 

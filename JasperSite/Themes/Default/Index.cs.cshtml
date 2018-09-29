@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = J.Layout("_Layout.cshtml",Context.Request);
+    Layout = J.Layout("_Layout.cshtml");
     ViewData["Title"] = "JasperSite";
 }
 
@@ -52,23 +52,23 @@
                 <img class="d-block img-fluid" src="@J.File("./Images/bg_pen_paper.jpg")" alt="First slide">
                 <div class="carousel-caption d-none d-md-block" style="color:black!important">
                     <h3>J<span style="color:#AB47BC">asp</span>erSite</h3>
-                    <p>Simple cross-platform content management system.</p>
+                    <p>Jednoduchý multiplatformní redakční systém.</p>
                 </div>
 
             </div>
             <div class="carousel-item">
                 <img class="d-block img-fluid" src="@J.File("./Images/brush.jpg")" alt="Second slide">
                 <div class="carousel-caption d-none d-md-block">
-                    <h3>Additional themes</h3>
-                    <p>JasperSite supports custom themes.</p>
+                    <h3>Dodatečné vzhledy</h3>
+                    <p>Systém podporuje vytváření vlastních vzhledů</p>
 
                 </div>
             </div>
             <div class="carousel-item">
                 <img class="d-block img-fluid" src="@J.File("./Images/bg_programming.jpg")" alt="Third slide">
                 <div class="carousel-caption d-none d-md-block" style="background-color:rgba(0, 0, 0, 0.5)!important">
-                    <h3>Configurable</h3>
-                    <p>Thanks to configuration files, the system can be easily configured.</p>
+                    <h3>Široké možnosti konfigurace</h3>
+                    <p>Díky konfiguračním souborům je možné nastavit celý systém i jednotlivé vzhledy</p>
                 </div>
             </div>
         </div>
@@ -92,10 +92,10 @@
                 <div class="col-md-6">
 
                     <ul class="list-group">
-                        <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important"> <h5 style="text-align:center">Welcome!</h5></li>
-                        <li class="list-group-item">JasperSite is cross-platform content management system built on the ASP.NET Core MVC.</li>
-                        <li class="list-group-item">Enables to easily create own web pages.</li>
-                        <li class="list-group-item">Includes management of articles, categories, users, themes and other settings.</li>
+                        <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important"> <h5 style="text-align:center">Vítejte</h5></li>
+                        <li class="list-group-item">JasperSite je multiplatformní redakční systém na platformě ASP.NET Core MVC.</li>
+                        <li class="list-group-item">Umožňuje rychle vytvářet vlastní webové stránky.</li>
+                        <li class="list-group-item">Obsahuje správu článků, rubrik, uživatelů, vzhledů a další nastavení.</li>
 
                     </ul>
 
@@ -104,9 +104,9 @@
                 <div class="col-md-6">
 
                     <ul class="list-group">
-                        <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">  <h5 style="text-align:center">Student's Work</h5></li>
+                        <li class="list-group-item active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">  <h5 style="text-align:center">Studentský projekt</h5></li>
                         <li class="list-group-item">
-                            <p> This project is a part of my master's thesis on Czech University of Life Sciences in Prague.</p>
+                            <p> Tento projekt vznikl jako praktická část diplomové práce na PEF ČZU Praha, obor INFON.</p>
                             <img src="@J.File("./Images/logo.gif")" class="img-fluid" style="max-height:145px" />
                         </li>
                     </ul>
@@ -124,59 +124,56 @@
                 <div class="col-md-12">
                     <div class="list-group">
                         <div class="list-group-item list-group-item-action flex-column align-items-start active" style="background-color:#AB47BC!important;border-color:#DFDFDF!important;padding:5px!important">
-                            <h5 style="text-align:center;padding:0px">Step by Step</h5>
+                            <h5 style="text-align:center;padding:0px">Krok za krokem</h5>
                         </div>
                         <div class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">Demo page</h6>
-                                <small class="text-muted">1. step</small>
+                                <h6 class="mb-1">Ukázková stránka</h6>
+                                <small class="text-muted">1. krok</small>
                             </div>
-                            <p class="mb-1">You are currently on a demo page. This page is a stand-alone theme, but does not show any custom content.</p>
-                            <small class="text-muted">Similarly can look your own page.</small>
+                            <p class="mb-1">Právě se nacházíte na ukázkové stránce. Tato stránka je samostatný vzhled, ale neukazuje vámi žádný vytvořený obsah.</p>
+                            <small class="text-muted">Podobně může vypadat i vaše stránka.</small>
                         </div>
                         <a asp-action="index" asp-area="admin" asp-controller="login" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">Login</h6>
-                                <small class="text-muted">2. step</small>
+                                <h6 class="mb-1">Přihlášení</h6>
+                                <small class="text-muted">2. krok</small>
                             </div>
                             <p class="mb-1">
-                                Login into the administration section using pre-made admin account:                                
-                                <ul><li>username: admin</li><li>password: admin</li></ul>
-                                <small class="text-muted">Unlike the password, the username is not case-sensitive.</small>
+                                Přihlaste se do administrace pomocí předpřipraveného administrátorského účtu:
+                                <ul><li>jméno: admin</li><li>heslo: admin</li></ul>
+                                <small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>
                             </p>
 
                         </a>
 
                         <a asp-action="index" asp-area="admin" asp-controller="users" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">Change of password</h6>
-                                <small class="text-muted">3. step</small>
+                                <h6 class="mb-1">Změna hesla</h6>
+                                <small class="text-muted">3. krok</small>
                             </div>
                             <p class="mb-1">
-                                In the Users section you should choose more secure password.                              
+                                V sekci uživatelé si změnte svoje administrátorské heslo na nějaké bezpečnější.
 
                             </p>
                             <p class="mb-1">
-                                <small class="text-muted">
-                                Use upper-case and lower-case, numbers and special characters to make your password more secure.
-                                </small>
+                                <small class="text-muted">Používejte malá a velká písmena, číslice a speciální znaky pro zvýšení bezpečnosti hesla.</small>
                             </p>
 
                         </a>
 
                         <a asp-action="index" asp-area="admin" asp-controller="home" target="_blank" class="list-group-item list-group-item-action flex-column align-items-start">
                             <div class="d-flex w-100 justify-content-between">
-                                <h6 class="mb-1">Finishing setup</h6>
-                                <small class="text-muted">4. step</small>
+                                <h6 class="mb-1">Dokončení nastavení</h6>
+                                <small class="text-muted">4. krok</small>
                             </div>
                             <p class="mb-1">
-                                Finally you can add more users with limited authorization, change the name
-                                of your website and add new themes. You can also add any number of new categories
-                                and articles.
-
+                                Nakonec přidejte další uživatele s omezenými právy (role redaktor), změňte název
+                                vaší stránky a vyberte si vhodný vzhled. Dále můžete již dle libosti přidávat
+                                další rubriky a články.
                             </p>
                             <p class="mb-1">
-                                <small class="text-muted">This CMS can do many more!</small>
+                                <small class="text-muted">Tento redakční systém toho umí pochopitelně mnohem více!</small>
                             </p>
 
                         </a>

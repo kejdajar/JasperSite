@@ -2,7 +2,6 @@
 @using JasperSite.Models.Database
 @inject DatabaseContext databaseContext
 
-
 @{
     Layout = J.Layout("_Layout.cshtml", Context.Request);
 
@@ -31,12 +30,12 @@
     else
     {
 
-        <div class="jumbotron"> <h2>The article could not be found.</h2></div>
+        <div class="jumbotron"> <h2>Článek se nepodařilo nalézt.</h2></div>
         <p>
-           The requested article does not exists or is currently unavailable. <br />
+            Zadaný článek neexistuje, nebo je již nedostupný. <br />
         </p>
         <p>
-            <a href="./"><i class="fa fa-undo"></i> Return to the homepage.</a>
+            <a href="./"><i class="fa fa-undo"></i> Vrátit se na hlavní stránku.</a>
         </p>
     }
 

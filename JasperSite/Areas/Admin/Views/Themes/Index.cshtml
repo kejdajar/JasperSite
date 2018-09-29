@@ -2,11 +2,15 @@
 @using JasperSite.Areas.Admin.Models
 @model JasperSite.Areas.Admin.ViewModels.ThemesViewModel
 @{
-    ViewBag.Title = "Vzhledy";
+    ViewBag.Title = Localizer["Themes"];
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @section Scripts {
-   
+
     <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
     <script>
         /* SUBMIT BUTTON FOR THEME UPLOAD IS DISABLED IF NO FILE HAS BEEN UPLOADED YET  */
@@ -31,118 +35,124 @@
 
 <div id="vzhledy"></div>
 
-<h2>Vzhledy </h2>
+<h2>@Localizer["Themes"] </h2>
 
 
-  
 
-    <!--NOT REGISTERED THEMES IN FOLDER-->
-    @if (Model.NotRegisteredThemeNames != null)
+
+<!--NOT REGISTERED THEMES IN FOLDER-->
+@if (Model.NotRegisteredThemeNames != null)
+{
+    if (Model.NotRegisteredThemeNames.Count > 0)
     {
-        if (Model.NotRegisteredThemeNames.Count > 0)
-        {
 
+        <div class="alert alert-warning fade show" role="alert">
+
+            <strong>@Localizer["Folder with themes was edited - unregistered themes detected."]</strong> <br />
+          @Localizer["The contents of folder <i>{0}</i> containing theme files were changed, or the database contains unexpected values.",Configuration.ThemeFolder]
+           @Localizer["Unregistered themes"]:
+            <ul style="list-style-type:disc">
+                @foreach (string name in Model.NotRegisteredThemeNames)
+                {
+                    <li>@name</li>
+                }
+            </ul>
+            <a class="btn btn-jasper" asp-controller="Themes" asp-action="AddNewAddedThemesToDb" asp-area="Admin">@Localizer["Register new themes into the database."].</a>
+
+        </div>
+
+    }
+}
+
+<!--MANUALLY DELETED THEMES STILL REGISTERED IN DATABASE-->
+@if (Model.ManuallyDeletedThemeNames != null )
+{
+    if (Model.ManuallyDeletedThemeNames.Count > 0 )
+    {
+        <section class="j-admin-section">
             <div class="alert alert-warning fade show" role="alert">
 
-                <strong>Složka se vzhledy byla upravena - neregistrované vzhledy</strong> <br />
-                Ve složce: <i> @Configuration.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, nebo jsou v databázi neočekávané údaje. Neregistrované vzhledy:
+                <strong>@Localizer["The folder with themes was modified - manually deleted themes were detected."]</strong> <br />
+               
+                @Localizer["The contents of folder {0} containing theme files were changed. This changes has to be saved.",Configuration.ThemeFolder]
+                
+               
+                
+              @Localizer["Manually deleted themes"]:
                 <ul style="list-style-type:disc">
-                    @foreach (string name in Model.NotRegisteredThemeNames)
+                    @foreach (string name in Model.ManuallyDeletedThemeNames)
                     {
                         <li>@name</li>
                     }
                 </ul>
-                <a class="btn btn-jasper" asp-controller="Themes" asp-action="AddNewAddedThemesToDb" asp-area="Admin">Registrovat nové vzhledy do databáze.</a>
-
+                <a class="btn btn-jasper" asp-controller="Themes" asp-action="RemoveManuallyDeletedThemesFromDb" asp-area="Admin">Delete unaccessible themes from the database.</a>
             </div>
-
-        }
+        </section>
     }
+}
 
-    <!--MANUALLY DELETED THEMES STILL REGISTERED IN DATABASE-->
-    @if (Model.ManuallyDeletedThemeNames != null)
+@if (Model.ManuallyDeletedThemeNames != null && Model.NotRegisteredThemeNames != null)
+{
+    if (Model.ManuallyDeletedThemeNames.Count == 0 && Model.NotRegisteredThemeNames.Count == 0)
     {
-        if (Model.ManuallyDeletedThemeNames.Count > 0)
-        {
-            <section class="j-admin-section">
-                <div class="alert alert-warning fade show" role="alert">
 
-                    <strong>Složka se vzhledy byla upravena - manuálně smazány vzhledy</strong> <br />
-                    Ve složce: <i> @Configuration.ThemeFolder</i>, ve které jsou uloženy vzhledy, došlo ke změnám, které je nutné
-                    uložit. Manuálně odstraněné vzhledy:
-                    <ul style="list-style-type:disc">
-                        @foreach (string name in Model.ManuallyDeletedThemeNames)
-                        {
-                            <li>@name</li>
-                        }
-                    </ul>
-                    <a class="btn btn-jasper" asp-controller="Themes" asp-action="RemoveManuallyDeletedThemesFromDb" asp-area="Admin">Odstranit nedostupné vzhledy z datbáze.</a>
-                </div>
-            </section>
-        }
+        <div id="mainForm1">
+            @Html.Partial("ThemesPartialView", Model)
+        </div>
+
     }
-
-    @if (Model.ManuallyDeletedThemeNames != null && Model.NotRegisteredThemeNames != null)
+    else
     {
-        if (Model.ManuallyDeletedThemeNames.Count == 0 && Model.NotRegisteredThemeNames.Count == 0)
-        {
-            
-                <div id="mainForm1">
-                    @Html.Partial("ThemesPartialView", Model)
-                </div>
-          
-        }
-        else
-        {
-            <section class="j-admin-section">
-                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <strong>Seznam vzhledů</strong> <br />
-                    Oblast pro operace se vzhledy není momentálně dostupná. Vyřešte prosím nejprve výše uvedené problémy.
-                </div>
-            </section>
+        <section class="j-admin-section">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>@Localizer["List of themes"]</strong> <br />
+                @Localizer["The theme browser is currently unavailable. Please fix the listed issues first."]
+            </div>
+        </section>
 
-        }
     }
+}
 
 
 
-    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Informace o nastavení systému</strong> <br />
-        Složka se vzhledy:<b> @((Model.ThemeFolder) ?? "?")</b>, právě aktivní vzhled:<b> @(Model.SelectedThemeName ?? "?") </b>
-    </div>
+<div class="alert alert-secondary alert-dismissible fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>@Localizer["System settings information"]</strong> <br />
+    @Localizer["Folder with themes"]:<b> @((Model.ThemeFolder) ?? "?")</b>, @Localizer["currently activated theme"]:<b> @(Model.SelectedThemeName ?? "?") </b>
+</div>
 
-    <div class="alert alert-secondary fade show" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Inteligetní změna vzhledu</strong> <br />
-        Redakční systém obsahuje algoritmus pro inteligentní změnu vzhledu. Pokud nově aktivovaný
-        vzhled obsahuje stejně pojmenované kontejnery, tak se textové bloky automaticky přiřadí k novým kontejnerům.
-    </div>
+<div class="alert alert-secondary fade show" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>@Localizer["Intelligent change of theme"]</strong> <br />
+    @Localizer["This CMS contains an algorithm for intelligent change of theme. Provided that the newly " +
+    "selected theme contains block holders with the same names, the text blocks" +
+    " will be automatically assigned to the new block holders."]
+</div>
 
 
-    <section class="j-admin-section">
-        <h4><i class="fa fa-upload j-icon" aria-hidden="true"></i>Vlastní rozšíření</h4>
-        <p>Rozšiřte tento redakční systém o další vzhledy.</p>
+<section class="j-admin-section">
+    <h4><i class="fa fa-upload j-icon" aria-hidden="true"></i>@Localizer["Custom themes"]</h4>
+    <p>@Localizer["Extend this system with additional themes."]</p>
 
-        <form enctype="multipart/form-data" asp-controller="Themes" asp-action="UploadTheme" asp-area="Admin">
-            <div class="form-group">
-                <input type="file" class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
-                <small id="fileHelp" class="form-text text-muted"> Vzhled je potřeba nahrát ve formátu .zip</small>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Nahrát zvolený vzhled" class="btn btn-jasper" id="submitThemeFile" disabled />
-            </div>
+    <form enctype="multipart/form-data" asp-controller="Themes" asp-action="UploadTheme" asp-area="Admin">
+        <div class="form-group">
+            <input type="file"  class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
+            <small id="fileHelp" class="form-text text-muted"> @Localizer["The theme has to be a ZIP file."]</small>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="@Localizer["Submit selected theme"]" class="btn btn-jasper" id="submitThemeFile" disabled />
+        </div>
 
-        </form>
-        
-    </section>
+    </form>
+
+</section>
 
 
 <div id="modalTargetDiv"></div>

@@ -1,11 +1,15 @@
 ﻿@model JasperSite.Areas.Admin.ViewModels.CategoriesViewModel
 @using JasperSite.Models.Database;
 @{
-    ViewBag.Title = "Categories";
+    ViewBag.Title = Localizer["Categories"];
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @section Scripts {
- 
+
     <script>
     /* AJAX */
     $(document).ready(function () {
@@ -30,7 +34,7 @@
 
         $("#categoryPartialForm").html(data);
 
-        // savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+        
 
                 },
 
@@ -51,21 +55,22 @@
 
 
 
-<h2>Rubriky</h2>
-
-
- 
+<h2>@Localizer["Categories"]</h2>
 
 
 
-    <div id="categoryPartialForm">
-        @Html.Partial("AddNewCategoryPartialView")
-    </div>
+
+
+
+<div id="categoryPartialForm">
+    @Html.Partial("AddNewCategoryPartialView")
+</div>
 
 
 <div class="alert alert-secondary alert-dismissible">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Tip:</strong> Odstraněním rubriky, která obsahuje články, dojde k automatickému přesunu článků do rubriky "Nezařazeno".
+   @Localizer["<strong>Tip:</strong> Deltion of category, which contains articles will result into moving all these articles into  <i>uncategorized</i> category."]
+   
 </div>
 
 <div id="modalTargetDiv"></div>

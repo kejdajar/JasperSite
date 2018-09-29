@@ -5,8 +5,12 @@
 @inject DatabaseContext databaseContext
 @model JasperSite.Areas.Admin.ViewModels.ArticlesViewModel
 
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
-    ViewData["Title"] = "Články";
+    ViewData["Title"] = Localizer["Articles"];
 }
 
 @section Scripts {
@@ -17,18 +21,18 @@
 }
 
 
-<h2>Články </h2>
+<h2>@Localizer["Articles"] </h2>
 
 <div class="j-admin-section">
-    <h4><i class="fa fa-info-circle j-icon" aria-hidden="true"></i>Přehled</h4>
+    <h4><i class="fa fa-info-circle j-icon" aria-hidden="true"></i>@Localizer["Overview"]</h4>
     <div class="table-responsive ">
         <table class="table table-bordered j-left-border-block">
             <tr>
-                <td>Celkový počet článků</td>
+                <td>@Localizer["Total number of articles"]</td>
                 <td>@Model.NumberOfArticles</td>
             </tr>
             <tr>
-                <td>Celkový počet rubrik</td>
+                <td>@Localizer["Total number of categories"]</td>
                 <td>@Model.NumberOfCategories</td>
             </tr>
 
@@ -37,16 +41,16 @@
 </div>
 
 <div class="j-admin-section">
-    <h4><i class="fa fa-pencil j-icon" aria-hidden="true"></i>Nový článek</h4>
+    <h4><i class="fa fa-pencil j-icon" aria-hidden="true"></i>@Localizer["New Article"]</h4>
     @if (Model.UncategorizedCategoryExists)
     {
-        <a asp-area="Admin" asp-controller="Articles" asp-action="Add" class="btn btn-jasper" style="width:200px">Vytvořit</a>
+        <a asp-area="Admin" asp-controller="Articles" asp-action="Add" class="btn btn-jasper" style="width:200px">@Localizer["Create"]</a>
     }
     else
     {
         <div class=" alert alert-warning">
-            <p>Pro přidání nové rubriky je zapotřebí, aby existovala rubrika "Nezařazeno".</p>
-            <a asp-area="Admin" asp-controller="Articles" asp-action="CreateUncategorizedCategory" class="btn btn-jasper">Vytvořit rubriku "Nezařazeno"</a>
+            <p>@Localizer["There has to be category \"uncategorized\" to add new category."]</p>
+            <a asp-area="Admin" asp-controller="Articles" asp-action="CreateUncategorizedCategory" class="btn btn-jasper">@Localizer["Create category \"Uncategorized\""]</a>
         </div>
     }
 </div>
@@ -54,9 +58,9 @@
 
 
 <div class="j-admin-section">
-    <h4><i class="fa fa-table j-icon" aria-hidden="true"></i>Seznam článků</h4>
+    <h4><i class="fa fa-table j-icon" aria-hidden="true"></i>@Localizer["List of Articles"]</h4>
     <div id="listOfArticles">
-        @Html.Partial("ArticlesListPartialView",Model.ArticleListModel)
+        @Html.Partial("ArticlesListPartialView", Model.ArticleListModel)
     </div>
 </div>
 

@@ -4,11 +4,11 @@
 
 @{
     Layout = J.Layout("_Layout.cshtml", Context.Request);
-    ViewData["Title"] = "Categories";
+    ViewData["Title"] = "Rubriky";
 }
 <div class="container-fluid">
     <div class="jumbotron">
-        <h1>Categories</h1>
+        <h1>Rubriky</h1>
     </div>
 
     @{ List<Category> allCategories = J.GetAllCategories(); }
@@ -56,7 +56,7 @@
                     <div class="list-group">
                         <div class="list-group-item list-group-item-action flex-column align-items-start ">
                             <div class="d-flex w-100 justify-content-between">
-                                <h5 class="mb-1">There are no available articles.</h5>
+                                <h5 class="mb-1">Žádné články k dispozici</h5>
 
                             </div>
 
@@ -71,7 +71,7 @@
                 else
                 {
                     <div class="alert alert-warning">
-                      There are no available categories.
+                        Źádné kategorie nebyly nalezeny.
                     </div>
                 }
 
@@ -81,7 +81,7 @@
     else
     {
         <div class="alert alert-warning">
-            This section is currently unavailable.
+            Sekce kategorií momentálně není k dispozici.
         </div>
 
     }

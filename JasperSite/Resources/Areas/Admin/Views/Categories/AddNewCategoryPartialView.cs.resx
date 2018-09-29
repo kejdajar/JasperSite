@@ -117,67 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&lt;strong&gt;Error.&lt;/strong&gt; Configuration settings could not be updated." xml:space="preserve">
-    <value>&lt;strong&gt;Chyba.&lt;/strong&gt; Konfigurační nastavení nebylo možné aktualizovat.</value>
+  <data name="Action" xml:space="preserve">
+    <value>Akce</value>
   </data>
-  <data name="&lt;strong&gt;This place is empty!&lt;/strong&gt; In order to display overview it is required at least one category and article." xml:space="preserve">
-    <value>&lt;strong&gt;Nic zde není!&lt;/strong&gt; Pro zobrazení přehledu je vyžadována alespoň jedna rubrika a článek.</value>
+  <data name="Category" xml:space="preserve">
+    <value>Rubrika</value>
   </data>
-  <data name="Categories and Articles" xml:space="preserve">
-    <value>Rubriky a články</value>
+  <data name="Create" xml:space="preserve">
+    <value>Vytvořit</value>
   </data>
-  <data name="Configuration settings updated." xml:space="preserve">
-    <value>Veškeré konfigurační nastavení bylo aktualizováno.</value>
+  <data name="Delete" xml:space="preserve">
+    <value>Odstranit</value>
   </data>
-  <data name="Information about categories and articles could not be fetched." xml:space="preserve">
-    <value>Nepodařilo se získat informace o rubrikách a článcích. </value>
+  <data name="Do you really want to delete this category?" xml:space="preserve">
+    <value>Skutečně odstranit rubriku?</value>
   </data>
-  <data name="JasperSite is a part of master's thesis: &lt;i&gt;Design and implementation of Content Management System in ASP.NET Core&lt;/i&gt;, published on Czech University of Life Sciences. The author of this content management system and the related master's thesis is Bc. Jaromír Kejda." xml:space="preserve">
-    <value>Redakční systém je součástí diplomové práce:&lt;i&gt; Návrh a implementace redakčního systému v ASP.NET Core&lt;/i&gt;, vedené na České zemědělské univerzitě v Praze, Provozně ekonomické fakultě, Katedře systémového inženýrství. Autorem diplomové práce a redakčního systému &lt;i&gt;JasperSite&lt;/i&gt; je Bc. Jaromír Kejda.</value>
+  <data name="List of Categories" xml:space="preserve">
+    <value>Seznam rubrik</value>
   </data>
-  <data name="Language" xml:space="preserve">
-    <value>Jazyk</value>
+  <data name="Name" xml:space="preserve">
+    <value>Název</value>
   </data>
-  <data name="Master's Thesis" xml:space="preserve">
-    <value>Diplomová práce</value>
+  <data name="Name of Category" xml:space="preserve">
+    <value>Název rubriky</value>
   </data>
-  <data name="Number of articles in category" xml:space="preserve">
-    <value>Počet článků v rubrice</value>
+  <data name="New Category" xml:space="preserve">
+    <value>Nová rubrika</value>
   </data>
-  <data name="Overview" xml:space="preserve">
-    <value>Přehled</value>
+  <data name="Number of Articles" xml:space="preserve">
+    <value>Počet článků</value>
   </data>
-  <data name="Requested information could not be loaded." xml:space="preserve">
-    <value>Nepodařilo se načíst požadované informace.</value>
-  </data>
-  <data name="The CMS currently registers {0} articles and {1} categories" xml:space="preserve">
-    <value>Redakční systém právě eviduje {0} článků a {1} kategorií</value>
-  </data>
-  <data name="Tips and Tricks" xml:space="preserve">
-    <value>Tipy a triky</value>
-  </data>
-  <data name="Update configuration files using" xml:space="preserve">
-    <value>Aktualizace konfiguračních souborů pomocí</value>
-  </data>
-  <data name="Welcome back" xml:space="preserve">
-    <value>Vítejte zpět</value>
-  </data>
-  <data name="You can display your page using" xml:space="preserve">
-    <value>Vaší stránku zobrazíte pomocí</value>
-  </data>
-  <data name="You can logout using" xml:space="preserve">
-    <value>Odhlásit se můžete pomocí</value>
-  </data>
-  <data name="You can return to this page using" xml:space="preserve">
-    <value>Na tuto stránku se můžete vrátit pomocí</value>
-  </data>
-  <data name="Your nickname" xml:space="preserve">
-    <value>Vaše přezdívka</value>
-  </data>
-  <data name="Your user role is" xml:space="preserve">
-    <value>Vaše uživatelská role je</value>
-  </data>
-  <data name="Your username" xml:space="preserve">
-    <value>Vaše uživatelské jméno</value>
+  <data name="will be permanently deleted" xml:space="preserve">
+    <value>bude nenávratně odstraněna</value>
   </data>
 </root>

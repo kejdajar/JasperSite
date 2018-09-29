@@ -34,10 +34,11 @@
     <Content Remove="Areas\Admin\Views\Blocks\AddedAndLooseHoldersPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Blocks\BlockFormPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\TinyMceSettingsPartialView.cshtml" />
+    <Content Remove="Themes\Default\AboutAuthor.cs.cshtml" />
     <Content Remove="Themes\Default\AboutAuthor.cshtml" />
+    <Content Remove="Themes\Default\AboutProject.cs.cshtml" />
     <Content Remove="Themes\Default\AboutProject.cshtml" />
-    <Content Remove="Themes\Emerald\About.cshtml" />
-    <Content Remove="Themes\Onyx\About.cshtml" />
+    <Content Remove="Themes\Jasper\About.cs.cshtml" />
     <Content Remove="Themes\Jasper\About.cshtml" />
   </ItemGroup>
 
@@ -61,22 +62,15 @@
     <None Remove="Areas\Admin\Views\Shared\_ErrorModalPartialViewTemp.cshtml" />
     <None Remove="Areas\Admin\Views\Shared\_SuccessModalPartialViewTemp.cshtml" />
     <None Remove="Areas\Admin\Views\Users\AddUser.cshtml" />
-    <None Remove="Themes\Emerald\Article.cshtml" />
-    <None Remove="Themes\Emerald\Category.cshtml" />
-    <None Remove="Themes\Emerald\Error.cshtml" />
-    <None Remove="Themes\Emerald\Index.cshtml" />
-    <None Remove="Themes\Emerald\jasper.json" />
-    <None Remove="Themes\Emerald\SingleCategory.cshtml" />
-    <None Remove="Themes\Emerald\_Layout.cshtml" />
-    <None Remove="Themes\Emerald\_ViewImports.cshtml" />
-    <None Remove="Themes\Onyx\Article.cshtml" />
-    <None Remove="Themes\Onyx\Category.cshtml" />
-    <None Remove="Themes\Onyx\Error.cshtml" />
-    <None Remove="Themes\Onyx\Index.cshtml" />
-    <None Remove="Themes\Onyx\jasper.json" />
-    <None Remove="Themes\Onyx\SingleCategory.cshtml" />
-    <None Remove="Themes\Onyx\_Layout.cshtml" />
-    <None Remove="Themes\Onyx\_ViewImports.cshtml" />
+    <None Remove="Themes\Default\Error.cs.cshtml" />
+    <None Remove="Themes\Default\Index.cs.cshtml" />
+    <None Remove="Themes\Default\_Layout.cs.cshtml" />
+    <None Remove="Themes\Jasper\Article.cs.cshtml" />
+    <None Remove="Themes\Jasper\Category.cs.cshtml" />
+    <None Remove="Themes\Jasper\Error.cs.cshtml" />
+    <None Remove="Themes\Jasper\Index.cs.cshtml" />
+    <None Remove="Themes\Jasper\SingleCategory.cs.cshtml" />
+    <None Remove="Themes\Jasper\_Layout.cs.cshtml" />
     <None Remove="Themes\Jasper\Article.cshtml" />
     <None Remove="Themes\Jasper\Category.cshtml" />
     <None Remove="Themes\Jasper\Error.cshtml" />
@@ -288,6 +282,33 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Themes\Default\Error.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Default\Index.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Default\_Layout.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Jasper\Article.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Jasper\Category.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Jasper\Error.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Jasper\Index.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Jasper\SingleCategory.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Jasper\_Layout.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\JasperJsonThemePartialView.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

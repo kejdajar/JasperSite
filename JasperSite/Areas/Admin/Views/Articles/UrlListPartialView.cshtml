@@ -1,5 +1,11 @@
 ﻿@model JasperSite.Areas.Admin.ViewModels.UrlListViewModel
 
+
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
 @Html.Partial("_SuccessModalPartialViewTemp")
 @Html.Partial("_ErrorModalPartialViewTemp")
 
@@ -29,40 +35,40 @@
     });
 </script>
 
-@if(JasperSite.Models.Configuration.WebsiteConfig.UrlRewriting)
+@if (JasperSite.Models.Configuration.WebsiteConfig.UrlRewriting)
 {
 
-<div class="table-responsive">
-    @if (Model.Urls.Count > 0)
-    {
-        <table id="routeTable" class="table table-bordered j-table j-table-left">
-            <tr><th>Odstranit</th><th class="col-sm-1">URL</th></tr>
-            @foreach (string route in Model.Urls)
-            {
-                <tr>
-                    <td>
-                        <a name="removeUrlBtn" data-toggle="tooltip" title="Odebrat" asp-area="admin" asp-controller="Articles" asp-action="DeleteRoute" asp-route-name="@route" data-route-name="@route" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
-                    </td>
-                    <td><i>@JasperSite.Models.Configuration.WebsiteConfig.ArticleRoute</i><b>@route</b> </td>
+    <div class="table-responsive">
+        @if (Model.Urls.Count > 0)
+        {
+            <table id="routeTable" class="table table-bordered j-table j-table-left">
+                <tr><th>@Localizer["Delete"]</th><th class="col-sm-1">URL</th></tr>
+                @foreach (string route in Model.Urls)
+                {
+                    <tr>
+                        <td>
+                            <a name="removeUrlBtn" data-toggle="tooltip" title="@Localizer["Delete"]" asp-area="admin" asp-controller="Articles" asp-action="DeleteRoute" asp-route-name="@route" data-route-name="@route" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                        </td>
+                        <td><i>@JasperSite.Models.Configuration.WebsiteConfig.ArticleRoute</i><b>@route</b> </td>
 
-                </tr>
-            }
-        </table>
-    }
-    else
-    {
-        <div class="alert alert-warning">
-            Žádné URL adresy nebyly ještě přiřazeny.
-        </div>
-
-    }
-</div>
-
-
-  }
+                    </tr>
+                }
+            </table>
+        }
         else
         {
-<div class="alert alert-secondary">
-    Přepisování URL adres není pro tento vzhled momentálně aktivováno.
-</div>
+            <div class="alert alert-warning">
+              @Localizer["No URL adresses have been assigned yet."]
+            </div>
+
         }
+    </div>
+
+
+}
+else
+{
+    <div class="alert alert-secondary">
+        @Localizer["URL rewriting is not activated for this current theme."]
+    </div>
+}

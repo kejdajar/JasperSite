@@ -1,6 +1,10 @@
 ﻿@model JasperSite.Areas.Admin.ViewModels.EditArticleViewModel
 @using JasperSite.Models.Database
 @using JasperSite.Models
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
     ViewData["Title"] = Model.Name;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -82,7 +86,7 @@
         z-index: 3;
     }
 </style>
-<h2>Úprava článku</h2>
+<h2>@Localizer["Edit Article"]</h2>
 
 
 <section class="j-admin-section">

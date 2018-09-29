@@ -117,67 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&lt;strong&gt;Error.&lt;/strong&gt; Configuration settings could not be updated." xml:space="preserve">
-    <value>&lt;strong&gt;Chyba.&lt;/strong&gt; Konfigurační nastavení nebylo možné aktualizovat.</value>
+  <data name="Activate" xml:space="preserve">
+    <value>Ativovat</value>
   </data>
-  <data name="&lt;strong&gt;This place is empty!&lt;/strong&gt; In order to display overview it is required at least one category and article." xml:space="preserve">
-    <value>&lt;strong&gt;Nic zde není!&lt;/strong&gt; Pro zobrazení přehledu je vyžadována alespoň jedna rubrika a článek.</value>
+  <data name="Activate the selected theme?" xml:space="preserve">
+    <value>Skutečně aktivovat vzhled?</value>
   </data>
-  <data name="Categories and Articles" xml:space="preserve">
-    <value>Rubriky a články</value>
+  <data name="Are you sure you want to delete this theme?" xml:space="preserve">
+    <value>Skutečně odstranit vzhled?</value>
   </data>
-  <data name="Configuration settings updated." xml:space="preserve">
-    <value>Veškeré konfigurační nastavení bylo aktualizováno.</value>
+  <data name="current" xml:space="preserve">
+    <value>aktuální</value>
   </data>
-  <data name="Information about categories and articles could not be fetched." xml:space="preserve">
-    <value>Nepodařilo se získat informace o rubrikách a článcích. </value>
+  <data name="currently activated theme" xml:space="preserve">
+    <value>právě aktivní vzhled</value>
   </data>
-  <data name="JasperSite is a part of master's thesis: &lt;i&gt;Design and implementation of Content Management System in ASP.NET Core&lt;/i&gt;, published on Czech University of Life Sciences. The author of this content management system and the related master's thesis is Bc. Jaromír Kejda." xml:space="preserve">
-    <value>Redakční systém je součástí diplomové práce:&lt;i&gt; Návrh a implementace redakčního systému v ASP.NET Core&lt;/i&gt;, vedené na České zemědělské univerzitě v Praze, Provozně ekonomické fakultě, Katedře systémového inženýrství. Autorem diplomové práce a redakčního systému &lt;i&gt;JasperSite&lt;/i&gt; je Bc. Jaromír Kejda.</value>
+  <data name="Custom themes" xml:space="preserve">
+    <value>Vlastní vzhledy</value>
   </data>
-  <data name="Language" xml:space="preserve">
-    <value>Jazyk</value>
+  <data name="Delete" xml:space="preserve">
+    <value>Odstranit</value>
   </data>
-  <data name="Master's Thesis" xml:space="preserve">
-    <value>Diplomová práce</value>
+  <data name="Delete unaccessible themes from the database." xml:space="preserve">
+    <value>Odstranit nedostupné vzhledy z databáze.</value>
   </data>
-  <data name="Number of articles in category" xml:space="preserve">
-    <value>Počet článků v rubrice</value>
+  <data name="Description is unavailable." xml:space="preserve">
+    <value>Popis není k dispozici.</value>
   </data>
-  <data name="Overview" xml:space="preserve">
-    <value>Přehled</value>
+  <data name="Extend this system with additional themes." xml:space="preserve">
+    <value>Rozšiřte tento systém o nové vzhledy.</value>
   </data>
-  <data name="Requested information could not be loaded." xml:space="preserve">
-    <value>Nepodařilo se načíst požadované informace.</value>
+  <data name="Folder with themes" xml:space="preserve">
+    <value>Složka se vzhledy</value>
   </data>
-  <data name="The CMS currently registers {0} articles and {1} categories" xml:space="preserve">
-    <value>Redakční systém právě eviduje {0} článků a {1} kategorií</value>
+  <data name="Folder with themes was edited - unregistered themes detected." xml:space="preserve">
+    <value>Složka se vzhledy byla upravena - neregistrované vzhledy.</value>
   </data>
-  <data name="Tips and Tricks" xml:space="preserve">
-    <value>Tipy a triky</value>
+  <data name="Intelligent change of theme" xml:space="preserve">
+    <value>Inteligentní změna vzhledu</value>
   </data>
-  <data name="Update configuration files using" xml:space="preserve">
-    <value>Aktualizace konfiguračních souborů pomocí</value>
+  <data name="List of themes" xml:space="preserve">
+    <value>Seznam vzhledů</value>
   </data>
-  <data name="Welcome back" xml:space="preserve">
-    <value>Vítejte zpět</value>
+  <data name="Manually deleted themes" xml:space="preserve">
+    <value>Manuálně odstraněné vzhledy</value>
   </data>
-  <data name="You can display your page using" xml:space="preserve">
-    <value>Vaší stránku zobrazíte pomocí</value>
+  <data name="Register new themes into the database." xml:space="preserve">
+    <value>Registrovat nové vzhledy do databáze.</value>
   </data>
-  <data name="You can logout using" xml:space="preserve">
-    <value>Odhlásit se můžete pomocí</value>
+  <data name="Submit selected theme" xml:space="preserve">
+    <value>Nahrát zvolený vzhled</value>
   </data>
-  <data name="You can return to this page using" xml:space="preserve">
-    <value>Na tuto stránku se můžete vrátit pomocí</value>
+  <data name="System settings information" xml:space="preserve">
+    <value>Informace o nastavení systému</value>
   </data>
-  <data name="Your nickname" xml:space="preserve">
-    <value>Vaše přezdívka</value>
+  <data name="The contents of folder &lt;i&gt;{0}&lt;/i&gt; containing theme files were changed, or the database contains unexpected values." xml:space="preserve">
+    <value>Ve složce {0}, ve které jsou uloženy vzhledy, došlo ke změnám, nebo jsou v databázi neočekávané údaje.</value>
   </data>
-  <data name="Your user role is" xml:space="preserve">
-    <value>Vaše uživatelská role je</value>
+  <data name="The contents of folder {0} containing theme files were changed. This changes has to be saved." xml:space="preserve">
+    <value>Ve složce {0}, ve které jsou uloženy vzhledy došlo ke změnám, které je nutné uložit.</value>
   </data>
-  <data name="Your username" xml:space="preserve">
-    <value>Vaše uživatelské jméno</value>
+  <data name="The folder with themes was modified - manually deleted themes were detected." xml:space="preserve">
+    <value>Složka se vzhledy byla upravena - manuálně smazané vzhledy</value>
+  </data>
+  <data name="The theme browser is currently unavailable. Please fix the listed issues first." xml:space="preserve">
+    <value>Oblast pro operace se vzhledy není momentálně dostupná. Vyřešte prosím nejpve výše uvedené problémy.</value>
+  </data>
+  <data name="The theme has to be a ZIP file." xml:space="preserve">
+    <value>Vzhled je potřeba nahrát ve formátu .ZIP.</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Vzhled</value>
+  </data>
+  <data name="Themes" xml:space="preserve">
+    <value>Vzhledy</value>
+  </data>
+  <data name="This CMS contains an algorithm for intelligent change of theme. Provided that the newly selected theme contains block holders with the same names, the text blocks will be automatically assigned to the new block holders." xml:space="preserve">
+    <value>Redakční systém obsahuje algoritmus pro inteligentní vzměnu vzhledu. Pokud nově aktivovaný vzhled obsahje stejně pojmenované kontejnery, tak se textové bloky automaticky přiřadí k novým kontejnerům.</value>
+  </data>
+  <data name="Unregistered themes" xml:space="preserve">
+    <value>Neregistrované vzhledy</value>
+  </data>
+  <data name="will be activated. Current text block will be assigned to the text holders with appropriate names. If the new theme contains differently named block holders, the text blocks have to be assigned again manually." xml:space="preserve">
+    <value>bude aktivován. Stávající textové bloky budou přiřazeny do stejně pojmenovaných kontejnerů nového vzhledu. Pokud vzhled obsahuje jinak pojmenované kontejnery, bude nutné nakonfigurovat textové bloky znovu ručně.</value>
+  </data>
+  <data name="will be permanently deleted" xml:space="preserve">
+    <value>bude nenávratně odstraněn</value>
   </data>
 </root>

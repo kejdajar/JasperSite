@@ -1,34 +1,26 @@
 ﻿@using JasperSite.Models.Database
 @using JasperSite.Models
-@using JasperSite.Helpers
+@inject DatabaseContext databaseContext
+@{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
 @{
-    Layout = J.Layout("_Layout.cshtml", Context.Request);
-    ViewData["Title"] = "Main Page";
+    string categoryName = @J.GetCategoryNameById(query);
+    Layout =J.Layout("_Layout.cshtml",Context.Request);
+    ViewData["Title"] = categoryName;
 }
 
 
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <h1>Main Page</h1>  
-        
+        <h1> @(string.IsNullOrEmpty(categoryName) ? "Kategorie nebyla nalezena." : categoryName)</h1>
     </div>
 
-    <div>
-        @J.Components.Holder("MainPageHolder")
-    </div>
+    @{ List<Article> allArticlesFromCategory = J.GetAllArticles(query);}
 
-    @{List<Category> allCategories = J.GetAllCategories();}
-   
-    @if (allCategories != null)
+
+    @if (allArticlesFromCategory != null)
     {
-
-    @foreach (Category c in allCategories)
-    {
-        List<Article> allArticlesFromCategory = J.GetAllArticles(c.Id);
-
-        <h2 style="margin:10px"><i class="fa fa-angle-double-down" aria-hidden="true"></i> @c.Name</h2>
-        @if (allArticlesFromCategory.Count > 0)
+        if (allArticlesFromCategory.Count > 0)
         {
             @foreach (Article article in allArticlesFromCategory)
             {
@@ -50,23 +42,28 @@
             <div class="list-group">
                 <div class="list-group-item list-group-item-action flex-column align-items-start ">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">There are no available articles.</h5>
+                        <h5 class="mb-1">Žádné články nejsou k dispozici.</h5>
 
                     </div>
 
                 </div>
             </div>
 
+
         }
 
     }
-    }
     else
     {
-        <div class="alert alert-warning">
-           This section is currently unavailable.
-        </div>
+            <div class="alert alert-warning">
+                Články z dané rubriky se nepodařilo načíst. Zkuste to prosím později.
+            </div>
+
+
 
     }
+
+
+
 
 </div>

@@ -10,6 +10,8 @@ using JasperSite.Areas.Admin.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.AspNetCore.Localization;
+using System.IO;
 
 namespace JasperSite.Controllers
 {
@@ -66,6 +68,7 @@ namespace JasperSite.Controllers
                 if (Configuration.CustomRouting.IsHomePage(rawUrl)) // For the main (index) page only
                 {
                     string viewToReturn = Configuration.CustomRouting.GetHomePageFile(); // throws CustomRouting exception when view is not found                                     
+                    viewToReturn = Globalization.GlobalizeView(viewToReturn,Request); // current culture is fetched and requested view name changed to e.x. : Index.{culture}.cshtml
                     return View(viewToReturn);
                 }
                 else if (!string.IsNullOrEmpty(file = Configuration.CustomRouting.MapUrlToFile(rawUrl))) // Custom mapping for non-index pages, throws exception if view is not found
@@ -81,6 +84,7 @@ namespace JasperSite.Controllers
                         {
                             try
                             {
+                                file = Globalization.GlobalizeView(file, Request);
                                 return View(file,Convert.ToInt32(queryId));
                             }
                             catch 
@@ -90,6 +94,7 @@ namespace JasperSite.Controllers
                         }
                     }
 
+                    file = Globalization.GlobalizeView(file,Request);// current culture is fetched and requested view name changed to e.x. : About.{culture}.cshtml
                     return View(file);
                 }
                 // --------------URL REWRITING FOR ARTICLES-----------------------------------------------------------------
@@ -101,6 +106,8 @@ namespace JasperSite.Controllers
                     {
                         string articleFileLocation = Configuration.WebsiteConfig.ArticleFile;
                         string physicalFileLocation = Configuration.CustomRouting.RelativeThemePathToRootRelativePath(articleFileLocation);
+
+                        physicalFileLocation = Globalization.GlobalizeView(physicalFileLocation, Request);
                         return View(physicalFileLocation, articleIdFromRequest); // this returns view based one path: ie: /Themes/Jasper/Article.cshtml and passes model data.
                     }
                     else // URL rewriting rule for current article request does not exist
@@ -108,6 +115,8 @@ namespace JasperSite.Controllers
                         // Return Article view and pass Null instead of Id --> view itself will handle the null value and show ie.: article not found
                         string articleFileLocation = Configuration.WebsiteConfig.ArticleFile;
                         string physicalFileLocation = Configuration.CustomRouting.RelativeThemePathToRootRelativePath(articleFileLocation);
+
+                        physicalFileLocation = Globalization.GlobalizeView(physicalFileLocation, Request);
                         return View(physicalFileLocation, null);
                     }
 
@@ -148,14 +157,18 @@ namespace JasperSite.Controllers
 
                 return View("_FatalError", UpdateModel());
             }
-
+          
         }
+        
+        
 
         private ViewResult ShowWebsiteErrorPage()
         {
             try
             {
                 string errorPageFileLocation = Configuration.CustomRouting.GetErrorPageFile();
+
+                errorPageFileLocation = Globalization.GlobalizeView(errorPageFileLocation, Request);
                 return View(errorPageFileLocation); // Custom error page from the theme will be served.
             }
             catch (Exception ex)

@@ -2,16 +2,15 @@
 @using JasperSite.Models
 @using JasperSite.Helpers
 @{
-    Layout = J.Layout("_Layout.cshtml", Context.Request);
-    ViewData["Title"] = "Main Page";
+    Layout = J.Layout("_Layout.cshtml", Context.Request);   
+    ViewData["Title"] = "Hlavní stránka";
 }
 
 
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <h1>Main Page</h1>  
-        
+        <h1>Hlavní stránka</h1>         
     </div>
 
     <div>
@@ -50,7 +49,7 @@
             <div class="list-group">
                 <div class="list-group-item list-group-item-action flex-column align-items-start ">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">There are no available articles.</h5>
+                        <h5 class="mb-1">Žádné články k dispozici</h5>
 
                     </div>
 
@@ -64,7 +63,7 @@
     else
     {
         <div class="alert alert-warning">
-           This section is currently unavailable.
+           Sekce kategorií momentálně není k dispozici.
         </div>
 
     }

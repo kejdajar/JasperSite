@@ -1,16 +1,17 @@
-﻿@{
-    Layout =J.Layout("_Layout.cshtml");
-    ViewData["Title"] = "O Autorovi";
+﻿
+@{
+    Layout = J.Layout("_Layout.cshtml", Context.Request);
+    ViewData["Title"] = "About Author";
 }
 
 
 <div class="container-fluid">
     <div class="jumbotron">
-        <h1>O Autorovi</h1>
+        <h1>About Author</h1>
     </div>
 
     <p>
-      Autorem tohoto redakčního systému a související diplomové práce je Bc. Jaromír Kejda.
+        The author of this content management system and the relating master's thesis is Bc. Jaromír Kejda.
     </p>
 
 </div>

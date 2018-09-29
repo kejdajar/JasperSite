@@ -12,7 +12,7 @@ using JasperSite.Areas.Admin.ViewModels;
 using Microsoft.AspNetCore.Html;
 using System.Text;
 using JasperSite.Helpers;
-
+using Microsoft.AspNetCore.Http;
 
 namespace JasperSite.Models.Database
 {
@@ -432,7 +432,7 @@ namespace JasperSite.Models.Database
         /// <param name="url"></param>
         /// <returns></returns>
         /// <exception cref="CustomRoutingException"></exception>
-        string Layout(string url);
+        string Layout(string url, HttpRequest request);
 
         #endregion
     }
@@ -1446,12 +1446,16 @@ namespace JasperSite.Models.Database
 
         
         /// <see cref="IJasperDataService.Layout(string)"/>
-        public string Layout(string url)
+        public string Layout(string url, HttpRequest request)
         {
             try
             {
                 string path = File(url);
                 path = "~" + path;
+
+                // Layout page could be globalized e.x : ~/Themes/Jasper/_Layout.cs.cshtml (for Czech language)
+                path = Globalization.GlobalizeView(path, request);
+
                 return path;
             }
             catch (Exception ex)
@@ -1855,7 +1859,7 @@ namespace JasperSite.Models.Database
         /// <param name="url"></param>
         /// <returns></returns>
         /// <exception cref="CustomRoutingException"></exception>
-        string Layout(string url);
+        string Layout(string url,HttpRequest request);
 
         #endregion
         
@@ -2668,12 +2672,16 @@ namespace JasperSite.Models.Database
 
         
         /// <see cref="IJasperDataServicePublic.Layout(string)/>
-        public string Layout(string url)
+        public string Layout(string url, HttpRequest request)
         {
             try
             {
                 string path = File(url);
                 path = "~" + path;
+
+                // Layout page could be globalized e.x : ~/Themes/Jasper/_Layout.cs.cshtml (for Czech language)
+                path=Globalization.GlobalizeView(path,request);
+
                 return path;
             }
             catch (Exception)
