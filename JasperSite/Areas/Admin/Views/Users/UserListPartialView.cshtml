@@ -1,6 +1,9 @@
 ﻿@using JasperSite.Models.Database;
 @model JasperSite.Areas.Admin.ViewModels.UsersViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @Html.Partial("_ErrorModalPartialViewTemp")
 @Html.Partial("_SuccessModalPartialViewTemp")
 
@@ -22,7 +25,7 @@
         var Id = singleLink.data('removeId');
         var userName = singleLink.data('userName');
 
-        appendWindow("Skutečně odstranit uživatele?", `Uživatel (uživatelské jméno: <b> ${userName}</b>) bude nenávratně odstraněn.`, function () { return ajaxCall(Id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
+        appendWindow("@Localizer["Are you sure you want do delete this user?"]", `@Localizer["User ( username: <b>"] ${userName} @Localizer["</b>) will be permanently deleted. "]`, function () { return ajaxCall(Id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]");
 
 
 
@@ -64,40 +67,41 @@
 
 
 
-<h4><i class="fa fa-table j-icon" aria-hidden="true"></i>Seznam uživatelů</h4>
+<h4><i class="fa fa-table j-icon" aria-hidden="true"></i>@Localizer["List of users"]</h4>
 <div class="table-responsive">
     @if (Model.Users != null)
     {
         <table id="usersTable" class="table table-bordered j-table ">
-            <tr><th>Uživatelské jméno</th><th>Přezdívka</th><th >Role</th><th class="col-sm-1">Akce</th></tr>
+            <tr><th>@Localizer["Username"]</th><th>@Localizer["Nickname"]</th><th>@Localizer["User role"]</th><th class="col-sm-1">@Localizer["Action"]</th></tr>
             @foreach (User u in Model.Users)
             {
-            <tr data-href="@u.Id" style="@((User.Identity.Name.Trim().ToLower() == u.Username.Trim().ToLower()) ? "border-left:10px solid #BA68C8" : "" )">
-                
-                <td>@u.Username</td>
-                <td>@u.Nickname</td>
-                <td>@u.Role.Name</td>
-                <td><a href="/Admin/Users/EditUser?id=@u.Id" class="btn btn-jasper">Upravit</a>
-                
-                    @if (User.Identity.Name.Trim().ToLower() == u.Username.Trim().ToLower())
-                    {
-                    <span data-toggle="tooltip" title="Aktivního uživatele není možné odstranit">  <a href="#" class="btn btn-jasper btn-jasper-delete disabled"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></span>
-                       
-                    }
-                    else
-                    {
-                        <a title="Odstranit" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-id="@u.Id" data-remove-id="@u.Id" data-user-name="@u.Username" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
-                    }
+                <tr data-href="@u.Id" style="@((User.Identity.Name.Trim().ToLower() == u.Username.Trim().ToLower()) ? "border-left:10px solid #BA68C8" : "" )">
 
-                </td>
-            </tr>
+                    <td>@u.Username</td>
+                    <td>@u.Nickname</td>
+                    <td>@u.Role.Name</td>
+                    <td>
+                        <a href="/Admin/Users/EditUser?id=@u.Id" class="btn btn-jasper">@Localizer["Edit"]</a>
+
+                        @if (User.Identity.Name.Trim().ToLower() == u.Username.Trim().ToLower())
+                        {
+                            <span data-toggle="tooltip" title="@Localizer["Active user could not be deleted."]">  <a href="#" class="btn btn-jasper btn-jasper-delete disabled"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></span>
+
+                        }
+                        else
+                        {
+                            <a title="@Localizer["Delete"]" asp-area="Admin" asp-controller="Users" asp-action="DeleteUser" asp-route-id="@u.Id" data-remove-id="@u.Id" data-user-name="@u.Username" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                        }
+
+                    </td>
+                </tr>
             }
         </table>
     }
     else
     {
         <div class="alert alert-warning">
-            <strong>Nic zde není!</strong> Žádný uživatel nebyl nalezen.
+           @Localizer["<b>This palce is empty! </b> No users were found."]
         </div>
 
     }

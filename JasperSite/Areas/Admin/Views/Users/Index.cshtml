@@ -1,14 +1,17 @@
 ﻿@using JasperSite.Models.Database;
 @model JasperSite.Areas.Admin.ViewModels.UsersViewModel
 @{
-    ViewData["Title"] = "Uživatelé";
+    ViewData["Title"] = Localizer["Users"];
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @section Scripts {
 
     <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
-  
+
 
 }
 
@@ -21,13 +24,13 @@
 
 
 
-<h2>Uživatelé</h2>
+<h2>@Localizer["Users"]</h2>
 
 <section class="j-admin-section">
-    <h4><i class="fa fa-user j-icon" aria-hidden="true"></i>Nový uživatel</h4>
+    <h4><i class="fa fa-user j-icon" aria-hidden="true"></i>@Localizer["New user"]</h4>
     <div class="input-group">
         <div class="input-group-btn">
-            <a class="btn btn-jasper" asp-area="admin" asp-controller="Users" asp-action="AddUser"> Přidat nového uživatele </a>
+            <a class="btn btn-jasper" asp-area="admin" asp-controller="Users" asp-action="AddUser"> @Localizer["Add new user"] </a>
         </div>
     </div>
 </section>

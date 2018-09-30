@@ -2,13 +2,15 @@
 
 @Html.Partial("_SuccessModalPartialViewTemp")
 @Html.Partial("_ErrorModalPartialViewTemp")
-@Html.Partial("_UnobtrusiveValidationFixPartialView","#settingsForm")
+@Html.Partial("_UnobtrusiveValidationFixPartialView", "#settingsForm")
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <form id="settingsForm" asp-action="SaveSettings" asp-controller="Settings"
- asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm">
-    
-    <div class="form-horizontal"> 
+      asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm">
+
+    <div class="form-horizontal">
         <div class="form-group">
             <label asp-for="WebsiteName"></label>
             <input asp-for="WebsiteName" class="form-control" />
@@ -16,7 +18,7 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> Uložit změny</button>
+            <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Localizer["Save changes"]</button>
         </div>
     </div>
 

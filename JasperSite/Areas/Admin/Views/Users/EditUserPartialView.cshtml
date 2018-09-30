@@ -1,12 +1,16 @@
 ﻿@using JasperSite.Models.Database;
 @model JasperSite.Areas.Admin.ViewModels.EditUserViewModel
 
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @Html.Partial("_ErrorModalPartialViewTemp")
 @Html.Partial("_SuccessModalPartialViewTemp")
 
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         // By default, unobtrusive validation in partial view does not work after first submit
         UnobtrusiveValidationFix("#formId");
@@ -14,14 +18,14 @@
     });
 </script>
 
-<h2>Úprava uživatele</h2>
+<h2>@Localizer["Edit user"]</h2>
 
 
 <div class="j-admin-section">
     @if (Model != null)
     {
 
-        <h4>Uživatel: @Model.Username</h4>
+        <h4>@Localizer["User"]: @Model.Username</h4>
 
 
         <form id="formId" asp-action="EditUser" asp-controller="Users"
@@ -60,7 +64,7 @@
                 <div class="form-group">
                     <label asp-for="NewPasswordPlainText"></label>
 
-                    <input asp-for="NewPasswordPlainText" class="form-control j-input-password" placeholder="Ponechte prázdné, pokud chcete zachovat stávající heslo." />
+                    <input asp-for="NewPasswordPlainText" class="form-control j-input-password" placeholder="@Localizer["Leave the field empty, if you want to keep the current password."]" />
                     <span asp-validation-for="NewPasswordPlainText" class="text-danger"></span>
 
                 </div>
@@ -68,7 +72,7 @@
                 <div class="form-group">
                     <label asp-for="NewPasswordPlainTextAgain"></label>
 
-                    <input asp-for="NewPasswordPlainTextAgain" class="form-control j-input-password" placeholder="Ponechte prázdné, pokud chcete zachovat stávající heslo." />
+                    <input asp-for="NewPasswordPlainTextAgain" class="form-control j-input-password" placeholder="@Localizer["Leave the field empty, if you want to keep the current password."]" />
                     <span asp-validation-for="NewPasswordPlainTextAgain" class="text-danger"></span>
 
                 </div>
@@ -76,8 +80,8 @@
 
                 <div class="form-group">
 
-                    <a href="/Admin/Users/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam uživatelů</a>
-                    <button id="mainSubmitButton" type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+                    <a href="/Admin/Users/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> @Localizer["Back to the list of users"]</a>
+                    <button id="mainSubmitButton" type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Localizer["Save changes"]</button>
 
 
 
@@ -90,7 +94,7 @@
     else
     {
         <div class="alert alert-warning">
-            Hledaný uživatel nebyl nalezen, nebo došlo k neočekávané chybě.
+            @Localizer["The requested user was not found or an unexpected error occured."]
         </div>
 
     }

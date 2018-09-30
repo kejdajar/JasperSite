@@ -14,25 +14,25 @@ namespace JasperSite.Areas.Admin.ViewModels
     {
        public int Id { get; set; }
 
-        [Display(Name = "Přezdívka")]
-        [Required(ErrorMessage ="Vyplňte přezdívku")]
+        [Display(Name = "Nickname")]
+        [Required(ErrorMessage ="Fill in the nickname")]
         public string Nickname { get; set; }
 
-        [Display(Name = "Uživatelské jméno")]
-        [Required(ErrorMessage = "Vyplňte uživatelské jméno")]
+        [Display(Name = "Username")]
+        [Required(ErrorMessage = "Fill in the username")]
         public string Username { get; set; }
 
-        [Display(Name = "Zadejte vaše nové heslo")]
-        [Required(ErrorMessage = "Zadejte vaše nové heslo")]
+        [Display(Name = "Fill in the new password")]
+        [Required(ErrorMessage = "Fill in the new password")]
         public string NewPasswordPlainText { get; set; }
 
-        [Display(Name="Zadejte vaše nové heslo znovu")]
-        [Required(ErrorMessage = "Zadejte nové heslo znovu")]
+        [Display(Name="Fill in the new password again")]
+        [Required(ErrorMessage = "Fill in the new password again")]
         public string NewPasswordPlainTextAgain { get; set; }
 
         public int RoleId { get; set; }       
 
-        [Display(Name = "Zvolte roli")] 
+        [Display(Name = "Choose the user role")] 
         public List<Role> AllRoles { get; set; }
      
     }

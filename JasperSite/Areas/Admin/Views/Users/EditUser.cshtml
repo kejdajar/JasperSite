@@ -1,12 +1,16 @@
 ﻿@using JasperSite.Models.Database;
 @model JasperSite.Areas.Admin.ViewModels.EditUserViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = Localizer["Edit user"];
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section Scripts {
 
-   
+
 }
 
 

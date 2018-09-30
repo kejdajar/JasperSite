@@ -1,8 +1,13 @@
 ﻿@using JasperSite.Models.Database
 @model JasperSite.Areas.Admin.ViewModels.SettingsViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+
 @inject IJasperDataServicePublic J;
 @{
-    ViewData["Title"] = "Závažná chyba";
+    
     Layout = null;
 }
 
@@ -12,8 +17,8 @@
     <link rel="shortcut icon" href="~/Areas/Admin/Content/Images/favicon.ico" type="image/x-icon">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Instalace</title>
-       
+    <title> @Localizer["Fatal error"]</title>
+
 
     @*********************************************************************** Styles ****************************************************************************@
     <environment include="Development">
@@ -21,7 +26,7 @@
     </environment>
 
     <environment exclude="Development">
-        <script src="~/bundles/admin.bundle.js"></script>       
+        <script src="~/bundles/admin.bundle.js"></script>
     </environment>
 
     <style>
@@ -64,7 +69,7 @@
 
         try
         {
-            (errorMessages[0]) = "<b>Hlavní chyba:</b> "  + errorMessages[0];
+            (errorMessages[0]) = "<b>Hlavní chyba:</b> " + errorMessages[0];
             if (errorMessages.Count > 1)
             {
                 for (int i = 0; i <= errorMessages.Count(); i++)
@@ -90,15 +95,14 @@
         @if (User.Identity.IsAuthenticated)
         {
             <h1>J<span class="j-header-color">asp</span>er Site</h1>
-            <h2><small>Detekovány závažné chyby</small></h2>
+            <h2><small>@Localizer["Fatal error detected"]</small></h2>
 
             <div class="row">
 
                 <div class="col-lg-12">
                     <section class="j-admin-section ">
                         <p>
-                            Na této stránce se nachází seznam všech chyb, které je potřeba opravit, než
-                            bude možné redakční systém spolehlivě používat.
+                           @Localizer["This page lists all the fatal errors that has to be resolved before JasperSite will be fully operational again."]
                         </p>
 
 
@@ -108,7 +112,7 @@
                             if ((string)(TempData["ErrorInPageLevelCode"]) == "1")
                             {
                                 <div class="alert alert-warning">
-                                    Na požadované stránce se nachází chyba, kterou je nutné opravit.
+                                    @Localizer["The requested page contains an error which has to be fixed."]
                                 </div>
                             }
 
@@ -128,9 +132,7 @@
                         }
                         else
                         {
-                            @*<div class="alert alert-warning">
-                   Žádné podrobnosti k chybám nejsou k dispozici.
-                </div>*@
+                          
 
                         }
                     </section>
@@ -140,18 +142,18 @@
                         <div class="j-admin-section">
 
                             <p>
-                                <b>Administrátorská sekce:</b> <br />
-                                Vítejte uživateli @User.Identity.Name. Tuto sekci vidíte, protože máte roli <b>Admin</b>. <br />
-                                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-undo fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
-                                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Home" asp-area="admin" asp-action="Index"><i class="fa fa-diamond fa-1x"> </i> Přejít do administrace</a>
-                                <a name="reloadButton" class="btn btn-jasper btn-user-icon" style="left:5px;"><i class="fa fa-refresh"> </i> Načíst tuto stránku znovu</a>
+                                <b>@Localizer["Admin section"]:</b> <br />
+                                @Localizer["Welcome user"] @User.Identity.Name.  @Localizer["You can see this section because you have the role "] <b>Admin</b>. <br />
+                                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-undo fa-1x"> </i> @Localizer["Logout user"] <i> @User.Identity.Name</i></a>
+                                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Home" asp-area="admin" asp-action="Index"><i class="fa fa-diamond fa-1x"> </i> @Localizer["Go to the administration"]</a>
+                                <a name="reloadButton" class="btn btn-jasper btn-user-icon" style="left:5px;"><i class="fa fa-refresh"> </i> @Localizer["Reload this page"]</a>
                             </p>
 
                             <p>
-                                <br /><b>Řešení problémů:</b> <br />
+                                <br /><b>@Localizer["Troubleshooting"]:</b> <br />
 
                                 <table class="table j-table-no-hover table-bordered">
-                                    <tr><th>Akce</th><th>Popis</th></tr>
+                                    <tr><th>@Localizer["Action"]</th><th>@Localizer["Description"]</th></tr>
                                     <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Home" asp-action="Refresh" asp-area="Admin">Aktualizovat a aplikovat</a></td><td>Všechny změny v globálních a vzhledových souborech jasper.json budou aplikovány.</td></tr>
                                     <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateAllThemesData" asp-area="Admin">Aktualizovat a aplikovat pouze vzhledy</a></td><td>Zkontroluje integritu evidovaných vzhledů a aktualizuje konfigurační nastevení všech vzhledů.</td></tr>
                                     <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateConfiguration" asp-area="Admin">Pouze aktualizovat</a></td><td>Všechny změny v globálních a vzhledových souborech jasper.json budou načteny do paměti, ale změny týkající se vzhledů nebudou aplikovány.</td></tr>
@@ -164,7 +166,7 @@
                         </div>
 
                         <section class="j-admin-section">
-                            <h4><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Globální konfigurační soubor jasper.json</h4>
+                            <h4><i class="fa fa-diamond j-icon" aria-hidden="true"></i>@Localizer["Global configuration file jasper.json"]</h4>
 
                             <div id="mainForm2">
                                 @Html.Partial("JasperJsonPartialView", Model.model2)
@@ -172,7 +174,7 @@
                         </section>
 
                         <section class="j-admin-section">
-                            <h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Vzhledový konfigurační soubor jasper.json</h4>
+                            <h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>@Localizer["Local configuration file jasper.json"]</h4>
 
                             <div id="mainForm3">
                                 @Html.Partial("JasperJsonThemePartialView", Model.model3)
@@ -213,21 +215,21 @@
                             websiteHeader = "Omlouváme se, ";
                         } }
 
-                @websiteHeader
-            </h1>
-            <h4>stránka je momentálně mimo provoz </h4>
-        </div>
+                    @websiteHeader
+                </h1>
+                <h4>stránka je momentálně mimo provoz </h4>
+            </div>
 
-        <div class="row">
+            <div class="row">
 
-        </div>
+            </div>
 
-        <footer>
-            <hr />
-            Tento web využívá redakční systém JasperSite.
-            <a asp-controller="Login" asp-action="Index" asp-area="Admin">Přihlásit se</a>
-        </footer>
-    }
+            <footer>
+                <hr />
+                Tento web využívá redakční systém JasperSite.
+                <a asp-controller="Login" asp-action="Index" asp-area="Admin">Přihlásit se</a>
+            </footer>
+        }
     </div>
 
 

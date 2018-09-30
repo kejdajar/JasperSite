@@ -1,16 +1,18 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @{
-    ViewData["Title"] = "Chyba";
-  
+    ViewData["Title"] = Localizer["Error"];
+
 }
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
-    <h2><i class="fa fa-exclamation-triangle j-icon" aria-hidden="true"></i>  Něco se pokazilo </h2>
+<h2><i class="fa fa-exclamation-triangle j-icon" aria-hidden="true"></i>  Něco se pokazilo </h2>
 
 
-    <div class="j-admin-section" style="padding:0px;">
-        <div class="alert alert-warning" style="margin:0px;">
-            Na stránce se vyskytla neočekávaná chyba, nebo daná adresa neexistuje.
-        </div>
+<div class="j-admin-section" style="padding:0px;">
+    <div class="alert alert-warning" style="margin:0px;">
+        @Localizer["An unexpected error occured or the requested page does not exist."]
     </div>
+</div>
 

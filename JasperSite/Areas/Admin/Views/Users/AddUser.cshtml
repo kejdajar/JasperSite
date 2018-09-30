@@ -1,15 +1,19 @@
 ﻿@using JasperSite.Models.Database;
 @model JasperSite.Areas.Admin.ViewModels.AddUserViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = Localizer["New user"];
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 
 @Html.Partial("_ErrorModalPartialViewTemp")
 
-    <div id="mainForm">
-    <h2>Přidání nového uživatele</h2>
+<div id="mainForm">
+    <h2>@Localizer["Add a new user"]</h2>
     <div class="j-admin-section">
         <form asp-action="SaveNewUser" asp-controller="Users" asp-area="Admin" method="post">
 
@@ -61,8 +65,8 @@
 
                 <div class="form-group">
 
-                    <a href="/Admin/Users/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam uživatelů</a>
-                    <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+                    <a href="/Admin/Users/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> @Localizer["Back to the list of users"]</a>
+                    <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Localizer["Save changes"]</button>
 
 
 
@@ -71,4 +75,4 @@
 
         </form>
     </div>
-    </div>
+</div>

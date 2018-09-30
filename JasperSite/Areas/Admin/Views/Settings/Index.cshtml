@@ -2,21 +2,24 @@
 
 @model JasperSite.Areas.Admin.ViewModels.SettingsViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
-    ViewData["Title"] = "Nastavení";
+    ViewData["Title"] = Localizer["Settings"];
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 @section Scripts {
 
-   
+
 }
 
-<h2>Nastavení</h2>
+<h2>@Localizer["Settings"]</h2>
 
 @*=====FIRST FORM======*@
 <section class="j-admin-section">
-    <h4><i class="fa fa-file-text j-icon" aria-hidden="true"></i>Název webové stránky</h4>
+    <h4><i class="fa fa-file-text j-icon" aria-hidden="true"></i>@Localizer["Website name"]</h4>
     <div id="mainForm">
         @Html.Partial("WebsiteNamePartialView", Model.model1)
     </div>
@@ -28,15 +31,15 @@
 
 
 <section class="j-admin-section">
-    <h4><i class="fa fa-cog j-icon" aria-hidden="true"></i>Pokročilé možnosti</h4>
-    <p>Pokud jste manuálně modifikovali vzhledy na serveru, nebo upravovali konfigurační nastavení aplikace, můžou se hodit následující možnosti:</p>
-       
+    <h4><i class="fa fa-cog j-icon" aria-hidden="true"></i>@Localizer["Advanced options"]</h4>
+    <p>@Localizer["If you have manually modified some values in the database or edited configuration settings, these options could come in handy."]:</p>
+
     <table class="table j-table-no-hover table-bordered">
         <tr><th>Akce</th><th>Popis</th></tr>
-        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Home" asp-action="Refresh" asp-area="Admin">Aktualizovat a aplikovat</a></td><td>Všechny změny v globálních a vzhledových souborech jasper.json budou aplikovány.</td></tr>
-        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateAllThemesData" asp-area="Admin">Aktualizovat a aplikovat pouze vzhledy</a></td><td>Zkontroluje integritu evidovaných vzhledů a aktualizuje konfigurační nastevení všech vzhledů.</td></tr>
-        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Settings" asp-action="UpdateConfiguration" asp-area="Admin">Pouze aktualizovat</a></td><td>Všechny změny v globálních a vzhledových souborech jasper.json budou načteny do paměti, ale změny týkající se vzhledů nebudou aplikovány.</td></tr>
-        <tr><td style="padding:5px"><a style="width:350px;" class="btn btn-jasper" asp-controller="Themes" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">Rekonstrukce databáze vzhledů</a></td><td>V případě poškození databáze vzhledů tato možnost zresetuje databázi vzhledů a odstraní přiřazené textové bloky k jednotlivým kontejnerům příslušných vzhledů. </td></tr>
+        <tr><td style="padding:5px"><a  class="btn btn-jasper" asp-controller="Home" asp-action="Refresh" asp-area="Admin">@Localizer["Update"]</a></td><td>@Localizer["All changes in global and local jasper.json files will be applied."]</td></tr>
+        <tr><td style="padding:5px"><a  class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateAllThemesData" asp-area="Admin">@Localizer["Update"]</a></td><td>@Localizer["Runs integrity test on all installed themes and updates their configuration settings."]</td></tr>
+        <tr><td style="padding:5px"><a  class="btn btn-jasper" asp-controller="Settings" asp-action="UpdateConfiguration" asp-area="Admin">@Localizer["Update"]</a></td><td>@Localizer["All changes in global and local configuration files will be loaded to memory, but changes related to themes will not be applied."]</td></tr>
+        <tr><td style="padding:5px"><a  class="btn btn-jasper" asp-controller="Themes" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">@Localizer["Update"]</a></td><td> @Localizer["In case of database corruption this option will reset themes saved in the database and all text blocks will be marked as unassigned."] </td></tr>
     </table>
 
 
@@ -44,11 +47,11 @@
 
 
 <section class="j-admin-section">
-    <h4><i class="fa fa-database j-icon" aria-hidden="true"></i>Instalace systému</h4>
+    <h4><i class="fa fa-database j-icon" aria-hidden="true"></i>@Localizer["Installation"]</h4>
 
     <table class="table j-table-no-hover table-bordered">
-        <tr><th>Akce</th><th>Popis</th></tr>
-        <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="Install" asp-action="Index" asp-area="Admin">Zobrazit instalační okno</a></td><td>Tato možnost zobrazí instalační okno, pomocí něhož je možné obnovit tovární nastavení redakčního systému.</td></tr>
+        <tr><th>@Localizer["Action"]</th><th>@Localizer["Description"]</th></tr>
+        <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="Install" asp-action="Index" asp-area="Admin">@Localizer["Show installation page"]</a></td><td>@Localizer["This option displays an installation page which can be used for a factory reset of this CMS."]</td></tr>
     </table>
 
 </section>
@@ -57,16 +60,16 @@
 
 @*=====SECOND FORM=====*@
 <section class="j-admin-section">
-    <h4><i class="fa fa-diamond j-icon" aria-hidden="true"></i>Globální konfigurační soubor jasper.json</h4>
-   
+    <h4><i class="fa fa-diamond j-icon" aria-hidden="true"></i>@Localizer["Global configuration file jasper.json"]</h4>
+
     <div id="mainForm2">
         @Html.Partial("JasperJsonPartialView", Model.model2)
     </div>
 </section>
 
 <section class="j-admin-section">
-    <h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Vzhledový konfigurační soubor jasper.json</h4>
-    
+    <h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>@Localizer["Local configuration file jasper.json"]</h4>
+
     <div id="mainForm3">
         @Html.Partial("JasperJsonThemePartialView", Model.model3)
     </div>

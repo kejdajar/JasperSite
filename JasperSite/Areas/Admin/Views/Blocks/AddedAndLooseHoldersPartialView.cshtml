@@ -4,6 +4,9 @@
 @inject IJasperDataServicePublic J
 @model JasperSite.Areas.Admin.ViewModels.AddedAndLooseHoldersViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @Html.Partial("_SuccessModalPartialViewTemp")
 @Html.Partial("_ErrorModalPartialViewTemp")
 
@@ -41,7 +44,7 @@
 
 
             var allAddLinks = $('a[data-add-holder-id]').click(function (e) {
-     
+
                 e.preventDefault();
                 var singleLink = $(this);
 
@@ -75,7 +78,7 @@
 
                 var holderId = singleLink.data('orderHolderId');
                 var blockId = singleLink.data('orderBlockId');
-                var order = $('[data-input-order-id="' + holderId + ',' + blockId + '"]').val();          
+                var order = $('[data-input-order-id="' + holderId + ',' + blockId + '"]').val();
 
                 $.ajax({
                     type: 'post',
@@ -106,43 +109,43 @@
 
 <section class="j-admin-section">
 
-    <h2> <i class="fa fa-thumb-tack j-icon" aria-hidden="true"></i>Přiřazené kontejnery:</h2>
+    <h2> <i class="fa fa-thumb-tack j-icon" aria-hidden="true"></i>@Localizer["Assigned block holders"]:</h2>
 
     @if (Model.CorrespondingBlockHolders.Count() > 0)
     {<table class="table table-bordered j-table j-left-border-block">
-            <tr><th>Akce</th><th  style="min-width:150px">Název kontejneru</th><th class="col-sm-1">Název vzhledu</th><th >Pořadí bloku</th></tr>
+            <tr><th>@Localizer["Action"]</th><th style="min-width:150px">@Localizer["Name of the block holder"]</th><th class="col-sm-1">@Localizer["Name of the theme"]</th><th>@Localizer["Order of the block in block holder"]</th></tr>
             @foreach (BlockHolder holder in Model.CorrespondingBlockHolders)
             {
                 <tr>
-                    <td>   <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Blocks" asp-action="RemoveHolderFromBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper btn-jasper-delete" data-remove-holder-id="@holder.Id" > <i class="fa fa-minus fa-1x" aria-hidden="true"></i>  </a></td>
+                    <td>   <a data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Blocks" asp-action="RemoveHolderFromBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper btn-jasper-delete" data-remove-holder-id="@holder.Id"> <i class="fa fa-minus fa-1x" aria-hidden="true"></i>  </a></td>
                     @{var holder_block = J.GetHolder_Block(Model.CurrentTextBoxId, holder.Id);}
                     <td>@holder.Name</td>
-                  <td>@holder.Theme.Name</td>
-  
-                  <td>
-                      <form class="form-inline" style="min-width:150px" method="post" asp-controller="Blocks" asp-action="SaveTextBlockOrder" asp-area="admin">
-                          <div class="form-group">
-                              <input type="number" class="form-control" value="@holder_block.Order" name="order" style="width:100px" data-input-order-id="@holder.Id,@Model.CurrentTextBoxId">
-                              <input type="hidden" name="holderId" value="@holder.Id" />
-                              <input type="hidden" name="textBlockId" value="@Model.CurrentTextBoxId" />
-                          </div>
+                    <td>@holder.Theme.Name</td>
 
-                          <button type="submit" data-toggle="tooltip" title="Uložit pořadí" class="btn btn-jasper" data-order-block-id="@Model.CurrentTextBoxId" data-order-holder-id="@holder.Id" name="orderSubmit"> <i class="fa fa-floppy-o fa-1x" aria-hidden="true"></i>  </button>
+                    <td>
+                        <form class="form-inline" style="min-width:150px" method="post" asp-controller="Blocks" asp-action="SaveTextBlockOrder" asp-area="admin">
+                            <div class="form-group">
+                                <input type="number" class="form-control" value="@holder_block.Order" name="order" style="width:100px" data-input-order-id="@holder.Id,@Model.CurrentTextBoxId">
+                                <input type="hidden" name="holderId" value="@holder.Id" />
+                                <input type="hidden" name="textBlockId" value="@Model.CurrentTextBoxId" />
+                            </div>
+
+                            <button type="submit" data-toggle="tooltip" title="@Localizer["Save the order"]" class="btn btn-jasper" data-order-block-id="@Model.CurrentTextBoxId" data-order-holder-id="@holder.Id" name="orderSubmit"> <i class="fa fa-floppy-o fa-1x" aria-hidden="true"></i>  </button>
 
 
-                      </form>
+                        </form>
 
-                     
-                  </td>
 
-                  </tr>
+                    </td>
+
+                </tr>
             }
         </table>
     }
     else
     {
         <div class="alert alert-warning" role="alert">
-            <strong>Upozornění:</strong> Tento textový blok nemá přiřazen zatím žádný kontejner a proto nebude zobrazen na stránce.
+            @Localizer["<strong>Warning</strong> This text block does not have any block holder assigned and thus will not be rendered on the page."]
         </div>
 
     }
@@ -152,17 +155,17 @@
 
 <section class="j-admin-section">
 
-    <h2> <i class="fa fa-plus-circle j-icon" aria-hidden="true"></i>Přiřadit kontejnery:</h2>
+    <h2> <i class="fa fa-plus-circle j-icon" aria-hidden="true"></i>@Localizer["Assign the block holders"]:</h2>
     @if (Model.AllBlockHolders.Except(Model.CorrespondingBlockHolders).Count() > 0)
     {
 
 
         <table class="table table-bordered j-table j-table-left j-left-border-block">
-            <tr><th>Akce</th><th style="min-width:150px">Název kontejneru</th><th class="col-sm-1">Název vzhledu</th></tr>
+            <tr><th>@Localizer["Action"]</th><th style="min-width:150px">@Localizer["Name of the block holder"]</th><th class="col-sm-1">@Localizer["Name of the theme"]</th></tr>
             @foreach (BlockHolder holder in Model.AllBlockHolders.Except(Model.CorrespondingBlockHolders))
             {
                 <tr>
-                    <td><a data-toggle="tooltip" title="Přiřadit" asp-area="Admin" asp-controller="Blocks" asp-action="AddHolderToBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper" data-add-holder-id="@holder.Id"> <i class="fa fa-plus fa-1x" aria-hidden="true"></i>  </a></td>
+                    <td><a data-toggle="tooltip" title="@Localizer["Assign"]" asp-area="Admin" asp-controller="Blocks" asp-action="AddHolderToBlock" asp-route-holderId="@holder.Id" asp-route-blockId="@Model.CurrentTextBoxId" class="btn btn-jasper" data-add-holder-id="@holder.Id"> <i class="fa fa-plus fa-1x" aria-hidden="true"></i>  </a></td>
                     <td>@holder.Name</td>
                     <td>@holder.Theme.Name</td>
                 </tr>
@@ -172,21 +175,21 @@
     else
     {
         <div class="alert alert-warning" role="alert">
-            <strong>Upozornění:</strong> Žádné další kontejnery nemá aktivní vzhled k dispozici.
+         @Localizer["<strong>Warning</strong> The current theme hasn't any other block holders available."]
         </div>
 
     }
 
 
 
-    
-
-       
 
 
-   
+
+
+
+
 </section>
 <section class="j-admin-section">
-    <a href="/Admin/Blocks/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> Zpět na seznam bloků</a>
+    <a href="/Admin/Blocks/" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> @Localizer["Back to the list of blocks"]</a>
 </section>
 

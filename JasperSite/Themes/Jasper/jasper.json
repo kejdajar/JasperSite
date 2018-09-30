@@ -7,7 +7,7 @@
   "missingImagePath": "./Images/missing.jpg",
   "routingList": {
     "homePage": [
-     "/home/index",      
+      "/home/index",      
       "/home",      
       "/"     
     ],

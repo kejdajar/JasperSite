@@ -1,5 +1,8 @@
 ﻿@model JasperSite.Areas.Admin.ViewModels.InstallViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @using JasperSite.Models
 @{
     Layout = null;
@@ -11,34 +14,34 @@
     <link rel="shortcut icon" href="~/Areas/Admin/Content/Images/favicon.ico" type="image/x-icon">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Instalace</title>   
+    <title>@Localizer["Install"]</title>
 
     <environment exclude="Development">
         <script src="~/bundles/admin.bundle.js"></script>
     </environment>
 
-  
+
     <environment include="Development">
         <script src="~/bundles/admin.bundle.js"></script>
     </environment>
 
-  
+
     @Html.Partial("_ErrorModalPartialViewTemp")
 
 
-    
-        <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
-        <script>
-        $(document).ready(function(){
-        $("#submitButtonReinstall").click(function(e){
 
-           
-           if( $("#installForm").valid()) {
+    <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#submitButtonReinstall").click(function (e) {
 
-               e.preventDefault();
-               appendWindow("Skutečně reinstalovat redakční systém?", "Tato akce je nevratná, veškerý obsah bude smazán.", function () { toggleWindow(); $("body").addClass("loading"); $("#installForm").submit(); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Smazat data a reinstalovat systém");
-              
-       }
+
+                if ($("#installForm").valid()) {
+
+                    e.preventDefault();
+                    appendWindow("Skutečně reinstalovat redakční systém?", "Tato akce je nevratná, veškerý obsah bude smazán.", function () { toggleWindow(); $("body").addClass("loading"); $("#installForm").submit(); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Smazat data a reinstalovat systém");
+
+                }
             });
 
             /* Installation has not yet been completed */
@@ -47,15 +50,15 @@
 
                 if ($("#installForm").valid()) {
 
-                    $("body").addClass("loading"); 
+                    $("body").addClass("loading");
                 }
             });
 
 
 
         });
-        </script>
-    
+    </script>
+
 
 
     <!-- Google Fonts -->
@@ -63,75 +66,74 @@
     <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
 
     <style>
-        
-        body {
-            margin-top: 20px;
-        }
 
-        .j-jumbotron-span {
-            color: #BA68C8;
-        }
+             body {
+                 margin-top: 20px;
+             }
 
-
-        /* Centered div with spinning icon (without shade) */
-
-        .modal-loading {
-            display:none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: black;
-            background-color:transparent;
-            z-index: 3;
-        }
+             .j-jumbotron-span {
+                 color: #BA68C8;
+             }
 
 
-        body.loading .modal-loading {
-            overflow: hidden;
-        }
+             /* Centered div with spinning icon (without shade) */
 
-        body.loading .modal-loading {
-            display: block;
-        }
-        
+             .modal-loading {
+                 display: none;
+                 position: absolute;
+                 top: 50%;
+                 left: 50%;
+                 transform: translate(-50%, -50%);
+                 color: black;
+                 background-color: transparent;
+                 z-index: 3;
+             }
 
 
-        /* Background shade */       
+             body.loading .modal-loading {
+                 overflow: hidden;
+             }
 
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 2;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background: rgba( 255, 255, 255, .8 );
-        }
+             body.loading .modal-loading {
+                 display: block;
+             }
 
-        /* When the body has the loading class, we turn
-   the scrollbar off with overflow:hidden */
-        body.loading .modal {
-            overflow: hidden;
-        }
 
-        /* Anytime the body has the loading class, our
-   modal element will be visible */
-        body.loading .modal {
-            display: block;
-        }
-       
-    </style> 
+
+             /* Background shade */
+
+             .modal {
+                 display: none;
+                 position: fixed;
+                 z-index: 2;
+                 top: 0;
+                 left: 0;
+                 height: 100%;
+                 width: 100%;
+                 background: rgba( 255, 255, 255, .8 );
+             }
+
+             /* When the body has the loading class, we turn
+        the scrollbar off with overflow:hidden */
+             body.loading .modal {
+                 overflow: hidden;
+             }
+
+             /* Anytime the body has the loading class, our
+        modal element will be visible */
+             body.loading .modal {
+                 display: block;
+             }
+    </style>
 
 </head>
 
 <body>
 
 
-   
-        <div id="modalTargetDiv"></div>
-    
+
+    <div id="modalTargetDiv"></div>
+
 
     <div class="container">
 
@@ -139,7 +141,7 @@
             <h1>
                 J<span class="j-jumbotron-span">asp</span>er Site
             </h1>
-            <h2><small>Instalace redakčního systému</small> </h2>
+            <h2><small>@Localizer["System installation"]</small> </h2>
         </div>
 
 
@@ -155,17 +157,17 @@
                 <div class="j-admin-section">
 
 
-                    <form id="installForm" method="post" asp-area="Admin" asp-controller="Install" asp-action="Index" >
+                    <form id="installForm" method="post" asp-area="Admin" asp-controller="Install" asp-action="Index">
 
                         <div class="form-group">
-                            <label>Zvolte databázi</label>
+                            <label>@Localizer["Choose the database provider"]</label>
                             <select class="form-control" asp-for="SelectedDatabase" asp-items="@(new SelectList(Model.AllDatabases,"Id","Name"))"></select>
                             <span asp-validation-for="SelectedDatabase" class="text-danger"></span>
                         </div>
 
                         <div class="form-group">
-                            <label>Zadejte připojovací řetězec</label>
-                           
+                            <label>@Localizer["Insert the connection string"]</label>
+
                             <textarea rows="3" class="form-control" type="text" asp-for="ConnectionString"> </textarea>
                             <span asp-validation-for="ConnectionString" class="text-danger"></span><br />
 
@@ -181,16 +183,16 @@
 
                                 <div class="list-group-item list-group-item-action flex-column align-items-start">
                                     <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1"><b>Příklady připojovacích řetězců</b></h5>
+                                        <h5 class="mb-1"><b>@Localizer["Examples of connection strings"]</b></h5>
                                         <small class="text-muted">Tip!</small>
                                     </div>
                                     <p class="mb-1">
                                         <ul style="margin-left:20px;margin-top:5px">
                                             <li>
-                                                <i>MSSQL:</i><br /> Data Source=název_serveru; Initial Catalog=název_databáze; Integrated Security=True
+                                                <i>MSSQL:</i><br /> Data Source=@Localizer["server_name"]; Initial Catalog=@Localizer["database_name"]; Integrated Security=True
                                             </li>
                                             <li>
-                                                <i>MySQL:</i> <br />Server=název_serveru; Database=název_databáze; Uid=root;Pwd=root;
+                                                <i>MySQL:</i> <br />Server=@Localizer["server_name"]; Database=@Localizer["database_name"]; Uid=root;Pwd=root;
                                             </li>
                                         </ul>
                                         @*<small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>*@
@@ -206,18 +208,18 @@
 
                             @if (Configuration.GlobalWebsiteConfig.InstallationCompleted)
                             {
-                                <a asp-controller="Home" asp-area="Admin" asp-action="Index" class="btn btn-secondary"> Zpět do redakčního systému </a>
+                                <a asp-controller="Home" asp-area="Admin" asp-action="Index" class="btn btn-secondary"> @Localizer["Back to the administration"] </a>
                             }
 
                             @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
                             {
-                               
-                                <input id="submitButtonClean" type="submit" value="Dokončit instalaci" class="btn btn-jasper" asp-area="Admin" asp-controller="Install" asp-action="Index"/>
+
+                                <input id="submitButtonClean" type="submit" value="@Localizer["Finish the installation"]" class="btn btn-jasper" asp-area="Admin" asp-controller="Install" asp-action="Index" />
                             }
                             else
                             {
 
-                                <input id="submitButtonReinstall" type="submit" value="Reinstalovat systém" class="btn btn-warning" asp-area="Admin" asp-controller="Install" asp-action="Index"/>
+                                <input id="submitButtonReinstall" type="submit" value="@Localizer["Reinstall CMS"]" class="btn btn-warning" asp-area="Admin" asp-controller="Install" asp-action="Index" />
                             }
                         </div>
                     </form>
@@ -231,22 +233,18 @@
                     @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
                     {
                         <div class="alert alert-warning" role="alert">
-                            Redakční systém JasperSite ještě nebyl nainstalován. Postupujte pomocí pokynů instalace.
+                           @Localizer["System JasperSite has not yet been installed on this machine. Follow the installation instructions."]
                         </div>
                     }
                     else
                     {
                         <div class="alert alert-danger" role="alert">
                             <p>
-                                Redakční systém JasperSite byl již jednou nainstalován. Opětovná instalace přemaže některá uložená data: Články, rubriky,
-                                uživatelské účty, obrázky, konfigurační nastavení a další uživatelský obsah bude smazán. Složka se vzhledy bude ponechána.
+                                @Localizer["System JasperSite has been already installed on this machine. Reinstallation will result in the loss of some of the stored data, such as articles, categories, user accounts, images, configuration setttings and other custom content. Theme folder will be left as is."]
                             </p>
-                            @*<p>
-                                     Konfigurační nastavení budou také ponechány. Pokud chcete obnovit výchozí konfigurační nastavení pro web, zvolte následující možnost.
-                                <br />  <a class="btn btn-warning" asp-area="admin" asp-controller="install" asp-action="ResetGlobalConfigJson">Resetovat konfigurační nastavení</a>
-                                 </p>*@
+                            
                             <p>
-                                Pro zobrazení konfiguračního nastevení zvolte možnost: pokročilé ladící informace.
+                                @Localizer["In order to display other current configuration settings, select the \"Advanced debug options\"."]
                             </p>
                         </div>
 
@@ -258,19 +256,19 @@
                             <div class="card-header" id="headingTwo">
                                 <h5 class="mb-0">
                                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Pokročilé ladící informace
+                                        @Localizer["Advanced debug options"]
                                     </button>
                                 </h5>
                             </div>
                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                                 <div class="card-body">
                                     <div class="alert alert-warning" role="alert" style="margin-bottom:0px">
-                                        <b>Aktuální nastavení</b><br />
-                                        Dokončení instalace:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.InstallationCompleted <br />
-                                        Připojovací řetězec:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.ConnectionString <br />
-                                        Typ databáze:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.TypeOfDatabase<br />
-                                        Název aktivního vzhledu:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.ThemeName<br />
-                                        Složka se vzhledy: @JasperSite.Models.Configuration.ThemeFolder <br />
+                                        <b>@Localizer["Current settings"]</b><br />
+                                        @Localizer["Finished installation"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.InstallationCompleted <br />
+                                        @Localizer["Connection string"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.ConnectionString <br />
+                                       @Localizer["Database provider"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.TypeOfDatabase<br />
+                                       @Localizer["Name of the current theme"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.ThemeName<br />
+                                        @Localizer["Folder with themes"]: @JasperSite.Models.Configuration.ThemeFolder <br />
                                     </div>
                                 </div>
                             </div>

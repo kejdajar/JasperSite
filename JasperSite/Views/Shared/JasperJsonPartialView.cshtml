@@ -3,9 +3,11 @@
 @Html.Partial("_SuccessModalPartialViewTemp")
 @Html.Partial("_ErrorModalPartialViewTemp")
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         // By default, unobtrusive validation in partial view does not work after first submit
         UnobtrusiveValidationFix('#settingsForm');
@@ -15,10 +17,10 @@
 <form id="settingsForm" asp-action="SaveJasperJson" asp-controller="Settings"
       asp-area="Admin" data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm2">
     <div class="form-group">
-        <textarea asp-for="JasperJson" rows="10" class="form-control">test</textarea>
+        <textarea asp-for="JasperJson" rows="10" class="form-control"></textarea>
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> Uložit a aplikovat</button>
+        <button type="submit" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Localizer["Save and update"]</button>
     </div>
 </form>

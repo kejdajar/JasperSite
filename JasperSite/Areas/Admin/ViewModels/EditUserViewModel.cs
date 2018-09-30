@@ -15,28 +15,28 @@ namespace JasperSite.Areas.Admin.ViewModels
        public int Id { get; set; }
 
         
-        [Display(Name = "Přezdívka")]
-        [Required(ErrorMessage ="Vyplňte přezdívku")]
+        [Display(Name = "Nickname")]
+        [Required(ErrorMessage ="Fill in the nickname")]
         public string Nickname { get; set; }
 
        
-        [Display(Name = "Uživatelské jméno")]
-        [Required(ErrorMessage = "Vyplňte uživatelské jméno")]
+        [Display(Name = "Username")]
+        [Required(ErrorMessage = "Fill in the username")]
         public string Username { get; set; }
 
-        [StringLength(int.MaxValue,MinimumLength = 1, ErrorMessage = "Minimální délka hesla je jeden znak. ")]        
-        [Display(Name = "Zadejte vaše nové heslo")]      
+        [StringLength(int.MaxValue,MinimumLength = 1, ErrorMessage = "The minimal length of password is one character")]        
+        [Display(Name = "Fill in your new password")]      
         [DataType(DataType.Password)]
         public string NewPasswordPlainText { get; set; }
 
-        [Display(Name="Zadejte vaše nové heslo znovu")] 
-        [Compare("NewPasswordPlainText",ErrorMessage ="Zadaná hesla se musí shodovat.")]
+        [Display(Name="Fill in your new password again")] 
+        [Compare("NewPasswordPlainText",ErrorMessage ="Passwords do not match")]
         [DataType(DataType.Password)]
         public string NewPasswordPlainTextAgain { get; set; }
 
         public int RoleId { get; set; }       
 
-        [Display(Name = "Zvolte roli")] 
+        [Display(Name = "Choose the user role")] 
         public List<Role> AllRoles { get; set; }
      
     }

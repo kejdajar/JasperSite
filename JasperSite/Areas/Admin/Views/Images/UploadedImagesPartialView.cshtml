@@ -1,12 +1,13 @@
 ﻿@model JasperSite.Areas.Admin.ViewModels.ImagesViewModel
 @using JasperSite.Models.Database
 
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 @Html.Partial("_ErrorModalPartialViewTemp")
 @Html.Partial("_SuccessModalPartialViewTemp")
 
-<h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Nahrané obrázky</h4>
+<h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>@Localizer["Uploaded images"]</h4>
 
 <script>
 
@@ -20,7 +21,7 @@
                 var id = singleLink.data('removeId');
                 var imageName = singleLink.data('imageName');
 
-                appendWindow("Skutečně odstranit obrázek?", `Obrázek <b> ${imageName}</b> bude nenávratně odstraněn.`, function () { return ajaxCall(id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
+                appendWindow("@Localizer["Are you sure you want to delete this image?"]", `@Localizer["Image"] <b> ${imageName}</b> @Localizer["will be permanently deleted."]`, function () { return ajaxCall(id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]");
 
          });
 
@@ -36,7 +37,7 @@
 
                         $("#mainForm").html(data);
 
-                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        savedInfo("@Localizer["<strong>Saved</strong> All the changes has been successfully saved."]", "alert-success");
                     }
                 });
 
@@ -89,7 +90,7 @@
                     @img.Name
                 </div>
                 <div>
-                    <a style="width:100%;padding:2px" data-toggle="tooltip" title="Odebrat" asp-area="Admin" asp-controller="Images" asp-action="DeleteImage" asp-route-imgId="@img.Id" data-remove-id="@img.Id" data-image-name="@img.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
+                    <a style="width:100%;padding:2px" data-toggle="tooltip" title="@Localizer["Delete"]" asp-area="Admin" asp-controller="Images" asp-action="DeleteImage" asp-route-imgId="@img.Id" data-remove-id="@img.Id" data-image-name="@img.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
                 </div>
             </div>
         }
@@ -99,7 +100,7 @@
 else
 {
     <div class="alert alert-warning" role="alert">
-        <strong>Upozornění:</strong> Žádné obrázky nebyly ještě nahrány.
+       @Localizer["<strong>Warning </strong> No images have been uploaded yet."]
     </div>
 
 }

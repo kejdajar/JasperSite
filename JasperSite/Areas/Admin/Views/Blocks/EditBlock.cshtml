@@ -1,10 +1,14 @@
 ﻿@model JasperSite.Areas.Admin.ViewModels.EditBlockViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @{
-    ViewData["Title"] = "Úprava textového bloku";
+    ViewData["Title"] = Localizer["Edit text block"];
 }
 @section Scripts {
 
-   
+
     <script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
     @{ Html.RenderPartial("TinyMceSettingsPartialView");}
 
@@ -39,12 +43,12 @@
                     success: function (data) {
 
                         $("#modelNameHeader").text(data);
-                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        savedInfo("@Localizer["<strong>Saved</strong> All changes have been successfully saved."]", "alert-success");
                     },
                     error: function(data){
-        savedInfo("<strong>Chyba.</strong> Změny nemohly být uloženy.", "alert-danger");
-                      
-        
+        savedInfo("@Localizer["<strong>Error</strong> Changes could not be saved."]", "alert-danger");
+
+
                     }
                 });
         }

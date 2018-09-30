@@ -4,6 +4,9 @@
 @inject DatabaseContext databaseContext
 @model JasperSite.Areas.Admin.ViewModels.BlockViewModel
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 <script>
      /* AJAX REMOVE BLOCK */
     $(document).ready(function () {
@@ -17,7 +20,7 @@
                 var blockToBeRemovedId = singleLink.data('removeBlockId');
                 var blockName = singleLink.data('blockName');
 
-                appendWindow("Skutečně odstranit textový blok?", `Textový blok <b> ${blockName}</b> a jeho obsah  bude nenávratně odstraněn.`, function () { return ajaxCallDeleteBlock(blockToBeRemovedId); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "Odstranit");
+                appendWindow("@Localizer["Are you sure you want to delete this text block?"]", `@Localizer["Text block"] <b> ${blockName}</b> @Localizer["and his content will be permanently deleted."]`, function () { return ajaxCallDeleteBlock(blockToBeRemovedId); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]");
 
         });
 
@@ -32,7 +35,7 @@
 
                         $("#mainForm1").html(data);
 
-                        savedInfo("<strong>Uloženo.</strong> Veškeré provedené změny byly uloženy.", "alert-success");
+                        savedInfo("@Localizer["<strong>Saved</strong> All changes have been successfully saved."]", "alert-success");
                     }
                 });
         }
@@ -44,7 +47,7 @@
 @Html.Partial("_SuccessModalPartialViewTemp")
 
 <div class="j-admin-section">
-    <h4><i class="fa fa-th-large j-icon" aria-hidden="true"></i>Nový textový blok</h4>
+    <h4><i class="fa fa-th-large j-icon" aria-hidden="true"></i>@Localizer["New text block"]</h4>
 
     <form asp-action="AddNewBlock" asp-controller="Blocks" asp-area="Admin"
           data-ajax="true" data-ajax-method="POST" data-ajax-update="#mainForm1">
@@ -60,14 +63,14 @@
 
             <div class="form-group">
                 <label asp-for="NewTextBlock.Content"></label>
-                <input asp-for="NewTextBlock.Content" class="form-control" placeholder="Toto pole můžete ponechat prozatím prázdné" />
+                <input asp-for="NewTextBlock.Content" class="form-control" placeholder="@Localizer["You can leave this field empty for now."]" />
                 <span asp-validation-for="NewTextBlock.Content" class="text-danger"></span>
             </div>
 
             @if (Model.AllBlockHolders != null && Model.CurrentThemeId > 0)
             {
                 <div class="form-group">
-                    <label>Přiřadit ke kontejneru</label>
+                    <label>@Localizer["Assign to block holder"]</label>
                     <select class="form-control" asp-for="NewTextBlock.BlockHolderId" asp-items="@(new SelectList(Model.AllBlockHolders.Where(b => b.ThemeId == Model.CurrentThemeId), "Id", "Name"))"></select>
                     <span asp-validation-for="NewTextBlock.BlockHolderId" class="text-danger"></span>
                 </div>
@@ -75,7 +78,7 @@
             <div class="form-group">
 
 
-                <button type="submit" asp-area="Admin" asp-controller="Blocks" asp-action="AddNewBlock" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i>Uložit změny</button>
+                <button type="submit" asp-area="Admin" asp-controller="Blocks" asp-action="AddNewBlock" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Localizer["Save changes"]</button>
 
 
 
@@ -92,113 +95,113 @@
 
 
 <div class="j-admin-section">
-    <h4><i class="fa fa-th j-icon" aria-hidden="true"></i>Bloky</h4>
-
-
-
-
-
-    
-
-        @if (Model.Blocks != null && Model.Blocks.Count > 0)
-        {
-            foreach (BlocksViewModelData data in @Model.Blocks)
-            {
-    <div class="j-section-divider">
-        <h5>  <a asp-area="Admin" asp-controller="Blocks" asp-action="DeleteBlock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px" data-remove-block-id="@data.TextBlock.Id" data-block-name="@data.TextBlock.Name">x</a>  @data.TextBlock.Name   </h5>
-        <div class="j-left-border-block">
+    <h4><i class="fa fa-th j-icon" aria-hidden="true"></i>@Localizer["Blocks"]</h4>
 
 
 
 
 
 
-            @if (data.BlocHolderWithTheme.Count() > 0)
-            {
-                <div class="table-responsive">
-                    <table class="table table-bordered j-table j-table-headers-left">
-                        <tr><th>Název kontejneru na stránce</th><th>Název aktivního vzhledu</th><th>Pořadí bloku v kontejneru</th></tr>
-                        @foreach (var item in data.BlocHolderWithTheme)
-                        {
-                            <tr><td>@item.BlockHolderName</td><td>@item.ThemeName</td><td>@item.Order</td></tr>
-                        }
-                    </table>
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-warning" role="alert">
-                    <strong>Upozornění!</strong> Tento textový blok nemá přiřazen žádný kontejner a nebude proto zobrazen na stránce.
-                </div>
-            }
-            <a asp-area="Admin" asp-controller="Blocks" asp-action="EditBlock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper">Upravit</a>
-        </div>
-    </div>
-            }
-        }
-        else
-        {
-            <div class="alert alert-warning" role="alert">
-                Žádné bloky nejsou k dispozici.
-            </div>
 
-        }
-   
-</div>
-
-<div class="j-admin-section">
-<h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>Přehled vzhledů a jejich kontejnerů</h4>
-<div class="table-responsive">
-
-    @if (Model.AllThemes != null)
+    @if (Model.Blocks != null && Model.Blocks.Count > 0)
     {
-        foreach (Theme theme in Model.AllThemes)
+        foreach (BlocksViewModelData data in @Model.Blocks)
         {
-    <div class="j-section-divider">
+            <div class="j-section-divider">
+                <h5>  <a asp-area="Admin" asp-controller="Blocks" asp-action="DeleteBlock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px" data-remove-block-id="@data.TextBlock.Id" data-block-name="@data.TextBlock.Name">x</a>  @data.TextBlock.Name   </h5>
+                <div class="j-left-border-block">
 
-        <h5>@theme.Name</h5>
-        @{var blockHolders = Model.AllBlockHolders.Where(b => b.ThemeId == theme.Id);
-        }
 
-        @if (blockHolders.Count() > 0)
-        {
-        <div style="border-left:3px solid #BA68C8;padding-left:4px">
-            <table class="table table-bordered j-table j-table-headers-left ">
-                <tr><th>Název kontejneru</th></tr>
-                @foreach (BlockHolder holder in blockHolders)
-                {
 
-                    <tr><td>@holder.Name</td></tr>
 
-                }
-            </table>
-        </div>
-        }
-        else
-        {
-        <div class="alert alert-warning" role="alert">
-            Tento vzhled nemá přiřazený žádný kontejner.
-        </div>
 
-        }
 
-    </div>
+                    @if (data.BlocHolderWithTheme.Count() > 0)
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-bordered j-table j-table-headers-left">
+                                <tr><th>@Localizer["Name of the block holder"]</th><th>@Localizer["Name of the active theme"]</th><th>@Localizer["Order of the block within the block holder"]</th></tr>
+                                @foreach (var item in data.BlocHolderWithTheme)
+                                {
+                                    <tr><td>@item.BlockHolderName</td><td>@item.ThemeName</td><td>@item.Order</td></tr>
+                                }
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            @Localizer["<strong>Warning</strong> This text block has't got any assigned block holder and thus will not be rendered on the page."]
+                        </div>
+                    }
+                    <a asp-area="Admin" asp-controller="Blocks" asp-action="EditBlock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper">Upravit</a>
+                </div>
+            </div>
         }
     }
     else
     {
         <div class="alert alert-warning" role="alert">
-            Žádné položky nebyly nalezeny.
+           @Localizer["There are no blocks available."]
         </div>
 
     }
 
 </div>
+
+<div class="j-admin-section">
+    <h4><i class="fa fa-paint-brush j-icon" aria-hidden="true"></i>@Localizer["Overview of all the themes and their block holders"]</h4>
+    <div class="table-responsive">
+
+        @if (Model.AllThemes != null)
+        {
+            foreach (Theme theme in Model.AllThemes)
+            {
+                <div class="j-section-divider">
+
+                    <h5>@theme.Name</h5>
+                    @{var blockHolders = Model.AllBlockHolders.Where(b => b.ThemeId == theme.Id);
+                    }
+
+                    @if (blockHolders.Count() > 0)
+                    {
+                        <div style="border-left:3px solid #BA68C8;padding-left:4px">
+                            <table class="table table-bordered j-table j-table-headers-left ">
+                                <tr><th>@Localizer["Name of the block holder"]</th></tr>
+                                @foreach (BlockHolder holder in blockHolders)
+                                {
+
+                                    <tr><td>@holder.Name</td></tr>
+
+                                }
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-warning" role="alert">
+                           @Localizer["This theme has no assigned block holder."]
+                        </div>
+
+                    }
+
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                @Localizer["No items were found."]
+            </div>
+
+        }
+
     </div>
+</div>
 
 <div class="alert alert-secondary">
-    <b>Informace nejsou aktuální?</b> Pokud jste manuálně upravili nastavení konfiguračního souboru vzhledu, je potřeba provést aktualizaci.
-    <a class="btn btn-jasper" asp-controller="Blocks" asp-action="UpdateAllThemesData" asp-area="Admin">Aktualizovat</a>
+    <b>@Localizer["Information not up-to-date?"]</b> @Localizer["If you have manually edited configuration file of the theme, an update is required."]
+    <a class="btn btn-jasper" asp-controller="Blocks" asp-action="UpdateAllThemesData" asp-area="Admin">@Localizer["Update"]</a>
 </div>
 
 

@@ -1,12 +1,15 @@
 ﻿@model JasperSite.Areas.Admin.ViewModels.ImagesViewModel
 @using JasperSite.Models.Database
 @{
-    ViewData["Title"] = "Obrázky";
+    ViewData["Title"] = Localizer["Images"];
 }
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @section Scripts
     {
 
-   
+
     <script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
 
     <script>
@@ -32,21 +35,23 @@
     </script>
 }
 
-<h2>Obrázky</h2>
+<h2>@Localizer["Images"]</h2>
 <section class="j-admin-section">
-    <h4><i class="fa fa-upload j-icon" aria-hidden="true"></i>Nahrání obrázku</h4>
+    <h4><i class="fa fa-upload j-icon" aria-hidden="true"></i>@Localizer["Image upload"]</h4>
 
 
-    <p>Pokud chcete přidat do článku nebo textového bloku vlastní obrázek, je třeba
-    ho nejdříve nahrát. Je možné nahrát i více souborů zároveň.</p>
+    <p>
+        @Localizer["If you want to add a new image to your article or text" +
+       " block, you need to upload it first. It is possible to upload even more than one image at once."]
+    </p>
 
     <form method="post" asp-controller="Images" asp-action="PostImage" asp-area="admin" enctype="multipart/form-data">
         <div class="form-group">
             <input type="file" accept="image/*" class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
-            <small id="fileHelp" class="form-text text-muted"> Je možné nahrávat pouze obrázkové formáty (.JPG,.PNG apod.)</small>
+            <small id="fileHelp" class="form-text text-muted"> @Localizer["Only image data files are supported (.JPG, PNG, etc.)"]</small>
         </div>
         <div class="form-group">
-            <input type="submit" value="Nahrát" class="btn btn-jasper" id="submitThemeFile" disabled />
+            <input type="submit" value="@Localizer["Upload"]" class="btn btn-jasper" id="submitThemeFile" disabled />
         </div>
 
     </form>
@@ -63,7 +68,7 @@
         catch
         {
             <div class="alert alert-warning" style="margin-bottom:0px;">
-                Seznam obrázků se nepodařilo načíst.
+                @Localizer["The list of images could not be loaded."]
             </div>
         }
 

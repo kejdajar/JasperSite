@@ -19,8 +19,8 @@ namespace JasperSite.Areas.Admin.ViewModels
 
     public class SettingsNameViewModel
     {
-        [Display(Name = "Název vašeho webu")]
-        [Required(ErrorMessage = "Zvolte název vašeho webu")]
+        [Display(Name = "Website name")]
+        [Required(ErrorMessage = "Choose the name of your website")]
         public string WebsiteName { get; set; }
     }
 
@@ -34,7 +34,7 @@ namespace JasperSite.Areas.Admin.ViewModels
         public string JasperJson { get; set; }
         public int SelectedThemeId { get; set; }
 
-        [Display(Name ="Zvolte vzhled")]
+        [Display(Name ="Choose the theme")]
         public List<Theme> Themes { get; set; }
     }
 

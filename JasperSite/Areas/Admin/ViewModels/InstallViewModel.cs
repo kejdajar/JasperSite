@@ -12,7 +12,7 @@ namespace JasperSite.Areas.Admin.ViewModels
      
         public int SelectedDatabase { get; set; }
 
-        [Required(ErrorMessage = "Zadejte připojovací řetězec")]
+        [Required(ErrorMessage = "Fill in the connection string")]
         public string ConnectionString { get; set; }
 
         public List<DatabaseListItem> AllDatabases { get; set; }

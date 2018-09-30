@@ -8,10 +8,10 @@ namespace JasperSite.Areas.Admin.ViewModels
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage ="Vyplňte uživatelské jméno")]
+        [Required(ErrorMessage ="Fill in the username")]
        public string Username { get; set; }
 
-        [Required(ErrorMessage ="Vyplňte heslo")]
+        [Required(ErrorMessage ="Fill in the password")]
         public string Password { get; set; }
 
         public bool Remember { get; set; }
