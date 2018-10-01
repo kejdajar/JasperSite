@@ -117,40 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action" xml:space="preserve">
-    <value>Akce</value>
-  </data>
-  <data name="Advanced options" xml:space="preserve">
-    <value>Pokročilé možnosti</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Popis</value>
-  </data>
-  <data name="Global configuration file jasper.json" xml:space="preserve">
-    <value>Globalní konfigurační soubor jasper.json</value>
-  </data>
-  <data name="If you have manually modified some values in the database or edited configuration settings, these options could come in handy." xml:space="preserve">
-    <value>Pokud jste manuálně modifikovali vzhledy na serveru, nebo upravovali konfigurační nastavení aplikace, můžou se hodit následující možnosti</value>
-  </data>
-  <data name="Installation" xml:space="preserve">
-    <value>Instalace systému</value>
-  </data>
-  <data name="Local configuration file jasper.json" xml:space="preserve">
-    <value>Lokální konfigurační soubor jasper.json</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Nastavení</value>
-  </data>
-  <data name="Show installation page" xml:space="preserve">
-    <value>Zobrazit instalační stránku</value>
-  </data>
-  <data name="This option displays an installation page which can be used for a factory reset of this CMS." xml:space="preserve">
-    <value>Tato možnost zobrazí instalační okno, pomocí něhož je možné obnovit tovární nastavení redakčního systému</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>Aktualizovat</value>
-  </data>
-  <data name="Website name" xml:space="preserve">
-    <value>Název webové stránky</value>
+  <data name="(active)" xml:space="preserve">
+    <value>(aktuální)</value>
   </data>
 </root>

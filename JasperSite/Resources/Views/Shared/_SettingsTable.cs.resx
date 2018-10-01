@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Action" xml:space="preserve">
+    <value>Akce</value>
+  </data>
+  <data name="All changes in global and local configuration files will be loaded to memory, but changes related to themes will not be applied." xml:space="preserve">
+    <value>Všechny změny v globálních a lokálních konfiguračních souborech budou načteny do paměti, ale změny týkající se vzhledů nebudou aplikovány</value>
+  </data>
+  <data name="All changes in global and local jasper.json files will be applied." xml:space="preserve">
+    <value>Všechny změny v globálních a lokálních souborech jasper.json budou aplikovány.</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Popis</value>
+  </data>
+  <data name="In case of database corruption this option will reset themes saved in the database and all text blocks will be marked as unassigned." xml:space="preserve">
+    <value>V případě poškození databáze vzhledů tato možnost zresetuje databázi vzhledů a odstraní přiřazené textové bloky k jednotlivým kontejnerům příslušných vzhledů.</value>
+  </data>
+  <data name="Runs integrity test on all installed themes and updates their configuration settings." xml:space="preserve">
+    <value>Zkontroluje integritu evidovaných vzhledů a aktualizuje konfigurační nastavení všech vzhledů.</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Aktualizovat</value>
+  </data>
 </root>

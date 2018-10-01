@@ -316,6 +316,9 @@
     <Content Update="Views\Shared\JasperJsonThemePartialView.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Views\Shared\_SettingsTable.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Shared\_SuccessModalPartialViewTemp.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

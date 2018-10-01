@@ -8,6 +8,7 @@ using JasperSite.Models;
 using JasperSite.Models.Database;
 using Microsoft.AspNetCore.Authorization;
 using System.Net;
+using Microsoft.Extensions.Localization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {
@@ -17,11 +18,13 @@ namespace JasperSite.Areas.Admin.Controllers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+        private readonly IStringLocalizer<SettingsController> _localizer;
 
-        public SettingsController(DatabaseContext dbContext)
+        public SettingsController(DatabaseContext dbContext, IStringLocalizer<SettingsController> localizer)
         {
             this._databaseContext = dbContext;
             this._dbHelper = new DbHelper(dbContext);
+            this._localizer = localizer;
         }
 
         [HttpGet]
@@ -119,7 +122,7 @@ namespace JasperSite.Areas.Admin.Controllers
             List<Theme> allThemes = _dbHelper.GetAllThemes();
             int currentThemeId = _dbHelper.GetCurrentThemeIdFromDb();
             Theme currentTheme = allThemes.Where(t => t.Id == currentThemeId).Single();
-            currentTheme.Name += " (aktuální)";
+            currentTheme.Name +=" " + _localizer["(active)"];
             allThemes.Remove(currentTheme);
             allThemes.Insert(0, currentTheme);
             return allThemes;
@@ -142,7 +145,7 @@ namespace JasperSite.Areas.Admin.Controllers
 
             // currently activated theme will be marked
             int currentThemeid = _dbHelper.GetCurrentThemeIdFromDb();
-            allThemes.Where(t => t.Id == currentThemeid).Single().Name += " (aktuální)";
+            allThemes.Where(t => t.Id == currentThemeid).Single().Name += " "+_localizer["(active)"];
 
             model.Themes = allThemes;
 
@@ -178,15 +181,7 @@ namespace JasperSite.Areas.Admin.Controllers
                 Configuration.WebsiteConfig.SaveThemeJsonFileAsString(oldDataBackup, themeNameToBeUpdated);
             }
 
-            //// update model
-            //JasperJsonThemeViewModel model = new JasperJsonThemeViewModel();
-            //model.JasperJson = Configuration.WebsiteConfig.GetThemeJsonFileAsString();
-            //// currently selected theme will be first in the list
-            //List<Theme> allThemes = _dbHelper.GetAllThemes();
-            //Theme themeToBeUpdated = _dbHelper.GetAllThemes().Where(t => t.Id == selectedThemeId).Single();
-            //themeToBeUpdated.Name += " (aktuální)";
-            //allThemes.Remove(themeToBeUpdated);
-            //allThemes.Insert(0, themeToBeUpdated);
+            
 
 
             JasperJsonThemeViewModel model = new JasperJsonThemeViewModel();
@@ -200,7 +195,7 @@ namespace JasperSite.Areas.Admin.Controllers
 
             // currently activated theme will be marked
             int currentThemeid = _dbHelper.GetCurrentThemeIdFromDb();
-            allThemes.Where(t => t.Id == currentThemeid).Single().Name += " (aktuální)";
+            allThemes.Where(t => t.Id == currentThemeid).Single().Name += " "+ _localizer["(active)"];
 
             model.Themes = allThemes;
 
