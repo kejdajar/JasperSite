@@ -7,13 +7,9 @@
   "missingImagePath": "./Images/missing.jpg",
   "routingList": {
     "homePage": [
-<<<<<<< Updated upstream
-      "/home/index",
-=======
-     "/home/index",
->>>>>>> Stashed changes
+      "/",
       "/home",
-      "/"
+      "/home/index"
     ],
     "homePageFile": "Index.cshtml",
     "errorPageFile": "Error.cshtml"
