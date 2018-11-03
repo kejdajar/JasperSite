@@ -4,8 +4,9 @@
 }
 @section Scripts {
 
-   
-    <script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>
+
+    <script src="/nodeLib/jquery-ui-dist/jquery-ui.min.js"></script>
+
     @{ Html.RenderPartial("TinyMceSettingsPartialView");}
 
     @*@{ Html.RenderPartial("TinyMceSettingsPartialView");}*@
@@ -43,8 +44,8 @@
                     },
                     error: function(data){
         savedInfo("<strong>Chyba.</strong> Změny nemohly být uloženy.", "alert-danger");
-                      
-        
+
+
                     }
                 });
         }
@@ -58,7 +59,8 @@
 
 @section Styles {
 
-    <link href="~/node_modules/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
+    <link href="/nodeLib/jquery-ui-dist/jquery-ui.min.css" rel="stylesheet" />
+
 
 }
 
