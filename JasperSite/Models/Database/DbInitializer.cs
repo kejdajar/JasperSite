@@ -6,6 +6,7 @@ using JasperSite.Models;
 using JasperSite.Areas.Admin.Models;
 using JasperSite.Models.Providers;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace JasperSite.Models.Database
 {
@@ -32,21 +33,29 @@ namespace JasperSite.Models.Database
             // Resets the configuration file in case it was modified
             Configuration.GlobalWebsiteConfig.ThemeName = "Default";
 
-            if (ensureDbIsDeleted) DatabaseContext.Database.EnsureDeleted();
-            DatabaseContext.Database.EnsureCreated();
+
+
+            /*---START Does not work on certain webhostings--- */
+
+            //if (ensureDbIsDeleted) DatabaseContext.Database.EnsureDeleted();
+            //DatabaseContext.Database.EnsureCreated();
+
+            /*---END Does not work on certain webhostings--- */
+
+            DatabaseContext.Database.Migrate(); // creates the database - working solution
 
             //Configuration.DbHelper = new DbHelper(DatabaseContext); // Old implementation without dependency injection
 
-          
 
 
-           
+
+
 
             // If there is at least one user, the DB was already seeded
-//if (DatabaseContext.Users.Any())
-//{
-//    return;   // DB has been seeded
-//}
+            //if (DatabaseContext.Users.Any())
+            //{
+            //    return;   // DB has been seeded
+            //}
 
 
             Category[] categories = new Category[]
