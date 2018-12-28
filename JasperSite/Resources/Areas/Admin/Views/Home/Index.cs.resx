@@ -132,14 +132,8 @@
   <data name="Information about categories and articles could not be fetched." xml:space="preserve">
     <value>Nepodařilo se získat informace o rubrikách a článcích. </value>
   </data>
-  <data name="JasperSite is a part of master's thesis: &lt;i&gt;Design and implementation of Content Management System in ASP.NET Core&lt;/i&gt;, published on Czech University of Life Sciences. The author of this content management system and the related master's thesis is Bc. Jaromír Kejda." xml:space="preserve">
-    <value>Redakční systém je součástí diplomové práce:&lt;i&gt; Návrh a implementace redakčního systému v ASP.NET Core&lt;/i&gt;, vedené na České zemědělské univerzitě v Praze, Provozně ekonomické fakultě, Katedře systémového inženýrství. Autorem diplomové práce a redakčního systému &lt;i&gt;JasperSite&lt;/i&gt; je Bc. Jaromír Kejda.</value>
-  </data>
   <data name="Language" xml:space="preserve">
     <value>Jazyk</value>
-  </data>
-  <data name="Master's Thesis" xml:space="preserve">
-    <value>Diplomová práce</value>
   </data>
   <data name="Number of articles in category" xml:space="preserve">
     <value>Počet článků v rubrice</value>
