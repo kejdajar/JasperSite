@@ -108,11 +108,20 @@ namespace JasperSite
 
             Env.ServiceProvider = serviceProvider;
 
+
+            CultureInfo en = new CultureInfo("en");
+            en.DateTimeFormat.ShortDatePattern = "MM/dd/yyyy";
+
+            CultureInfo cs = new CultureInfo("cs");
+            cs.DateTimeFormat.ShortDatePattern = "dd.MM.yyyy";
+
             var supportedCultures = new[]
             { 
-                new CultureInfo("en"),
-                new CultureInfo("cs")
+                en,
+                cs
             };
+
+           
 
             app.UseRequestLocalization(new RequestLocalizationOptions
             {

@@ -1,8 +1,10 @@
 ﻿@model JasperSite.Areas.Admin.ViewModels.EditArticleViewModel
 @using JasperSite.Models.Database
 @using JasperSite.Models
-
+@using Microsoft.AspNetCore.Localization
 @using Microsoft.AspNetCore.Mvc.Localization
+
+
 @inject IViewLocalizer Localizer
 
 @{
@@ -14,9 +16,17 @@
     @*<script src="~/node_modules/jquery-ui-dist/jquery-ui.min.js"></script>*@
     <script src="~/nodeLib/jquery-ui-dist/jquery-ui.min.js"></script>
 
+    @{
+        var rqf = Context.Features.Get<IRequestCultureFeature>();
+        // Culture contains the information of the requested culture
+        var culture = rqf.RequestCulture.Culture;
+    }
     <script src="~/Areas/Admin/Content/Scripts/EditArticle.js"></script>
-
-
+    <script>
+        /* Enables datepicker on date field */
+        $.datepicker.setDefaults($.datepicker.regional['@culture']);
+        
+    </script>
 
 
     <script>

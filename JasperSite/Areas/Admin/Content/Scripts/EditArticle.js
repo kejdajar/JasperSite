@@ -36,8 +36,7 @@ $.datepicker.regional['sk'] = {
     showMonthAfterYear: false,
     yearSuffix: ''
 };
-/* Enables datepicker on date field */
-$.datepicker.setDefaults($.datepicker.regional['cs']);
+
 $(document).ready(function () {
 
 
@@ -46,5 +45,6 @@ $(document).ready(function () {
 
 
 });
+
 
     
