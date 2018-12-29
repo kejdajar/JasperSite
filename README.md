@@ -1,15 +1,33 @@
 # JasperSite
 JasperSite is a web content management system built on top of ASP.NET Core MVC. The founder of this project is Ing. Jaromír Kejda. This project is a part of his master's thesis: _Design and Implementation of Content Management System in ASP.NET Core_ - for more information refer to the __CZU__ branch of this repository or visit [jaromirkejda.net](www.jaromirkejda.net) (Czech only). 
 
+
+
+<p float="left">
+  <img  src="https://github.com/kejdajar/JasperSite/blob/master/resources/readme_resources/dashboard.jpg" width="32%" height="200px" />
+  <img  src="https://github.com/kejdajar/JasperSite/blob/master/resources/readme_resources/articles_overview.jpg" width="32%" height="200px" /> 
+  <img  src="https://github.com/kejdajar/JasperSite/blob/master/resources/readme_resources/edit_article.jpg" width="32%" height="200px" />
+</p>
+
+## Set-up
+In order to deploy this CMS to your webhosting service, you need to make sure that your provider supports the .NET Core 2.1 Framework. Firstly, download the ready-to-be-deployed version of this CMS from the Releases section and upload all these un-zipped files directly to the root folder of your webhosting. You will also need a connection string to your MSSQL or a MySQL database. The last step is to visit your page, eg. http://mydomain.com/ in order to complete the installation. If done correctly, you should be prompted to insert a connection string to your database. A login screen should appear automatically, once the installation has been completed. Use a default username: *admin* and password: *admin* to log into the system.
+
+<p float="left">
+<img  src="https://github.com/kejdajar/JasperSite/blob/master/resources/readme_resources/installation_page.jpg" width="40%" height="200px" />
+  <img  src="https://github.com/kejdajar/JasperSite/blob/master/resources/readme_resources/login_page.jpg" width="35%" height="200px" />
+</p>
+
+Finally, please navigate to the *Users* section of the administration page and change usernames/passwords according to your needs. Now if you visit your webpage, eg. http://mydomain.com/ you will be greeted with a welcome page with further instructions. A great way how to start with JasperSite is to pick a different theme from the *Themes* section in your administration page.
+
+## Supported languages
+JasperSite supports _English and Czech Language_. The language will be automatically selected based on your environment and can be changed later on.
+
 ## Branches
 This repository consists of three main branches:
 
 1. __master__ - the most stable releases of JasperSite
 2. __develop__ - experimental features and unstable code
 3. __czu__ - legacy version of JasperSite, published as a part of master's thesis
-
-## Supported languages
-The source code of this program is written and commented in English. Unfortunately, the admin section of the CMS currently supports only _Czech Language_.
 
 ## Installation
 Follow the next steps according to your needs:
@@ -26,7 +44,7 @@ Follow the next steps according to your needs:
 
 ### Production Installation
 For the installation on a production server follow either the same steps as in development installation and use built-in publish feature of Visual Studio, or download the already compiled project from the releases section, which is ready to be uploaded to the production server, for instance through FTP.
-If you want to run this compiled project locally, you can navigate to the root folder and run `dotnet JasperSite.dll` via CMD. 
+If you want to run this compiled project locally, you can navigate to the root folder and run `dotnet JasperSite.dll` via CMD (make sure you have .NET Core 2.1 SDK installed). 
 
 
 ## History
