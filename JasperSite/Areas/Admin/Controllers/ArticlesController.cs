@@ -176,7 +176,7 @@ namespace JasperSite.Areas.Admin.Controllers
                     Id = articleToEdit.Id,
                     HtmlContent = articleToEdit.HtmlContent,
                     Name = articleToEdit.Name,
-                    PublishDate = articleToEdit.PublishDate,
+                    PublishDate = articleToEdit.PublishDate.ToShortDateString(),
                     Categories = dbHelper.GetAllCategories(),
                     SelectedCategoryId = articleToEdit.CategoryId,
                     Publish = articleToEdit.Publish,
@@ -211,7 +211,7 @@ namespace JasperSite.Areas.Admin.Controllers
                     newArticleData.Id = model.Id;
                     newArticleData.HtmlContent = model.HtmlContent;
                     newArticleData.Name = model.Name;
-                    newArticleData.PublishDate = (DateTime)model.PublishDate;
+                    newArticleData.PublishDate = DateTime.Parse(model.PublishDate);
                     newArticleData.CategoryId = model.SelectedCategoryId;
                     newArticleData.Publish = model.Publish;
                     newArticleData.Keywords = model.Keywords;

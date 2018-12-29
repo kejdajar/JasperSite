@@ -21,8 +21,8 @@ namespace JasperSite.Areas.Admin.ViewModels
 
         [Required(ErrorMessage = "Fill in the date of the creation")]
         [Display(Name = "Date of creation")]
-        [DisplayFormat(ApplyFormatInEditMode = true)]
-        public DateTime PublishDate { get; set; }
+        [DisplayFormat]
+        public string PublishDate { get; set; }
 
        
         [Display(Name ="Category")]
