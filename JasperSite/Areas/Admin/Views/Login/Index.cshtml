@@ -1,7 +1,11 @@
 ﻿@{
-Layout = null;
+    Layout = null;
 }
 @model JasperSite.Areas.Admin.ViewModels.LoginViewModel
+
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <!DOCTYPE html>
 <html>
@@ -9,9 +13,9 @@ Layout = null;
     <link rel="shortcut icon" href="~/Areas/Admin/Content/Images/favicon.ico" type="image/x-icon">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Přihlášení do administrace</title>
- 
-   
+    <title>@Localizer["Login to administration"]</title>
+
+
     <environment include="Development">
         <script src="~/bundles/login.bundle.js"></script>
     </environment>
@@ -28,7 +32,7 @@ Layout = null;
     <div class="container h-100">
         <div class="row h-100 justify-content-center align-items-center">
 
-          
+
             @if (!User.Identity.IsAuthenticated)
             {
 
@@ -37,18 +41,18 @@ Layout = null;
                         <h2 class="text-center">J<span style="color:#BA68C8">asp</span>erSite</h2>
 
                         <div class="form-group">
-                            <input asp-for="Username" type="text" class="form-control" placeholder="Uživatelské jméno" required="required">
+                            <input asp-for="Username" type="text" class="form-control" placeholder="@Localizer["Username"]" required="required">
                         </div>
                         <div class="form-group">
-                            <input asp-for="Password" type="password" class="form-control" placeholder="Heslo" required="required">
+                            <input asp-for="Password" type="password" class="form-control" placeholder="@Localizer["Password"]" required="required">
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-jasper" style="width:100%">Přihlásit se</button>
+                            <button type="submit" class="btn btn-jasper" style="width:100%">@Localizer["Login"]</button>
                         </div>
 
                         <div class="clearfix">
-                            <label class="checkbox-inline"><input asp-for="Remember" type="checkbox"> Zapamatovat si</label> <br />
-                            <a asp-area="" asp-controller="Home" asp-action="Index">Zpátky na web</a>
+                            <label class="checkbox-inline"><input asp-for="Remember" type="checkbox"> @Localizer["Remember me"]</label> <br />
+                            <a asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Return to website"]</a>
                         </div>
 
                         @if (!string.IsNullOrEmpty(Context.Request.Query["ReturnUrl"]))
@@ -67,17 +71,17 @@ Layout = null;
             {
 
                 <div class="login-form">
-                    <form >
+                    <form>
                         <h2 class="text-center">J<span style="color:#BA68C8">asp</span>erSite</h2>
 
 
                         <div class="form-group">
-                            <a style="width:100%" asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-jasper">Administrace</a>
-                            <a asp-area="Admin" asp-controller="Login" asp-action="SignOut" class="btn btn-jasper btn-leave">Odhlásit se</a>
+                            <a style="width:100%" asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-jasper">@Localizer["Administration"]</a>
+                            <a asp-area="Admin" asp-controller="Login" asp-action="SignOut" class="btn btn-jasper btn-leave">@Localizer["Sign Out"]</a>
 
                         </div>
                         <div>
-                            <a asp-area="" asp-controller="Home" asp-action="Index">Zpátky na web</a>
+                            <a asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Return to website"]</a>
                         </div>
                     </form>
                 </div>

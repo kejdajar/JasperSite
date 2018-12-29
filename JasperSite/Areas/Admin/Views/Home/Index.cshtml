@@ -16,7 +16,7 @@
 
 
 @{
-    ViewBag.Title=Localizer["Overview"];
+    ViewBag.Title=Localizer["Dashboard"];
 }
 @model JasperSite.Areas.Admin.ViewModels.HomeViewModel
 
@@ -148,7 +148,7 @@ $(document).ready(function(){
 
 
 
-<h2>@Localizer["Overview"] </h2>
+<h2>@Localizer["Dashboard"] </h2>
 
 <style>
     .list-group-item {
@@ -170,7 +170,7 @@ $(document).ready(function(){
             {
                 <h4><i class="fa fa-star j-icon" aria-hidden="true"></i>@Localizer["Welcome back"]</h4>
 
-                <small> Dnes je @DateTime.Now.ToLongDateString()</small>
+                <small>@Localizer["Today is"] @DateTime.Now.ToLongDateString()</small>
                 <hr />
                 <p> @Localizer["Your username"]: @Model.CurrentUser.Username</p>
 
@@ -200,7 +200,7 @@ $(document).ready(function(){
     </div>
 
     <div class="col-lg-6">
-        <section class="j-admin-section  alert alert-info alert-dismissible">
+        <section class="j-admin-section  alert alert-info alert-dismissible" style="color:black!important">
 
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             <h4><i class="fa fa-sticky-note j-icon" aria-hidden="true"></i>@Localizer["Tips and Tricks"]</h4>

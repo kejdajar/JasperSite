@@ -202,16 +202,10 @@
             @* Page for normal visitor *@
 
             <div class="jumbotron">
-                <h1>
-                    @{ string websiteHeader = J.GetWebsiteName();
-                        @if (websiteHeader == null)
-                        {
-                            websiteHeader = "Omlouváme se, ";
-                        } }
-
-                    @websiteHeader
+                <h1> 
+                    @Localizer["We are sorry,"]
                 </h1>
-                <h4>stránka je momentálně mimo provoz </h4>
+                <h4>@Localizer["this website is unavailable right now"]</h4>
             </div>
 
             <div class="row">
@@ -220,8 +214,8 @@
 
             <footer>
                 <hr />
-                Tento web využívá redakční systém JasperSite.
-                <a asp-controller="Login" asp-action="Index" asp-area="Admin">Přihlásit se</a>
+                @Localizer["This website is powered by JasperSite."]
+                <a asp-controller="Login" asp-action="Index" asp-area="Admin">@Localizer["Login"]</a>
             </footer>
         }
     </div>

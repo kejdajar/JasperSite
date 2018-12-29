@@ -141,6 +141,9 @@
   <data name="Local configuration file jasper.json" xml:space="preserve">
     <value>Lokální konfigurační soubor jasper.json</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Přihlásit se</value>
+  </data>
   <data name="Logout user" xml:space="preserve">
     <value>Odhlásit uživatele</value>
   </data>
@@ -153,8 +156,17 @@
   <data name="This page lists all the fatal errors that has to be resolved before JasperSite will be fully operational again." xml:space="preserve">
     <value>Na této stránce se nachází seznam všech chyb, které je potřeba opravit, než bude možné redakční systém spolehlivě používat.</value>
   </data>
+  <data name="This website is powered by JasperSite." xml:space="preserve">
+    <value>Tento web využívá redakční systém JasperSite.</value>
+  </data>
+  <data name="this website is unavailable right now" xml:space="preserve">
+    <value>tato stránka je momentálně mimo provoz</value>
+  </data>
   <data name="Troubleshooting" xml:space="preserve">
     <value>Řešení problémů</value>
+  </data>
+  <data name="We are sorry," xml:space="preserve">
+    <value>Omlouváme se,</value>
   </data>
   <data name="Welcome user" xml:space="preserve">
     <value>Vítejte uživateli</value>

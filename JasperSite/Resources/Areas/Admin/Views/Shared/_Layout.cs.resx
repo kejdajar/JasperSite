@@ -126,14 +126,14 @@
   <data name="Categories" xml:space="preserve">
     <value>Rubriky</value>
   </data>
+  <data name="Dashboard" xml:space="preserve">
+    <value>Přehled</value>
+  </data>
   <data name="Images" xml:space="preserve">
     <value>Obrázky</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Jazyk</value>
-  </data>
-  <data name="Overview" xml:space="preserve">
-    <value>Přehled</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Nastavení</value>
