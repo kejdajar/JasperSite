@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Html;
 using System.Text;
 using JasperSite.Helpers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 
 namespace JasperSite.Models.Database
 {
@@ -212,7 +213,7 @@ namespace JasperSite.Models.Database
         /// </summary>
         /// <param name="themeNamesToBeAdded"></param>        
         /// <exception cref="DatabaseHelperException"></exception>
-        void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded);
+        void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded, IRequestCultureFeature culture);
 
         /// <summary>
         /// 1) Removes all themes from database.
@@ -221,20 +222,20 @@ namespace JasperSite.Models.Database
         /// 4) All text blocks will be marked as unassigned.
         /// </summary>
         /// <exception cref="DatabaseHelperException"></exception>
-        void ReconstructAndClearThemeData();
+        void ReconstructAndClearThemeData(IRequestCultureFeature culture);
 
         /// <summary>       
         /// Returns all theme names that have not yet been stored in the database.
         /// </summary>
         /// <exception cref="DatabaseHelperException"></exception>
-        List<string> CheckThemeFolderAndDatabaseIntegrity();
+        List<string> CheckThemeFolderAndDatabaseIntegrity(IRequestCultureFeature culture);
 
         /// <summary>
         /// Finds theme names that are registered in Db but not physically present in theme folder.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="DatabaseHelperException"></exception>
-        List<string> FindManuallyDeletedThemes();
+        List<string> FindManuallyDeletedThemes(IRequestCultureFeature culture);
 
         /// <summary>
         /// Returns current theme Id.
@@ -863,12 +864,12 @@ namespace JasperSite.Models.Database
 
         
         ///<see cref="IJasperDataService.AddThemesFromFolderToDatabase(List{string})"/>
-        public void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded)
+        public void AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded, IRequestCultureFeature culture)
         {
             try
             {
                 // All themes info, even those that were already registered
-                List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+                List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive(culture);
 
                 // Subset of new themes that will be stored in DB
                 List<ThemeInfo> subset = new List<ThemeInfo>();
@@ -918,7 +919,7 @@ namespace JasperSite.Models.Database
 
        
         /// <see cref="IJasperDataService.ReconstructAndClearThemeData"/>
-        public void ReconstructAndClearThemeData()
+        public void ReconstructAndClearThemeData(IRequestCultureFeature culture)
         {
             try
             {
@@ -928,7 +929,7 @@ namespace JasperSite.Models.Database
 
                 // Old text blocks will not be deleted
 
-                List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+                List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive(culture);
                 foreach (ThemeInfo ti in themesInfo)
                 {
                     Theme theme = new Theme() { Name = ti.ThemeName };
@@ -963,11 +964,11 @@ namespace JasperSite.Models.Database
 
       
         /// <see cref="IJasperDataService.CheckThemeFolderAndDatabaseIntegrity"/>
-        public List<string> CheckThemeFolderAndDatabaseIntegrity()
+        public List<string> CheckThemeFolderAndDatabaseIntegrity(IRequestCultureFeature culture)
         {
             try
             {
-                List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo();
+                List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo(culture);
                 List<Theme> themesStoredInDb = GetAllThemes();
 
                 // All names that are to be found in DB will be removed from this list
@@ -996,11 +997,12 @@ namespace JasperSite.Models.Database
 
        
         /// <see cref="IJasperDataService.FindManuallyDeletedThemes"/>
-        public List<string> FindManuallyDeletedThemes()
+        public List<string> FindManuallyDeletedThemes(IRequestCultureFeature culture)
         {
             try
             {
-                List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo();
+               
+                List<ThemeInfo> themeInfosFromFolder = Configuration.ThemeHelper.GetInstalledThemesInfo(culture);
                 List<Theme> themesStoredInDb = GetAllThemes();
 
                 List<string> themeNamesOnlyInDatabaseAndNotInFolder = themesStoredInDb.Select(n => n.Name).ToList();
@@ -1653,7 +1655,7 @@ namespace JasperSite.Models.Database
         /// </summary>
         /// <param name="themeNamesToBeAdded"></param>
         /// <returns></returns>
-        bool AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded);
+        bool AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded, IRequestCultureFeature culture);
 
         /// <summary>
         /// 1) Removes all themes from database.
@@ -1663,19 +1665,19 @@ namespace JasperSite.Models.Database
         /// 5) Finally returns true. In case of failure returns false.
         /// </summary>
         /// <returns></returns>
-        bool ReconstructAndClearThemeData();
+        bool ReconstructAndClearThemeData(IRequestCultureFeature culture);
 
         /// <summary>
         /// Returns all theme names that have not yet been stored in the database. In case of failure returns null.
         /// </summary>
         /// <returns></returns>
-        List<string> CheckThemeFolderAndDatabaseIntegrity();
+        List<string> CheckThemeFolderAndDatabaseIntegrity(IRequestCultureFeature culture);
 
         /// <summary>
         /// Returns list of names of manually deleted themes. In case of failure returns null.
         /// </summary>
         /// <returns></returns>
-        List<string> FindManuallyDeletedThemes();
+        List<string> FindManuallyDeletedThemes(IRequestCultureFeature culture);
 
         /// <summary>
         /// Returns current theme Id. In case of failure returns -1.
@@ -2249,11 +2251,11 @@ namespace JasperSite.Models.Database
 
       
         /// <see cref="IJasperDataServicePublic.AddThemesFromFolderToDatabase(List{string})"/>
-        public bool AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded)
+        public bool AddThemesFromFolderToDatabase(List<string> themeNamesToBeAdded, IRequestCultureFeature culture)
         {
             try
             {
-                _dbHelper.AddThemesFromFolderToDatabase(themeNamesToBeAdded);
+                _dbHelper.AddThemesFromFolderToDatabase(themeNamesToBeAdded,culture);
                 return true;
             }
             catch
@@ -2264,11 +2266,11 @@ namespace JasperSite.Models.Database
 
         
         /// <see cref="IJasperDataServicePublic.ReconstructAndClearThemeData"/>
-        public bool ReconstructAndClearThemeData()
+        public bool ReconstructAndClearThemeData(IRequestCultureFeature culture)
         {
             try
             {
-                _dbHelper.ReconstructAndClearThemeData();
+                _dbHelper.ReconstructAndClearThemeData(culture);
                 return true;
             }
             catch
@@ -2280,11 +2282,11 @@ namespace JasperSite.Models.Database
 
        
         /// <see cref="IJasperDataServicePublic.CheckThemeFolderAndDatabaseIntegrity"/>
-        public List<string> CheckThemeFolderAndDatabaseIntegrity()
+        public List<string> CheckThemeFolderAndDatabaseIntegrity(IRequestCultureFeature culture)
         {
             try
             {
-                return _dbHelper.CheckThemeFolderAndDatabaseIntegrity();
+                return _dbHelper.CheckThemeFolderAndDatabaseIntegrity(culture);
             }
             catch
             {
@@ -2294,11 +2296,11 @@ namespace JasperSite.Models.Database
 
       
         /// <see cref="IJasperDataServicePublic.FindManuallyDeletedThemes"/>
-        public List<string> FindManuallyDeletedThemes()
+        public List<string> FindManuallyDeletedThemes(IRequestCultureFeature culture)
         {
             try
             {
-                return _dbHelper.FindManuallyDeletedThemes();
+                return _dbHelper.FindManuallyDeletedThemes(culture);
             }
             catch
             {

@@ -7,6 +7,7 @@ using JasperSite.Models.Providers;
 using Microsoft.AspNetCore.Hosting;
 using JasperSite.Models.Database;
 using JasperSite.Areas.Admin.Models;
+using Microsoft.AspNetCore.Localization;
 
 namespace JasperSite.Models
 {
@@ -50,7 +51,7 @@ namespace JasperSite.Models
         }
         
 
-        public static void CreateAndSeedDb(DatabaseContext dbContext,bool ensureDbIsDeleted = false)
+        public static void CreateAndSeedDb(DatabaseContext dbContext,IRequestCultureFeature culture, bool ensureDbIsDeleted = false)
         {
             if (GlobalWebsiteConfig.InstallationCompleted)
             {
@@ -60,7 +61,7 @@ namespace JasperSite.Models
               
 
                 DbInitializer init = new DbInitializer(dbContext);
-                init.Initialize(ensureDbIsDeleted);
+                init.Initialize(culture,ensureDbIsDeleted);
                 //}
                 //catch(NotSupportedDatabaseException ex)
                 //{

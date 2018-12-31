@@ -1,1 +1,1 @@
-﻿Jasper je základní vzhled vaší webové stránky v červeném odstínu.
+﻿Jasper is a basic red-tinged theme for your webpage.

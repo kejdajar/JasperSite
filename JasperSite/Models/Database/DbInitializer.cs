@@ -7,6 +7,7 @@ using JasperSite.Areas.Admin.Models;
 using JasperSite.Models.Providers;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Localization;
 
 namespace JasperSite.Models.Database
 {
@@ -28,7 +29,7 @@ namespace JasperSite.Models.Database
         }
 
 
-      public void Initialize(bool ensureDbIsDeleted = false)
+      public void Initialize(IRequestCultureFeature culture, bool ensureDbIsDeleted = false)
             {
             // Resets the configuration file in case it was modified
             Configuration.GlobalWebsiteConfig.ThemeName = "Default";
@@ -137,7 +138,7 @@ namespace JasperSite.Models.Database
 
             // Text blocks
 
-            List<ThemeInfo> themesInfo= Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+            List<ThemeInfo> themesInfo= Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive(culture);
             foreach(ThemeInfo ti in themesInfo)
             {
                 Theme theme = new Theme() { Name = ti.ThemeName };

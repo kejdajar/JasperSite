@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using JasperSite.Models.Database;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {  [Authorize]
@@ -22,11 +23,13 @@ namespace JasperSite.Areas.Admin.Controllers
 
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+       
 
         public BlocksController(DatabaseContext dbContext)
         {
             this._databaseContext = dbContext;
             this._dbHelper = new DbHelper(dbContext);
+      
         }
 
         public BlockViewModel UpdatePage()
@@ -376,7 +379,8 @@ namespace JasperSite.Areas.Admin.Controllers
         {
             try
             {
-                Configuration.ThemeHelper.UpdateAllThemeRelatedData(_databaseContext);
+                IRequestCultureFeature culture = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                Configuration.ThemeHelper.UpdateAllThemeRelatedData(_databaseContext,culture);
                 TempData["Success"] = true;
 
             }

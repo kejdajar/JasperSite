@@ -11,6 +11,7 @@ using JasperSite.Models;
 using JasperSite.Models.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
@@ -25,10 +26,13 @@ namespace JasperSite.Areas.Admin.Controllers
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
 
+       
+
         public ThemesController(DatabaseContext dbContext)
         {
             this.databaseContext = dbContext;
             this.dbHelper = new DbHelper(dbContext);
+        
         }
 
         [HttpGet]
@@ -40,6 +44,7 @@ namespace JasperSite.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Index(ThemesViewModel model, IFormCollection collection)
         {
+            
 
             ThemesViewModel model2 = new ThemesViewModel();
 
@@ -56,7 +61,9 @@ namespace JasperSite.Areas.Admin.Controllers
                 if (prev != null)
                     currentPage--;
 
-                List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
+                IRequestCultureFeature culture = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo(culture);
+
                 themeInfoList.OrderBy(o => o.ThemeName);
                 ThemeInfo currentTheme = themeInfoList.Where(i => i.ThemeName == Configuration.GlobalWebsiteConfig.ThemeName).First();
                 themeInfoList.Remove(currentTheme);
@@ -102,7 +109,9 @@ namespace JasperSite.Areas.Admin.Controllers
         {
             try
             {
-                dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity());
+                IRequestCultureFeature culture = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity(culture),culture);
+
                 TempData["Success"] = true;
             }
             catch
@@ -118,7 +127,9 @@ namespace JasperSite.Areas.Admin.Controllers
         {
             try
             {
-                List<string> themesToDelete = dbHelper.FindManuallyDeletedThemes();
+                IRequestCultureFeature culture = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                List<string> themesToDelete = dbHelper.FindManuallyDeletedThemes(culture);
+
                 foreach (string name in themesToDelete)
                 {
                     dbHelper.DeleteThemeByName(name);
@@ -140,7 +151,9 @@ namespace JasperSite.Areas.Admin.Controllers
                 int itemsPerPage = 6;
                 int currentPage = 1;
 
-                List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive();
+                IRequestCultureFeature culture = Request.HttpContext.Features.Get<IRequestCultureFeature>(); // Theme description path is based on locale e.g. (desc.cs.txt) for the Czech language
+
+                List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfoByNameAndActive(culture);
 
                 JasperPaging<ThemeInfo> paging = new JasperPaging<ThemeInfo>(themeInfoList, currentPage, itemsPerPage);
 
@@ -154,8 +167,10 @@ namespace JasperSite.Areas.Admin.Controllers
                 model.ThemeInfoList = paging.GetCurrentPageItems();
 
                 // Not registered themes check
-                model.NotRegisteredThemeNames = dbHelper.CheckThemeFolderAndDatabaseIntegrity();
-                model.ManuallyDeletedThemeNames = dbHelper.FindManuallyDeletedThemes();
+
+             
+                model.NotRegisteredThemeNames = dbHelper.CheckThemeFolderAndDatabaseIntegrity(culture);
+                model.ManuallyDeletedThemeNames = dbHelper.FindManuallyDeletedThemes(culture);
 
                 return model;
             }
@@ -221,7 +236,8 @@ namespace JasperSite.Areas.Admin.Controllers
         {
             try
             {
-                Configuration.ThemeHelper.UpdateAllThemeRelatedData(databaseContext);
+                IRequestCultureFeature culture = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                Configuration.ThemeHelper.UpdateAllThemeRelatedData(databaseContext,culture);
                 TempData["Success"] = true;
               
             }
@@ -373,7 +389,8 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             finally
             {
-                dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity()); // commit physicall changes in Theme folder to DB
+                IRequestCultureFeature culture = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity(culture),culture); // commit physicall changes in Theme folder to DB
             }
             
             return RedirectToAction("Index");
@@ -385,7 +402,8 @@ namespace JasperSite.Areas.Admin.Controllers
         {
             try
             {
-                dbHelper.ReconstructAndClearThemeData();
+                IRequestCultureFeature culture = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                dbHelper.ReconstructAndClearThemeData(culture);
                 TempData["Success"] = true;
             }
             catch

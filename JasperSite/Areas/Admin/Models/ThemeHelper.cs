@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using JasperSite.Models.Database;
 using JasperSite.Models.Providers;
+using Microsoft.AspNetCore.Localization;
 
 namespace JasperSite.Areas.Admin.Models
 {
@@ -17,11 +18,24 @@ namespace JasperSite.Areas.Admin.Models
         /// </summary>
         /// <param name="pathToTheme"></param>
         /// <returns></returns>        
-        private string GetThemeDescription(string pathToTheme)
+        private string GetThemeDescription(string pathToTheme, IRequestCultureFeature culture)
         {
             try
             {
-                string desc = File.ReadAllText(Path.Combine(pathToTheme, "desc.txt"));
+                string language = culture.RequestCulture.Culture.Name;
+                string path = Path.Combine(pathToTheme, "desc." + language + ".txt");
+                string desc = string.Empty;
+
+                if(File.Exists(path))
+                {
+                     desc = File.ReadAllText(path);
+                }
+                else
+                {
+                    desc = File.ReadAllText(Path.Combine(pathToTheme,"desc.txt"));
+                }                
+
+
                 return desc;
             }
             catch
@@ -63,10 +77,10 @@ namespace JasperSite.Areas.Admin.Models
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ThemeHelperException"></exception>
-        public List<ThemeInfo> GetInstalledThemesInfo()
+        public List<ThemeInfo> GetInstalledThemesInfo(IRequestCultureFeature culture)
         {
 
-            return GetInstalledThemesInfo(Configuration.ThemeFolder);
+            return GetInstalledThemesInfo(Configuration.ThemeFolder, culture);
 
         }
 
@@ -76,7 +90,7 @@ namespace JasperSite.Areas.Admin.Models
         /// <param name="themeFolderPath">Path to the folder with themes.</param>
         /// <returns></returns>
         /// <exception cref="ThemeHelperException"></exception>
-        public List<ThemeInfo> GetInstalledThemesInfo(string themeFolderPath)
+        public List<ThemeInfo> GetInstalledThemesInfo(string themeFolderPath, IRequestCultureFeature culture)
         {
 
             try
@@ -92,7 +106,7 @@ namespace JasperSite.Areas.Admin.Models
 
                         ThemeName = _themeName,
                         ThemeFolder = themeFolderPath,
-                        ThemeDescription = GetThemeDescription(themeSubdirPath),
+                        ThemeDescription = GetThemeDescription(themeSubdirPath, culture),
                         ThemeThumbnailUrl = GetThemeThumbnailUrl(_themeName)
                     };
                     themeInfos.Add(ti);
@@ -113,13 +127,13 @@ namespace JasperSite.Areas.Admin.Models
         /// <returns></returns>       
         /// <exception cref="ThemeHelperException"></exception>
         /// <exception cref="ThemeNotExistsException">Jasper.json file property themeName points to theme that does not exist.</exception>
-        public List<ThemeInfo> GetInstalledThemesInfoByNameAndActive()
+        public List<ThemeInfo> GetInstalledThemesInfoByNameAndActive(IRequestCultureFeature culture)
         {
 
 
             try
             {
-                List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo();
+                List<ThemeInfo> themeInfoList = Configuration.ThemeHelper.GetInstalledThemesInfo(culture);
                 themeInfoList.OrderBy(o => o.ThemeName);
                 ThemeInfo currentTheme = themeInfoList.Where(i => i.ThemeName == Configuration.GlobalWebsiteConfig.ThemeName).First();
                 themeInfoList.Remove(currentTheme);
@@ -173,17 +187,17 @@ namespace JasperSite.Areas.Admin.Models
         /// </summary>
         /// <param name="Database"></param>
         /// <exception cref="ThemeHelperException"></exception>
-        public void UpdateAllThemeRelatedData(DatabaseContext Database)
+        public void UpdateAllThemeRelatedData(DatabaseContext Database, IRequestCultureFeature culture)
         {
             try
             {
                 DbHelper dbHelper = new DbHelper(Database);
 
             // Firstly, this will add all unregistered themes to the database
-            dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity());
+            dbHelper.AddThemesFromFolderToDatabase(dbHelper.CheckThemeFolderAndDatabaseIntegrity(culture),culture);
 
             //Secondly, all manually deleted themes will be removed from the DB
-            List<string> themesToDelete = dbHelper.FindManuallyDeletedThemes();
+            List<string> themesToDelete = dbHelper.FindManuallyDeletedThemes(culture);
             foreach (string name in themesToDelete)
             {
                 dbHelper.DeleteThemeByName(name);
@@ -199,7 +213,7 @@ namespace JasperSite.Areas.Admin.Models
 
            
                 // All themes info, even those that were already registered
-                List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfo();
+                List<ThemeInfo> themesInfo = Configuration.ThemeHelper.GetInstalledThemesInfo(culture);
 
 
                 foreach (ThemeInfo ti in themesInfo)

@@ -1,2 +1,2 @@
-﻿Default je základní výchozí vzhled vaší webové stránky a slouží jako návod pro začínající uživatele.
-Neobsahuje žádný uživatelský obsah.
+﻿"Default" is a demo page containing a short tutorial for beginners. This theme
+does not show any user content.

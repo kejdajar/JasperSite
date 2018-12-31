@@ -24,12 +24,12 @@ namespace JasperSite.Areas.Admin.Controllers
      
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
+     
 
         public HomeController(DatabaseContext dbContext)
         {
             this.databaseContext = dbContext;
-            this.dbHelper = new DbHelper(dbContext);
-          
+            this.dbHelper = new DbHelper(dbContext);           
         }
 
       
@@ -75,8 +75,9 @@ namespace JasperSite.Areas.Admin.Controllers
 
             try
             {
+               IRequestCultureFeature  culture = Request.HttpContext.Features.Get<IRequestCultureFeature>();
                 Configuration.Initialize();
-                Configuration.ThemeHelper.UpdateAllThemeRelatedData(databaseContext);
+                Configuration.ThemeHelper.UpdateAllThemeRelatedData(databaseContext,culture);
 
                 if (isAjaxCall)
                 {

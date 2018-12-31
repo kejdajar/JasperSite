@@ -1,0 +1,2 @@
+﻿Default je základní výchozí vzhled vaší webové stránky a slouží jako návod pro začínající uživatele.
+Neobsahuje žádný uživatelský obsah.

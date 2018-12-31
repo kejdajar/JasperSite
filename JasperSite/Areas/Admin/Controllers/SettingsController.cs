@@ -9,6 +9,7 @@ using JasperSite.Models.Database;
 using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Localization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {
@@ -19,12 +20,14 @@ namespace JasperSite.Areas.Admin.Controllers
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
         private readonly IStringLocalizer<SettingsController> _localizer;
+      
 
         public SettingsController(DatabaseContext dbContext, IStringLocalizer<SettingsController> localizer)
         {
             this._databaseContext = dbContext;
             this._dbHelper = new DbHelper(dbContext);
             this._localizer = localizer;
+           
         }
 
         [HttpGet]
@@ -167,7 +170,9 @@ namespace JasperSite.Areas.Admin.Controllers
                 string newJsonData = viewModel.JasperJson;
 
                 Configuration.WebsiteConfig.SaveThemeJsonFileAsString(newJsonData,themeNameToBeUpdated);
-                Configuration.ThemeHelper.UpdateAllThemeRelatedData(_databaseContext); // apply changes             
+
+                IRequestCultureFeature culture = Request.HttpContext.Features.Get<IRequestCultureFeature>();
+                Configuration.ThemeHelper.UpdateAllThemeRelatedData(_databaseContext,culture); // apply changes             
 
                 TempData["Success"] = true;
              
