@@ -5,8 +5,8 @@
 
 <table class="table j-table-no-hover table-bordered">
     <tr><th>@Localizer["Action"]</th><th>@Localizer["Description"]</th></tr>
-    <tr><td style="padding:5px;width:90px"><a class="btn btn-jasper" asp-controller="Home" asp-action="Refresh" asp-area="Admin">@Localizer["Update"]</a></td><td>@Localizer["All changes in global and local jasper.json files will be applied."]</td></tr>
-    <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="Themes" asp-action="UpdateAllThemesData" asp-area="Admin">@Localizer["Update"]</a></td><td>@Localizer["Runs integrity test on all installed themes and updates their configuration settings."]</td></tr>
-    <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="Settings" asp-action="UpdateConfiguration" asp-area="Admin">@Localizer["Update"]</a></td><td>@Localizer["All changes in global and local configuration files will be loaded to memory, but changes related to themes will not be applied."]</td></tr>
-    <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="Themes" asp-action="ReconstructAllThemesCorrespondingDatabaseTables" asp-area="Admin">@Localizer["Update"]</a></td><td> @Localizer["In case of database corruption this option will reset themes saved in the database and all text blocks will be marked as unassigned."] </td></tr>
+    <tr><td style="padding:5px;width:90px"><a class="btn btn-jasper" asp-controller="home" asp-action="refresh" asp-area="admin">@Localizer["Update"]</a></td><td>@Localizer["All changes in global and local jasper.json files will be applied."]</td></tr>
+    <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="themes" asp-action="updateallthemesdata" asp-area="admin">@Localizer["Update"]</a></td><td>@Localizer["Runs integrity test on all installed themes and updates their configuration settings."]</td></tr>
+    <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="settings" asp-action="updateconfiguration" asp-area="admin">@Localizer["Update"]</a></td><td>@Localizer["All changes in global and local configuration files will be loaded to memory, but changes related to themes will not be applied."]</td></tr>
+    <tr><td style="padding:5px"><a class="btn btn-jasper" asp-controller="themes" asp-action="reconstructallthemescorrespondingdatabasetables" asp-area="admin">@Localizer["Update"]</a></td><td> @Localizer["In case of database corruption this option will reset themes saved in the database and all text blocks will be marked as unassigned."] </td></tr>
 </table>

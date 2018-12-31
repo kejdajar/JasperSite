@@ -3,11 +3,14 @@
     This partial view calls savedInfo function whenever the TempData["success"] flag is set.
 *@
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
 @if (TempData["Success"] != null)
 {
     <script>
         $(document).ready(function () {
-             savedInfo('Veškeré provedené změny byly uloženy.', 'alert-success')
+             savedInfo('@Localizer["All changes have been saved."]', 'alert-success')
          });
     </script>
 }

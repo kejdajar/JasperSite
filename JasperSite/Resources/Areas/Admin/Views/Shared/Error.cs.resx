@@ -123,4 +123,7 @@
   <data name="Error" xml:space="preserve">
     <value>Chyba</value>
   </data>
+  <data name="Something went wrong" xml:space="preserve">
+    <value>Něco se pokazilo</value>
+  </data>
 </root>

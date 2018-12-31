@@ -117,67 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action" xml:space="preserve">
-    <value>Akce</value>
+  <data name="Close" xml:space="preserve">
+    <value>Zavřít</value>
   </data>
-  <data name="Admin section" xml:space="preserve">
-    <value>Administrátorská sekce</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Popis</value>
-  </data>
-  <data name="Fatal error" xml:space="preserve">
-    <value>Závažná chyba</value>
-  </data>
-  <data name="Fatal error detected" xml:space="preserve">
-    <value>Detekovány závažné chyby</value>
-  </data>
-  <data name="Global configuration file jasper.json" xml:space="preserve">
-    <value>Globální konfigurační soubor jasper.json</value>
-  </data>
-  <data name="Go to the administration" xml:space="preserve">
-    <value>Přejít do administrace</value>
-  </data>
-  <data name="Local configuration file jasper.json" xml:space="preserve">
-    <value>Lokální konfigurační soubor jasper.json</value>
-  </data>
-  <data name="Login" xml:space="preserve">
-    <value>Přihlásit se</value>
-  </data>
-  <data name="Logout user" xml:space="preserve">
-    <value>Odhlásit uživatele</value>
-  </data>
-  <data name="Reload this page" xml:space="preserve">
-    <value>Načíst tuto stránku znovu</value>
-  </data>
-  <data name="The requested page contains an error which has to be fixed." xml:space="preserve">
-    <value>Na požadované stránce se nachází chyba, kterou je nutné opravit.</value>
-  </data>
-  <data name="This page lists all the fatal errors that has to be resolved before JasperSite will be fully operational again." xml:space="preserve">
-    <value>Na této stránce se nachází seznam všech chyb, které je potřeba opravit, než bude možné redakční systém spolehlivě používat.</value>
-  </data>
-  <data name="This website is powered by JasperSite." xml:space="preserve">
-    <value>Tento web využívá redakční systém JasperSite.</value>
-  </data>
-  <data name="this website is unavailable right now" xml:space="preserve">
-    <value>tato stránka je momentálně mimo provoz</value>
-  </data>
-  <data name="Troubleshooting" xml:space="preserve">
-    <value>Řešení problémů</value>
-  </data>
-  <data name="We are sorry," xml:space="preserve">
-    <value>Omlouváme se,</value>
-  </data>
-  <data name="Welcome user" xml:space="preserve">
-    <value>Vítejte uživateli</value>
-  </data>
-  <data name="You can see this section because you have the role" xml:space="preserve">
-    <value>Tuto sekci vidíte, protože máte roli</value>
-  </data>
-  <data name="&lt;b&gt;Main error:&lt;/b&gt;" xml:space="preserve">
-    <value>&lt;b&gt;Hlavní chyba:&lt;/b&gt;</value>
-  </data>
-  <data name="&lt;i&gt;Inner Exception:&lt;/i&gt;" xml:space="preserve">
-    <value>&lt;i&gt;Vnitřní výjimka:&lt;/i&gt;</value>
+  <data name="Your request could not be completed." xml:space="preserve">
+    <value>Váš požadavek nebylo možno provést.</value>
   </data>
 </root>

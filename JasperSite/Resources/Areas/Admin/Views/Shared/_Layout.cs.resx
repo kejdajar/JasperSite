@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&lt;strong&gt;Failure.&lt;/strong&gt; Configuration data could not be updated." xml:space="preserve">
+    <value>&lt;strong&gt;Chyba.&lt;/strong&gt; Konfigurační nastavení nebylo možné aktualizovat.</value>
+  </data>
   <data name="About" xml:space="preserve">
     <value>O systému</value>
   </data>
@@ -132,11 +135,17 @@
   <data name="Images" xml:space="preserve">
     <value>Obrázky</value>
   </data>
+  <data name="JavaScript is disabled in your browser. Some features could be unavailabe." xml:space="preserve">
+    <value>Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</value>
+  </data>
   <data name="Language" xml:space="preserve">
     <value>Jazyk</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Nastavení</value>
+  </data>
+  <data name="Successfully updated all configuration data." xml:space="preserve">
+    <value>Veškeré konfigurační nastavení bylo aktualizováno.</value>
   </data>
   <data name="Text blocks" xml:space="preserve">
     <value>Bloky</value>

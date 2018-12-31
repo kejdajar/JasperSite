@@ -61,10 +61,10 @@ $(document).ready(function(){
                         type: 'get',
                         url: '@Url.Action("Refresh","Home")',
                         success: function (data) {
-                            savedInfo("Všekeré konfigurační nastavení bylo aktualizováno.", "alert-success");
+                            savedInfo("@Localizer["Successfully updated all configuration data."]", "alert-success");
                         },
         error: function(){
-        savedInfo("<strong>Chyba.</strong> Konfigurační nastavení nebylo možné aktualizovat.", "alert-danger");
+            savedInfo("<strong>Failure.</strong> Configuration data could not be updated.", "alert-danger");
         }
                     })
 
@@ -92,7 +92,7 @@ $(document).ready(function(){
                 </div>
                 <div class="menuGroup">
                     <div class="j-link-container">
-                        <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Home" ? "j-menu-highlight" : "" )" asp-controller="Home" asp-action="Index" asp-area="Admin">
+                        <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString().ToLower() == "home" ? "j-menu-highlight" : "" )" asp-controller="home" asp-action="index" asp-area="admin">
                             <i class="fa fa-home j-fa-margin" aria-hidden="true"></i>
                            @Localizer["Dashboard"]
                         </a>
@@ -101,56 +101,56 @@ $(document).ready(function(){
                     </div>
 
                     <div class="j-link-container">
-                        <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Categories" ? "j-menu-highlight" : "" )" asp-controller="Categories" asp-action="Index" asp-area="Admin">
+                        <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString().ToLower() == "categories" ? "j-menu-highlight" : "" )" asp-controller="categories" asp-action="index" asp-area="admin">
                             <i class="fa fa-folder j-fa-margin" aria-hidden="true"></i>
                             @Localizer["Categories"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
-                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Articles" ? "j-menu-highlight" : "" )" asp-controller="Articles" asp-action="Index" asp-area="Admin">
+                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString().ToLower() == "articles" ? "j-menu-highlight" : "" )" asp-controller="articles" asp-action="index" asp-area="admin">
                             <i class="fa fa-edit j-fa-margin" aria-hidden="true"></i>
                             @Localizer["Articles"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
-                        <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString() == "Themes" ? "j-menu-highlight" : "" )" asp-controller="Themes" asp-action="Index" asp-area="Admin">
+                        <a class="j-link  @(ViewContext.RouteData.Values["controller"].ToString().ToLower() == "themes" ? "j-menu-highlight" : "" )" asp-controller="themes" asp-action="index" asp-area="admin">
                             <i class="fa fa-paint-brush j-fa-margin " aria-hidden="true"></i>
                             @Localizer["Themes"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
-                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Blocks" ? "j-menu-highlight" : "" )" asp-controller="Blocks" asp-action="Index" asp-area="Admin">
+                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString().ToLower() == "blocks" ? "j-menu-highlight" : "" )" asp-controller="blocks" asp-action="index" asp-area="admin">
                             <i class="fa fa-comment-o j-fa-margin" aria-hidden="true"></i>
                             @Localizer["Text blocks"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
-                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Images" ? "j-menu-highlight" : "" )" asp-controller="Images" asp-action="Index" asp-area="Admin">
+                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString().ToLower() == "images" ? "j-menu-highlight" : "" )" asp-controller="images" asp-action="index" asp-area="admin">
                             <i class="fa fa-image j-fa-margin" aria-hidden="true"></i>
                             @Localizer["Images"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
-                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Users" ? "j-menu-highlight" : "" )" asp-controller="Users" asp-action="Index" asp-area="Admin">
+                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString().ToLower() == "users" ? "j-menu-highlight" : "" )" asp-controller="users" asp-action="index" asp-area="admin">
                             <i class="fa fa-user-circle-o j-fa-margin" aria-hidden="true"></i>
                             @Localizer["Users"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
-                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "Settings" ? "j-menu-highlight" : "" )" asp-controller="Settings" asp-action="Index" asp-area="Admin">
+                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() .ToLower()== "settings" ? "j-menu-highlight" : "" )" asp-controller="settings" asp-action="index" asp-area="admin">
                             <i class="fa fa-cogs j-fa-margin" aria-hidden="true"></i>
                             @Localizer["Settings"]
                         </a>
                     </div>
 
                     <div class="j-link-container">
-                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString() == "About" ? "j-menu-highlight" : "" )" asp-controller="About" asp-action="Index" asp-area="Admin">
+                        <a class="j-link @(ViewContext.RouteData.Values["controller"].ToString().ToLower() == "about" ? "j-menu-highlight" : "" )" asp-controller="about" asp-action="index" asp-area="admin">
                             <i class="fa fa-info-circle j-fa-margin" aria-hidden="true"></i>
                             @Localizer["About"]
                         </a>
@@ -184,28 +184,28 @@ $(document).ready(function(){
                             <!--View page button-->
                             <div class="j-header-group">
                                 <div class="j-header-group-item">
-                                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+                                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="home" asp-area="admin" asp-action="index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
                                 </div>
                             </div>
 
                             <!--View page button-->
                             <div class="j-header-group">
                                 <div class="j-header-group-item">
-                                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+                                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="home" asp-area="" asp-action="index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
                                 </div>
                             </div>
 
                             <!--Refresh button-->
                             <div class="j-header-group">
                                 <div class="j-header-group-item  ">
-                                    <a id="refreshButton" class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="Admin" asp-action="Refresh">   <i class="fa fa-refresh fa-1x" aria-hidden="true"></i> </a>
+                                    <a id="refreshButton" class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="home" asp-area="admin" asp-action="refresh">   <i class="fa fa-refresh fa-1x" aria-hidden="true"></i> </a>
                                 </div>
                             </div>
 
                             <div class="j-header-group">
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <a class="btn btn-jasper btn-jasper-icon-control-panel" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-sign-out fa-1x"> </i> @*Odhlásit uživatele <i> @User.Identity.Name</i>*@</a>
+                                    <a class="btn btn-jasper btn-jasper-icon-control-panel" style="left:5px;" asp-controller="login" asp-area="admin" asp-action="signout"><i class="fa fa-sign-out fa-1x"> </i> @*Odhlásit uživatele <i> @User.Identity.Name</i>*@</a>
                                 }
                                 else
                                 {
@@ -227,7 +227,7 @@ $(document).ready(function(){
 
                 <!--Noscript notification-->
                 <div class="j-flex-row" style="background-color:red">
-                    <noscript>  Ve Vašem prohlížeči je zakázán JavaScript. Některé funkcionality nemusí být dostupné.</noscript>
+                    <noscript>@Localizer["JavaScript is disabled in your browser. Some features could be unavailabe."]</noscript>
                 </div>
 
 

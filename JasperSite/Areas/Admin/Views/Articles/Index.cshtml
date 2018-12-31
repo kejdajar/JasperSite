@@ -44,13 +44,13 @@
     <h4><i class="fa fa-pencil j-icon" aria-hidden="true"></i>@Localizer["New Article"]</h4>
     @if (Model.UncategorizedCategoryExists)
     {
-        <a asp-area="Admin" asp-controller="Articles" asp-action="Add" class="btn btn-jasper" style="width:200px">@Localizer["Create"]</a>
+        <a asp-area="Admin" asp-controller="articles" asp-action="add" class="btn btn-jasper" style="width:200px">@Localizer["Create"]</a>
     }
     else
     {
         <div class=" alert alert-warning">
             <p>@Localizer["There has to be category \"uncategorized\" to add new category."]</p>
-            <a asp-area="Admin" asp-controller="Articles" asp-action="CreateUncategorizedCategory" class="btn btn-jasper">@Localizer["Create category \"Uncategorized\""]</a>
+            <a asp-area="admin" asp-controller="articles" asp-action="createuncategorizedcategory" class="btn btn-jasper">@Localizer["Create category \"Uncategorized\""]</a>
         </div>
     }
 </div>

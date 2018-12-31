@@ -208,17 +208,17 @@ $(document).ready(function(){
             <ul class="list-group">
                 <li class="list-group-item">
                    @Localizer["You can display your page using"]:
-                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="" asp-action="Index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
+                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="home" asp-area="" asp-action="index" target="_blank">   <i class="fa fa-globe fa-1x" aria-hidden="true"></i> </a>
                 </li>
 
                 <li class="list-group-item">
                    @Localizer["You can return to this page using"]:
-                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="Home" asp-area="Admin" asp-action="Index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
+                    <a class="btn btn-jasper btn-jasper-icon-control-panel" asp-controller="home" asp-area="admin" asp-action="index">   <i class="fa fa-home fa-1x" aria-hidden="true"></i> </a>
                 </li>
 
                 <li class="list-group-item">
                    @Localizer["Update configuration files using"]:
-                    <a id="tipRefreshButton" asp-controller="Home" asp-action="Refresh" asp-area="admin" class="btn btn-jasper btn-jasper-icon-control-panel">  <i class="fa fa-refresh fa-1x" aria-hidden="true"></i></a>
+                    <a id="tipRefreshButton" asp-controller="home" asp-action="refresh" asp-area="admin" class="btn btn-jasper btn-jasper-icon-control-panel">  <i class="fa fa-refresh fa-1x" aria-hidden="true"></i></a>
                 </li>
 
                 @if (User.Identity.IsAuthenticated)
@@ -227,7 +227,7 @@ $(document).ready(function(){
                 <li class="list-group-item">
                     @Localizer["You can logout using"]:
 
-                    <a class="btn btn-jasper btn-jasper-icon-control-panel" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-sign-out fa-1x"> </i> </a>
+                    <a class="btn btn-jasper btn-jasper-icon-control-panel" style="left:5px;" asp-controller="login" asp-area="admin" asp-action="signout"><i class="fa fa-sign-out fa-1x"> </i> </a>
                 </li>
 
                 }

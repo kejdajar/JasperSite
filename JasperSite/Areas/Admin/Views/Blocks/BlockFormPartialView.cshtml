@@ -78,7 +78,7 @@
             <div class="form-group">
 
 
-                <button type="submit" asp-area="Admin" asp-controller="Blocks" asp-action="AddNewBlock" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Localizer["Save changes"]</button>
+                <button type="submit" asp-area="admin" asp-controller="blocks" asp-action="addnewblock" class="btn btn-jasper"><i class="fa fa-floppy-o" aria-hidden="true"></i> @Localizer["Save changes"]</button>
 
 
 
@@ -108,7 +108,7 @@
         foreach (BlocksViewModelData data in @Model.Blocks)
         {
             <div class="j-section-divider">
-                <h5>  <a asp-area="Admin" asp-controller="Blocks" asp-action="DeleteBlock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px" data-remove-block-id="@data.TextBlock.Id" data-block-name="@data.TextBlock.Name">x</a>  @data.TextBlock.Name   </h5>
+                <h5>  <a asp-area="admin" asp-controller="blocks" asp-action="deleteblock" asp-route-id="@data.TextBlock.Id" class="btn btn-outline-danger" style="padding-left:5px;padding-right:5px;padding-top:1px;padding-bottom:1px" data-remove-block-id="@data.TextBlock.Id" data-block-name="@data.TextBlock.Name">x</a>  @data.TextBlock.Name   </h5>
                 <div class="j-left-border-block">
 
 
@@ -134,7 +134,7 @@
                             @Localizer["<strong>Warning</strong> This text block has't got any assigned block holder and thus will not be rendered on the page."]
                         </div>
                     }
-                    <a asp-area="Admin" asp-controller="Blocks" asp-action="EditBlock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper">Upravit</a>
+                    <a asp-area="admin" asp-controller="blocks" asp-action="editblock" asp-route-blockId="@data.TextBlock.Id" class="btn btn-jasper">Upravit</a>
                 </div>
             </div>
         }
@@ -201,7 +201,7 @@
 
 <div class="alert alert-secondary">
     <b>@Localizer["Information not up-to-date?"]</b> @Localizer["If you have manually edited configuration file of the theme, an update is required."]
-    <a class="btn btn-jasper" asp-controller="Blocks" asp-action="UpdateAllThemesData" asp-area="Admin">@Localizer["Update"]</a>
+    <a class="btn btn-jasper" asp-controller="blocks" asp-action="updateallthemesdata" asp-area="admin">@Localizer["Update"]</a>
 </div>
 
 

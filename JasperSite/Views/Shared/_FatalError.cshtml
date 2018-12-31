@@ -69,7 +69,7 @@
 
         try
         {
-            (errorMessages[0]) = "<b>Hlavní chyba:</b> " + errorMessages[0];
+            (errorMessages[0]) = Localizer["<b>Main error:</b>"] + " " + errorMessages[0];
             if (errorMessages.Count > 1)
             {
                 for (int i = 0; i <= errorMessages.Count(); i++)
@@ -77,7 +77,7 @@
                     if (i != 0)
                     {
 
-                        errorMessages[i] = "<i>Inner Exception:</i> " + errorMessages[i];
+                        errorMessages[i] = Localizer["<i>Inner Exception:</i>"]+ " " + errorMessages[i];
                     }
 
 
@@ -144,8 +144,8 @@
                             <p>
                                 <b>@Localizer["Admin section"]:</b> <br />
                                 @Localizer["Welcome user"] @User.Identity.Name.  @Localizer["You can see this section because you have the role "] <b>Admin</b>. <br />
-                                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-undo fa-1x"> </i> @Localizer["Logout user"] <i> @User.Identity.Name</i></a>
-                                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Home" asp-area="admin" asp-action="Index"><i class="fa fa-diamond fa-1x"> </i> @Localizer["Go to the administration"]</a>
+                                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="login" asp-area="admin" asp-action="signout"><i class="fa fa-undo fa-1x"> </i> @Localizer["Logout user"] <i> @User.Identity.Name</i></a>
+                                <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="home" asp-area="admin" asp-action="index"><i class="fa fa-diamond fa-1x"> </i> @Localizer["Go to the administration"]</a>
                                 <a name="reloadButton" class="btn btn-jasper btn-user-icon" style="left:5px;"><i class="fa fa-refresh"> </i> @Localizer["Reload this page"]</a>
                             </p>
 
@@ -182,8 +182,8 @@
 
                             <b>Sekce uživatele systému:</b> <br />
                             Vítejte uživateli @User.Identity.Name. Tuto sekci vidíte, protože jste přihlášen, ale nemáte administrátorská práva. Pro více možností se přihlašte jako administrátor. <br />
-                            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Login" asp-area="admin" asp-action="SignOut"><i class="fa fa-undo fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
-                            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="Home" asp-area="admin" asp-action="Index"><i class="fa fa-diamond fa-1x"> </i> Přejít do administrace</a>
+                            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="login" asp-area="admin" asp-action="signout"><i class="fa fa-undo fa-1x"> </i> Odhlásit uživatele <i> @User.Identity.Name</i></a>
+                            <a class="btn btn-jasper btn-user-icon" style="left:5px;" asp-controller="home" asp-area="admin" asp-action="index"><i class="fa fa-diamond fa-1x"> </i> Přejít do administrace</a>
 
                         </div>
 
@@ -215,7 +215,7 @@
             <footer>
                 <hr />
                 @Localizer["This website is powered by JasperSite."]
-                <a asp-controller="Login" asp-action="Index" asp-area="Admin">@Localizer["Login"]</a>
+                <a asp-controller="login" asp-action="index" asp-area="admin">@Localizer["Login"]</a>
             </footer>
         }
     </div>

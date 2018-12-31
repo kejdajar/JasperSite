@@ -52,7 +52,7 @@
 
                         <div class="clearfix">
                             <label class="checkbox-inline"><input asp-for="Remember" type="checkbox"> @Localizer["Remember me"]</label> <br />
-                            <a asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Return to website"]</a>
+                            <a asp-area="" asp-controller="home" asp-action="index">@Localizer["Return to website"]</a>
                         </div>
 
                         @if (!string.IsNullOrEmpty(Context.Request.Query["ReturnUrl"]))
@@ -76,12 +76,12 @@
 
 
                         <div class="form-group">
-                            <a style="width:100%" asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-jasper">@Localizer["Administration"]</a>
-                            <a asp-area="Admin" asp-controller="Login" asp-action="SignOut" class="btn btn-jasper btn-leave">@Localizer["Sign Out"]</a>
+                            <a style="width:100%" asp-area="admin" asp-controller="home" asp-action="index" class="btn btn-jasper">@Localizer["Administration"]</a>
+                            <a asp-area="admin" asp-controller="login" asp-action="signout" class="btn btn-jasper btn-leave">@Localizer["Sign Out"]</a>
 
                         </div>
                         <div>
-                            <a asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Return to website"]</a>
+                            <a asp-area="" asp-controller="home" asp-action="index">@Localizer["Return to website"]</a>
                         </div>
                     </form>
                 </div>

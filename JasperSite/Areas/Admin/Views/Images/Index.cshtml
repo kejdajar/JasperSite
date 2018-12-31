@@ -45,7 +45,7 @@
        " block, you need to upload it first. It is possible to upload even more than one image at once."]
     </p>
 
-    <form method="post" asp-controller="Images" asp-action="PostImage" asp-area="admin" enctype="multipart/form-data">
+    <form method="post" asp-controller="images" asp-action="postimage" asp-area="admin" enctype="multipart/form-data">
         <div class="form-group">
             <input type="file" accept="image/*" class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
             <small id="fileHelp" class="form-text text-muted"> @Localizer["Only image data files are supported (.JPG, PNG, etc.)"]</small>
