@@ -42,7 +42,17 @@ namespace JasperSite.Models.Database
 
             /*---END Does not work on certain webhostings--- */
 
-            DatabaseContext.Database.Migrate(); // creates the database - working solution
+            if(ensureDbIsDeleted)
+            {
+                DatabaseContext.Database.EnsureDeleted();
+                DatabaseContext.Database.EnsureCreated();
+            }
+            else
+            {
+                DatabaseContext.Database.Migrate(); // creates the database - working solution
+            }
+
+          
 
             //Configuration.DbHelper = new DbHelper(DatabaseContext); // Old implementation without dependency injection
 

@@ -12,6 +12,8 @@ namespace JasperSite.Areas.Admin.ViewModels
      
         public int SelectedDatabase { get; set; }
 
+        public bool RecreateDatabase { get; set; }
+
         [Required(ErrorMessage = "Fill in the connection string")]
         public string ConnectionString { get; set; }
 

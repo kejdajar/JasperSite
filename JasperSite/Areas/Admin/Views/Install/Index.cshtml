@@ -171,14 +171,13 @@
                             <textarea rows="3" class="form-control" type="text" asp-for="ConnectionString"> </textarea>
                             <span asp-validation-for="ConnectionString" class="text-danger"></span><br />
 
+                        </div>
 
 
 
 
 
-
-
-
+                        <div class="form-group">
                             <div class="list-group">
 
                                 <div class="list-group-item list-group-item-action flex-column align-items-start">
@@ -202,7 +201,17 @@
                             </div>
 
 
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="recreateDb" asp-for="RecreateDatabase" />
+                                <label class="form-check-label" for="recreateDb">@Localizer["Recreate database"]</label>
+                                <p>
+                                    <small>@Localizer["During installation or reinstallation the database must be empty. Provided you have sufficient permissions, you can delete all it's contents selecting the \"Recreate database\" option. Otherwise you need to empty the database manually."]</small>
+                                </p>
+                            </div>
+
                         </div>
+
+                        
 
                         <div class="form-group">
 

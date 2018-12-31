@@ -94,6 +94,7 @@ namespace JasperSite.Areas.Admin.Controllers
                     }
                     model.SelectedDatabase = idOfDb;
                     model.ConnectionString = Configuration.GlobalWebsiteConfig.ConnectionString;
+                    model.RecreateDatabase = false; // by default unchecked
                 }
                 return model;
             }
@@ -113,6 +114,8 @@ namespace JasperSite.Areas.Admin.Controllers
         {
             string selectedDb = string.Empty;
             int selectedDbId = model.SelectedDatabase;
+            bool recreateDb = model.RecreateDatabase;
+
             switch (selectedDbId)
             {
                 case 1: selectedDb = "mssql"; break;
@@ -141,7 +144,7 @@ namespace JasperSite.Areas.Admin.Controllers
 
                     //DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>(); // OLD WAY - problems with detached and atached objects
 
-                    JasperSite.Models.Configuration.CreateAndSeedDb(dbContext, true);
+                    JasperSite.Models.Configuration.CreateAndSeedDb(dbContext, recreateDb);
 
                     // All changes in jasper.json will be saved in memory
                     // Without this statement, in-memory jasper.json data will not be up-to-date
