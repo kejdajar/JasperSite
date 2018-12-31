@@ -147,4 +147,7 @@
   <data name="The article hasn't got any assigned URL." xml:space="preserve">
     <value>Článek nemá přiřazenou žádnou URL adresu</value>
   </data>
+  <data name="Uncategorized" xml:space="preserve">
+    <value>Nezařazeno</value>
+  </data>
 </root>

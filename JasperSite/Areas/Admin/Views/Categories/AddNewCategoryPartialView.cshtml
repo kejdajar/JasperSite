@@ -85,12 +85,22 @@
                 {
                     <tr>
 
-                        <td>@c.Name</td>
+                        <td>
+                            @if (c.Name == "Uncategorized")
+                            {
+                                @Localizer[c.Name]
+                            }
+                            else
+                            {
+                                @c.Name
+                            }
+
+                        </td>
                         <td>@c.Articles.Count()</td>
                         <td>
-                            @if (c.Name != "Nezařazeno")
+                            @if (c.Name != "Uncategorized")
                             {
-                                <a data-delete-id="@c.Id" data-category-name="@c.Name" asp-controller="categories" asp-action="deletecategory" asp-route-id="@c.Id" asp-area="Admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
+                                <a data-delete-id="@c.Id" data-category-name="@c.Name" asp-controller="categories" asp-action="deletecategory" asp-route-id="@c.Id" asp-area="admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
                             }
                             else
                             {

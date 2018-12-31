@@ -147,6 +147,9 @@
   <data name="Number of Articles" xml:space="preserve">
     <value>Počet článků</value>
   </data>
+  <data name="Uncategorized" xml:space="preserve">
+    <value>Nezařazeno</value>
+  </data>
   <data name="will be permanently deleted" xml:space="preserve">
     <value>bude nenávratně odstraněna</value>
   </data>

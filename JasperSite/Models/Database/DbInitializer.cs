@@ -49,7 +49,7 @@ namespace JasperSite.Models.Database
             }
             else
             {
-                DatabaseContext.Database.Migrate(); // creates the database - working solution
+                DatabaseContext.Database.Migrate(); // creates the database - working solution for every webhosting
             }
 
           
@@ -70,7 +70,7 @@ namespace JasperSite.Models.Database
 
             Category[] categories = new Category[]
             {
-                new Category(){Name="Nezařazeno"},
+                new Category(){Name="Uncategorized"},
                 new Category(){Name="První rubrika"},
                 new Category(){Name="Druhá rubrika"},
             };

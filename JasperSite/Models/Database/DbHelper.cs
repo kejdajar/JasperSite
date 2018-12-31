@@ -517,7 +517,7 @@ namespace JasperSite.Models.Database
                     Name = "Nový článek",
                     PublishDate = DateTime.Now,
                     // New article will be automatically assigned to uncategorized category
-                    CategoryId = GetAllCategories().Where(c => c.Name == "Nezařazeno").Single().Id
+                    CategoryId = GetAllCategories().Where(c => c.Name == "Uncategorized").Single().Id
                 };
 
                 Database.Articles.Add(articleEntity);
@@ -587,8 +587,8 @@ namespace JasperSite.Models.Database
 
             }
         }
+     
 
-       
         /// <see cref="IJasperDataService.GetCategoryNameById(int)"/>    
         public string GetCategoryNameById(int id)
         {
@@ -628,9 +628,9 @@ namespace JasperSite.Models.Database
             {
                 List<Category> allCategories = GetAllCategories();
                 Category categoryToBeRemoved = allCategories.Where(c => c.Id == categoryId).Single();
-                Category categoryForUnassignedArticles = allCategories.Where(c => c.Name == "Nezařazeno").Single();
+                Category categoryForUnassignedArticles = allCategories.Where(c => c.Name == "Uncategorized").Single();
 
-                if (categoryToBeRemoved.Name == "Nezařazeno")
+                if (categoryToBeRemoved.Name == "Uncategorized")
                 {
                     throw new DatabaseHelperException("Výchozí rubriku \"nezařazeno\" není možné odstranit.");
                 }
@@ -666,7 +666,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-                Category uncategorized = Database.Categories.Where(c => c.Name == "Nezařazeno").Single();
+                Category uncategorized = Database.Categories.Where(c => c.Name == "Uncategorized").Single();
                 if (uncategorized != null) return true; else return false;
             }
             catch
@@ -682,7 +682,7 @@ namespace JasperSite.Models.Database
             try
             {
                 if (UncategorizedCategoryExists()) throw new DatabaseHelperException("Uncategorized category already exists.");
-                Category uncategorized = new Category() { Name = "Nezařazeno" };
+                Category uncategorized = new Category() { Name = "Uncategorized" };
                 Database.Categories.Add(uncategorized);
                 Database.SaveChanges();
             }

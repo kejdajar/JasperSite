@@ -85,7 +85,17 @@
                     <tr data-href="@a.Id">
 
                         <td>@a.Name</td>
-                        <td>@a.Category.Name</td>
+                        <td>
+                            @if (a.Category.Name == "Uncategorized")
+                            {
+                                @Localizer[a.Category.Name]
+                            }
+                            else
+                            {
+                                @a.Category.Name
+                            }
+
+                        </td>
                         <td>@a.PublishDate.ToShortDateString()</td>
                         <td>
 

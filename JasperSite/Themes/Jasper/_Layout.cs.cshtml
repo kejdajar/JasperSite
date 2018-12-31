@@ -60,7 +60,18 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
                         @foreach (Category c in allCategories)
                         {
                             <li class="nav-item @(Context.Request.Path.Value.ToLower().StartsWith("/home/singlecategory?id=" + c.Id) ? "active" : "")">
-                                <a class="nav-link" href="/home/singlecategory?id=@c.Id">@c.Name</a>
+                                <a class="nav-link" href="/home/singlecategory?id=@c.Id">
+
+                                    @if (c.Name == "Uncategorized")
+                                    {
+                                        @:Nezařazeno
+                                    }
+                                    else
+                                    {
+                                        @c.Name
+                                    }
+
+                                </a>
                             </li>
                         }
 

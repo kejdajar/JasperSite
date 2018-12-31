@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using JasperSite.Helpers;
+using Microsoft.Extensions.Localization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {    
@@ -21,10 +22,12 @@ namespace JasperSite.Areas.Admin.Controllers
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
 
-        public ArticlesController(DatabaseContext dbContext)
+        private readonly IStringLocalizer _localizer;
+        public ArticlesController(DatabaseContext dbContext, IStringLocalizer<ArticlesController> localizer)
         {
             this.databaseContext = dbContext;
             this.dbHelper = new DbHelper(dbContext);
+            this._localizer = localizer;
         }
 
         public ArticlesViewModel UpdatePage()
@@ -183,6 +186,10 @@ namespace JasperSite.Areas.Admin.Controllers
                     Keywords = articleToEdit.Keywords                    
                     
                 };
+
+                // Localize "Uncategorized" category
+                model.Categories.Where(c => c.Name == "Uncategorized").Single().Name = _localizer["Uncategorized"];
+               
 
                 // URL rewriting
                 model.AllUrl = dbHelper.GetUrls(articleToEdit.Id);
