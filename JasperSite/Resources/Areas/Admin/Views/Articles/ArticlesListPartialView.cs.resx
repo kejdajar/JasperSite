@@ -120,14 +120,23 @@
   <data name="Action" xml:space="preserve">
     <value>Akce</value>
   </data>
+  <data name="Are you sure to delete this article?" xml:space="preserve">
+    <value>Skutečně odstranit článek?</value>
+  </data>
+  <data name="Article" xml:space="preserve">
+    <value>Článek</value>
+  </data>
   <data name="Category" xml:space="preserve">
     <value>Rubrika</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Zavřít</value>
   </data>
   <data name="Date of Creation" xml:space="preserve">
     <value>Datum vytvoření</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Odebrat</value>
+    <value>Odstranit</value>
   </data>
   <data name="Details" xml:space="preserve">
     <value>Podrobnosti</value>
@@ -149,5 +158,8 @@
   </data>
   <data name="Uncategorized" xml:space="preserve">
     <value>Nezařazeno</value>
+  </data>
+  <data name="will be permanently deleted" xml:space="preserve">
+    <value>bude nenávratně odstraněn</value>
   </data>
 </root>

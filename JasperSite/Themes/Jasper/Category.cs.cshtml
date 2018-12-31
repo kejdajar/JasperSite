@@ -22,7 +22,16 @@
             
             @if (allCategories.Count() > 0)
             {
-                <h2 style="margin:10px"><i class="fa fa-angle-double-down" aria-hidden="true"></i> @c.Name</h2>
+                <h2 style="margin:10px"><i class="fa fa-angle-double-down" aria-hidden="true"></i>
+    @if(c.Name == "Uncategorized")
+    {
+        @:Nezařazeno
+    } else
+    {
+        @c.Name
+    }
+
+    </h2>
 
                 List<Article> allArticles = J.GetAllArticles(c.Id);
 

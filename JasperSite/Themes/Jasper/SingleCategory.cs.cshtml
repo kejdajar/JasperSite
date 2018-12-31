@@ -4,6 +4,12 @@
 @{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
 @{
     string categoryName = @J.GetCategoryNameById(query);
+    if(categoryName == "Uncategorized")
+    {
+        categoryName = "Nezařazeno";
+    }
+
+
     Layout =J.Layout("_Layout.cshtml",Context.Request);
     ViewData["Title"] = categoryName;
 }
@@ -32,7 +38,7 @@
                             <small>@article.PublishDate.ToLongDateString()</small>
                         </div>
                         <p class="mb-1"><i></i></p>
-                        <small>@article.Category.Name</small>
+                        <small>@categoryName</small>
                     </a>
                 </div>
             }

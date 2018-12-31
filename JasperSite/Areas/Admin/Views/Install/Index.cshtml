@@ -39,7 +39,7 @@
                 if ($("#installForm").valid()) {
 
                     e.preventDefault();
-                    appendWindow("@Localizer["Are you sure to reinstall your website? This can not be undone. All content will be deleted."]", function () { toggleWindow(); $("body").addClass("loading"); $("#installForm").submit(); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete all data and reinstall this system."]");
+                    appendWindow("@Localizer["Are you sure to reinstall your website? This can not be undone. All content will be deleted."]", function () { toggleWindow(); $("body").addClass("loading"); $("#installForm").submit(); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete all data and reinstall this system."]","@Localizer["Close"]");
 
                 }
             });

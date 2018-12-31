@@ -24,12 +24,13 @@ namespace JasperSite.Areas.Admin.Controllers
      
         private readonly DatabaseContext databaseContext;
         private readonly DbHelper dbHelper;
-     
+        private readonly IStringLocalizer _localizer;
 
-        public HomeController(DatabaseContext dbContext)
+        public HomeController(DatabaseContext dbContext, IStringLocalizer<HomeController> localizer)
         {
             this.databaseContext = dbContext;
-            this.dbHelper = new DbHelper(dbContext);           
+            this.dbHelper = new DbHelper(dbContext);
+            this._localizer = localizer;
         }
 
       
@@ -47,6 +48,11 @@ namespace JasperSite.Areas.Admin.Controllers
                 HomeViewModel model = new HomeViewModel();
                 model.Articles = dbHelper.GetAllArticles();
                 model.Categories = dbHelper.GetAllCategories();
+                try
+                {
+
+                    model.Categories.Where(c => c.Name == "Uncategorized").Single().Name = _localizer["Uncategorized"];
+                } catch { }
 
                 string activeUserName = User.Identity.Name;
                 JasperSite.Models.Database.User currentUser = dbHelper.GetAllUsers().Where(u => u.Username.Trim().ToLower() == activeUserName.Trim().ToLower()).Single();

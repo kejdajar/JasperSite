@@ -191,4 +191,7 @@ Pokud dostatečná práva nemáte, je nutné obsah databáze smazat ručně</val
   <data name="Recreate database" xml:space="preserve">
     <value>Smazat obsah databáze</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
 </root>

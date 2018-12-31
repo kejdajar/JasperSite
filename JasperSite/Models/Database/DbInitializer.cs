@@ -71,9 +71,7 @@ namespace JasperSite.Models.Database
 
             Category[] categories = new Category[]
             {
-                new Category(){Name="Uncategorized"},
-                new Category(){Name="První rubrika"},
-                new Category(){Name="Druhá rubrika"},
+                new Category(){Name="Uncategorized"},               
             };
 
             foreach (Category c in categories)
@@ -90,11 +88,8 @@ namespace JasperSite.Models.Database
 
             Article[] articles = new Article[]
             {
-                new Article {Name="Ukázkový článek",Publish=true, HtmlContent=articleContent,PublishDate = DateTime.Now,Category=categories[0],Keywords="článek, ukázka, demo"},
-                 new Article {Name="Druhý článek", Publish=true, HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[1],Keywords="článek, ukázka, demo"},
-                 new Article {Name="Třetí článek", Publish=true, HtmlContent="<b>kurzíva</b>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(60),Category=categories[1],Keywords="článek, ukázka, demo"},
-                   new Article {Name="Čtvrtý článek", Publish=true, HtmlContent="<h2>nadpis text</h2>", PublishDate = DateTime.Now + TimeSpan.FromMinutes(120),Category=categories[2],Keywords="článek, ukázka, demo"},
-                    new Article {Name="Pátý článek", Publish=true, HtmlContent="test", PublishDate = DateTime.Now + TimeSpan.FromMinutes(180),Category=categories[2],Keywords="článek, ukázka, demo"},
+                new Article {Name="Lorem Ipsum",Publish=true, HtmlContent=articleContent,PublishDate = DateTime.Now,Category=categories[0],Keywords="lorem, ipsum, dolor, sit, amet"},
+                 
             };
 
             //for (int i = 1; i <= 10000; i++)
@@ -110,21 +105,21 @@ namespace JasperSite.Models.Database
             //DatabaseContext.SaveChanges();
 
             Role adminRole = new Role() { Name = "Admin" };
-            Role redactorRole = new Role() { Name = "Redaktor" };
+            Role redactorRole = new Role() { Name = "Redactor" };
             DatabaseContext.Roles.Add(adminRole);
             DatabaseContext.Roles.Add(redactorRole);
  //DatabaseContext.SaveChanges();
 
-            User admin = new User() { Nickname = "Administrátor", Username = "admin",Role=adminRole };
+            User admin = new User() { Nickname = "administrator", Username = "admin",Role=adminRole };
             string salt, hashedPassword;
             JasperSite.Models.Security.Authentication.HashPassword("admin", out salt, out hashedPassword);
             admin.Password = hashedPassword;
             admin.Salt = salt;
             DatabaseContext.Users.Add(admin);
 
-            User redactor = new User() { Nickname = "Redaktor", Username = "redaktor", Role = redactorRole };
+            User redactor = new User() { Nickname = "redactor", Username = "redactor", Role = redactorRole };
             string salt2, hashedPassword2;
-            JasperSite.Models.Security.Authentication.HashPassword("redaktor", out salt2, out hashedPassword2);
+            JasperSite.Models.Security.Authentication.HashPassword("redactor", out salt2, out hashedPassword2);
             redactor.Password = hashedPassword2;
             redactor.Salt = salt2;
             DatabaseContext.Users.Add(redactor);
@@ -132,7 +127,7 @@ namespace JasperSite.Models.Database
 //DatabaseContext.SaveChanges();
 
             // Settings
-            Setting websiteNameSetting = new Setting() { Key = "WebsiteName", Value = "Název vašeho webu" };
+            Setting websiteNameSetting = new Setting() { Key = "WebsiteName", Value = "Lorem Ipsum" };
             _databaseContext.Settings.Add(websiteNameSetting);
  //DatabaseContext.SaveChanges();
 
@@ -153,9 +148,9 @@ namespace JasperSite.Models.Database
                 WebsiteConfig websiteConfig = new WebsiteConfig(configurationObjectJsonProvider);
 
 
-                TextBlock textBlock1 = new TextBlock() { Name = "WelcomePageTextBlock", Content = "Uvítací stránka - obsah tohoto bloku upravte pomocí redakčního systému." };
-                TextBlock textBlock2 = new TextBlock() { Name = "AboutPageTextBlock", Content = "Informace o autorovi - obsah tohoto bloku upravte pomocí redakčního systému." };
-                TextBlock textBlock3 = new TextBlock() { Name = "FooterPageTextBlock", Content = "&copy;2018-2019 - Bc. Jaromír Kejda, PEF ČZU Praha, diplomová práce: Návrh a implementace redakčního systému v ASP.NET Core, vytvořeno pomocí redakčního systému JasperSite." };
+                TextBlock textBlock1 = new TextBlock() { Name = "WelcomePageTextBlock", Content = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas ipsum velit, consectetuer eu lobortis ut, dictum at dui." };
+                TextBlock textBlock2 = new TextBlock() { Name = "AboutPageTextBlock", Content = "Mauris metus. Aliquam in lorem sit amet leo accumsan lacinia. Integer lacinia." };
+                TextBlock textBlock3 = new TextBlock() { Name = "FooterPageTextBlock", Content = "Aenean vel massa quis mauris vehicula lacinia. Lorem ipsum dolor sit amet, consectetuer adipiscing elit." };
                 if (ti.ThemeName == "Default")
                 {
                     // Demo text blocks
@@ -168,7 +163,7 @@ namespace JasperSite.Models.Database
                     string imgPath = Env.Hosting.ContentRootPath + "/Areas/Admin/DemoDataResources/demo_background.jpg";
                     byte[] bytes = System.IO.File.ReadAllBytes(imgPath);
                     Image img = new Image();
-                    img.Name = "Ukázkový obrázek";
+                    img.Name = "Lorem ipsum";
 
                     ImageData imgData = new ImageData() { Data = bytes };
 
@@ -208,13 +203,6 @@ namespace JasperSite.Models.Database
 
                 }
 
-
-               
-
-               
-
-            
-
             }
 
 
@@ -222,20 +210,7 @@ namespace JasperSite.Models.Database
 
             UrlRewrite rule1 = new UrlRewrite() { ArticleId = articles[0].Id, Url = "first_article" };
             _databaseContext.UrlRewrite.Add(rule1);
-
-            UrlRewrite rule2 = new UrlRewrite() { ArticleId = articles[1].Id, Url = "second_article" };
-            _databaseContext.UrlRewrite.Add(rule2);
-
-            UrlRewrite rule3 = new UrlRewrite() { ArticleId = articles[2].Id, Url = "third_article" };
-            _databaseContext.UrlRewrite.Add(rule3);
-
-            UrlRewrite rule4 = new UrlRewrite() { ArticleId = articles[3].Id, Url = "fourth_article" };
-            _databaseContext.UrlRewrite.Add(rule4);
-
-            UrlRewrite rule5 = new UrlRewrite() { ArticleId = articles[4].Id, Url = "fifth_article" };
-            _databaseContext.UrlRewrite.Add(rule5);
-
-
+                       
             _databaseContext.SaveChanges();
 
 

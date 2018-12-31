@@ -123,6 +123,9 @@
   <data name="Category" xml:space="preserve">
     <value>Rubrika</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
   <data name="Create" xml:space="preserve">
     <value>Vytvořit</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="Number of Articles" xml:space="preserve">
     <value>Počet článků</value>
+  </data>
+  <data name="This default category can't be deleted." xml:space="preserve">
+    <value>Tuto výchozí rubriku není možné odstranit.</value>
   </data>
   <data name="Uncategorized" xml:space="preserve">
     <value>Nezařazeno</value>

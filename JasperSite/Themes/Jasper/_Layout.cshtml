@@ -45,9 +45,7 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="login" asp-action="index" asp-area="admin">Login</a>
-                    </li>
+                  
                     <li class="nav-item  @(Context.Request.Path.Value.ToLower().StartsWith("/home/category") ? "active":"")">
                         <a class="nav-link" href="/home/category">All Categories</a>
                     </li>

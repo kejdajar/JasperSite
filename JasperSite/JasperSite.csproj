@@ -59,6 +59,7 @@
     <None Remove="Areas\Admin\ViewModels\UrlListViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\UsersViewModel.cs" />
     <None Remove="Areas\Admin\Views\About\Index.cs.cshtml" />
+    <None Remove="Areas\Admin\Views\Categories\AddNewCategoryPartialView.cshtml" />
     <None Remove="Areas\Admin\Views\Settings\JasperJsonThemePartialView.cshtml" />
     <None Remove="Areas\Admin\Views\Shared\_ErrorModalPartialViewTemp.cshtml" />
     <None Remove="Areas\Admin\Views\Shared\_SuccessModalPartialViewTemp.cshtml" />
@@ -284,6 +285,9 @@
 
   <ItemGroup>
     <Content Update="Areas\Admin\Views\About\Index.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Areas\Admin\Views\Categories\AddNewCategoryPartialView.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Themes\Default\Error.cs.cshtml">

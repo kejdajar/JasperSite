@@ -117,34 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Activate" xml:space="preserve">
-    <value>Aktivovat</value>
-  </data>
-  <data name="Activate the selected theme?" xml:space="preserve">
-    <value>Skutečně aktivovat vzhled?</value>
-  </data>
-  <data name="Are you sure you want to delete this theme?" xml:space="preserve">
-    <value>Skutečně odstranit vzhled?</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>Zavřít</value>
-  </data>
-  <data name="Current" xml:space="preserve">
-    <value>Aktuální</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Odstranit</value>
-  </data>
-  <data name="Description is unavailable." xml:space="preserve">
-    <value>Popis není k dispozici.</value>
-  </data>
-  <data name="Theme" xml:space="preserve">
-    <value>Vzhled</value>
-  </data>
-  <data name="will be activated. Current text block will be assigned to the text holders with appropriate names. If the new theme contains differently named block holders, the text blocks have to be assigned again manually." xml:space="preserve">
-    <value>bude aktivován. Stávající textové bloky budou přiřazeny do stejně pojmenovaných kontejnerů nového vzhledu. Pokud vzhled obsahuje jinak pojmenované kontejnery, bude nutné nakonfigurovat textové bloky znovu ručně.</value>
-  </data>
-  <data name="will be permanently deleted" xml:space="preserve">
-    <value>bude nenávratně odstraněn</value>
+  <data name="Uncategorized" xml:space="preserve">
+    <value>Nezařazeno</value>
   </data>
 </root>

@@ -427,7 +427,7 @@ namespace JasperSite.Areas.Admin.Controllers
         public int Id{ get; set; }
 
     
-        [Display(Name = "Název textového bloku")]
+        [Display(Name = "Name of the text block")]
         [Required(ErrorMessage = "Uveďte prosím název textového bloku.")]
         public string Name { get; set; }
 
