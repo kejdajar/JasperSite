@@ -1,10 +1,11 @@
 ﻿@using JasperSite.Models.Database
 @using JasperSite.Models
 @inject IJasperDataServicePublic J
-
 @*<script src="~/node_modules/tinymce/tinymce.js"></script>*@
 <script src="~/nodeLib/tinymce/tinymce.min.js"></script>
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 
 <script>
     $(document).ready(function () {
@@ -63,7 +64,7 @@
                 ed.addButton('j-insert-image', {
                     title: 'Insert image from JSC',
                     image: '@Url.Content(@"~/Areas/Admin/Content/Images/tinymceimgupload.png")',
-                      
+
                     onclick: function () {
                         ShowImageDialog();
                     }
@@ -76,7 +77,7 @@ remove_script_host : true,
 document_base_url : "/",
 convert_urls : true,
 
-   
+
 
         });
         /*
@@ -131,7 +132,7 @@ convert_urls : true,
 
 
 
-        
+
 
 
         function ShowImageDialog() {
@@ -176,8 +177,8 @@ convert_urls : true,
         }
 
         function AppendImage(data) {
-           
-            $("#imgTable tr:last").after(`<tr data-image-id="${data.id}"> <td><img class="img-fluid" src="data:image/png;base64,${data.data}"  title="${data.name}" /></td><td><a href="#" class="btn btn-jasper">vložit</a></td></tr>`);
+
+            $("#imgTable tr:last").after(`<tr data-image-id="${data.id}"> <td><img class="img-fluid" src="data:image/png;base64,${data.data}"  title="${data.name}" /></td><td><a href="#" class="btn btn-jasper">@Localizer["Insert"]</a></td></tr>`);
             $(`#imgTable tr[data-image-id='${data.id}']`).click(function () {
                 tinymce.activeEditor.insertContent(`<img alt="${data.name}" class="img-fluid" src="@Url.Action("GetImage","Images")?id=${data.id}"/>`)
             });
@@ -214,14 +215,14 @@ convert_urls : true,
     });
 </script>
 
-<div id="dialog" title="Vložení obrázku" style="overflow-y:auto;display:none;z-index:4">
-    <h3>Seznam obrázků</h3>
+<div id="dialog" title="@Localizer["Insert image"]" style="overflow-y:auto;display:none;z-index:4">
+    <h3>@Localizer["List of images"]</h3>
 
     <table id="imgTable" class="table table-bordered j-table j-table-text-center">
-        <tr><th>Náhled</th><th>Vložit</th></tr>
+        <tr><th>@Localizer["View"]</th><th>@Localizer["Insert"]</th></tr>
     </table>
 
-    <div id="noImages" class="alert alert-warning" >Žádné obrázky nebyly nalezeny</div>
+    <div id="noImages" class="alert alert-warning">@Localizer["No images were found."]</div>
 
 </div>
 

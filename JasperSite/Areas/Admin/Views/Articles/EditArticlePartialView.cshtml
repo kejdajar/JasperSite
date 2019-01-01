@@ -16,7 +16,7 @@
         $("#btnDeleteArticle").click(function (e) {
             e.preventDefault();
 
-            appendWindow("@Localizer["Really delete this article?"]", `@Localizer["This article will be permanently deleted."]`, function () { window.location = "@Url.Action("Delete", "Articles", new { Area = "Admin",id=Model.Id })"; }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]");
+            appendWindow("@Localizer["Really delete this article?"]", "@Localizer["This article will be permanently deleted."]", function () { window.location = "@Url.Action("Delete", "Articles", new { Area = "Admin",id=Model.Id })"; }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]","@Localizer["Close"]");
         });
     });
 </script>

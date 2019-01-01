@@ -117,34 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back to overview" xml:space="preserve">
-    <value>Zpět na přehled</value>
+  <data name="Insert" xml:space="preserve">
+    <value>Vložit</value>
   </data>
-  <data name="Close" xml:space="preserve">
-    <value>Zavřít</value>
+  <data name="Insert image" xml:space="preserve">
+    <value>Vložení obrázku</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Odstranit</value>
+  <data name="List of images" xml:space="preserve">
+    <value>Seznam obrázků</value>
   </data>
-  <data name="Delete article" xml:space="preserve">
-    <value>Odstranit článek</value>
+  <data name="No images were found." xml:space="preserve">
+    <value>Žádné obrázky nebyly nalezeny.</value>
   </data>
-  <data name="If you don't want to add another URL address, leave the field blank." xml:space="preserve">
-    <value>Pokud nechcete přidávat další URL adresu, ponechte pole prázdné.</value>
-  </data>
-  <data name="Insert comma separated keywords." xml:space="preserve">
-    <value>Zadejte klíčová slova oddělená čárkou.</value>
-  </data>
-  <data name="Name of your article" xml:space="preserve">
-    <value>Název vašeho článku</value>
-  </data>
-  <data name="Really delete this article?" xml:space="preserve">
-    <value>Skutečně odstranit článek?</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Uložit</value>
-  </data>
-  <data name="This article will be permanently deleted." xml:space="preserve">
-    <value>Tento článek bude nenávratně odstraněn.</value>
+  <data name="View" xml:space="preserve">
+    <value>Náhled</value>
   </data>
 </root>

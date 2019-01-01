@@ -13,11 +13,11 @@ $(document).ready(function () {
                     <div class="modal-content" style="max-height:500px">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title" style="margin-left:20px">Chyba</h4>
+                            <h4 class="modal-title" style="margin-left:20px">@Localizer["Error"]</h4>
                         </div>
                         <div class="modal-body" style="overflow-y: auto;">
                             @Localizer["Your request could not be completed."] <br />
-                            <text> Chyba: @TempData["ErrorMessage"].ToString() </text>
+                            <text> @Localizer["Error"]: @TempData["ErrorMessage"].ToString() </text>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-jasper" data-dismiss="modal" title="@Localizer["Close"]">@Localizer["Close"]</button>

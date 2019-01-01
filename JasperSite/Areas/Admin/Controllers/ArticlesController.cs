@@ -248,7 +248,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch (NoUrlRulesException)
             {
-                TempData["ErrorMessage"] = "Je nutné pøiøadit alespoò jednu URL adresu.";
+                TempData["ErrorMessage"] = _localizer["There has to be at least one URL address."];
             }
             catch(InvalidUrlRewriteException ex)
             {
