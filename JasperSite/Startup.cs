@@ -46,8 +46,8 @@ namespace JasperSite
         {
             // Authentication
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
-                options.LoginPath = "/Admin/Login";
-                options.AccessDeniedPath = "/Admin/Login/UnauthorizedUser";
+                options.LoginPath = "/admin/login";
+                options.AccessDeniedPath = "/admin/login/unauthorizeduser";
             });           
 
             // Added compatibility with new features, added support for localization

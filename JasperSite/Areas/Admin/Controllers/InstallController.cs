@@ -42,7 +42,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             else
             { 
-                if (User.IsInRole("Admin"))
+                if (User.IsInRole("admin"))
                 {
                     base.OnActionExecuting(filterContext);
                 }

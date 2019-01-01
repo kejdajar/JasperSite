@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Localization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles ="admin")]
     [Area("Admin")]
     public class SettingsController : Controller
     {

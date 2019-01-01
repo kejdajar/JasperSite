@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class UsersController : Controller
     {

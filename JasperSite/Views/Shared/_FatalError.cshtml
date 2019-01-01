@@ -137,7 +137,7 @@
                         }
                     </section>
 
-                    @if (User.IsInRole("Admin"))
+                    @if (User.IsInRole("admin"))
                     {
                         <div class="j-admin-section">
 
@@ -176,7 +176,7 @@
                         </section>
                     }
 
-                    @if (!User.IsInRole("Admin"))
+                    @if (!User.IsInRole("admin"))
                     {
                         <div class="j-admin-section">
 

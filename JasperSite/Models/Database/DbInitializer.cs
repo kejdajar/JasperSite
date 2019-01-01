@@ -104,8 +104,8 @@ namespace JasperSite.Models.Database
             }
             //DatabaseContext.SaveChanges();
 
-            Role adminRole = new Role() { Name = "Admin" };
-            Role redactorRole = new Role() { Name = "Redactor" };
+            Role adminRole = new Role() { Name = "admin" };
+            Role redactorRole = new Role() { Name = "redactor" };
             DatabaseContext.Roles.Add(adminRole);
             DatabaseContext.Roles.Add(redactorRole);
  //DatabaseContext.SaveChanges();
