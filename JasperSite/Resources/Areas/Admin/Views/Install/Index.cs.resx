@@ -177,8 +177,8 @@
   <data name="System JasperSite has not yet been installed on this machine. Follow the installation instructions." xml:space="preserve">
     <value>Redakční systém JasperSite ještě nebyl nainstalován. Postupujte pomocí pokynů instalace.</value>
   </data>
-  <data name="Are you sure to reinstall your website? This can not be undone. All content will be deleted." xml:space="preserve">
-    <value>Skutečně reinstalovat redakční systém?", "Tato akce je nevratná, veškerý obsah bude smazán.</value>
+  <data name="Are you sure to reinstall your website?" xml:space="preserve">
+    <value>Skutečně reinstalovat redakční systém?</value>
   </data>
   <data name="Delete all data and reinstall this system." xml:space="preserve">
     <value>Smazat data a reinstalovat systém.</value>
@@ -193,5 +193,8 @@ Pokud dostatečná práva nemáte, je nutné obsah databáze smazat ručně</val
   </data>
   <data name="Close" xml:space="preserve">
     <value>Zavřít</value>
+  </data>
+  <data name="This can not be undone. All content will be deleted." xml:space="preserve">
+    <value>Tato akce je nevratná, veškerý obsah bude smazán.</value>
   </data>
 </root>
