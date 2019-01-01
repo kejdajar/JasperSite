@@ -409,32 +409,8 @@ namespace JasperSite.Areas.Admin.Controllers
         public int Order { get; set; }
     }
 
-    public class NewTextBlock
-    {
-        [Display(Name ="Název textového bloku")]
-        [Required(ErrorMessage ="Uveďte prosím název textového bloku.")]      
-        public string Name { get; set; }
+  
 
-        [Display(Name="Rychlý obsah bloku")]
-        public string Content { get; set; }
-        
-        public int BlockHolderId { get; set; }
-    }
-
-    public class EditTextBlock
-    {
-        
-        public int Id{ get; set; }
-
-    
-        [Display(Name = "Name of the text block")]
-        [Required(ErrorMessage = "Uveďte prosím název textového bloku.")]
-        public string Name { get; set; }
-
-        [Display(Name = "Obsah bloku")]
-        public string Content { get; set; }
-
-      
-    }
+   
 
 }

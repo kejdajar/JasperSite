@@ -62,8 +62,8 @@
     <h4><i class="fa fa-pencil j-icon" aria-hidden="true"></i>@Localizer["New Category"]</h4>
     <form asp-action="CreateNewCategory" asp-controller="Categories" method="post" id="formNewCategory">
         <div class="form-group">
-            <input id="tbCategoryName" type="text" asp-for="NewCategory.NewCategoryName" placeholder="@Localizer["Name of Category"]" class="form-control" style="z-index:0" />
-            <span asp-validation-for="NewCategory.NewCategoryName" class="text-danger"></span>
+            <input id="tbCategoryName" type="text" asp-for="NewCategoryName" placeholder="@Localizer["Name of Category"]" class="form-control" style="z-index:0" />
+            <span asp-validation-for="NewCategoryName" class="text-danger"></span>
         </div>
         <div class="form-group">
             <input type="submit" class="btn btn-jasper" style="width:200px;z-index:0" value="@Localizer["Create"]" id="btnSubmit" />

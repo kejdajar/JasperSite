@@ -10,17 +10,11 @@ namespace JasperSite.Areas.Admin.ViewModels
     public class CategoriesViewModel
     {
        public List<Category> Categories { get; set; }
-       
-       public NewCategoryViewModel NewCategory { get; set; }
 
-        
+        [Required(ErrorMessage = "Fill in the name of the category")]
+        public string NewCategoryName { get; set; }
+
 
     }
 
-    public class NewCategoryViewModel
-    {
-        
-       [Required( ErrorMessage ="Fill in the name of the category")]
-       public string NewCategoryName { get; set; }
-    }
 }

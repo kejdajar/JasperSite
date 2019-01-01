@@ -24,7 +24,35 @@ namespace JasperSite.Areas.Admin.ViewModels
         public int CurrentThemeId { get; set; }
     }
 
-   
+    public class NewTextBlock
+    {
+        [Display(Name = "Name of the text block")]
+        [Required(ErrorMessage = "Please fill in the name of the text block")]
+        public string Name { get; set; }
 
-   
+        [Display(Name = "Quick block content")]
+        public string Content { get; set; }
+
+        public int BlockHolderId { get; set; }
+    }
+
+    public class EditTextBlock
+    {
+
+        public int Id { get; set; }
+
+
+        [Display(Name = "Name of the text block")]
+        [Required(ErrorMessage = "Fill in the name of the text block")]
+        public string Name { get; set; }
+
+        [Display(Name = "Block content")]
+        public string Content { get; set; }
+
+
+    }
+
+
+
+
 }
