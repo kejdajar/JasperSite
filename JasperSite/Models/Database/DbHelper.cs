@@ -514,8 +514,8 @@ namespace JasperSite.Models.Database
             {
                 Article articleEntity = new Article()
                 {
-                    HtmlContent = "Váš článek začíná zde...",
-                    Name = "Nový článek",
+                    HtmlContent = "",
+                    Name = "Lorem Ipsum",
                     PublishDate = DateTime.Now,
                     // New article will be automatically assigned to uncategorized category
                     CategoryId = GetAllCategories().Where(c => c.Name == "Uncategorized").Single().Id
@@ -608,7 +608,7 @@ namespace JasperSite.Models.Database
         public Category AddCategory(string categoryName)
         {
             try
-            {
+            {    
                 Category newCategory = new Category() { Name = categoryName };
                 Database.Categories.Add(newCategory);
                 Database.SaveChanges();

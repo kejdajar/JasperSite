@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="&lt;strong&gt; This place is empty!&lt;/strong&gt; You have currently no articles to browse." xml:space="preserve">
+    <value>&lt;strong&gt;Nic zde není!&lt;/strong&gt; Momentálně nemáte žádné uložené články.</value>
+  </data>
   <data name="Action" xml:space="preserve">
     <value>Akce</value>
   </data>

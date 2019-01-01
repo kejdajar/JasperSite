@@ -129,6 +129,9 @@
   <data name="Categories" xml:space="preserve">
     <value>Rubriky</value>
   </data>
+  <data name="Configuration settings updated." xml:space="preserve">
+    <value>Veškeré konfigurační nastavení bylo aktualizováno.</value>
+  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Přehled</value>
   </data>
@@ -143,9 +146,6 @@
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Nastavení</value>
-  </data>
-  <data name="Successfully updated all configuration data." xml:space="preserve">
-    <value>Veškeré konfigurační nastavení bylo aktualizováno.</value>
   </data>
   <data name="Text blocks" xml:space="preserve">
     <value>Bloky</value>

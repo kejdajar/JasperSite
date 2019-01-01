@@ -61,7 +61,7 @@ $(document).ready(function(){
                         type: 'get',
                         url: '@Url.Action("Refresh","Home")',
                         success: function (data) {
-                            savedInfo("@Localizer["Successfully updated all configuration data."]", "alert-success");
+                            savedInfo("@Localizer["Configuration settings updated."]", "alert-success");
                         },
         error: function(){
             savedInfo("<strong>Failure.</strong> Configuration data could not be updated.", "alert-danger");

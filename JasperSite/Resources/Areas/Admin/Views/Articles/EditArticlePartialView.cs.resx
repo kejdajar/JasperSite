@@ -132,6 +132,9 @@
   <data name="Insert comma separated keywords." xml:space="preserve">
     <value>Zadejte klíčová slova oddělená čárkou.</value>
   </data>
+  <data name="Name of your article" xml:space="preserve">
+    <value>Název vašeho článku</value>
+  </data>
   <data name="Really delete this article?" xml:space="preserve">
     <value>Skutečně odstranit článek?</value>
   </data>

@@ -62,8 +62,17 @@ namespace JasperSite.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid) // Server check in case JS is disabled
                 {
-                  _dbHelper.AddCategory(model.NewCategoryName);
-                    TempData["Success"] = true;
+
+                    if (model.NewCategoryName != "Uncategorized")
+                    {
+                        _dbHelper.AddCategory(model.NewCategoryName);
+                        TempData["Success"] = true;
+                    }
+                    else
+                    {
+                        TempData["ErrorMessage"] = "Rubriku s tímto názvem není možné vytvořit.";
+                    }
+
                 }
                 else
                 {
