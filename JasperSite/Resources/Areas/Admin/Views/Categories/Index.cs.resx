@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&lt;strong&gt;Tip:&lt;/strong&gt; Deltion of category, which contains articles will result into moving all these articles into  &lt;i&gt;uncategorized&lt;/i&gt; category." xml:space="preserve">
+  <data name="&lt;strong&gt;Tip:&lt;/strong&gt; Deletion of category, which contains articles will result in moving all these articles into &lt;i&gt;uncategorized&lt;/i&gt; category." xml:space="preserve">
     <value>&lt;strong&gt;Tip:&lt;/strong&gt; Odstraněním rubriky, která obsahuje články, dojde k automatickému přesunu článků do rubriky "Nezařazeno".</value>
   </data>
   <data name="Categories" xml:space="preserve">

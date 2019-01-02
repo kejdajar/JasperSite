@@ -21,7 +21,7 @@
                 var id = singleLink.data('removeId');
                 var imageName = singleLink.data('imageName');
 
-                appendWindow("@Localizer["Are you sure you want to delete this image?"]", `@Localizer["Image"] <b> ${imageName}</b> @Localizer["will be permanently deleted."]`, function () { return ajaxCall(id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]");
+                appendWindow("@Localizer["Are you sure you want to delete this image?"]", `@Localizer["Image"] <b> ${imageName}</b> @Localizer["will be permanently deleted."]`, function () { return ajaxCall(id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]","@Localizer["Close"]");
 
          });
 

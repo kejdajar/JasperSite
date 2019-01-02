@@ -171,7 +171,7 @@
   <data name="Themes" xml:space="preserve">
     <value>Vzhledy</value>
   </data>
-  <data name="This CMS contains an algorithm for intelligent change of theme. Provided that the newly selected theme contains block holders with the same names, the text blocks will be automatically assigned to the new block holders." xml:space="preserve">
+  <data name="This CMS contains an algorithm for an intelligent change of theme. Provided that the newly selected theme contains block holders with the same names, the text blocks will be automatically assigned to the new block holders." xml:space="preserve">
     <value>Redakční systém obsahuje algoritmus pro inteligentní vzměnu vzhledu. Pokud nově aktivovaný vzhled obsahje stejně pojmenované kontejnery, tak se textové bloky automaticky přiřadí k novým kontejnerům.</value>
   </data>
   <data name="Unregistered themes" xml:space="preserve">

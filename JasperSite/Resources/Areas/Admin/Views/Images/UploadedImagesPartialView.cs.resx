@@ -126,6 +126,9 @@
   <data name="Are you sure you want to delete this image?" xml:space="preserve">
     <value>Skutečně odstranit obrázek?</value>
   </data>
+  <data name="Close" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Odstranit</value>
   </data>

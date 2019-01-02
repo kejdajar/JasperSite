@@ -171,7 +171,7 @@
   <data name="System installation" xml:space="preserve">
     <value>Instalace redakčního systému</value>
   </data>
-  <data name="System JasperSite has been already installed on this machine. Reinstallation will result in the loss of some of the stored data, such as articles, categories, user accounts, images, configuration setttings and other custom content. Theme folder will be left as is." xml:space="preserve">
+  <data name="System JasperSite has been already installed on this machine. Reinstallation will result in the loss of some of the stored data, such as articles, categories, user accounts, images, configuration setttings, and other custom content. Theme folder will be left as is." xml:space="preserve">
     <value>Redakční systém JasperSite byl již jednou nainstalován. Opětovná instalace přemaže některá uložená data: Články, rubriky, uživatelské účty, obrázky, konfigurační nastavení a další uživatelský obsah bude smazán. Složka se vzhledy bude ponechána.</value>
   </data>
   <data name="System JasperSite has not yet been installed on this machine. Follow the installation instructions." xml:space="preserve">
@@ -183,12 +183,12 @@
   <data name="Delete all data and reinstall this system." xml:space="preserve">
     <value>Smazat data a reinstalovat systém.</value>
   </data>
-  <data name="During installation or reinstallation the database must be empty. Provided you have sufficient permissions, you can delete all it's contents selecting the &quot;Recreate database&quot; option. Otherwise you need to empty the database manually." xml:space="preserve">
+  <data name="During installation or reinstallation, the database must be empty. Provided you have sufficient permissions, you can delete all it's contents selecting the &quot;Recreate database&quot; option. Otherwise, you need to empty the database manually." xml:space="preserve">
     <value>Při instalaci nebo reinstalaci musí být databáze prázdná. Pokud máte dostatečná
 oprávnění, je možné volbou "Smazat obsah databáze" tuto databázi připravit na instalaci.
 Pokud dostatečná práva nemáte, je nutné obsah databáze smazat ručně</value>
   </data>
-  <data name="Recreate database" xml:space="preserve">
+  <data name="Recreate selected database" xml:space="preserve">
     <value>Smazat obsah databáze</value>
   </data>
   <data name="Close" xml:space="preserve">

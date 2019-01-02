@@ -203,9 +203,9 @@
 
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="recreateDb" asp-for="RecreateDatabase" />
-                                <label class="form-check-label" for="recreateDb">@Localizer["Recreate database"]</label>
+                                <label class="form-check-label" for="recreateDb">@Localizer["Recreate selected database"]</label>
                                 <p>
-                                    <small>@Localizer["During installation or reinstallation the database must be empty. Provided you have sufficient permissions, you can delete all it's contents selecting the \"Recreate database\" option. Otherwise you need to empty the database manually."]</small>
+                                    <small>@Localizer["During installation or reinstallation, the database must be empty. Provided you have sufficient permissions, you can delete all it's contents selecting the \"Recreate database\" option. Otherwise, you need to empty the database manually."]</small>
                                 </p>
                             </div>
 
@@ -249,7 +249,7 @@
                     {
                         <div class="alert alert-danger" role="alert">
                             <p>
-                                @Localizer["System JasperSite has been already installed on this machine. Reinstallation will result in the loss of some of the stored data, such as articles, categories, user accounts, images, configuration setttings and other custom content. Theme folder will be left as is."]
+                                @Localizer["System JasperSite has been already installed on this machine. Reinstallation will result in the loss of some of the stored data, such as articles, categories, user accounts, images, configuration setttings, and other custom content. Theme folder will be left as is."]
                             </p>
                             
                             <p>
