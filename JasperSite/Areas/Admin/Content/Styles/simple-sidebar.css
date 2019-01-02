@@ -4,12 +4,6 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 
-:root {
-    --main-black-color: #343A40;
-    --main-purple-color: #BA68C8;
-    --main-content-color: #F1F1F1;
-    --main-section-color: #FFFFFF;
-}
 
 
  body {
@@ -146,14 +140,9 @@
 /* Custom left menu desing */
 
 
-.j-link-container
-{
-    
-    background-color:var(--main-black-color);
-
+.j-link-container {
+    background-color: #343A40;    
     display: flex;
-
-    
 }
 
     .j-link-container :hover {

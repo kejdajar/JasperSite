@@ -5,7 +5,7 @@
   {
     "outputFileName": "Areas/Admin/Content/Styles/login-page.min.css",
     "inputFiles": [
-      "Areas/Admin/Content/Styles/login-page.css"
+      "Areas/Admin/Content/Styles/login-page.css" 
     ]
   },
   {
