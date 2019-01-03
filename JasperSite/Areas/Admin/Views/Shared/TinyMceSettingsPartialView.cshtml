@@ -178,9 +178,9 @@ convert_urls : true,
 
         function AppendImage(data) {
 
-            $("#imgTable tr:last").after(`<tr data-image-id="${data.id}"> <td><img class="img-fluid" src="data:image/png;base64,${data.data}"  title="${data.name}" /></td><td><a href="#" class="btn btn-jasper">@Localizer["Insert"]</a></td></tr>`);
-            $(`#imgTable tr[data-image-id='${data.id}']`).click(function () {
-                tinymce.activeEditor.insertContent(`<img alt="${data.name}" class="img-fluid" src="@Url.Action("GetImage","Images")?id=${data.id}"/>`)
+            $("#imgTable tr:last").after('<tr data-image-id="'+ data.id+'"> <td><img class="img-fluid" src="data:image/png;base64,'+ data.data+'"  title="'+ data.name+'" /></td><td><a href="#" class="btn btn-jasper">@Localizer["Insert"]</a></td></tr>');
+            $('#imgTable tr[data-image-id="'+ data.id+'"]').click(function () {
+                tinymce.activeEditor.insertContent('<img alt="'+ data.name+'" class="img-fluid" src="@Url.Action("GetImage","Images")?id='+ data.id+'"/>')
             });
 
         }

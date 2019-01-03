@@ -5,11 +5,11 @@
          */
 module.exports= function savedInfo(text, style) {         
 
-            var panel = $(`<div name="savedInfoPanel" class="j-flex-row j-secondary-header" >
-                                <div class="alert ${style}" role="alert" style="margin:0px;width:100%">
-                                ${text}
-                                </div>              
-                           </div>`);
+            var panel = $('<div name="savedInfoPanel" class="j-flex-row j-secondary-header" >'+
+                                '<div class="alert'+ style +'" role="alert" style="margin:0px;width:100%">'+
+                                text +
+                                '</div>'+        
+                           '</div>' );
 
             panel.css({
                 "display": "none",                

@@ -23,7 +23,7 @@
             var articleName = singleLink.data('articleName');
 
 
-            appendWindow("@Localizer["Are you sure to delete this article?"]", `@Localizer["Article"] <b> ${articleName}</b> @Localizer["will be permanently deleted"].`, function () { return ajaxCall(Id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]","@Localizer["Close"]");
+            appendWindow("@Localizer["Are you sure to delete this article?"]", '@Localizer["Article"] <b>'+ articleName+ '</b> @Localizer["will be permanently deleted"].', function () { return ajaxCall(Id); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]","@Localizer["Close"]");
 
 
 

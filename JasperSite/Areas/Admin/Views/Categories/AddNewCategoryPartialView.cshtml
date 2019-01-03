@@ -23,7 +23,7 @@
                 var categoryToBeRemovedId = singleLink.data('deleteId');
                 var categoryName = singleLink.data('categoryName');
 
-                appendWindow("@Localizer["Do you really want to delete this category?"]", `@Localizer["Category"]  <b> ${categoryName}</b> @Localizer["will be permanently deleted"].`, function () { return ajaxCall(categoryToBeRemovedId); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]","@Localizer["Close"]");
+                appendWindow("@Localizer["Do you really want to delete this category?"]", '@Localizer["Category"]  <b>'+ categoryName +'</b> @Localizer["will be permanently deleted"].', function () { return ajaxCall(categoryToBeRemovedId); }, "#modalTargetDiv", "btn-jasper-delete", "fa fa-trash fa-1x", "@Localizer["Delete"]","@Localizer["Close"]");
         });
 
 
