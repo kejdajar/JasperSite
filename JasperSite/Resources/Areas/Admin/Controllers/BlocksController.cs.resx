@@ -117,73 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&lt;strong&gt;Saved&lt;/strong&gt; All changes have been successfully saved." xml:space="preserve">
-    <value>&lt;strong&gt;Uloženo.&lt;/strong&gt; Veškeré provedené změny byly uloženy.</value>
+  <data name="An error occured during the creation of the text block." xml:space="preserve">
+    <value>Při vytváření nového textového bloku došlo k chybě.</value>
   </data>
-  <data name="&lt;strong&gt;Warning&lt;/strong&gt; This text block has't got any assigned block holder and thus will not be rendered on the page." xml:space="preserve">
-    <value>&lt;strong&gt;Upozornění!&lt;/strong&gt; Tento textový blok nemá přiřazen žádný kontejner a nebude proto zobrazen na stránce.</value>
+  <data name="The changes could not be completed." xml:space="preserve">
+    <value>Změny nebylo možné provést.</value>
   </data>
-  <data name="and his content will be permanently deleted." xml:space="preserve">
-    <value>a jeho obsah bude nenávratně odstraněn.</value>
+  <data name="The container could not be assigned to the text block." xml:space="preserve">
+    <value>Nebylo možné přiřadit danému textovému bloku daný kontejner.</value>
   </data>
-  <data name="Are you sure you want to delete this text block?" xml:space="preserve">
-    <value>Skutečně odstranit textový blok?</value>
+  <data name="The container could not be removed." xml:space="preserve">
+    <value>Kontejner nebylo možné odebrat.</value>
   </data>
-  <data name="Assign to block holder" xml:space="preserve">
-    <value>Přiřadit ke kontejneru</value>
-  </data>
-  <data name="Blocks" xml:space="preserve">
-    <value>Bloky</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Odstranit</value>
-  </data>
-  <data name="If you have manually edited configuration file of the theme, an update is required." xml:space="preserve">
-    <value>Pokud jste manuálně upravili nastavení konfiguračního souboru vzhledu, je potřeba provést aktualizaci.</value>
-  </data>
-  <data name="Information not up-to-date?" xml:space="preserve">
-    <value>Informace nejsou aktuální?</value>
-  </data>
-  <data name="Name of the active theme" xml:space="preserve">
-    <value>Jméno aktivního vzhledu</value>
-  </data>
-  <data name="Name of the block holder" xml:space="preserve">
-    <value>Název kontejneru</value>
-  </data>
-  <data name="New text block" xml:space="preserve">
-    <value>Nový textový blok</value>
-  </data>
-  <data name="No items were found." xml:space="preserve">
-    <value>Žádné položky nebyly nalezeny.</value>
-  </data>
-  <data name="Order of the block within the block holder" xml:space="preserve">
-    <value>Pořadí bloku v kontejneru</value>
-  </data>
-  <data name="Overview of all the themes and their block holders" xml:space="preserve">
-    <value>Přehled vzhledů a jejich kontejnerů</value>
-  </data>
-  <data name="Save changes" xml:space="preserve">
-    <value>Uložit změny</value>
-  </data>
-  <data name="Text block" xml:space="preserve">
-    <value>Textový blok</value>
-  </data>
-  <data name="There are no blocks available." xml:space="preserve">
-    <value>Žádné bloky nejsou k dispozici.</value>
-  </data>
-  <data name="This theme has no assigned block holder." xml:space="preserve">
-    <value>Tento vzhled nemá žádný přiřazený kontejner.</value>
-  </data>
-  <data name="Update" xml:space="preserve">
-    <value>Aktualizovat</value>
-  </data>
-  <data name="You can leave this field empty for now." xml:space="preserve">
-    <value>Prozatím můžete ponechat toto pole prázdné.</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>Zrušit</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Upravit</value>
+  <data name="The order of the text block could not be saved." xml:space="preserve">
+    <value>Pořadí textového bloku nemohlo být uloženo.</value>
   </data>
 </root>

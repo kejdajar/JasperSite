@@ -12,9 +12,9 @@
 '<div id="alertWindow" class="modal fade" role="dialog" style="z-index:99999!important">'+
    ' <div class="modal-dialog">'+       
        ' <div class="modal-content">'+
-            '<div class="modal-header">'+
-                '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
-                '<h4 class="modal-title" style="margin-left:20px">' + header +'</h4>'+
+            '<div class="modal-header">'+                
+         '<h4 class="modal-title" style="margin-left:20px">' + header + '</h4>' +
+         '<button type="button" class="close" data-dismiss="modal">&times;</button>' +
             '</div>'+
             '<div class="modal-body">'+
               body +

@@ -9,6 +9,7 @@ using JasperSite.Models.Database;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.Extensions.Localization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {  [Authorize]
@@ -23,13 +24,14 @@ namespace JasperSite.Areas.Admin.Controllers
 
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+        private readonly IStringLocalizer _localizer;
        
 
-        public BlocksController(DatabaseContext dbContext)
+        public BlocksController(DatabaseContext dbContext, IStringLocalizer<BlocksController> localizer)
         {
             this._databaseContext = dbContext;
             this._dbHelper = new DbHelper(dbContext);
-      
+            this._localizer = localizer;
         }
 
         public BlockViewModel UpdatePage()
@@ -105,7 +107,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch
             {
-                TempData["ErrorMessage"] = "Při vytváření nového textového bloku došlo k chybě.";
+                TempData["ErrorMessage"] = _localizer["An error occured during the creation of the text block."];
             }
 
             if(isAjaxCall)
@@ -198,7 +200,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch
             {
-                TempData["ErrorMessage"] = "Pořadí textového bloku nemohlo být uloženo";
+                TempData["ErrorMessage"] = _localizer["The order of the text block could not be saved."];
             }
           
 
@@ -302,7 +304,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch
             {
-                TempData["ErrorMessage"] = "Nebylo možné přiřadit danému textovému bloku daný kontejner";
+                TempData["ErrorMessage"] = _localizer["The container could not be assigned to the text block."];
             }
           
 
@@ -357,7 +359,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch
             {
-                TempData["ErrorMessage"] = "Kontejner nebylo možné odebrat";
+                TempData["ErrorMessage"] = _localizer["The container could not be removed."];
             }
 
 
@@ -386,7 +388,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-                TempData["ErrorMessage"] = "Změny nebylo možné provést";
+                TempData["ErrorMessage"] = _localizer["The changes could not be completed."];
             }
 
             return RedirectToAction("Index");

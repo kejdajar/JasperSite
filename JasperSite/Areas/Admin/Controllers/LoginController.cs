@@ -45,7 +45,7 @@ namespace JasperSite.Areas.Admin.Controllers
         private readonly DbHelper _dbHelper;
         private readonly IStringLocalizer _localizer;
 
-        public LoginController(DatabaseContext dbContext, IStringLocalizer<ImagesController> localizer)
+        public LoginController(DatabaseContext dbContext, IStringLocalizer<LoginController> localizer)
         {
             this._databaseContext = dbContext;
             this._dbHelper = new DbHelper(dbContext);
