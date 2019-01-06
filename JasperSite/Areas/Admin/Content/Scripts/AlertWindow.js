@@ -20,7 +20,7 @@
               body +
             '</div>'+
             '<div class="modal-footer">'+
-                 ' <a id="deleteModalButton" title="'+ mainButtonText +'" class="btn btn-jasper '+ mainButtonClass +'"> <i class="'+ mainButtonIconStyle+'" aria-hidden="true"></i>'+ mainButtonText +'</a>'+
+                 ' <a id="deleteModalButton" title="'+ mainButtonText +'" class="btn btn-jasper '+ mainButtonClass +'"> <i class="'+ mainButtonIconStyle+'" aria-hidden="true"></i>'+' '+ mainButtonText +'</a>'+
                 '<button type="button" class="btn btn-jasper" data-dismiss="modal" title="'+ closeButtonText+ '">'+ closeButtonText +'</button>'+
             '</div>'+
         '</div>'+

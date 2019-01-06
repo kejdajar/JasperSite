@@ -12,13 +12,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Localization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {
     [Area("admin")]
     public class ImagesController : Controller
     {
-        // Images can be served after the instalation was completed, otherwise everything is redirected to the install page
+        // Images can be served after the instalation was completed, otherwise everything is redirected to the install page.
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (Configuration.InstallationCompleted())
@@ -39,13 +40,19 @@ namespace JasperSite.Areas.Admin.Controllers
 
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+        private readonly IStringLocalizer _localizer;
 
-        public ImagesController(DatabaseContext dbContext)
+        public ImagesController(DatabaseContext dbContext, IStringLocalizer<ImagesController> localizer)
         {
             this._databaseContext = dbContext;
             this._dbHelper = new DbHelper(dbContext);
+            this._localizer = localizer;
         }
 
+        /// <summary>
+        /// Administration Image page
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public IActionResult Index()
@@ -69,6 +76,11 @@ namespace JasperSite.Areas.Admin.Controllers
             }
         }
 
+        /// <summary>
+        /// New images could be posted only by authorized users.
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         public IActionResult PostImage(ICollection<IFormFile> files)
@@ -84,9 +96,10 @@ namespace JasperSite.Areas.Admin.Controllers
                         byte[] imageInBytes = ms.ToArray();
 
                         string type = file.ContentType;
-                        if(type != "image/bmp" && type != "image/png" && type != "image/jpeg" && type != "image/gif" )
+                        
+                        if (type != "image/bmp" && type != "image/png" && type != "image/jpeg" && type != "image/gif" )
                         {
-                            throw new Exception("Formát daného souboru není podporován");
+                            throw new Exception(_localizer["The selected format is not supported."]);
                         }
 
                         Image dbImageEntity = new Image();
@@ -98,7 +111,7 @@ namespace JasperSite.Areas.Admin.Controllers
                     }
                     else
                     {
-                        throw new InvalidImageFormatException("Vložený soubor není obrázek nebo neobsahuje žádná data.");
+                        throw new InvalidImageFormatException(_localizer["The selected file is not a image or contains no data."]);
                     }
                 }
               
@@ -107,9 +120,9 @@ namespace JasperSite.Areas.Admin.Controllers
             {
                 TempData["ErrorMessage"] = ex.Message;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Při nahrávání došlo k chybě.";
+                TempData["ErrorMessage"] = _localizer["There was an error during image upload."] + ex.Message + ((ex.InnerException != null) ? ex.InnerException.Message : "");
             }
 
             return RedirectToAction("Index");
@@ -117,6 +130,7 @@ namespace JasperSite.Areas.Admin.Controllers
 
         /// <summary>
         /// If the image has been already deleted, deleted image placeholder will be returned instead.
+        /// This method is publicly accessible.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>       
@@ -149,7 +163,13 @@ namespace JasperSite.Areas.Admin.Controllers
 
         }
 
-        [HttpGet]
+        /// <summary>
+        /// This method is used only from the Admin section. It is used within the TinyMce plugin for displaying a list of images.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet]        
         public JsonResult GetImageForImageList(int id)
         {
             // Query using navigation property + include in DbHelper class
@@ -169,10 +189,12 @@ namespace JasperSite.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// Returns list of images id --> used in tinyMCE insert modal window
+        /// Returns list of images id --> used in tinyMCE insert modal window.
+        /// This method is used only within the Administration.
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public JsonResult GetImagesId()
         {
             try
@@ -189,7 +211,11 @@ namespace JasperSite.Areas.Admin.Controllers
         }
 
 
-
+        /// <summary>
+        /// Images could be deleted only by authorized users. 
+        /// </summary>
+        /// <param name="imgId"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public IActionResult DeleteImage(int imgId)
