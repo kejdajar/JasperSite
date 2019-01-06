@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using JasperSite.Models.Database;
+using Microsoft.Extensions.Localization;
 
 namespace JasperSite.Areas.Admin.Controllers
 {
@@ -42,11 +43,13 @@ namespace JasperSite.Areas.Admin.Controllers
 
         private readonly DatabaseContext _databaseContext;
         private readonly DbHelper _dbHelper;
+        private readonly IStringLocalizer _localizer;
 
-        public LoginController(DatabaseContext dbContext)
+        public LoginController(DatabaseContext dbContext, IStringLocalizer<ImagesController> localizer)
         {
             this._databaseContext = dbContext;
             this._dbHelper = new DbHelper(dbContext);
+            this._localizer = localizer;
         }
 
         // GET: Admin/Login
@@ -105,7 +108,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch
             {
-               TempData["ErrorMessage"]= "Bylo zadáno chybné uživatelské jméno nebo heslo.";
+               TempData["ErrorMessage"]= _localizer["Invalid username or password."];
                 return View("Index");
             }                 
         }

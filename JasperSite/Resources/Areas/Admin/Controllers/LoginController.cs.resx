@@ -117,43 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Category  \&quot;Uncategorized\&quot; could not be created." xml:space="preserve">
-    <value>Kategorii \"nezařazeno\" se nepodařilo vytvořit.</value>
-  </data>
-  <data name="The article could not be created." xml:space="preserve">
-    <value>Daný článek nebylo možné vytvořit.</value>
-  </data>
-  <data name="The article could not be deleted." xml:space="preserve">
-    <value>Daný článek nebylo možné odstranit.</value>
-  </data>
-  <data name="The changes could not be saved." xml:space="preserve">
-    <value>Změny nebylo možné uložit.</value>
-  </data>
-  <data name="The item could not be deleted." xml:space="preserve">
-    <value>Položku se nepodařilo odstranit.</value>
-  </data>
-  <data name="The required article was not found." xml:space="preserve">
-    <value>Daný článek nebyl nalezen.</value>
-  </data>
-  <data name="The required URL was not found to be deleted." xml:space="preserve">
-    <value>Daná URL adresa nebyla nalezena pro operaci odstranění.</value>
-  </data>
-  <data name="The URL adress has already an article assigned:" xml:space="preserve">
-    <value>Zadaná URL adresa je již obsazená článkem:</value>
-  </data>
-  <data name="The URL adress is already in use." xml:space="preserve">
-    <value>Zadaná URL adresa je již obsazená.</value>
-  </data>
-  <data name="There has to be at least one URL address." xml:space="preserve">
-    <value>Je nutné přiřadit alespoň jednu URL adresu.</value>
-  </data>
-  <data name="There has to be at least one URL for a article." xml:space="preserve">
-    <value>Pro daný článek musí existovat alespoň jedna URL adresa.</value>
-  </data>
-  <data name="Uncategorized" xml:space="preserve">
-    <value>Nezařazeno</value>
-  </data>
-  <data name="Your request could not be completed." xml:space="preserve">
-    <value>Při provádění pořadavku došlo k chybě.</value>
+  <data name="Invalid username or password." xml:space="preserve">
+    <value>Bylo zadáno chybné uživatelské jméno nebo heslo.</value>
   </data>
 </root>

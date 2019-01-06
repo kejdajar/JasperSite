@@ -84,7 +84,7 @@ namespace JasperSite.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(UpdatePage());
+          return View(UpdatePage());
         }
 
         public ArticleListViewModel UpdateArticleListModel(int currentPage, int itemsPerPage)
@@ -126,7 +126,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch
             {
-                TempData["ErrorMessage"] = "Pøi provádìní poøadavku došlo k chybì";
+                TempData["ErrorMessage"] = _localizer["Your request could not be completed."];
             }
 
             bool isAjaxRequest = Request.Headers["x-requested-with"] == "XMLHttpRequest";
@@ -159,7 +159,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch
             {
-                TempData["ErrorMessage"] = "Daný èlánek nebyl nalezen";
+                TempData["ErrorMessage"] = _localizer["The required article was not found."];
                 return RedirectToAction("Index");
             }           
 
@@ -255,17 +255,17 @@ namespace JasperSite.Areas.Admin.Controllers
                 try
                 {
                     string alreadyAssignedAricleName = dbHelper.GetArticleById(ex.AssignedArticleId).Name;
-                    TempData["ErrorMessage"] = "Zadaná URL adresa je již obsazená èlánkem: "+alreadyAssignedAricleName+ ".";
+                    TempData["ErrorMessage"] = _localizer["The URL adress has already an article assigned:"] + " "+alreadyAssignedAricleName+ ".";
                 }
                 catch 
                 {                    
-                    TempData["ErrorMessage"] = "Zadaná URL adresa je již obsazená.";
+                    TempData["ErrorMessage"] = _localizer["The URL adress is already in use."];
                 }
             }
             catch (Exception)
             {
                
-                TempData["ErrorMessage"] = "Zmìny nebylo možné uložit.";
+                TempData["ErrorMessage"] = _localizer["The changes could not be saved."];
             }
 
             if (isAjax)
@@ -296,7 +296,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch(Exception)
             {
-                TempData["ErrorMessage"] = "Daný èlánek nebylo možné vytvoøit";
+                TempData["ErrorMessage"] = _localizer["The article could not be created."];
 
                 return RedirectToAction("Index");
                 
@@ -315,7 +315,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch (Exception)
             {
-                TempData["ErrorMessage"] = "Daný èlánek nebylo možné odstranit";
+                TempData["ErrorMessage"] = _localizer["The article could not be deleted."];
             }
 
             
@@ -339,9 +339,9 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch(Exception)
             {
-                TempData["ErrorMessage"] = "Kategorii \"nezaøazeno\" se nepodaøilo vytvoøit.";                
+                TempData["ErrorMessage"] = _localizer["Category  \"Uncategorized\" could not be created."];                
             }
-            
+           
             return RedirectToAction("Index");
         }
 
@@ -356,7 +356,7 @@ namespace JasperSite.Areas.Admin.Controllers
                 // Both parameters has to be filled in
                 if (string.IsNullOrEmpty(name) || currentArticleId == null)
                 {
-                    TempData["ErrorMessage"] = "Položku se nepodaøilo odstranit.";
+                    TempData["ErrorMessage"] = _localizer["The item could not be deleted."];
                     return RedirectToAction("Index");
                 }
                 else
@@ -369,7 +369,7 @@ namespace JasperSite.Areas.Admin.Controllers
                     }
                     catch
                     {
-                        TempData["ErrorMessage"] = "Položku se nepodaøilo odstranit.";
+                        TempData["ErrorMessage"] = _localizer["The item could not be deleted."];
                         return RedirectToAction("Index");
                     }
                    
@@ -392,15 +392,15 @@ namespace JasperSite.Areas.Admin.Controllers
             }
             catch(InvalidUrlRewriteException)
             {
-                TempData["ErrorMessage"] = "Daná URL adresa nebyla nalezena pro operaci odstranìní.";
+                TempData["ErrorMessage"] = _localizer["The required URL was not found to be deleted."];
             }
             catch (NoUrlRulesException)
             {
-                TempData["ErrorMessage"] = "Pro daný èlánek musí existovat alespoò jedna URL adresa.";
+                TempData["ErrorMessage"] = _localizer["There has to be at least one URL for a article."];
             }
             catch (Exception)
             {
-                TempData["ErrorMessage"] = "Položku se nepodaøilo odstranit";
+                TempData["ErrorMessage"] = _localizer["The item could not be deleted."];
             }
 
 
