@@ -4,7 +4,7 @@
   "articleRoute": "/home/article/",
 
   "blockHolders": [ "MainPageHolder", "FooterHolder", "AboutPageHolder" ],
-  "missingImagePath": "./Images/missing.jpg",
+  "missingImagePath": "./Images/missing_img.png",
   "routingList": {
     "homePage": [
       "/",

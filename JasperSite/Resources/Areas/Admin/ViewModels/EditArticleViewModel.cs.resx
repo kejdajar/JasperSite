@@ -138,6 +138,9 @@
   <data name="Name of the article" xml:space="preserve">
     <value>Název článku</value>
   </data>
+  <data name="Only lowercase english alphabet, underscores or hyphens can be used." xml:space="preserve">
+    <value>Mohou být použita pouze malá písmena anglické abecedy, nebo znak pomlčky či podrtržítka.</value>
+  </data>
   <data name="Publish the article" xml:space="preserve">
     <value>Publikovat článek</value>
   </data>

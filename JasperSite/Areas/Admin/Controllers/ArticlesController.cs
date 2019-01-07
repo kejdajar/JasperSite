@@ -41,7 +41,6 @@ namespace JasperSite.Areas.Admin.Controllers
                     model.Articles = articles;
                 else model.Articles = null;
 
-
                 // Paging section --> first page, items per page
                 model.ArticleListModel = UpdateArticleListModel(1, 10);
 

@@ -35,7 +35,8 @@ namespace JasperSite.Areas.Admin.ViewModels
 
         [Display(Name="Keywords")]
         public string Keywords { get; set; }
-      
+
+        [RegularExpression("^[a-z0-9_-]*", ErrorMessage = "Only lowercase english alphabet, underscores or hyphens can be used.")]        
         public string Url { get; set; }
 
         public List<string> AllUrl { get; set; }
