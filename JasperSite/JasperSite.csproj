@@ -42,6 +42,8 @@
     <Content Remove="Themes\Clean Blog\about.cshtml" />
     <Content Remove="Themes\Clean Blog\Categories.cs.cshtml" />
     <Content Remove="Themes\Clean Blog\Categories.cshtml" />
+    <Content Remove="Themes\Clean Blog\Error.cs.cshtml" />
+    <Content Remove="Themes\Clean Blog\Error.cshtml" />
     <Content Remove="Themes\Clean Blog\index.cs.cshtml" />
     <Content Remove="Themes\Clean Blog\index.cshtml" />
     <Content Remove="Themes\Clean Blog\SingleCategory.cs.cshtml" />

@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = J.Layout("_Layout.cshtml", Context.Request);
+    ViewData["Title"] = "Stránka nenalezena";
+    ViewData["Keywords"] = "Stránka nenalezena";
+}
+
+@{ List<Category> allCategories = J.GetAllCategories(); }
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('@J.File("img/home-bg.jpg")')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>@J.GetWebsiteName()</h1>
+                   <span class="subheading">@J.Components.Holder("MainPageHolder")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+
+            <h1>Stránka nebyla nalezena</h1>
+
+            <div class="alert alert-warning">
+                <p>
+                    <strong>Chyba.</strong> Stránka nebyla nalezena nebo nastala neočekávaná chyba.
+                </p>
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+</div>
+

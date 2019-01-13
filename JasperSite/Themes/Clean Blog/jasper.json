@@ -8,7 +8,7 @@
   "routingList": {
     "homePage": [
       "/",
-      "/home/index"
+      "/home"
     ],
     "homePageFile": "Index.cshtml",
     "errorPageFile": "Error.cshtml"
