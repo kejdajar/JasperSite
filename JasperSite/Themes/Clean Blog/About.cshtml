@@ -1,0 +1,31 @@
+﻿
+
+@{
+    Layout = J.Layout("_Layout.cshtml", Context.Request);
+    ViewData["Title"] = "About";
+    ViewData["Keywords"] = "about";
+}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('@J.File("img/home-bg.jpg")')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>@J.GetWebsiteName()</h1>
+                    <span class="subheading">@J.Components.Holder("MainPageHolder")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+            @J.Components.Holder("AboutPageHolder");
+        </div>
+    </div>
+</div>

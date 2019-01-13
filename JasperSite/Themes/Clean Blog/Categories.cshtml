@@ -1,0 +1,102 @@
+﻿
+
+@{
+    Layout = J.Layout("_Layout.cshtml", Context.Request);
+    ViewData["Title"] = "Categories";
+    ViewData["Keywords"] = "categories";
+}
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('@J.File("img/home-bg.jpg")')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>@J.GetWebsiteName()</h1>
+                    <span class="subheading">@J.Components.Holder("MainPageHolder")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+            @{ List<Category> allCategories = J.GetAllCategories(); }
+
+@if(allCategories != null) 
+ {
+
+         if(allCategories.Count()>0)
+         {
+
+            @foreach(Category c in allCategories)
+                {
+            
+            <div style="width:100%;background-color:#F1F1F1;padding:5px;text-indent:20px;margin-top:20px"> 
+                <h1>@c.Name</h1>            
+            </div>
+                                List<Article> allArticles = J.GetAllArticles().Take(4).OrderByDescending(a=>a.PublishDate).ToList();
+
+                                @if (allArticles.Count > 0)
+                                {
+                                        @foreach (Article article in allArticles)
+                                                {
+                                        <div class="post-preview">
+                                            <a href="@J.Url(article)">
+                                                <h2 class="post-title">
+                                                    @article.Name
+                                                </h2>
+                                                <h3 class="post-subtitle">
+                                                    @article.Category.Name
+                                                </h3>
+                                            </a>
+                                            <p class="post-meta">
+                                                @article.PublishDate.ToLongDateString()
+                                            </p>
+                                        </div>
+                                        <hr>
+
+                                    
+                                                }
+
+                                      @if (allArticles.Count() > 4)
+                                    {
+                                    <div class="clearfix">
+                                        <a class="btn btn-primary float-right" href="/singlecategory?id=@c.Id">Older posts &rarr;</a>
+                                    </div>
+                                    }
+                                 }
+                                else {
+                                              <div class="alert alert-warning">
+                                            There are no available categories.
+                                            </div>
+                                     }
+                                
+                }
+                                
+
+         }
+            else {
+             <div class="alert alert-warning">
+         There are no available categories.
+         </div>
+            }
+
+}
+else {
+    <div class="alert alert-warning">
+        This section is currently unavailable.
+    </div>
+    }
+
+
+           
+
+        </div>
+    </div>
+</div>

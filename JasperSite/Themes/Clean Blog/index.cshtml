@@ -1,0 +1,69 @@
+﻿
+@{
+    Layout = J.Layout("_Layout.cshtml", Context.Request);
+    ViewData["Title"] = J.GetWebsiteName();
+    ViewData["Keywords"] = "Welcome page";
+}
+
+@{ List<Category> allCategories = J.GetAllCategories(); }
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('@J.File("img/home-bg.jpg")')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>@J.GetWebsiteName()</h1>
+                   <span class="subheading">@J.Components.Holder("MainPageHolder")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+
+
+            @{ List<Article> allArticles = J.GetAllArticles().Take(5).OrderByDescending(a => a.PublishDate).ToList(); }
+
+            @if (allArticles.Count > 0)
+            {
+                @foreach (Article article in allArticles)
+                {
+                    <div class="post-preview">
+                        <a href="@J.Url(article)">
+                            <h2 class="post-title">
+                                @article.Name
+                            </h2>
+                            <h3 class="post-subtitle">
+                                @article.Category.Name
+                            </h3>
+                        </a>
+                        <p class="post-meta">
+                            @article.PublishDate.ToLongDateString()
+                        </p>
+                    </div>
+                    <hr>
+                }
+                <!-- Pager -->
+                <div class="clearfix">
+                    <a class="btn btn-primary float-right" href="/categories">Older posts &rarr;</a>
+                </div>
+            }
+            else
+            {
+                <h2>There are no available articles </h2>
+
+            }
+
+
+
+        </div>
+    </div>
+</div>
+

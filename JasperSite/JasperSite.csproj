@@ -29,17 +29,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Themes\Clean Blog\_Layout.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Areas\Admin\Views\Articles\ArticlesListPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Articles\EditArticlePartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Blocks\AddedAndLooseHoldersPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Blocks\BlockFormPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\TinyMceSettingsPartialView.cshtml" />
+    <Content Remove="Themes\Clean Blog\About.cs.cshtml" />
+    <Content Remove="Themes\Clean Blog\about.cshtml" />
+    <Content Remove="Themes\Clean Blog\Categories.cs.cshtml" />
+    <Content Remove="Themes\Clean Blog\Categories.cshtml" />
+    <Content Remove="Themes\Clean Blog\index.cs.cshtml" />
+    <Content Remove="Themes\Clean Blog\index.cshtml" />
+    <Content Remove="Themes\Clean Blog\SingleCategory.cs.cshtml" />
+    <Content Remove="Themes\Clean Blog\SingleCategory.cshtml" />
+    <Content Remove="Themes\Clean Blog\_Layout.cshtml" />
     <Content Remove="Themes\Default\AboutAuthor.cs.cshtml" />
     <Content Remove="Themes\Default\AboutAuthor.cshtml" />
     <Content Remove="Themes\Default\AboutProject.cs.cshtml" />
     <Content Remove="Themes\Default\AboutProject.cshtml" />
     <Content Remove="Themes\Jasper\About.cs.cshtml" />
     <Content Remove="Themes\Jasper\About.cshtml" />
+    <Content Remove="Themes\_Layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -64,6 +78,12 @@
     <None Remove="Areas\Admin\Views\Shared\_ErrorModalPartialViewTemp.cshtml" />
     <None Remove="Areas\Admin\Views\Shared\_SuccessModalPartialViewTemp.cshtml" />
     <None Remove="Areas\Admin\Views\Users\AddUser.cshtml" />
+    <None Remove="Themes\Clean Blog\Article.cs.cshtml" />
+    <None Remove="Themes\Clean Blog\Article.cs.cshtml~RF1ff4a80.TMP" />
+    <None Remove="Themes\Clean Blog\Article.cs.cshtml~RF1ff4a80.TMP" />
+    <None Remove="Themes\Clean Blog\Article.cshtml" />
+    <None Remove="Themes\Clean Blog\jasper.json" />
+    <None Remove="Themes\Clean Blog\_ViewImports.cshtml" />
     <None Remove="Themes\Default\Error.cs.cshtml" />
     <None Remove="Themes\Default\Index.cs.cshtml" />
     <None Remove="Themes\Default\_Layout.cs.cshtml" />
@@ -288,6 +308,15 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Admin\Views\Categories\AddNewCategoryPartialView.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Clean Blog\Article.cs.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Clean Blog\Article.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Themes\Clean Blog\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Themes\Default\Error.cs.cshtml">

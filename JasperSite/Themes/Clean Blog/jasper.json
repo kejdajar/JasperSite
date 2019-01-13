@@ -1,0 +1,36 @@
+{
+  "urlRewriting": "True",
+  "articleFile": "Article.cshtml",
+  "articleRoute": "/article/",
+
+  "blockHolders": [ "MainPageHolder", "FooterHolder", "AboutPageHolder" ],
+  "missingImagePath": "./img/missing_img.png",
+  "routingList": {
+    "homePage": [
+      "/",
+      "/home/index"
+    ],
+    "homePageFile": "Index.cshtml",
+    "errorPageFile": "Error.cshtml"
+  },
+  "customPageMapping": [
+    {
+      "routes": [       
+        "/categories"
+      ],
+      "file": "Categories.cshtml"
+    },
+    {
+      "routes": [
+        "/about"
+      ],
+      "file": "About.cshtml"
+    },   
+    {
+      "routes": [
+        "/singlecategory"
+      ],
+      "file": "SingleCategory.cshtml"
+    }
+  ]
+}

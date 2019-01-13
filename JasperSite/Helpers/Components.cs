@@ -54,7 +54,7 @@ namespace JasperSite.Helpers
                 blocksToDisplay = blocksToDisplay.OrderBy(o => o.Order);
                 foreach (var tb in blocksToDisplay)
                 {
-                    sb.Append(tb.BlockToDisplay.Content + "<hr/>");
+                    sb.Append(tb.BlockToDisplay.Content);
                 }
                 return new HtmlString(sb.ToString());
             }

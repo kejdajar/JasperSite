@@ -1,0 +1,71 @@
+﻿@model int
+@using JasperSite.Models.Database
+@inject DatabaseContext databaseContext
+
+
+@{
+    Layout = J.Layout("_Layout.cshtml", Context.Request);
+    Article article = J.GetArticleById(Model);
+
+    @if(article.Category.Name == "Uncategorized")
+    {
+        article.Category.Name = "Nezařazeno";
+    }
+}
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('@J.File("img/home-bg.jpg")')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>@article.Name</h1>
+                    <span class="subheading">@article.PublishDate.ToShortDateString()
+                    <br/>
+                    <span style="color:#fff;font-size:0.7em"> <i> <i class="fa fa-undo"></i><a style="color:#fff" href="/categories?id=@article.CategoryId"> zpět na: @article.Category.Name</a></i> </span> 
+                    </span> 
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<article>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+
+             
+
+
+                @if (article != null)
+                {
+                    ViewData["Title"] = article.Name;
+                    ViewData["Keywords"] = article.Keywords;
+
+
+
+                    @Html.Raw(article.HtmlContent)
+
+
+                }
+                else
+                {
+
+                    <div class="jumbotron"> <h2>Článek nemohl být nalezen.</h2></div>
+                    <p>
+                       Požadovaný článek neexistuje nebo je momentálně nedostupný. <br />
+                    </p>
+                    <p>
+                        <a href="./"><i class="fa fa-undo"></i> Zpět na hlavní stránku.</a>
+                    </p>
+                }
+
+
+
+            </div>
+        </div>
+    </div>
+</article>
+
+

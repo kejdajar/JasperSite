@@ -1,0 +1,91 @@
+﻿
+@using JasperSite.Models.Database
+@using JasperSite.Models
+@inject DatabaseContext databaseContext
+@{ var query = Convert.ToInt32(Context.Request.Query["id"]);}
+@{
+    string categoryName = @J.GetCategoryNameById(query);
+    Layout =J.Layout("_Layout.cshtml",Context.Request);
+    ViewData["Title"] = categoryName;
+    ViewData["Keywords"] = categoryName;
+}
+
+
+@{ List<Article> allArticlesFromCategory = J.GetAllArticles(query).OrderByDescending(a=>a.PublishDate).ToList<Article>();}
+
+
+
+
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('@J.File("img/home-bg.jpg")')">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h1>@(string.IsNullOrEmpty(categoryName) ? "Requested category could not be found." : categoryName)</h1>
+
+                    @if(allArticlesFromCategory != null)
+                    {
+                    <span class="subheading">browsing @allArticlesFromCategory.Count() articles <br/>
+                     <span style="color:#fff;font-size:0.7em"> <i> <a style="color:#fff" href="/categories">view all categories</a></i> </span> 
+                    </span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+
+
+
+
+            @if (allArticlesFromCategory != null)
+    {
+            if (allArticlesFromCategory.Count > 0)
+            {
+            @foreach (Article article in allArticlesFromCategory)
+                    {
+            <div class="post-preview">
+                <a href="@J.Url(article)">
+                    <h2 class="post-title">
+                        @article.Name
+                    </h2>
+                    <h3 class="post-subtitle">
+                        @article.Category.Name
+                    </h3>
+                </a>
+                <p class="post-meta">
+                    @article.PublishDate.ToLongDateString()
+                </p>
+            </div>
+            <hr>
+                    }
+            }
+            else
+            {
+            <div class="alert alert-warning">
+                There are no available articles.
+            </div>
+
+            }
+
+     }
+     else
+     {
+
+            <div class="alert alert-warning">
+                Articles from the current category could not be loaded. Please try again later.
+            </div>
+
+     }
+
+
+        </div>
+    </div>
+</div>

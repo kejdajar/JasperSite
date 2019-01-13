@@ -496,7 +496,7 @@ namespace JasperSite.Models.Database
         {
             try
             {
-                return Database.Articles.Where(a => a.Id == id).Single();
+                return Database.Articles.Where(a => a.Id == id).Include(c=>c.Category).Single();
             }
             catch (Exception ex)
             {
