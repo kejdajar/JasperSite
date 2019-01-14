@@ -109,7 +109,7 @@ namespace JasperSite.Areas.Admin.Controllers
             
         }
 
-
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult SetLanguage(string culture, string returnUrl)
         {

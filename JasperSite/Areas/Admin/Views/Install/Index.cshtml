@@ -1,11 +1,22 @@
 ﻿@model JasperSite.Areas.Admin.ViewModels.InstallViewModel
 
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Builder
+
 @inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
 
 @using JasperSite.Models
 @{
     Layout = null;
+
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = c.DisplayName })
+        .ToList();
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}";
 }
 
 <!DOCTYPE html>
@@ -67,63 +78,63 @@
 
     <style>
 
-             body {
-                 margin-top: 20px;
-             }
+        body {
+            margin-top: 20px;
+        }
 
-             .j-jumbotron-span {
-                 color: #BA68C8;
-             }
-
-
-             /* Centered div with spinning icon (without shade) */
-
-             .modal-loading {
-                 display: none;
-                 position: absolute;
-                 top: 50%;
-                 left: 50%;
-                 transform: translate(-50%, -50%);
-                 color: black;
-                 background-color: transparent;
-                 z-index: 3;
-             }
+        .j-jumbotron-span {
+            color: #BA68C8;
+        }
 
 
-             body.loading .modal-loading {
-                 overflow: hidden;
-             }
+        /* Centered div with spinning icon (without shade) */
 
-             body.loading .modal-loading {
-                 display: block;
-             }
+        .modal-loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+            background-color: transparent;
+            z-index: 3;
+        }
+
+
+        body.loading .modal-loading {
+            overflow: hidden;
+        }
+
+        body.loading .modal-loading {
+            display: block;
+        }
 
 
 
-             /* Background shade */
+        /* Background shade */
 
-             .modal {
-                 display: none;
-                 position: fixed;
-                 z-index: 2;
-                 top: 0;
-                 left: 0;
-                 height: 100%;
-                 width: 100%;
-                 background: rgba( 255, 255, 255, .8 );
-             }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: rgba( 255, 255, 255, .8 );
+        }
 
-             /* When the body has the loading class, we turn
+        /* When the body has the loading class, we turn
         the scrollbar off with overflow:hidden */
-             body.loading .modal {
-                 overflow: hidden;
-             }
+        body.loading .modal {
+            overflow: hidden;
+        }
 
-             /* Anytime the body has the loading class, our
+        /* Anytime the body has the loading class, our
         modal element will be visible */
-             body.loading .modal {
-                 display: block;
-             }
+        body.loading .modal {
+            display: block;
+        }
     </style>
 
 </head>
@@ -156,6 +167,16 @@
             <section class="col-lg-6">
                 <div class="j-admin-section">
 
+                    <div class="form-group">
+                        <form id="selectLanguage" asp-controller="Home"
+                              asp-action="SetLanguage" asp-route-returnUrl="@returnUrl"
+                              method="post" class="form-horizontal" role="form">
+                            <label asp-for="@requestCulture.RequestCulture.UICulture.Name">@Localizer["Choose your language:"]</label>
+                            <select name="culture"
+                                    onchange="this.form.submit();"
+                                    asp-for="@requestCulture.RequestCulture.UICulture.Name" asp-items="cultureItems"></select>
+                        </form>
+                    </div>
 
                     <form id="installForm" method="post" asp-area="admin" asp-controller="install" asp-action="index">
 
@@ -187,14 +208,19 @@
                                     </div>
                                     <p class="mb-1">
                                         <ul style="margin-left:20px;margin-top:5px">
-                                            <li>
-                                                <i>MSSQL:</i><br /> Data Source=@Localizer["server_name"]; Initial Catalog=@Localizer["database_name"]; Integrated Security=True
+                                            <li>                                               
+                                                <b>MSSQL: </b> <br />
+                                                Data Source=@Localizer["server_name"];Initial Catalog=@Localizer["database_name"];User Id=@Localizer["user_id"];Password=@Localizer["password"]
+
                                             </li>
                                             <li>
-                                                <i>MySQL:</i> <br />Server=@Localizer["server_name"]; Database=@Localizer["database_name"]; Uid=root;Pwd=root;
+                                                <b>MSSQL (localhost):</b><br /> Data Source=@Localizer["server_name"]; Initial Catalog=@Localizer["database_name"]; Integrated Security=True
+                                            </li>
+                                            <li>
+                                                <b>MySQL:</b> <br />Server=@Localizer["server_name"]; Database=@Localizer["database_name"]; Uid=root;Pwd=root
                                             </li>
                                         </ul>
-                                        @*<small class="text-muted">V uživatelském jménu nezáleží na velikosti písmen.</small>*@
+                                       
                                     </p>
 
                                 </div>
@@ -211,7 +237,7 @@
 
                         </div>
 
-                        
+
 
                         <div class="form-group">
 
@@ -242,7 +268,7 @@
                     @if (!Configuration.GlobalWebsiteConfig.InstallationCompleted)
                     {
                         <div class="alert alert-warning" role="alert">
-                           @Localizer["System JasperSite has not yet been installed on this machine. Follow the installation instructions."]
+                            @Localizer["System JasperSite has not yet been installed on this machine. Follow the installation instructions."]
                         </div>
                     }
                     else
@@ -251,7 +277,7 @@
                             <p>
                                 @Localizer["System JasperSite has been already installed on this machine. Reinstallation will result in the loss of some of the stored data, such as articles, categories, user accounts, images, configuration setttings, and other custom content. Theme folder will be left as is."]
                             </p>
-                            
+
                             <p>
                                 @Localizer["In order to display other current configuration settings, select the \"Advanced debug options\"."]
                             </p>
@@ -275,8 +301,8 @@
                                         <b>@Localizer["Current settings"]</b><br />
                                         @Localizer["Finished installation"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.InstallationCompleted <br />
                                         @Localizer["Connection string"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.ConnectionString <br />
-                                       @Localizer["Database provider"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.TypeOfDatabase<br />
-                                       @Localizer["Name of the current theme"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.ThemeName<br />
+                                        @Localizer["Database provider"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.TypeOfDatabase<br />
+                                        @Localizer["Name of the current theme"]:  @JasperSite.Models.Configuration.GlobalWebsiteConfig.ThemeName<br />
                                         @Localizer["Folder with themes"]: @JasperSite.Models.Configuration.ThemeFolder <br />
                                     </div>
                                 </div>

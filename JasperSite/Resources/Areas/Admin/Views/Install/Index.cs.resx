@@ -197,4 +197,7 @@ Pokud dostatečná práva nemáte, je nutné obsah databáze smazat ručně</val
   <data name="This can not be undone. All content will be deleted." xml:space="preserve">
     <value>Tato akce je nevratná, veškerý obsah bude smazán.</value>
   </data>
+  <data name="Choose your language:" xml:space="preserve">
+    <value>Zvolte váš jazyk: </value>
+  </data>
 </root>
