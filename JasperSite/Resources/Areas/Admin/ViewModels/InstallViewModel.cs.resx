@@ -120,4 +120,22 @@
   <data name="Fill in the connection string" xml:space="preserve">
     <value>Zadejte připojovací řetězec</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Heslo</value>
+  </data>
+  <data name="Password can't be an empty string." xml:space="preserve">
+    <value>Heslo nesmí být prázdný řetězec.</value>
+  </data>
+  <data name="Password check" xml:space="preserve">
+    <value>Kontrola hesla</value>
+  </data>
+  <data name="Passwords do not match" xml:space="preserve">
+    <value>Hesla se neshodují</value>
+  </data>
+  <data name="Username" xml:space="preserve">
+    <value>Uživatelské jméno</value>
+  </data>
+  <data name="Username can't be an empty string." xml:space="preserve">
+    <value>Uživatelské jméno nesmí být prázdný řetězec.</value>
+  </data>
 </root>

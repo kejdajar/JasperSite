@@ -29,7 +29,7 @@ namespace JasperSite.Models.Database
         }
 
 
-      public void Initialize(IRequestCultureFeature culture, bool ensureDbIsDeleted = false)
+      public void Initialize(IRequestCultureFeature culture,string username, string password, bool ensureDbIsDeleted = false)
             {
             // Resets the configuration file in case it was modified
             Configuration.GlobalWebsiteConfig.ThemeName = "Default";
@@ -106,23 +106,20 @@ namespace JasperSite.Models.Database
 
             Role adminRole = new Role() { Name = "admin" };
             Role redactorRole = new Role() { Name = "redactor" };
+
             DatabaseContext.Roles.Add(adminRole);
             DatabaseContext.Roles.Add(redactorRole);
+           
  //DatabaseContext.SaveChanges();
 
-            User admin = new User() { Nickname = "administrator", Username = "admin",Role=adminRole };
+            User admin = new User() { Nickname = username, Username = username,Role=adminRole };
             string salt, hashedPassword;
-            JasperSite.Models.Security.Authentication.HashPassword("admin", out salt, out hashedPassword);
+            JasperSite.Models.Security.Authentication.HashPassword(password, out salt, out hashedPassword);
             admin.Password = hashedPassword;
             admin.Salt = salt;
             DatabaseContext.Users.Add(admin);
 
-            User redactor = new User() { Nickname = "redactor", Username = "redactor", Role = redactorRole };
-            string salt2, hashedPassword2;
-            JasperSite.Models.Security.Authentication.HashPassword("redactor", out salt2, out hashedPassword2);
-            redactor.Password = hashedPassword2;
-            redactor.Salt = salt2;
-            DatabaseContext.Users.Add(redactor);
+            
 
 //DatabaseContext.SaveChanges();
 

@@ -200,4 +200,13 @@ Pokud dostatečná práva nemáte, je nutné obsah databáze smazat ručně</val
   <data name="Choose your language:" xml:space="preserve">
     <value>Zvolte váš jazyk: </value>
   </data>
+  <data name="Fill in your admin username" xml:space="preserve">
+    <value>Vyplňte své uživatelské jméno pro administrátorský účet</value>
+  </data>
+  <data name="Fill in your password" xml:space="preserve">
+    <value>Vyplňte své heslo</value>
+  </data>
+  <data name="Fill in your password again" xml:space="preserve">
+    <value>Vyplňte opět své heslo pro kontrolu</value>
+  </data>
 </root>

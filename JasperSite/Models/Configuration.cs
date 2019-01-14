@@ -51,7 +51,7 @@ namespace JasperSite.Models
         }
         
 
-        public static void CreateAndSeedDb(DatabaseContext dbContext,IRequestCultureFeature culture, bool ensureDbIsDeleted = false)
+        public static void CreateAndSeedDb(DatabaseContext dbContext,IRequestCultureFeature culture, string username, string password, bool ensureDbIsDeleted = false)
         {
             if (GlobalWebsiteConfig.InstallationCompleted)
             {
@@ -61,7 +61,7 @@ namespace JasperSite.Models
               
 
                 DbInitializer init = new DbInitializer(dbContext);
-                init.Initialize(culture,ensureDbIsDeleted);
+                init.Initialize(culture, username, password,ensureDbIsDeleted);
                 //}
                 //catch(NotSupportedDatabaseException ex)
                 //{

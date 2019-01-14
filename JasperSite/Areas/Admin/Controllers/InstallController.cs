@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Authentication;
 
 namespace JasperSite.Areas.Admin.Controllers
 {
@@ -147,12 +148,13 @@ namespace JasperSite.Areas.Admin.Controllers
 
                     //DatabaseContext dbContext = ((ServiceProvider)Env.ServiceProvider).GetRequiredService<DatabaseContext>(); // OLD WAY - problems with detached and atached objects
 
-                    JasperSite.Models.Configuration.CreateAndSeedDb(dbContext,culture, recreateDb);
+                    JasperSite.Models.Configuration.CreateAndSeedDb(dbContext,culture, model.Username, model.Password,recreateDb);
 
                     // All changes in jasper.json will be saved in memory
                     // Without this statement, in-memory jasper.json data will not be up-to-date
                     Configuration.Initialize();
 
+                    HttpContext.SignOutAsync(); // before redirecting the current user is signed out (new username could be created during install)
                     return RedirectToAction("Index", "Home", new { area = "admin" });
 
                 }

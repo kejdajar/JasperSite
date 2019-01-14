@@ -24,10 +24,13 @@ namespace JasperSite.Areas.Admin.ViewModels
 
         [Display(Name = "Fill in the new password")]
         [Required(ErrorMessage = "Fill in the new password")]
+        [DataType(DataType.Password)]
         public string NewPasswordPlainText { get; set; }
 
         [Display(Name="Fill in the new password again")]
         [Required(ErrorMessage = "Fill in the new password again")]
+        [Compare("NewPasswordPlainText", ErrorMessage = "Passwords do not match")]
+        [DataType(DataType.Password)]
         public string NewPasswordPlainTextAgain { get; set; }
 
         public int RoleId { get; set; }       
