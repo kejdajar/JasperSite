@@ -3,7 +3,8 @@
   "connectionString": "",
   "typeOfDatabase": "",
   "installationCompleted": "",
- "enableEmail":"",
+ 
+"enableEmail":"",
   "email": {
     "smtpserver": "",
     "username": "",
