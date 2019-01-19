@@ -55,7 +55,6 @@
     <Content Remove="Themes\Default\AboutProject.cshtml" />
     <Content Remove="Themes\Jasper\About.cs.cshtml" />
     <Content Remove="Themes\Jasper\About.cshtml" />
-    <Content Remove="Themes\_Layout.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
