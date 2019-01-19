@@ -124,7 +124,33 @@ namespace JasperSite.Models
             }
         }
 
-        
+
+        /* E-mail */
+        public bool EnableEmail
+        {
+            get
+            {
+                bool enableEmail = ConfigurationDataObject.EnableEmail;
+                return enableEmail;
+            }
+            set
+            {
+                ConfigurationDataObject.EnableEmail = value;
+                CommitChanges();
+            }
+        }
+
+        public GlobalConfigData.Email GetEmailProperties()
+        {
+            GlobalConfigData.Email emailProperties = new GlobalConfigData.Email();
+            emailProperties.SmtpServer = ConfigurationDataObject.EmailProperties.SmtpServer;
+            emailProperties.Username = ConfigurationDataObject.EmailProperties.Username;
+            emailProperties.Password = ConfigurationDataObject.EmailProperties.Password;
+            emailProperties.From = ConfigurationDataObject.EmailProperties.From;
+            emailProperties.To = ConfigurationDataObject.EmailProperties.To;
+            return emailProperties;
+        }
+
 
     }
 
@@ -150,6 +176,30 @@ namespace JasperSite.Models
 
         [JsonProperty("installationCompleted")]
         public string InstallationCompleted { get; set; }
+
+        [JsonProperty("enableEmail")]
+        public bool EnableEmail { get; set; }
+
+        [JsonProperty("email")]
+        public Email EmailProperties { get; set; }
+
+        public class Email
+        {
+            [JsonProperty("smtpserver")]
+            public string SmtpServer { get; set; }
+
+            [JsonProperty("username")]
+            public string Username { get; set; }
+
+            [JsonProperty("password")]
+            public string Password { get; set; }
+
+            [JsonProperty("from")]
+            public string From{ get; set; }
+
+            [JsonProperty("to")]
+            public string To { get; set; }
+        }
     }
 
 }

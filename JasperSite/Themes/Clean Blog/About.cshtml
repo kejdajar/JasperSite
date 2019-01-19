@@ -25,7 +25,70 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
-            @J.Components.Holder("AboutPageHolder");
+            @J.Components.Holder("AboutPageHolder")
+
+            @if (Configuration.GlobalWebsiteConfig.EnableEmail)
+            {
+                <form asp-action="index" asp-controller="mail" asp-area="admin" method="post">
+
+
+                    <input type="hidden" name="returnurl" value="/about" />
+
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label>Name</label>
+                            <input type="text" class="form-control" placeholder="Name" name="sender" required value="@(TempData["Sender"] != null ? TempData["Sender"].ToString() : "")">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label>E-mail</label>
+                            <input type="email" class="form-control" placeholder="E-mail" name="email" required value="@(TempData["Email"] != null ? TempData["Email"].ToString() : "")">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label>Subject</label>
+                            <input type="text" class="form-control" placeholder="Subject" name="subject" required value="@(TempData["Subject"] != null ? TempData["Subject"].ToString() : "")">
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
+                            <label>Message</label>
+                            <textarea rows="4" class="form-control" placeholder="Your message" name="body" required>@(TempData["Message"] != null ? TempData["Message"].ToString() : "")</textarea>
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <br>
+                    @if (TempData["MailSuccess"] != null)
+                    {
+                        @if ((bool)(TempData["MailSuccess"]) == true)
+                        {
+                            <div class="alert alert-success">
+                                Your message was successfully send.
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert alert-danger">
+                                An error occured.
+                            </div>
+                        }
+                    }
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    Plugin for leaving a message is not configured.
+                </div>
+            }
         </div>
     </div>
 </div>

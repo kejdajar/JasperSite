@@ -15,6 +15,7 @@ using JasperSite.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Localization;
 
+
 namespace JasperSite.Models.Database
 {
 
@@ -1865,6 +1866,7 @@ namespace JasperSite.Models.Database
 
         #endregion
         
+        
     }
 
 
@@ -2693,8 +2695,7 @@ namespace JasperSite.Models.Database
         }
 
         #endregion
-
-
+       
     }
 }
 
