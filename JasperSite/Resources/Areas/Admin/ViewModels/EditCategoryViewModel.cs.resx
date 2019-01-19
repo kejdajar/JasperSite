@@ -117,49 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action" xml:space="preserve">
-    <value>Akce</value>
+  <data name="Fill in the name of the category" xml:space="preserve">
+    <value>Vyplňte jméno rubriky</value>
   </data>
-  <data name="Category" xml:space="preserve">
-    <value>Rubrika</value>
-  </data>
-  <data name="Close" xml:space="preserve">
-    <value>Zavřít</value>
-  </data>
-  <data name="Create" xml:space="preserve">
-    <value>Vytvořit</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Odstranit</value>
-  </data>
-  <data name="Do you really want to delete this category?" xml:space="preserve">
-    <value>Skutečně odstranit rubriku?</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Upravit</value>
-  </data>
-  <data name="List of Categories" xml:space="preserve">
-    <value>Seznam rubrik</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Název</value>
-  </data>
-  <data name="Name of Category" xml:space="preserve">
+  <data name="Name of the category" xml:space="preserve">
     <value>Název rubriky</value>
-  </data>
-  <data name="New Category" xml:space="preserve">
-    <value>Nová rubrika</value>
-  </data>
-  <data name="Number of Articles" xml:space="preserve">
-    <value>Počet článků</value>
-  </data>
-  <data name="This default category can't be deleted." xml:space="preserve">
-    <value>Tuto výchozí rubriku není možné odstranit.</value>
-  </data>
-  <data name="Uncategorized" xml:space="preserve">
-    <value>Nezařazeno</value>
-  </data>
-  <data name="will be permanently deleted" xml:space="preserve">
-    <value>bude nenávratně odstraněna</value>
   </data>
 </root>

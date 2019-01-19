@@ -51,7 +51,7 @@
 
                 </h1>            
             </div>
-                                List<Article> allArticles = J.GetAllArticles().Take(4).OrderByDescending(a=>a.PublishDate).ToList();
+                List<Article> allArticles = J.GetAllArticles().Where(a => a.CategoryId == c.Id).Take(4).OrderByDescending(a=>a.PublishDate).ToList();
 
                                 @if (allArticles.Count > 0)
                                 {
@@ -91,9 +91,9 @@
                                         }
                                     }
                                     else {
-                                              <div class="alert alert-warning">
-                                            Žádné rubriky nejsou k dispozici.
-                                            </div>
+                                             
+                                    <small><i>Žádné články nejsou k dispozici v této rubrice.</i></small>
+                                            
                                      }
                                 
                 }

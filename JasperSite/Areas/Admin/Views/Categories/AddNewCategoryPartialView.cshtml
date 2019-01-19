@@ -79,8 +79,8 @@
     <p>
         @if (Model.Categories != null)
         {
-        <table class="table table-bordered j-table">
-            <tr><th class="col-sm" style="text-align:left">@Localizer["Name"]</th><th style="min-width:200px">@Localizer["Number of Articles"]</th> <th>@Localizer["Action"]</th></tr>
+        <table class="table table-bordered j-table table-responsive">
+            <tr><th class="col-sm" style="text-align:left">@Localizer["Name"]</th><th style="min-width:200px">@Localizer["Number of Articles"]</th> <th style="min-width:175px">@Localizer["Action"]</th></tr>
             @foreach (Category c in Model.Categories)
                 {
             <tr>
@@ -99,13 +99,14 @@
                 <td>@c.Articles.Count()</td>
                 <td>
                     @if (c.Name != "Uncategorized")
-                            {
-                    <a data-delete-id="@c.Id" data-category-name="@c.Name" asp-controller="categories" asp-action="deletecategory" asp-route-id="@c.Id" asp-area="admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
-                            }
-                            else
-                            {
-                    <span data-toggle="tooltip" title="@Localizer["This default category can't be deleted."]">  <a href="#" class="btn btn-jasper btn-jasper-delete disabled"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></span>
-                            }
+                    {
+                        <a data-delete-id="@c.Id" data-category-name="@c.Name" asp-controller="categories" asp-action="deletecategory" asp-route-id="@c.Id" asp-area="admin" class="btn btn-jasper btn-jasper-delete"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a>
+                        <a asp-controller="categories" asp-action="editcategory" asp-route-id="@c.Id" asp-area="admin" class="btn btn-jasper">@Localizer["Edit"]</a>
+                    }
+                    else
+                    {
+                        <span data-toggle="tooltip" title="@Localizer["This default category can't be deleted."]">  <a href="#" class="btn btn-jasper btn-jasper-delete disabled"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></a></span>
+                    }
                 </td>
             </tr>
                 }

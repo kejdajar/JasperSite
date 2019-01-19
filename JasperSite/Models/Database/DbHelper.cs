@@ -82,6 +82,15 @@ namespace JasperSite.Models.Database
         #region Categories
 
         /// <summary>
+        /// Renames the category.
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="newName"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="DatabaseHelperException"></exception>
+        void RenameCategory(int categoryId, string newName);
+
+        /// <summary>
         /// Returns list of all categories.
         /// </summary>
         /// <returns></returns>
@@ -574,6 +583,39 @@ namespace JasperSite.Models.Database
         #endregion
 
         #region Categories
+
+
+        public void RenameCategory(int categoryId, string newName)
+        {
+           
+            if (newName == null)
+            {
+                throw new ArgumentNullException();
+            }
+
+            if(newName == string.Empty)
+            {
+                throw new DatabaseHelperException("Category name can't be an empty string.");
+            }
+
+            try
+            {
+                Category categoryToBeRenamed = Database.Categories.Where(c => c.Id == categoryId).Single();
+
+                if(categoryToBeRenamed.Name == "Uncategorized")
+                {
+                    throw new DatabaseHelperException("This default category can't be renamed.");
+                }
+
+                categoryToBeRenamed.Name = newName;
+                Database.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                throw new DatabaseHelperException("Category name could not be updated.",ex);
+            }
+           
+        }
         
         /// <see cref="IJasperDataService.GetAllCategories"/>    
         public List<Category> GetAllCategories()
@@ -608,8 +650,18 @@ namespace JasperSite.Models.Database
         /// <see cref="IJasperDataService.AddCategory(string)"/>    
         public Category AddCategory(string categoryName)
         {
+          
             try
-            {    
+            {
+                
+                if (categoryName == "Uncategorized")
+                {
+                    // Check if uncategorized category exists:
+                    bool uncategorizedExists = Database.Categories.Any(c => c.Name == "Uncategorized");
+                    throw new DatabaseHelperException("There has to be only one Uncategorized category");
+                }  
+
+
                 Category newCategory = new Category() { Name = categoryName };
                 Database.Categories.Add(newCategory);
                 Database.SaveChanges();
@@ -1531,6 +1583,13 @@ namespace JasperSite.Models.Database
         #region Categories
 
         /// <summary>
+        /// Renames the category.
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <param name="newName"></param>
+        bool RenameCategory(int categoryId, string newName);
+
+        /// <summary>
         /// Returns list of all categories. In case of failure returns null.
         /// </summary>
         /// <returns></returns>       
@@ -2010,6 +2069,21 @@ namespace JasperSite.Models.Database
         #endregion
 
         #region Categories
+
+        
+        /// <see cref="IJasperDataServicePublic.RenameCategory"></see>
+        public bool RenameCategory(int categoryId, string newName)
+        {
+            try
+            {
+                _dbHelper.RenameCategory(categoryId, newName);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         /// <see cref="IJasperDataServicePublic.GetAllCategories"/>
         public List<Category> GetAllCategories()

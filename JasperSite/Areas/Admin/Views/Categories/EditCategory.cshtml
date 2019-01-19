@@ -1,0 +1,47 @@
+﻿@model JasperSite.Areas.Admin.ViewModels.EditCategoryViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+
+@{
+    ViewBag.Title = Localizer["Edit category"];
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Localizer["Edit category"]</h1>
+
+@Html.Partial("_ErrorModalPartialViewTemp")
+@Html.Partial("_SuccessModalPartialViewTemp")
+<script src="~/Areas/Admin/Content/Scripts/AlertWindow.js"></script>
+
+<div class="row">
+
+    <div class="col-lg-12">
+
+        <section class="j-admin-section">
+
+            @if (Model != null)
+            {
+            <form method="post" asp-controller="categories" asp-action="editcategory" asp-area="admin">
+                <div class="form-group">
+                    <input type="hidden" asp-for="CategoryId" />
+                    <label asp-for="CategoryName"></label>
+                    <input type="text" class="form-control" asp-for="CategoryName" placeholder="@Localizer["Your category name"]" />
+                    <span asp-validation-for="CategoryName" class="text-danger"></span><br />
+
+                    <input type="submit" value="@Localizer["Change name of the category"]" class="btn btn-jasper" />
+                </div>
+            </form>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    @Localizer["An error occured or the requested category does not exist."]
+                </div>
+            }
+
+
+            <a asp-controller="categories" asp-action="index" asp-area="admin" class=" btn btn-secondary"><i class="fa fa-undo" aria-hidden="true"></i> @Localizer["Back to overview"]</a>
+
+        </section>
+    </div>
+</div>

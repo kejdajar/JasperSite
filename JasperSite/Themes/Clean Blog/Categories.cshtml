@@ -40,7 +40,7 @@
             <div style="width:100%;background-color:#F1F1F1;padding:5px;text-indent:20px;margin-top:20px"> 
                 <h1>@c.Name</h1>            
             </div>
-                                List<Article> allArticles = J.GetAllArticles().Take(4).OrderByDescending(a=>a.PublishDate).ToList();
+                List<Article> allArticles = J.GetAllArticles().Where(a => a.CategoryId == c.Id).Take(4).OrderByDescending(a => a.PublishDate).ToList();
 
                                 @if (allArticles.Count > 0)
                                 {
@@ -72,9 +72,9 @@
                                     }
                                  }
                                 else {
-                                              <div class="alert alert-warning">
-                                            There are no available categories.
-                                            </div>
+                                              <small><i>
+                                            There are no available articles in this category.
+                                            </i></small>
                                      }
                                 
                 }

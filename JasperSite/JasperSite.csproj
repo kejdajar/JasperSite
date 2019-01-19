@@ -37,6 +37,7 @@
     <Content Remove="Areas\Admin\Views\Articles\EditArticlePartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Blocks\AddedAndLooseHoldersPartialView.cshtml" />
     <Content Remove="Areas\Admin\Views\Blocks\BlockFormPartialView.cshtml" />
+    <Content Remove="Areas\Admin\Views\Categories\EditCategory.cshtml" />
     <Content Remove="Areas\Admin\Views\Shared\TinyMceSettingsPartialView.cshtml" />
     <Content Remove="Themes\Clean Blog\About.cs.cshtml" />
     <Content Remove="Themes\Clean Blog\about.cshtml" />
@@ -65,6 +66,7 @@
     <None Remove="Areas\Admin\ViewModels\BlockViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\CategoriesViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\EditBlockViewModel.cs" />
+    <None Remove="Areas\Admin\ViewModels\EditCategoryViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\EditUserViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\HomeViewModel.cs" />
     <None Remove="Areas\Admin\ViewModels\ImagesViewModel.cs" />

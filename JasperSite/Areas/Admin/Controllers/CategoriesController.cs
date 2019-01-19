@@ -63,15 +63,19 @@ namespace JasperSite.Areas.Admin.Controllers
                 if (ModelState.IsValid) // Server check in case JS is disabled
                 {
 
-                    if (model.NewCategoryName != "Uncategorized")
-                    {
-                        _dbHelper.AddCategory(model.NewCategoryName);
-                        TempData["Success"] = true;
-                    }
-                    else
-                    {
-                        TempData["ErrorMessage"] = "Rubriku s tímto názvem není možné vytvořit.";
-                    }
+                    //if (model.NewCategoryName != "Uncategorized")
+                    //{
+                    //    _dbHelper.AddCategory(model.NewCategoryName);
+                    //    TempData["Success"] = true;
+                    //}
+                    //else
+                    //{
+                    //    TempData["ErrorMessage"] = "Rubriku s tímto názvem není možné vytvořit.";
+                    //}
+
+                    // AddCategory checks for 'Uncategorized' category
+                    _dbHelper.AddCategory(model.NewCategoryName);
+                     TempData["Success"] = true;
 
                 }
                 else
@@ -81,9 +85,9 @@ namespace JasperSite.Areas.Admin.Controllers
                     throw new Exception();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] = "Akce nemohla být dokončena.";
+                TempData["ErrorMessage"] = ex.Message + " " + ((ex.InnerException != null) ? ex.InnerException.Message : string.Empty);
             }
 
             if (isAjaxCall)
@@ -132,6 +136,40 @@ namespace JasperSite.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
+        }
+
+        [HttpGet]
+        public IActionResult EditCategory(int id)
+        {
+            EditCategoryViewModel model = new EditCategoryViewModel();
+
+            try
+            {
+                model.CategoryId = id;
+                model.CategoryName = _dbHelper.GetCategoryNameById(id);
+            }
+            catch
+            {
+                model = null;
+            }
+            
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditCategory(EditCategoryViewModel model)
+        {
+            try
+            {                
+                _dbHelper.RenameCategory(model.CategoryId, model.CategoryName);
+                TempData["Success"] = true;
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message + " "+((ex.InnerException != null) ? ex.InnerException.Message : string.Empty);
+            }
+
+            return View(model);
         }
     }
 }
