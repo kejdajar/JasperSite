@@ -10,14 +10,16 @@ JasperSite is a web content management system built on top of ASP.NET Core MVC. 
 </p>
 
 ## Set-up
-In order to deploy this CMS to your webhosting service, you need to make sure that your provider supports the .NET Core 2.1 Framework. Firstly, download the ready-to-be-deployed version of this CMS from the Releases section and upload all these un-zipped files directly to the root folder of your webhosting. You will also need a connection string to your MSSQL or a MySQL database. The last step is to visit your page, eg. http://mydomain.com/ in order to complete the installation. If done correctly, you should be prompted to insert a connection string to your database. A login screen should appear automatically, once the installation has been completed. Use a default username: *admin* and password: *admin* to log into the system.
+__For detailed installation guide visit [Production installation](https://github.com/kejdajar/JasperSite/wiki/Production-installation) page.__
+ 
+In order to deploy this CMS to your webhosting service, you need to make sure that your provider supports the .NET Core 2.1 Framework. Firstly, download the ready-to-be-deployed version of this CMS from the Releases section and upload all these un-zipped files directly to the root folder of your webhosting. You will also need a connection string to your MSSQL or a MySQL database. The last step is to visit your page, eg. http://mydomain.com/ in order to complete the installation. If done correctly, you should be prompted to insert a connection string to your database. A login screen should appear automatically, once the installation has been completed. Use your credentials to log into the system.
 
 <p float="left">
 <img  src="https://github.com/kejdajar/JasperSite/blob/master/resources/readme_resources/installation_page.jpg" width="40%" height="200px" />
   <img  src="https://github.com/kejdajar/JasperSite/blob/master/resources/readme_resources/login_page.jpg" width="35%" height="200px" />
 </p>
 
-Finally, please navigate to the *Users* section of the administration page and change usernames/passwords according to your needs. Now if you visit your webpage, eg. http://mydomain.com/ you will be greeted with a welcome page with further instructions. A great way how to start with JasperSite is to pick a different theme from the *Themes* section in your administration page.
+Now if you visit your webpage, eg. http://mydomain.com/ you will be greeted with a welcome page with further instructions. A great way how to start with JasperSite is to pick a different theme from the *Themes* section in your administration page.
 
 ## Supported languages
 JasperSite supports _English and Czech Language_. The language will be automatically selected based on your environment and can be changed later on.
