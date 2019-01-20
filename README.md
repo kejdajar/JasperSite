@@ -10,7 +10,7 @@ JasperSite is a web content management system built on top of ASP.NET Core MVC. 
 </p>
 
 ## Set-up
-__For detailed installation guide visit [Production installation](https://github.com/kejdajar/JasperSite/wiki/Production-installation) page.__
+__For a detailed installation guide visit [Production installation](https://github.com/kejdajar/JasperSite/wiki/Production-installation) page.__
  
 In order to deploy this CMS to your webhosting service, you need to make sure that your provider supports the .NET Core 2.1 Framework. Firstly, download the ready-to-be-deployed version of this CMS from the Releases section and upload all these un-zipped files directly to the root folder of your webhosting. You will also need a connection string to your MSSQL or a MySQL database. The last step is to visit your page, eg. http://mydomain.com/ in order to complete the installation. If done correctly, you should be prompted to insert a connection string to your database. A login screen should appear automatically, once the installation has been completed. Use your credentials to log into the system.
 
@@ -35,6 +35,8 @@ This repository consists of three main branches:
 Follow the next steps according to your needs:
 
 ### Development Installation
+__For a detailed development installation visit [Development installation](https://github.com/kejdajar/JasperSite/wiki/Development-installation) page.__
+ 
 1. Clone this repository using GIT or download directly the source files.
 2. Use Visual Studio, Visual Studio Code, or any other IDE to open the JasperSite.sln solution file or solution folder.
 3. Make sure that you have .NET Core 2.1 SDK present on your machine.
@@ -44,9 +46,8 @@ Follow the next steps according to your needs:
 7. Follow the instructions displayed onscreen.
 
 
-### Production Installation
-For the installation on a production server follow either the same steps as in development installation and use built-in publish feature of Visual Studio, or download the already compiled project from the releases section, which is ready to be uploaded to the production server, for instance through FTP.
-If you want to run this compiled project locally, you can navigate to the root folder and run `dotnet JasperSite.dll` via CMD (make sure you have .NET Core 2.1 SDK installed). 
+### Running compiled version locally
+If you want to run already compilled ready-to-deploy JasperSite (downloaded from the Releases section), you can navigate to the root folder and run `dotnet JasperSite.dll` via CMD (make sure you have .NET Core 2.1 SDK installed). 
 
 
 ## History
