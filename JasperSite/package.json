@@ -11,6 +11,7 @@
     "jquery-ui-dist": "1.12.1",
     "jquery-validation": "^1.17.0",
     "jquery-validation-unobtrusive": "^3.2.10",
+    "natives": "^1.1.6",
     "popper.js": "^1.14.3",
     "tinymce": "^4.8.2"
   },
