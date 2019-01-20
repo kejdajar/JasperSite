@@ -31,7 +31,7 @@ This repository consists of three main branches:
 2. __develop__ - experimental features and unstable code
 3. __czu__ - legacy version of JasperSite, published as a part of master's thesis
 
-## Installation
+## Installation for development purposes
 Follow the next steps according to your needs:
 
 ### Development Installation
