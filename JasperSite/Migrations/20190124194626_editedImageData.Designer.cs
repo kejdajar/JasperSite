@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JasperSite.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20180923123853_init")]
-    partial class init
+    [Migration("20190124194626_editedImageData")]
+    partial class editedImageData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -108,8 +108,12 @@ namespace JasperSite.Migrations
 
                     b.Property<int>("ImageDataId");
 
+                    b.Property<bool>("InDb");
+
                     b.Property<string>("Name")
                         .IsRequired();
+
+                    b.Property<string>("Path");
 
                     b.HasKey("Id");
 
@@ -124,8 +128,7 @@ namespace JasperSite.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<byte[]>("Data")
-                        .IsRequired();
+                    b.Property<byte[]>("Data");
 
                     b.HasKey("Id");
 

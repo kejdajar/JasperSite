@@ -158,6 +158,9 @@ namespace JasperSite.Models.Database
         [Required]
         public int ImageDataId { get; set; }
         public ImageData ImageData { get; set; }
+
+        public string Path { get; set; }
+        public bool InDb { get; set; }
     }
 
     public class ImageData
@@ -166,7 +169,7 @@ namespace JasperSite.Models.Database
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
+        // not required
         public byte[] Data { get; set; }
     }
 

@@ -102,11 +102,15 @@ namespace JasperSite.Areas.Admin.Controllers
                             throw new Exception(_localizer["The selected format is not supported."]);
                         }
 
-                        Image dbImageEntity = new Image();
-                        dbImageEntity.Name = file.FileName;
-                        dbImageEntity.ImageData = new ImageData() { Data = imageInBytes };
-                        _databaseContext.Images.Add(dbImageEntity);
-                        _databaseContext.SaveChanges();
+                        // working solution - savig images to the DB
+                        //Image dbImageEntity = new Image();
+                        //dbImageEntity.Name = file.FileName;
+                        //dbImageEntity.ImageData = new ImageData() { Data = imageInBytes };
+                        //_databaseContext.Images.Add(dbImageEntity);
+                        //_databaseContext.SaveChanges();
+
+                        SaveFileToFilesystem(imageInBytes,file.FileName);                       
+
                         TempData["Success"] = true;
                     }
                     else
@@ -126,6 +130,43 @@ namespace JasperSite.Areas.Admin.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        private void SaveFileToFilesystem(byte[] imageInBytes, string filename)
+        {
+            string filesystemPath = "./Jasper-content";
+            if (Directory.Exists(filesystemPath))
+            {
+                string subfolderPath = System.IO.Path.Combine(filesystemPath, DateTime.Now.ToString("MM-yyyy"));
+                if (!Directory.Exists(subfolderPath))
+                {
+                    Directory.CreateDirectory(subfolderPath);
+                }
+
+                string wholePathWithNameAndExtension = System.IO.Path.Combine(subfolderPath, filename);
+                string fileWasFinallySavedAs = string.Empty;
+                if(System.IO.File.Exists(wholePathWithNameAndExtension))
+                {
+                    Guid guid = Guid.NewGuid();
+                    string path = System.IO.Path.Combine(subfolderPath, guid + filename);
+                    System.IO.File.WriteAllBytes(path, imageInBytes);
+                    fileWasFinallySavedAs = path;
+                }
+                else
+                {
+                    System.IO.File.WriteAllBytes(wholePathWithNameAndExtension, imageInBytes);
+                    fileWasFinallySavedAs = wholePathWithNameAndExtension;
+                }
+
+              
+                Image dbImageEntity = new Image();
+                dbImageEntity.Name = filename;
+                dbImageEntity.Path = fileWasFinallySavedAs;
+                dbImageEntity.ImageData = new ImageData() { Data = null };
+                _databaseContext.Images.Add(dbImageEntity);
+                _databaseContext.SaveChanges();
+
+            }
         }
 
         /// <summary>
