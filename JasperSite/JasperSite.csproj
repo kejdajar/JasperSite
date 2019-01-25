@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Areas/**" CopyToPublishDirectory="Always" />
+    <None Include="Areas/Admin/Content/**" CopyToPublishDirectory="Always" />
+    <None Include="Areas/Admin/DemoDataResources/**" CopyToPublishDirectory="Always" />
+    
     <None Include="Jasper-content/**" CopyToPublishDirectory="Always" />
     <None Include="Themes/**" CopyToPublishDirectory="Always" />
     <None Include="node_modules/**" CopyToPublishDirectory="Always" />
@@ -34,12 +36,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Admin\Views\Articles\ArticlesListPartialView.cshtml" />
-    <Content Remove="Areas\Admin\Views\Articles\EditArticlePartialView.cshtml" />
-    <Content Remove="Areas\Admin\Views\Blocks\AddedAndLooseHoldersPartialView.cshtml" />
-    <Content Remove="Areas\Admin\Views\Blocks\BlockFormPartialView.cshtml" />
-    <Content Remove="Areas\Admin\Views\Categories\EditCategory.cshtml" />
-    <Content Remove="Areas\Admin\Views\Shared\TinyMceSettingsPartialView.cshtml" />
     <Content Remove="Themes\Clean Blog\About.cs.cshtml" />
     <Content Remove="Themes\Clean Blog\about.cshtml" />
     <Content Remove="Themes\Clean Blog\Categories.cs.cshtml" />
