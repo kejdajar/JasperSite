@@ -195,10 +195,7 @@ namespace JasperSite.Areas.Admin.Controllers
             
         }
 
-        private async Task<byte[]> LoadImageFromFilesystem(string imgPath)
-        {
-            return await System.IO.File.ReadAllBytesAsync(imgPath);
-        }
+      
 
         /// <summary>
         /// If the image has been already deleted, deleted image placeholder will be returned instead.
@@ -221,7 +218,7 @@ namespace JasperSite.Areas.Admin.Controllers
                 }
                 else
                 {
-                    var img = LoadImageFromFilesystem(image.Result.Path);
+                    var img = _dbHelper.LoadImageFromFilesystem(image.Result.Path);
                     return File(img.Result,"image/jpg");
                 }
 
@@ -254,13 +251,13 @@ namespace JasperSite.Areas.Admin.Controllers
         [HttpGet]        
         public JsonResult GetImageForImageList(int id)
         {
-            // Query using navigation property + include in DbHelper class
-            // Query must be Async in order to display all images one after another as they are being loaded
+            
             try
             {
-                Task<Image> image = _databaseContext.Images.Include(i => i.ImageData).Where(i => i.Id == id).SingleAsync();
-                string imageName = image.Result.Name;
-                byte[] imageData = image.Result.ImageData.Data;
+                //Task<Image> image = _databaseContext.Images.Include(i => i.ImageData).Where(i => i.Id == id).SingleAsync();
+                Image image = _dbHelper.GetAllImages().Where(i => i.Id == id).Single();
+                string imageName = image.Name;
+                byte[] imageData = image.ImageData.Data;
                 return Json(new { Name = imageName, Data = imageData, Id=id });
             }
             catch

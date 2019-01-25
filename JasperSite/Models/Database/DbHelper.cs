@@ -374,11 +374,18 @@ namespace JasperSite.Models.Database
         #region Images
 
         /// <summary>
+        /// Loads a image from the Jasper-content folder.
+        /// </summary>
+        /// <param name="imgPath"></param>
+        /// <returns></returns>
+       Task<byte[]> LoadImageFromFilesystem(string imgPath);
+
+        /// <summary>
         /// Returns list of all images.
         /// </summary>
         /// <returns></returns>
         /// <exception cref="DatabaseHelperException"></exception>
-        List<Image> GetAllImages();
+        List<Image> GetAllImages(bool includeImgDataFromFilesystem=true);
 
         /// <summary>
         /// Deletes image by Id.
@@ -1338,13 +1345,35 @@ namespace JasperSite.Models.Database
         #endregion
 
         #region Images
-      
+
+        public async Task<byte[]> LoadImageFromFilesystem(string imgPath)
+        {
+            return await System.IO.File.ReadAllBytesAsync(imgPath);
+        }
+
         /// <see cref="IJasperDataService.GetAllImages"/>
-        public List<Image> GetAllImages()
+        public List<Image> GetAllImages(bool includeImgDataFromFilesystem = true)
         {
             try
             {
-                return Database.Images.Include(i => i.ImageData).ToList();
+                if(includeImgDataFromFilesystem)
+                {
+                    List<Image> allImgsFromDb= Database.Images.Include(i => i.ImageData).ToList();
+
+
+                    foreach (Image img in allImgsFromDb)
+                    {
+                        if(!img.InDb) 
+                        img.ImageData.Data =LoadImageFromFilesystem(img.Path).Result;
+                    }
+
+                    return allImgsFromDb;
+                }
+                else
+                {
+                    return Database.Images.Include(i => i.ImageData).ToList();
+                }
+               
             }
             catch (Exception ex)
             {
@@ -1879,10 +1908,17 @@ namespace JasperSite.Models.Database
         #region Images
 
         /// <summary>
+        /// Loads a image from the Jasper-content folder. In case of failure returns Null.
+        /// </summary>
+        /// <param name="imgPath"></param>
+        /// <returns></returns>
+        Task<byte[]> LoadImageFromFilesystem(string imgPath);
+
+        /// <summary>
         /// Returns list of all images. In case of failure returns null.
         /// </summary>
         /// <returns></returns>
-        List<Image> GetAllImages();
+        List<Image> GetAllImages(bool includeImgDataFromFilesystem=true);
 
         /// <summary>
         /// Deletes image by Id and returns true. In case of failure returns false.
@@ -2648,13 +2684,21 @@ namespace JasperSite.Models.Database
 
         #region Images
 
-       
+
+        
+        /// <see cref="IJasperDataService.LoadImageFromFilesystem(string)"/>
+        public async Task<byte[]> LoadImageFromFilesystem(string imgPath)
+        {
+            return await _dbHelper.LoadImageFromFilesystem(imgPath);
+        }
+
+
         /// <see cref="IJasperDataServicePublic.GetAllImages"/>
-        public List<Image> GetAllImages()
+        public List<Image> GetAllImages(bool includeImgDataFromFilesystem=true)
         {
             try
             {
-                return _dbHelper.GetAllImages();
+                return _dbHelper.GetAllImages(includeImgDataFromFilesystem);
             }
             catch
             {
