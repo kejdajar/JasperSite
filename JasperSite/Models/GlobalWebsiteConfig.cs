@@ -132,7 +132,7 @@ namespace JasperSite.Models
             {
                 try
                 {
-                    bool enableEmail = (bool)ConfigurationDataObject.EnableEmail;
+                    bool enableEmail = Convert.ToBoolean(ConfigurationDataObject.EnableEmail);
                     return enableEmail;
                 }
                 catch
@@ -143,7 +143,7 @@ namespace JasperSite.Models
             }
             set
             {
-                ConfigurationDataObject.EnableEmail = value;
+                ConfigurationDataObject.EnableEmail = value.ToString();
                 CommitChanges();
             }
         }
@@ -186,7 +186,7 @@ namespace JasperSite.Models
         public string InstallationCompleted { get; set; }
 
         [JsonProperty("enableEmail")]
-        public bool? EnableEmail { get; set; }
+        public string EnableEmail { get; set; }
 
         [JsonProperty("email")]
         public Email EmailProperties { get; set; }
