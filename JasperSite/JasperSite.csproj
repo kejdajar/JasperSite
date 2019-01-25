@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Include="Areas/**" CopyToPublishDirectory="Always" />
+    <None Include="Jasper-content/**" CopyToPublishDirectory="Always" />
     <None Include="Themes/**" CopyToPublishDirectory="Always" />
     <None Include="node_modules/**" CopyToPublishDirectory="Always" />
 
