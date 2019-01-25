@@ -135,4 +135,7 @@
   <data name="Upload" xml:space="preserve">
     <value>Nahrát</value>
   </data>
+  <data name="Use database as a storage" xml:space="preserve">
+    <value>Pro uložení použít databázi</value>
+  </data>
 </root>

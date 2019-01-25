@@ -381,11 +381,13 @@ namespace JasperSite.Models.Database
        Task<byte[]> LoadImageFromFilesystem(string imgPath);
 
         /// <summary>
-        /// Returns list of all images.
+        /// Returns a list of all images.
         /// </summary>
+        /// <param name="includeImageDataFromDatabase"></param>
+        /// <param name="includeImgDataFromFilesystem"></param>
         /// <returns></returns>
         /// <exception cref="DatabaseHelperException"></exception>
-        List<Image> GetAllImages(bool includeImgDataFromFilesystem=true);
+        Task<List<Image>> GetAllImages(bool includeImageDataFromDatabase = true, bool includeImgDataFromFilesystem = true);
 
         /// <summary>
         /// Deletes image by Id.
@@ -395,12 +397,14 @@ namespace JasperSite.Models.Database
         void DeleteImageById(int imgId);
 
         /// <summary>
-        /// Returns a image by Id.
+        /// Async: Returns a image by Id. Lazy loading from the DB/filesystem can be altered by the optional parameters.
         /// </summary>
         /// <param name="imgId"></param>
+        /// <param name="includeImageDataFromDatabase"></param>
+        /// <param name="includeImgDataFromFilesystem"></param>
         /// <returns></returns>
         /// <exception cref="DatabaseHelperException"></exception>
-        Image GetImageById(int imgId);
+        Task<Image> GetImageById(int imgId, bool includeImageDataFromDatabase = true, bool includeImgDataFromFilesystem = true);
 
         #endregion
 
@@ -1352,32 +1356,37 @@ namespace JasperSite.Models.Database
         }
 
         /// <see cref="IJasperDataService.GetAllImages"/>
-        public List<Image> GetAllImages(bool includeImgDataFromFilesystem = true)
+        public async Task<List<Image>> GetAllImages(bool includeImageDataFromDatabase = true, bool includeImgDataFromFilesystem = true)
         {
             try
             {
-                if(includeImgDataFromFilesystem)
+                List<Image> allImages;
+
+                // Lazy loading from the database
+                if (includeImageDataFromDatabase)
                 {
-                    List<Image> allImgsFromDb= Database.Images.Include(i => i.ImageData).ToList();
-
-
-                    foreach (Image img in allImgsFromDb)
-                    {
-                        if(!img.InDb) 
-                        img.ImageData.Data =LoadImageFromFilesystem(img.Path).Result;
-                    }
-
-                    return allImgsFromDb;
+                    allImages = await Database.Images.Include(i => i.ImageData).ToListAsync();
                 }
                 else
                 {
-                    return Database.Images.Include(i => i.ImageData).ToList();
+                    allImages = await Database.Images.ToListAsync();
+                }
+                
+                // Lazy loading from the filesystem
+                if (includeImgDataFromFilesystem)
+                {    
+                    foreach (Image img in allImages)
+                    {
+                        if(!img.InDb) 
+                        img.ImageData.Data = await LoadImageFromFilesystem(img.Path);
+                    }                   
                 }
                
+                return allImages;
+
             }
             catch (Exception ex)
             {
-
                 throw new DatabaseHelperException(ex);
             }
         }
@@ -1389,8 +1398,15 @@ namespace JasperSite.Models.Database
         {
             try
             {
-                ImageData imgToBeRemoved = Database.ImageData.Where(i => i.Id == imgId).Single();
-                Database.ImageData.Remove(imgToBeRemoved);
+                Image imgToBeRemoved = Database.Images.Where(i => i.Id == imgId).Single();
+
+                // If the images is saved in filesystem it has to be also deleted
+                if(!imgToBeRemoved.InDb)
+                {
+                    System.IO.File.Delete(imgToBeRemoved.Path);
+                }               
+
+                Database.Images.Remove(imgToBeRemoved);
                 Database.SaveChanges();
             }
             catch (Exception ex)
@@ -1400,13 +1416,35 @@ namespace JasperSite.Models.Database
             }
         }
 
-      
+
         /// <see cref="IJasperDataService.GetImageById(int)"/>
-        public Image GetImageById(int imgId)
+        public async Task<Image> GetImageById(int imgId, bool includeImageDataFromDatabase = true, bool includeImgDataFromFilesystem = true)
         {
             try
             {
-                return Database.Images.Where(i => i.Id == imgId).Single();
+                Image img;
+
+                // Lazy loading of images enabled/disabled from database
+                if (includeImageDataFromDatabase)
+                {
+                    img = await Database.Images.Where(i => i.Id == imgId).Include(i=>i.ImageData).SingleAsync();
+                }
+                else
+                {
+                    img = await Database.Images.Where(i => i.Id == imgId).SingleAsync();
+                }
+
+                // Lazy loading of images enabled/disabled from the filesystem
+                if (includeImgDataFromFilesystem)
+                {
+                    if (!img.InDb) // only if the image is saved in the filesystem
+                    {
+                        img.ImageData.Data = await LoadImageFromFilesystem(img.Path);                      
+                    }
+                }
+
+                return img;
+
             }
             catch(Exception ex)
             {
@@ -1915,10 +1953,12 @@ namespace JasperSite.Models.Database
         Task<byte[]> LoadImageFromFilesystem(string imgPath);
 
         /// <summary>
-        /// Returns list of all images. In case of failure returns null.
+        /// Returns a list of all images. In case of failure returns Null.
         /// </summary>
-        /// <returns></returns>
-        List<Image> GetAllImages(bool includeImgDataFromFilesystem=true);
+        /// <param name="includeImageDataFromDatabase"></param>
+        /// <param name="includeImgDataFromFilesystem"></param>
+        /// <returns></returns>       
+        Task<List<Image>> GetAllImages(bool includeImageDataFromDatabase = true, bool includeImgDataFromFilesystem = true);
 
         /// <summary>
         /// Deletes image by Id and returns true. In case of failure returns false.
@@ -1928,12 +1968,15 @@ namespace JasperSite.Models.Database
         bool DeleteImageById(int imgId);
 
         /// <summary>
-        /// Returns a image by Id. In case of failure returns Null.
+        /// Async: Returns a image by Id. Lazy loading from the DB/filesystem can be altered by the optional parameters.
+        /// In case of error returns Null.
         /// </summary>
         /// <param name="imgId"></param>
+        /// <param name="includeImageDataFromDatabase"></param>
+        /// <param name="includeImgDataFromFilesystem"></param>
         /// <returns></returns>
-        Image GetImageById(int imgId);
-       
+        Task<Image> GetImageById(int imgId, bool includeImageDataFromDatabase = true, bool includeImgDataFromFilesystem = true);
+
 
         #endregion
 
@@ -2694,11 +2737,11 @@ namespace JasperSite.Models.Database
 
 
         /// <see cref="IJasperDataServicePublic.GetAllImages"/>
-        public List<Image> GetAllImages(bool includeImgDataFromFilesystem=true)
+        public async Task<List<Image>> GetAllImages(bool includeImageDataFromDatabase = true, bool includeImgDataFromFilesystem = true)
         {
             try
             {
-                return _dbHelper.GetAllImages(includeImgDataFromFilesystem);
+                return await _dbHelper.GetAllImages(includeImageDataFromDatabase,includeImgDataFromFilesystem);
             }
             catch
             {
@@ -2722,11 +2765,11 @@ namespace JasperSite.Models.Database
         }
 
         /// <see cref="IJasperDataServicePublic.GetImageById(int)"/>
-        public Image GetImageById(int imgId)
+        public Task<Image> GetImageById(int imgId, bool includeImageDataFromDatabase = true, bool includeImgDataFromFilesystem = true)
         {
             try
             {
-                return _dbHelper.GetImageById(imgId);
+                return _dbHelper.GetImageById(imgId, includeImageDataFromDatabase, includeImgDataFromFilesystem);
             }
             catch
             {

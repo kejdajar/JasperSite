@@ -52,7 +52,7 @@
             //convert_urls: false, // url will remain unchanged, default conversion is ../Images/GetImage?id=1
             image_list: [
 
-                @foreach(Image img in J.GetAllImages())
+                @foreach(Image img in await J.GetAllImages())
                 {
                     @: { title: '@Html.Raw(img.Name)', value: '@Url.Action("GetImage","Images",new { id=img.Id})' },
                 }

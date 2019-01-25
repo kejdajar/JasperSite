@@ -55,7 +55,7 @@
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" asp-for="SaveToDb" id="defaultCheck1">
                 <label class="form-check-label" for="defaultCheck1">
-                   use database as a storage
+                   @Localizer["Use database as a storage"]
                 </label>
             </div>
         </div>
@@ -73,7 +73,7 @@
     <div id="mainForm">
         @try
         {
-            @Html.PartialAsync("UploadedImagesPartialView").Result
+            @await Html.PartialAsync("UploadedImagesPartialView")
         }
         catch
         {

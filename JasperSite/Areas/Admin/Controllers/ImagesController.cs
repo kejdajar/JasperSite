@@ -55,17 +55,17 @@ namespace JasperSite.Areas.Admin.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(UpdatePage());
+            return View(await UpdatePage());
         }
 
-        public ImagesViewModel UpdatePage()
+        public async Task<ImagesViewModel> UpdatePage()
         {
             try
             {
                 ImagesViewModel model = new ImagesViewModel();
-                model.ImagesFromDatabase = _dbHelper.GetAllImages();
+                model.ImagesFromDatabase = await _dbHelper.GetAllImages();
                 return model;
             }
             catch 
@@ -181,19 +181,7 @@ namespace JasperSite.Areas.Admin.Controllers
             }
         }
 
-        private void DeleteImageFromFilesystem(string imgPath)
-        {
-            try
-            {
-                System.IO.File.Delete(imgPath);
-            }
-            catch
-            {
-                // TODO: ex
-                throw new NotImplementedException();
-            }
-            
-        }
+       
 
       
 
@@ -204,22 +192,22 @@ namespace JasperSite.Areas.Admin.Controllers
         /// <param name="id"></param>
         /// <returns></returns>       
         [HttpGet]
-        public FileResult GetImage(int id)
+        public async Task<FileResult> GetImage(int id)
         {
             // Query using navigation property + include in DbHelper class
             // Query must be Async in order to display all images one after another as they are being loaded
             try
             {                
-                Task<Image> image = _databaseContext.Images.Include(i => i.ImageData).Where(i => i.Id == id).SingleAsync();
+                Image image = await _databaseContext.Images.Include(i => i.ImageData).Where(i => i.Id == id).SingleAsync();
 
-                if(image.Result.InDb)
+                if(image.InDb)
                 {
-                    return File(image.Result.ImageData.Data, "image/jpg");
+                    return File(image.ImageData.Data, "image/jpg");
                 }
                 else
                 {
-                    var img = _dbHelper.LoadImageFromFilesystem(image.Result.Path);
-                    return File(img.Result,"image/jpg");
+                    byte[] img = await _dbHelper.LoadImageFromFilesystem(image.Path);
+                    return File(img,"image/jpg");
                 }
 
             }
@@ -249,13 +237,13 @@ namespace JasperSite.Areas.Admin.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]        
-        public JsonResult GetImageForImageList(int id)
+        public async Task<JsonResult> GetImageForImageList(int id)
         {
             
             try
             {
                 //Task<Image> image = _databaseContext.Images.Include(i => i.ImageData).Where(i => i.Id == id).SingleAsync();
-                Image image = _dbHelper.GetAllImages().Where(i => i.Id == id).Single();
+                Image image = (await _dbHelper.GetAllImages()).Where(i => i.Id == id).Single();
                 string imageName = image.Name;
                 byte[] imageData = image.ImageData.Data;
                 return Json(new { Name = imageName, Data = imageData, Id=id });
@@ -301,18 +289,8 @@ namespace JasperSite.Areas.Admin.Controllers
         {
             try
             {
-                // check whether the image is stored in DB or filesystem
-                Image imgToDelete = _dbHelper.GetImageById(imgId);
-               if(imgToDelete.InDb)
-                {
-                    _dbHelper.DeleteImageById(imgId);
-                }
-               else
-                {
-                    DeleteImageFromFilesystem(imgToDelete.Path);
-                    // and also remove the record from the DB
-                    _dbHelper.DeleteImageById(imgId);
-                }
+              // image record is removed from the DB, in case the image is saved in the filesystem -> it is removed as well 
+             _dbHelper.DeleteImageById(imgId);               
                
             }
             catch (Exception ex)
