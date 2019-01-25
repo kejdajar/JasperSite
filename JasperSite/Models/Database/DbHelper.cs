@@ -1352,7 +1352,16 @@ namespace JasperSite.Models.Database
 
         public async Task<byte[]> LoadImageFromFilesystem(string imgPath)
         {
-            return await System.IO.File.ReadAllBytesAsync(imgPath);
+
+            try
+            {
+                return await System.IO.File.ReadAllBytesAsync(imgPath);
+            }
+            catch 
+            {
+                return null;
+            }
+
         }
 
         /// <see cref="IJasperDataService.GetAllImages"/>
@@ -1403,7 +1412,10 @@ namespace JasperSite.Models.Database
                 // If the images is saved in filesystem it has to be also deleted
                 if(!imgToBeRemoved.InDb)
                 {
+                    // in case the image was already removed, no further action is required
+                    try { 
                     System.IO.File.Delete(imgToBeRemoved.Path);
+                    } catch { }
                 }               
 
                 Database.Images.Remove(imgToBeRemoved);

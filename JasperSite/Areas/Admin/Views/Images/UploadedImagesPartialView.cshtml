@@ -57,18 +57,30 @@
 
         @foreach (Image img in Model.ImagesFromDatabase)
         {
-            <div class="galleryItem">
-                <div>
-                    <img alt="@img.Name" src="@Url.Action("GetImage", "Images", new { id = img.Id })" class="img-fluid" />
-                </div>
-                <div class="itemName">
-                    @img.Name <br/>
-                    <i> @Localizer["Storage"]: @((@img.InDb) ? Localizer["database"] : Localizer["filesystem"]) </i>
-                </div>
-                <div>
-                    <a style="width:100%;padding:2px" data-toggle="tooltip" title="@Localizer["Delete"]" asp-area="admin" asp-controller="images" asp-action="deleteimage" asp-route-imgId="@img.Id" data-remove-id="@img.Id" data-image-name="@img.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
-                </div>
+        <div class="galleryItem">
+
+
+
+            <div style="float:right">
+                <a data-toggle="tooltip" title="@Localizer["Delete"]" asp-area="admin" asp-controller="images" asp-action="deleteimage" asp-route-imgId="@img.Id" data-remove-id="@img.Id" data-image-name="@img.Name" class="btn btn-jasper btn-jasper-delete"> <i class="fa fa-trash fa-1x" aria-hidden="true"></i>  </a>
             </div>
+            <div>
+                <img alt="@img.Name" src="@Url.Action("GetImage", "Images", new { id = img.Id })" class="img-fluid" />
+            </div>
+
+
+            <div class="itemName">
+                @img.Name <br />
+                <i> @Localizer["Storage"]: @((@img.InDb) ? Localizer["database"] : Localizer["filesystem"]) </i>
+            </div>
+            @if (img.ImageData.Data == null)
+            {
+                <div style="width:100%" class="alert alert-warning">
+                    @Localizer["Image was not found"]
+                </div>
+            }
+
+        </div>
         }
 
     </div>

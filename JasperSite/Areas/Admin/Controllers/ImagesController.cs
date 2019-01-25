@@ -285,14 +285,14 @@ namespace JasperSite.Areas.Admin.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpGet]
-        public IActionResult DeleteImage(int imgId)
+        public async Task<IActionResult> DeleteImage(int imgId)
         {
             try
             {
               // image record is removed from the DB, in case the image is saved in the filesystem -> it is removed as well 
-             _dbHelper.DeleteImageById(imgId);               
-               
-            }
+             _dbHelper.DeleteImageById(imgId);
+            
+            } 
             catch (Exception ex)
             {
                 ViewBag.Error = "1"; // Automatically shows error modal
@@ -302,11 +302,11 @@ namespace JasperSite.Areas.Admin.Controllers
             bool isAjaxCall = Request.Headers["x-requested-with"] == "XMLHttpRequest";
             if (isAjaxCall)
             {
-                return PartialView("UploadedImagesPartialView",UpdatePage());
+                return PartialView("UploadedImagesPartialView",await UpdatePage());
             }
             else
             {
-                return View("Index", UpdatePage());
+                return View("Index",await UpdatePage());
             }
               
          
