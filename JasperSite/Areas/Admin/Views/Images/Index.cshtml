@@ -50,6 +50,16 @@
             <input type="file" accept="image/*" class="form-control-file" id="files" name="files" aria-describedby="fileHelp" multiple>
             <small id="fileHelp" class="form-text text-muted"> @Localizer["Only image data files are supported (.JPG, PNG, etc.)"]</small>
         </div>
+
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" asp-for="SaveToDb" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                   use database as a storage
+                </label>
+            </div>
+        </div>
+
         <div class="form-group">
             <input type="submit" value="@Localizer["Upload"]" class="btn btn-jasper" id="submitThemeFile" disabled />
         </div>

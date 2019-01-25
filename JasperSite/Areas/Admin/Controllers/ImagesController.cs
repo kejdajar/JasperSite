@@ -83,8 +83,11 @@ namespace JasperSite.Areas.Admin.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost]
-        public IActionResult PostImage(ICollection<IFormFile> files)
+        public IActionResult PostImage(ICollection<IFormFile> files, ImagesViewModel model)
         {
+
+            bool useDatabaseStorage = model.SaveToDb;
+            
             try
             {
                 foreach (IFormFile file in files)
@@ -102,14 +105,22 @@ namespace JasperSite.Areas.Admin.Controllers
                             throw new Exception(_localizer["The selected format is not supported."]);
                         }
 
-                        // working solution - savig images to the DB
-                        //Image dbImageEntity = new Image();
-                        //dbImageEntity.Name = file.FileName;
-                        //dbImageEntity.ImageData = new ImageData() { Data = imageInBytes };
-                        //_databaseContext.Images.Add(dbImageEntity);
-                        //_databaseContext.SaveChanges();
 
-                        SaveFileToFilesystem(imageInBytes,file.FileName);                       
+                        if(useDatabaseStorage)
+                        {
+                            // working solution - savig images to the DB
+                            Image dbImageEntity = new Image();
+                            dbImageEntity.Name = file.FileName;
+                            dbImageEntity.ImageData = new ImageData() { Data = imageInBytes };
+                            dbImageEntity.InDb = true; // indicate that the image is strored in the database
+                            _databaseContext.Images.Add(dbImageEntity);
+                            _databaseContext.SaveChanges();
+                        }
+                        else
+                        {
+                            SaveImageToFilesystem(imageInBytes, file.FileName);
+                        } 
+                                            
 
                         TempData["Success"] = true;
                     }
@@ -132,7 +143,7 @@ namespace JasperSite.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        private void SaveFileToFilesystem(byte[] imageInBytes, string filename)
+        private void SaveImageToFilesystem(byte[] imageInBytes, string filename)
         {
             string filesystemPath = "./Jasper-content";
             if (Directory.Exists(filesystemPath))
@@ -163,10 +174,30 @@ namespace JasperSite.Areas.Admin.Controllers
                 dbImageEntity.Name = filename;
                 dbImageEntity.Path = fileWasFinallySavedAs;
                 dbImageEntity.ImageData = new ImageData() { Data = null };
+                dbImageEntity.InDb = false; // indicate that the image is not stored in DB
                 _databaseContext.Images.Add(dbImageEntity);
                 _databaseContext.SaveChanges();
 
             }
+        }
+
+        private void DeleteImageFromFilesystem(string imgPath)
+        {
+            try
+            {
+                System.IO.File.Delete(imgPath);
+            }
+            catch
+            {
+                // TODO: ex
+                throw new NotImplementedException();
+            }
+            
+        }
+
+        private async Task<byte[]> LoadImageFromFilesystem(string imgPath)
+        {
+            return await System.IO.File.ReadAllBytesAsync(imgPath);
         }
 
         /// <summary>
@@ -181,9 +212,19 @@ namespace JasperSite.Areas.Admin.Controllers
             // Query using navigation property + include in DbHelper class
             // Query must be Async in order to display all images one after another as they are being loaded
             try
-            {
+            {                
                 Task<Image> image = _databaseContext.Images.Include(i => i.ImageData).Where(i => i.Id == id).SingleAsync();
-                return File(image.Result.ImageData.Data, "image/jpg");
+
+                if(image.Result.InDb)
+                {
+                    return File(image.Result.ImageData.Data, "image/jpg");
+                }
+                else
+                {
+                    var img = LoadImageFromFilesystem(image.Result.Path);
+                    return File(img.Result,"image/jpg");
+                }
+
             }
             catch
             {
@@ -263,7 +304,19 @@ namespace JasperSite.Areas.Admin.Controllers
         {
             try
             {
-                _dbHelper.DeleteImageById(imgId);
+                // check whether the image is stored in DB or filesystem
+                Image imgToDelete = _dbHelper.GetImageById(imgId);
+               if(imgToDelete.InDb)
+                {
+                    _dbHelper.DeleteImageById(imgId);
+                }
+               else
+                {
+                    DeleteImageFromFilesystem(imgToDelete.Path);
+                    // and also remove the record from the DB
+                    _dbHelper.DeleteImageById(imgId);
+                }
+               
             }
             catch (Exception ex)
             {

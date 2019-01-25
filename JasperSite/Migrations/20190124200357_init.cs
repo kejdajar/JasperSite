@@ -27,7 +27,7 @@ namespace JasperSite.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Data = table.Column<byte[]>(nullable: false)
+                    Data = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {

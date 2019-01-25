@@ -12,7 +12,7 @@ namespace JasperSite.Areas.Admin.ViewModels
     public class ImagesViewModel
     {
        public List<Image> ImagesFromDatabase { get; set; }
-
+       public bool SaveToDb { get; set; }
     }
 
    

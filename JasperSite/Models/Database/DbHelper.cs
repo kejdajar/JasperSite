@@ -387,6 +387,14 @@ namespace JasperSite.Models.Database
         /// <exception cref="DatabaseHelperException"></exception>
         void DeleteImageById(int imgId);
 
+        /// <summary>
+        /// Returns a image by Id.
+        /// </summary>
+        /// <param name="imgId"></param>
+        /// <returns></returns>
+        /// <exception cref="DatabaseHelperException"></exception>
+        Image GetImageById(int imgId);
+
         #endregion
 
         #region Url
@@ -1363,6 +1371,20 @@ namespace JasperSite.Models.Database
             }
         }
 
+      
+        /// <see cref="IJasperDataService.GetImageById(int)"/>
+        public Image GetImageById(int imgId)
+        {
+            try
+            {
+                return Database.Images.Where(i => i.Id == imgId).Single();
+            }
+            catch(Exception ex)
+            {
+                throw new DatabaseHelperException(ex);
+            }
+        }
+
         #endregion
 
         #region Url
@@ -1868,6 +1890,14 @@ namespace JasperSite.Models.Database
         /// <param name="imgId"></param>
         /// <returns></returns>
         bool DeleteImageById(int imgId);
+
+        /// <summary>
+        /// Returns a image by Id. In case of failure returns Null.
+        /// </summary>
+        /// <param name="imgId"></param>
+        /// <returns></returns>
+        Image GetImageById(int imgId);
+       
 
         #endregion
 
@@ -2647,13 +2677,26 @@ namespace JasperSite.Models.Database
             }
         }
 
-        #endregion
+        /// <see cref="IJasperDataServicePublic.GetImageById(int)"/>
+        public Image GetImageById(int imgId)
+        {
+            try
+            {
+                return _dbHelper.GetImageById(imgId);
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
-        #region Url
+            #endregion
 
-       
-        /// <see cref="IJasperDataServicePublic.GetAllUrls"/>
-        public List<UrlRewrite> GetAllUrls()
+            #region Url
+
+
+            /// <see cref="IJasperDataServicePublic.GetAllUrls"/>
+            public List<UrlRewrite> GetAllUrls()
         {
             try
             {

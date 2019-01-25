@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JasperSite.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20190124194626_editedImageData")]
-    partial class editedImageData
+    [Migration("20190124200357_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -161,6 +161,7 @@ namespace JasperSite.Models.Database
                     byte[] bytes = System.IO.File.ReadAllBytes(imgPath);
                     Image img = new Image();
                     img.Name = "Lorem ipsum";
+                    img.InDb = true;
 
                     ImageData imgData = new ImageData() { Data = bytes };
 
