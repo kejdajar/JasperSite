@@ -16,7 +16,7 @@
     <link href="@J.File("css/clean-blog.min.css")" rel="stylesheet">
 
 </head>
-<body>  
+<body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
         <div class="container">
@@ -35,12 +35,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
-                    </li>                   
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-   
+
 
     @RenderBody()
 
@@ -50,9 +50,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-md-10 mx-auto">
-                   
-                     
-                       
+
+
+
                     <ul class="list-inline text-center">
                         <li class="list-inline-item">
                             <a href="#">
@@ -70,7 +70,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="list-inline-item">                           
+                        <li class="list-inline-item">
                             <a href="#">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
@@ -78,11 +78,11 @@
                                 </span>
                             </a>
                         </li>
-                    </ul> 
+                    </ul>
 
                     <p class="copyright text-muted">
                         @J.Components.Holder("FooterHolder")
-                        <br/>
+                        <br />
                         <a href="/admin" title="administration" target="_blank">administration</a>
                     </p>
                 </div>
@@ -91,5 +91,8 @@
     </footer>
 
     <script src="@J.File("js/clean-blog.min.js")"></script>
+    <script src="~/bundles/font-awesome.bundle.js"></script>
+    <script src="~/customLib/prism.min.js"></script>
+    <link href="~/customLib/prism.min.css" rel="stylesheet" />
 </body>
 </html>

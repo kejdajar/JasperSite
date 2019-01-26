@@ -1,26 +1,24 @@
 ﻿
-
 const path = require('path');
 module.exports = {
-mode: "production",
+    mode: "production",
     entry: {
         theme: "./wwwroot/scripts/theme.js",
         admin: "./wwwroot/scripts/admin.js",
         login: "./wwwroot/scripts/login.js",
         chart: "./wwwroot/scripts/chart.js",
-        
-     
+        'font-awesome': "./wwwroot/scripts/font-awesome.js"
     },
     output: {
-path: path.resolve(__dirname,"wwwroot/bundles"),
-filename: "[name].bundle.js"
+        path: path.resolve(__dirname, "wwwroot/bundles"),
+        filename: "[name].bundle.js"
 
     },
-    module:{
-        rules:[
+    module: {
+        rules: [
             {
-                test:/\.css$/,
-                use:['style-loader','css-loader']
+                test: /\.css$/,
+                use: ['style-loader', 'css-loader']
             },
 
             /* regex for font-awesome */
@@ -31,7 +29,7 @@ filename: "[name].bundle.js"
             {
                 test: /\.(png|jpg)$/, loader: 'url-loader'
             }
-       ]
+        ]
     }
 
 };
