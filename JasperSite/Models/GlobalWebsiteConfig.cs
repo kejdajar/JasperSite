@@ -148,6 +148,9 @@ namespace JasperSite.Models
             }
         }
 
+
+        
+
         public GlobalConfigData.Email GetEmailProperties()
         {
             GlobalConfigData.Email emailProperties = new GlobalConfigData.Email();
@@ -159,6 +162,15 @@ namespace JasperSite.Models
             return emailProperties;
         }
 
+        /* Disqus */  
+
+
+        public Disqus GetDisqusProperties()
+        {
+            Disqus disqus = new Disqus(ConfigurationDataObject,GlobalConfigDataProvider);
+            return disqus;
+        }
+
 
     }
 
@@ -167,6 +179,84 @@ namespace JasperSite.Models
        GlobalConfigData GetFreshData();
        void SaveData(GlobalConfigData dataToSave);
         string GetGlobalJsonFilePath();
+    }
+
+    public class Disqus
+    {
+        public Disqus(GlobalConfigData configurationDataObject, IGlobalWebsiteConfigProvider globalConfigDataProvider)
+        {
+            this._configurationDataObject = configurationDataObject;
+            this._globalConfigDataProvider = globalConfigDataProvider;
+        }
+
+        private GlobalConfigData _configurationDataObject;
+        IGlobalWebsiteConfigProvider _globalConfigDataProvider;
+                 
+
+        public bool Enabled
+        {
+            get
+            {
+                try
+                {
+                    return (_configurationDataObject.DisqusProperties.Enabled != null) ? Convert.ToBoolean(_configurationDataObject.DisqusProperties.Enabled) : false;
+                }
+                catch
+                {
+                    return false;
+                }
+
+            }
+            set
+            {
+                _configurationDataObject.DisqusProperties.Enabled = value.ToString();
+                _globalConfigDataProvider.SaveData(_configurationDataObject);
+            }
+        }
+
+        public string UrlStart
+        {
+            get
+            {
+                try
+                {
+                    return (_configurationDataObject.DisqusProperties.UrlStart != null) ? _configurationDataObject.DisqusProperties.UrlStart : string.Empty;
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+
+            }
+            set
+            {
+                _configurationDataObject.DisqusProperties.UrlStart = value;
+                _globalConfigDataProvider.SaveData(_configurationDataObject);
+            }
+        }
+
+        public string Src
+        {
+            get
+            {
+                try
+                {
+                    return (_configurationDataObject.DisqusProperties.Src != null) ? _configurationDataObject.DisqusProperties.Src : string.Empty;
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+
+            }
+            set
+            {
+                _configurationDataObject.DisqusProperties.Src = value;
+                _globalConfigDataProvider.SaveData(_configurationDataObject);
+            }
+        }
+
+
     }
 
     public class GlobalConfigData
@@ -207,6 +297,23 @@ namespace JasperSite.Models
 
             [JsonProperty("to")]
             public string To { get; set; }
+        }
+
+
+        [JsonProperty("disqus")]
+        public Disqus DisqusProperties { get; set; }
+
+        public class Disqus
+        {
+            [JsonProperty("enabled")]
+            public string Enabled { get; set; }
+
+            [JsonProperty("urlStart")]
+            public string UrlStart { get; set; }
+
+            [JsonProperty("src")]
+            public string Src { get; set; }
+          
         }
     }
 

@@ -204,6 +204,16 @@ $(document).ready(function(){
                                 </div>
                             </div>
 
+                            @if (JasperSite.Models.Configuration.GlobalWebsiteConfig.GetDisqusProperties().Enabled)
+                            {
+                            <!--Refresh button-->
+                            <div class="j-header-group">
+                                <div class="j-header-group-item  ">
+                                    <a id="refreshButton" class="btn btn-jasper btn-jasper-icon-control-panel" href="@JasperSite.Models.Configuration.GlobalWebsiteConfig.GetDisqusProperties().Src" target="_blank">   <i class="fa fa-comments fa-1x" aria-hidden="true"></i> </a>
+                                </div>
+                            </div>
+                            }
+
                             <div class="j-header-group">
                                 @if (User.Identity.IsAuthenticated)
                                 {

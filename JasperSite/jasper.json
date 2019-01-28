@@ -10,5 +10,10 @@
     "password": "",
     "from": "",
     "to": ""
+  },
+  "disqus": {
+    "enabled": "",
+    "urlStart": "",
+    "src": ""
   }
 }

@@ -1,0 +1,44 @@
+﻿@model int
+@using JasperSite.Models
+
+@* -----------------------------------------------------------------------------------------DISQUS BEGIN--------------------------------- *@
+@if (@Configuration.GlobalWebsiteConfig.GetDisqusProperties().Enabled)
+    {
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+@inject IViewLocalizer Localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+
+        var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+        var culture = requestCulture.RequestCulture.Culture;
+
+
+
+
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+        var disqus_config = function () {
+            this.language = "@culture";
+this.page.url =  "@Configuration.GlobalWebsiteConfig.GetDisqusProperties().UrlStart@Context.Request.Host@Context.Request.Path";  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = @Model; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+    s.src = '@Configuration.GlobalWebsiteConfig.GetDisqusProperties().Src' +'/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    }
+@* -----------------------------------------------------------------------------------------DISQUS END--------------------------------- *@

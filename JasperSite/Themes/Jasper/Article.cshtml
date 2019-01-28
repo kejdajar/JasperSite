@@ -16,17 +16,26 @@
         ViewData["Title"] = article.Name;
         ViewData["Keywords"] = article.Keywords;
 
-        <div class="container-fluid article-text">
-            <j-article id="@Model">
+<div class="container-fluid article-text">
+    <j-article id="@Model">
 
-                <div class="jumbotron">
-                    <h1> <j-name /></h1>
-                    <small><j-date format="dd/MM/yyyy" /></small>
-                </div>
-
-                <j-content />
-            </j-article>
+        <div class="jumbotron">
+            <h1> <j-name /></h1>
+            <small><j-date format="dd/MM/yyyy" /></small>
         </div>
+
+        <j-content />
+    </j-article>
+
+
+
+
+
+
+   @Html.Partial("_Disqus",article.Id)
+
+
+</div>
     }
     else
     {
