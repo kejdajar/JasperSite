@@ -94,6 +94,13 @@ namespace JasperSite.Controllers
                         }
                     }
 
+
+                    // the requested file could be something other than .cshtml view (robots.txt etc.)
+                    if(file.EndsWith(".txt"))
+                    {
+                        return Content(System.IO.File.ReadAllText(file));
+                    }
+
                     file = Globalization.GlobalizeView(file,Request);// current culture is fetched and requested view name changed to e.x. : About.{culture}.cshtml
                     return View(file);
                 }

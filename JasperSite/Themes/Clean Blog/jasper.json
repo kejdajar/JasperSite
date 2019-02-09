@@ -15,7 +15,7 @@
   },
   "customPageMapping": [
     {
-      "routes": [       
+      "routes": [
         "/categories"
       ],
       "file": "Categories.cshtml"
@@ -25,12 +25,18 @@
         "/about"
       ],
       "file": "About.cshtml"
-    },   
+    },
     {
       "routes": [
         "/singlecategory"
       ],
       "file": "SingleCategory.cshtml"
+    },
+    {
+      "routes": [
+        "/robots.txt"
+      ],
+      "file": "robots.txt"
     }
   ]
 }

@@ -1,49 +1,42 @@
 {
   "urlRewriting": "True",
   "articleFile": "Article.cshtml",
-  "articleRoute": "/home/article/",
+  "articleRoute": "/article/",
 
   "blockHolders": [ "MainPageHolder", "FooterHolder", "AboutPageHolder" ],
   "missingImagePath": "./Images/missing_img.png",
   "routingList": {
     "homePage": [
       "/",
-      "/home/index"
+      "/home"
     ],
     "homePageFile": "Index.cshtml",
     "errorPageFile": "Error.cshtml"
-  }, 
+  },
   "customPageMapping": [
     {
-      "routes": [
-        "/home/category",       
+      "routes": [        
         "/category"
       ],
       "file": "Category.cshtml"
     },
     {
       "routes": [
-        "/home/tutorial"       
-      ],
-      "file": "Tutorial.cshtml"
-    },
-    {
-      "routes": [
-        "/home/article"      
-      ],
-      "file": "Article.cshtml"
-    },
-    {
-      "routes": [
-        "/home/singlecategory"     
+        "/singlecategory"
       ],
       "file": "SingleCategory.cshtml"
     },
     {
       "routes": [
-        "/home/about"       
+        "/about"
       ],
       "file": "About.cshtml"
+    },
+    {
+      "routes": [
+        "/robots.txt"
+      ],
+      "file": "robots.txt"
     }
   ]
 }

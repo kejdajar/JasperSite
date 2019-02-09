@@ -47,10 +47,10 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
                 <ul class="navbar-nav mr-auto">
 
                     <li class="nav-item  @(Context.Request.Path.Value.ToLower().StartsWith("/home/category") ? "active":"")">
-                        <a class="nav-link" href="/home/category">All Categories</a>
+                        <a class="nav-link" href="/category">All Categories</a>
                     </li>
                     <li class="nav-item  @(Context.Request.Path.Value.ToLower().StartsWith("/home/about") ? "active":"")">
-                        <a class="nav-link" href="/home/about">About</a>
+                        <a class="nav-link" href="/about">About</a>
                     </li>
                     @{ List<Category> allCategories = J.GetAllCategories();}
                     @if (allCategories != null)
@@ -58,7 +58,7 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
                         @foreach (Category c in allCategories)
                         {
                             <li class="nav-item @(Context.Request.Path.Value.ToLower().StartsWith("/home/singlecategory?id=" + c.Id) ? "active" : "")">
-                                <a class="nav-link" href="/home/singlecategory?id=@c.Id">@c.Name</a>
+                                <a class="nav-link" href="/singlecategory?id=@c.Id">@c.Name</a>
                             </li>
                         }
 
@@ -75,7 +75,7 @@ All usings are loaded from _ViewImports.cshtml together with databaseContext dep
             <footer style="padding:10px">
                 <p class="text-muted">
                     @J.Components.Holder("FooterHolder")
-                    <a href="/Admin/">Administration</a>
+                    <a href="/admin" target="_blank">Administration</a>
                 </p>
             </footer>
         </div>
