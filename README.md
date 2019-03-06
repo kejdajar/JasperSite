@@ -1,5 +1,5 @@
 # JasperSite
-JasperSite is a web content management system built on top of ASP.NET Core MVC. The founder of this project is Ing. Jaromír Kejda. This project is a part of his master's thesis: _Design and Implementation of Content Management System in ASP.NET Core_ - for more information refer to the __CZU__ branch of this repository or visit [jaromirkejda.net](https://www.jaromirkejda.net) (Czech only). 
+JasperSite is a web content management system built on top of ASP.NET Core MVC. The founder of this project is Bc. Jaromír Kejda. This project is a part of his master's thesis: _Design and Implementation of Content Management System in ASP.NET Core_ - for more information refer to the __CZU__ branch of this repository or visit [jaromirkejda.net](https://www.jaromirkejda.net) (Czech only). 
 
 
 
