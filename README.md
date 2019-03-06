@@ -1,5 +1,5 @@
 # JasperSite
-JasperSite is a web content management system built on top of ASP.NET Core MVC, designed and implemented by Ing. Jaromír Kejda. 
+JasperSite is a web content management system built on top of ASP.NET Core MVC, designed and implemented by Bc. Jaromír Kejda. 
 
 This project is a part of his master's thesis: _Design and Implementation of Content Management System in ASP.NET Core_.
 This master's thesis was successfully defended in 2019, Czech University of Life Sciences and supervised by Ing. Jiří Brožek, Ph.D., Department of Information Engineering.
