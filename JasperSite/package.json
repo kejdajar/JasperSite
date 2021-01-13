@@ -9,7 +9,7 @@
     "jquery": "^3.3.1",
     "jquery-ajax-unobtrusive": "^3.2.4",
     "jquery-ui-dist": "1.12.1",
-    "jquery-validation": "^1.17.0",
+    "jquery-validation": "^1.19.3",
     "jquery-validation-unobtrusive": "^3.2.10",
     "natives": "^1.1.6",
     "popper.js": "^1.14.3",
